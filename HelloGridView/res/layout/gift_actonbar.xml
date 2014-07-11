@@ -4,13 +4,13 @@
     android:layout_height="50dp" >
 
     <TextView
-        android:id="@+id/gift_actionbar_text"
+        android:id="@+id/gift_actionbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="@string/action_gift_send_text"
+        android:text="123456"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />

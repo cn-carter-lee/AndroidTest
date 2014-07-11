@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">礼物搜</string>
-    <string name="hello_world">THIS IS A WONDERFUL WORLD!</string>
+    <string name="hello_world">~~~~ WORLD!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_product">礼物搜索</string>
     <string name="edit_message">Enter a message</string>
@@ -22,5 +22,7 @@
     <string name="gift_all">全部</string>
     <string name="gift_male">男性</string>
     <string name="gift_female">女性</string>
+    <string name="gift_actionbar_more">更多</string>
+    <string name="gift_actionbar_liwusou">您要送谁礼物？</string>
 
 </resources>

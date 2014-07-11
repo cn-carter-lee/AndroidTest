@@ -17,8 +17,9 @@ public class MoreActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ActionBar actionBar = getSupportActionBar();
-		actionBar.setCustomView(R.layout.gift_send_actonbar);
-		
+		// actionBar.setCustomView(R.layout.gift_actonbar);
+		Utils.SetActionBar(this, actionBar,
+				getString(R.string.gift_actionbar_more));
 		setContentView(R.layout.activity_more);
 
 		if (savedInstanceState == null) {

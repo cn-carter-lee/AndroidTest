@@ -3,6 +3,10 @@ package com.pys.hellogridview;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.widget.TextView;
+
 public class Utils {
 	public static void CopyStream(InputStream is, OutputStream os) {
 		final int buffer_size = 1024;
@@ -16,5 +20,13 @@ public class Utils {
 			}
 		} catch (Exception ex) {
 		}
+	}
+
+	public static void SetActionBar(ActionBarActivity activity,
+			ActionBar actionBar, String title) {
+		actionBar.setCustomView(R.layout.gift_actonbar);
+		TextView textView = (TextView) activity
+				.findViewById(R.id.gift_actionbar_title);
+		textView.setText(title);
 	}
 }

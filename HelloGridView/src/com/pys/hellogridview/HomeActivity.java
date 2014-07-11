@@ -24,7 +24,8 @@ public class HomeActivity extends ActionBarActivity implements
 
 		super.onCreate(savedInstanceState);
 		ActionBar actionBar = getSupportActionBar();
-		actionBar.setCustomView(R.layout.gift_send_actonbar);
+		Utils.SetActionBar(this, actionBar,
+				getString(R.string.gift_actionbar_liwusou));
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		Tab tab = actionBar
@@ -75,17 +76,10 @@ public class HomeActivity extends ActionBarActivity implements
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		/*
-		switch (id) {
-		case R.id.action_gift_home:
-			break;
-		case R.id.action_gift_search:
-			break;
-		case R.id.action_gift_favorite:
-			break;
-		case R.id.action_gift_more:
-			break;
-		}
-		*/
+		 * switch (id) { case R.id.action_gift_home: break; case
+		 * R.id.action_gift_search: break; case R.id.action_gift_favorite:
+		 * break; case R.id.action_gift_more: break; }
+		 */
 
 		return super.onOptionsItemSelected(item);
 	}
