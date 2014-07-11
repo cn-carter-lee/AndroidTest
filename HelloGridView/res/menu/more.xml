@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.pys.hellogridview.MoreActivity" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
+   <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_gift_home"
+        android:icon="@drawable/ic_action_liwusou"
+        android:title="@string/action_gift_liwuso"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_gift_search"
+        android:icon="@drawable/ic_action_search"
+        android:title="@string/action_gift_search"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_gift_favorite"
+        android:icon="@drawable/ic_action_store"
+        android:title="@string/action_gift_favorite"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_gift_more"
+        android:icon="@drawable/ic_action_more"
+        android:title="@string/action_gift_more"
+        app:showAsAction="ifRoom"/>
+</menu>

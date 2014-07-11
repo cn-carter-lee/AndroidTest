@@ -1,0 +1,29 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!-- API 11 theme customizations can go here. -->
+    </style>
+
+    <style name="HomeNoActionBar" parent="Theme.AppCompat.Light">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="GiftTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/GiftActionBarStyle</item>
+    </style>
+
+    <style name="GiftActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:displayOptions"> showHome|showTitle<!-- showHome|showTitle -->
+        </item>
+        <item name="android:background">#FF8432</item>
+        <item name="android:backgroundSplit">#FFFFFF</item>
+        <item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>
+        <item name="actionBarTabTextStyle">@style/MyActionBarTabText</item>
+    </style>
+
+    <style name="MyActionBarTabText" parent="@style/Widget.AppCompat.ActionBar.TabText">
+        <item name="android:textColor">#FF0000</item>
+    </style>
+
+</resources>

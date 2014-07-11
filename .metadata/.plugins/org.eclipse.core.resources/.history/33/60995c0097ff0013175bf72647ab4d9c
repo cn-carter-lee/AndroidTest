@@ -1,0 +1,111 @@
+package com.pys.hellogridview;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.Toast;
+
+public class MainActivity extends ActionBarActivity {
+
+	ListView listview;
+	LazyAdapter adapter;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		/*
+		 * if (savedInstanceState == null) {
+		 * getSupportFragmentManager().beginTransaction() .add(R.id.container,
+		 * new PlaceholderFragment()).commit(); }
+		 * 
+		 * GridView gridview = (GridView) findViewById(R.id.gridview);
+		 * gridview.setAdapter(new ImageAdapter(this));
+		 */
+
+		listview = (ListView) findViewById(R.id.listView1);
+		adapter = new LazyAdapter(this, imageUrls);
+		listview.setAdapter(adapter);
+		// listview.setAdapter(new ImageAdapter(this));
+		listview.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), "" + position,
+						Toast.LENGTH_SHORT).show();
+			}
+
+		});
+		/*
+		 * gridview.setOnItemClickListener(new OnItemClickListener() { public
+		 * void onItemClick(AdapterView<?> parent, View v, int position, long
+		 * id) { Toast.makeText(HelloGridView.this, "" + position,
+		 * Toast.LENGTH_SHORT).show(); } });
+		 */
+		// ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+
+		// new DownloadImageTask((ImageView) findViewById(R.id.imageView1))
+		// .execute("http://img5.cache.netease.com/photo/0005/2014-06-24/9VGU91CO5O2Q0005.jpg");
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onDestroy() {
+		// list.setAdapter(null);
+		super.onDestroy();
+	}
+
+	private String imageUrls[] = { "http://www.liwuso.com/Uploads/cpc/86.jpg",
+			"http://www.liwuso.com/Uploads/cpc/89.jpg",
+			"http://www.liwuso.com/Uploads/cpc/90.jpg",
+			"http://www.liwuso.com/Uploads/cpc/91.jpg",
+			"http://www.liwuso.com/Uploads/cpc/92.jpg",
+			"http://www.liwuso.com/Uploads/cpc/93.jpg",
+			"http://www.liwuso.com/Uploads/cpc/94.jpg" };
+
+	/**
+	 * A placeholder fragment containing a simple view.
+	 */
+	public static class PlaceholderFragment extends Fragment {
+
+		public PlaceholderFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_main, container,
+					false);
+			return rootView;
+		}
+	}
+}
