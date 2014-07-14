@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MoreActivity extends ActionBarActivity {
@@ -77,7 +77,7 @@ public class MoreActivity extends ActionBarActivity {
 		// Commit the transaction
 		transaction.commit();
 	}
-	
+
 	public void openAdviceFragment(View view) {
 		FragmentTransaction transaction = getSupportFragmentManager()
 				.beginTransaction();
@@ -116,7 +116,7 @@ public class MoreActivity extends ActionBarActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 
-			View rootView = inflater.inflate(R.layout.fragment_more_home,
+			View rootView = inflater.inflate(R.layout.fragment_more,
 					container, false);
 			return rootView;
 		}
@@ -163,10 +163,11 @@ public class MoreActivity extends ActionBarActivity {
 
 			View rootView = inflater.inflate(R.layout.fragment_more_advice,
 					container, false);
+			MoreActivity activity = (MoreActivity) this.getActivity();
+			activity.setActionBarText("意见建议");
 
 			return rootView;
 		}
-
 	}
 
 }

@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="com.pys.hellogridview.ArtistFragment" >
+    tools:context="com.pys.hellogridview.SearchFemaleFragment" >
 
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="artist" />
+        android:text="album" />
 
 </FrameLayout>

@@ -22,8 +22,8 @@ public class Utils {
 		}
 	}
 
-	public static void SetActionBar(Activity activity,
-			ActionBar actionBar, String title) {
+	public static void SetActionBar(Activity activity, ActionBar actionBar,
+			String title) {
 		actionBar.setCustomView(R.layout.gift_actonbar);
 		TextView textView = (TextView) activity
 				.findViewById(R.id.gift_actionbar_title);

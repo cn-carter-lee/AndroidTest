@@ -15,9 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HomeActivity extends ActionBarActivity implements
-		ArtistFragment.OnFragmentInteractionListener,
-		AlbumFragment.OnFragmentInteractionListener {
+public class SearchActivity extends ActionBarActivity implements
+		SearchAllFragment.OnFragmentInteractionListener,
+		SearchFemaleFragment.OnFragmentInteractionListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,24 +32,24 @@ public class HomeActivity extends ActionBarActivity implements
 				.newTab()
 				.setText(R.string.gift_all)
 				.setTabListener(
-						new MyTabListener<ArtistFragment>(this, "album",
-								ArtistFragment.class));
+						new GiftTabListener<SearchAllFragment>(this, "album",
+								SearchAllFragment.class));
 		actionBar.addTab(tab);
 
 		tab = actionBar
 				.newTab()
 				.setText(R.string.gift_male)
 				.setTabListener(
-						new MyTabListener<AlbumFragment>(this, "album",
-								AlbumFragment.class));
+						new GiftTabListener<SearchFemaleFragment>(this, "album",
+								SearchFemaleFragment.class));
 		actionBar.addTab(tab);
 
 		tab = actionBar
 				.newTab()
 				.setText(R.string.gift_female)
 				.setTabListener(
-						new MyTabListener<AlbumFragment>(this, "album",
-								AlbumFragment.class));
+						new GiftTabListener<SearchFemaleFragment>(this, "album",
+								SearchFemaleFragment.class));
 		actionBar.addTab(tab);
 
 		// setContentView(R.layout.activity_home);
@@ -107,14 +107,14 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 	}
 
-	public static class MyTabListener<T extends Fragment> implements
+	public static class GiftTabListener<T extends Fragment> implements
 			ActionBar.TabListener {
 		private Fragment mFragment;
 		private final Activity mActivity;
 		private final String mTag;
 		private final Class<T> mClass;
 
-		public MyTabListener(Activity activity, String tag, Class<T> clz) {
+		public GiftTabListener(Activity activity, String tag, Class<T> clz) {
 			this.mActivity = activity;
 			this.mTag = tag;
 			this.mClass = clz;

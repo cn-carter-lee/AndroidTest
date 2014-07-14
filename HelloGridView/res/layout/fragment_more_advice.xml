@@ -9,24 +9,64 @@
     tools:context="com.pys.hellogridview.MoreAdviceFragment" >
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/editAdvice"
         android:layout_width="fill_parent"
         android:layout_height="150dp"
-        android:inputType="textPersonName" >
+        android:background="@drawable/gift_more_edit_background"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="请输入意见建议内容"
+        android:inputType="textMultiLine"
+        android:padding="5dp"
+        android:scrollbars="vertical"
+        android:textSize="10sp" >
     </EditText>
 
-    <Button
-        android:id="@+id/button0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="sendAdvice"
-        android:text="提交" />
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/editAdvice"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/gift_more_edit_background"
+        android:hint="请输入您常用的电子邮箱"
+        android:padding="5dp"
+        android:scrollbars="vertical"
+        android:textSize="10sp" >
+    </EditText>
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="navigateFragment"
-        android:text="常见问题" />
+        android:layout_below="@+id/editEmail"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button0"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4"
+            android:background="#f86047"
+            android:onClick="sendAdvice"
+            android:text="提交"
+            android:textColor="#FFFFFF" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="40dp" >
+        </View>
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4"
+            android:background="#34abcd"
+            android:onClick="navigateFragment"
+            android:text="常见问题"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
 
 </RelativeLayout>

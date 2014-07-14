@@ -43,7 +43,7 @@
                 android:value="splitActionBarWhenNarrow" />
         </activity>
         <activity
-            android:name="com.pys.hellogridview.HomeActivity"
+            android:name="com.pys.hellogridview.SearchActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/GiftTheme"
             android:uiOptions="splitActionBarWhenNarrow" >

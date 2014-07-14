@@ -24,15 +24,10 @@ public class MainActivity extends ActionBarActivity {
 
 		setContentView(R.layout.activity_main);
 
-		// this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		// this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		// ActionBar actionBar = getSupportActionBar();
-		// actionBar.hide();
-
 		final MainActivity activity = this;
 		new android.os.Handler().postDelayed(new Runnable() {
 			public void run() {
-				Intent intent = new Intent(activity, MoreActivity.class);
+				Intent intent = new Intent(activity, SearchActivity.class);
 				String message = "";
 				intent.putExtra(EXTRA_MESSAGE, message);
 				startActivity(intent);
