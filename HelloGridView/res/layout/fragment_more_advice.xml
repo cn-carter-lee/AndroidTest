@@ -12,14 +12,14 @@
         android:id="@+id/editAdvice"
         android:layout_width="fill_parent"
         android:layout_height="150dp"
-        android:background="@drawable/gift_more_edit_background"
+        android:background="@drawable/more_edit_background"
         android:ems="10"
         android:gravity="top"
         android:hint="请输入意见建议内容"
         android:inputType="textMultiLine"
         android:padding="5dp"
         android:scrollbars="vertical"
-        android:textSize="10sp" >
+        android:textSize="12sp" >
     </EditText>
 
     <EditText
@@ -28,11 +28,11 @@
         android:layout_height="40dp"
         android:layout_below="@+id/editAdvice"
         android:layout_marginTop="20dp"
-        android:background="@drawable/gift_more_edit_background"
+        android:background="@drawable/more_edit_background"
         android:hint="请输入您常用的电子邮箱"
         android:padding="5dp"
         android:scrollbars="vertical"
-        android:textSize="10sp" >
+        android:textSize="12sp" >
     </EditText>
 
     <LinearLayout

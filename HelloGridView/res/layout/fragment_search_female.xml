@@ -3,43 +3,40 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    style="@style/Gift.ParentLayoutPadding"
     tools:context="com.pys.hellogridview.SearchFemaleFragment" >
 
     <!-- TODO: Update blank fragment layout -->
 
     <Button
         android:id="@+id/button0"
-        style="@style/GiftMoreButton"
+        style="@style/SearchButtonRed"
         android:layout_marginTop="10dp"
+        android:background="@drawable/color_red"
         android:onClick="navigateSearch"
         android:text="女朋友" />
 
     <Button
         android:id="@+id/button1"
-        style="@style/GiftMoreButton"
-        android:layout_marginTop="1dp"
+        style="@style/SearchButtonBlue"
         android:onClick="navigateSearch"
         android:text="老婆" />
 
     <Button
         android:id="@+id/button2"
-        style="@style/GiftMoreButton"
-        android:layout_marginTop="1dp"
+        style="@style/SearchButtonYellow"
         android:onClick="navigateSearch"
         android:text="女性朋友" />
 
     <Button
         android:id="@+id/button3"
-        style="@style/GiftMoreButton"
-        android:layout_marginTop="30dp"
+        style="@style/SearchButtonPink"
         android:onClick="openAdviceFragment"
         android:text="妈妈" />
 
     <Button
         android:id="@+id/button4"
-        style="@style/GiftMoreButton"
-        android:layout_marginTop="1dp"
-        android:background="@drawable/gift_more_button_background"
+        style="@style/SearchButtonPurple"
         android:onClick="navigateSearch"
         android:text="女生" />
 

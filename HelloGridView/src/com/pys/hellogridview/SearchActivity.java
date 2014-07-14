@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 public class SearchActivity extends ActionBarActivity implements
 		SearchAllFragment.OnFragmentInteractionListener,
+		SearchMaleFragment.OnFragmentInteractionListener,
 		SearchFemaleFragment.OnFragmentInteractionListener {
 
 	@Override
@@ -38,18 +39,18 @@ public class SearchActivity extends ActionBarActivity implements
 
 		tab = actionBar
 				.newTab()
-				.setText(R.string.gift_male)
+				.setText(R.string.gift_female)
 				.setTabListener(
-						new GiftTabListener<SearchFemaleFragment>(this, "album",
-								SearchFemaleFragment.class));
+						new GiftTabListener<SearchFemaleFragment>(this,
+								"album", SearchFemaleFragment.class));
 		actionBar.addTab(tab);
 
 		tab = actionBar
 				.newTab()
-				.setText(R.string.gift_female)
+				.setText(R.string.gift_male)
 				.setTabListener(
-						new GiftTabListener<SearchFemaleFragment>(this, "album",
-								SearchFemaleFragment.class));
+						new GiftTabListener<SearchMaleFragment>(this, "album",
+								SearchMaleFragment.class));
 		actionBar.addTab(tab);
 
 		// setContentView(R.layout.activity_home);

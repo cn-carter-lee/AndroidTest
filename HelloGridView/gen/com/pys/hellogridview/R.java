@@ -985,21 +985,33 @@ containing a value of this type.
         public static final int abc_textfield_searchview_holo_light=0x7f020054;
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
-        public static final int button_right_gray=0x7f020057;
-        public static final int button_right_white=0x7f020058;
-        public static final int gift_more_btn_bg=0x7f020059;
-        public static final int gift_more_btn_bg2=0x7f02005a;
-        public static final int gift_more_button_background=0x7f02005b;
-        public static final int gift_more_button_background_right=0x7f02005c;
-        public static final int gift_more_button_textcolor=0x7f02005d;
-        public static final int gift_more_edit_background=0x7f02005e;
-        public static final int ic_action_compose=0x7f02005f;
-        public static final int ic_action_liwusou=0x7f020060;
-        public static final int ic_action_more=0x7f020061;
-        public static final int ic_action_search=0x7f020062;
-        public static final int ic_action_store=0x7f020063;
-        public static final int ic_launcher=0x7f020064;
-        public static final int splash=0x7f020065;
+        public static final int button_blue=0x7f020057;
+        public static final int button_pink=0x7f020058;
+        public static final int button_purple=0x7f020059;
+        public static final int button_red=0x7f02005a;
+        public static final int button_yellow=0x7f02005b;
+        public static final int color_blue=0x7f02005c;
+        public static final int color_pink=0x7f02005d;
+        public static final int color_purple=0x7f02005e;
+        public static final int color_red=0x7f02005f;
+        public static final int color_yellow=0x7f020060;
+        public static final int gift_more_btn_bg=0x7f020061;
+        public static final int gift_more_btn_bg2=0x7f020062;
+        public static final int ic_action_compose=0x7f020063;
+        public static final int ic_action_liwusou=0x7f020064;
+        public static final int ic_action_more=0x7f020065;
+        public static final int ic_action_search=0x7f020066;
+        public static final int ic_action_store=0x7f020067;
+        public static final int ic_launcher=0x7f020068;
+        public static final int more_button_background=0x7f020069;
+        public static final int more_button_background_right=0x7f02006a;
+        public static final int more_button_right_gray=0x7f02006b;
+        public static final int more_button_right_white=0x7f02006c;
+        public static final int more_button_textcolor=0x7f02006d;
+        public static final int more_edit_background=0x7f02006e;
+        public static final int search_button_background_red=0x7f02006f;
+        public static final int search_button_background_right=0x7f020070;
+        public static final int splash=0x7f020071;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1234,12 +1246,19 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0b0084;
+        public static final int Gift_ParentLayoutPadding=0x7f0b0089;
         public static final int GiftActionBarStyle=0x7f0b0087;
-        public static final int GiftActionBarTabText=0x7f0b0089;
-        public static final int GiftMoreButton=0x7f0b008a;
+        public static final int GiftActionBarTabText=0x7f0b008a;
+        public static final int GiftMoreButton=0x7f0b008b;
         public static final int GiftTheme=0x7f0b0086;
         public static final int HomeNoActionBar=0x7f0b0085;
         public static final int MyActionBarTabText=0x7f0b0088;
+        public static final int SearchButton=0x7f0b008c;
+        public static final int SearchButtonBlue=0x7f0b008e;
+        public static final int SearchButtonPink=0x7f0b008f;
+        public static final int SearchButtonPurple=0x7f0b0090;
+        public static final int SearchButtonRed=0x7f0b008d;
+        public static final int SearchButtonYellow=0x7f0b0091;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0b0063;

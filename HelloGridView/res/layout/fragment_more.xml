@@ -44,7 +44,7 @@
         style="@style/GiftMoreButton"
         android:layout_below="@+id/button3"
         android:layout_marginTop="1dp"
-        android:background="@drawable/gift_more_button_background"
+        android:background="@drawable/more_button_background"
         android:onClick="navigateFragment"
         android:text="联系我们" />
 

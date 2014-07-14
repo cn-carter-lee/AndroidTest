@@ -1,14 +1,40 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Gift.ParentLayoutPadding"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:orientation="vertical"
     tools:context="com.pys.hellogridview.SearchFemaleFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:id="@+id/button0"
+        style="@style/SearchButtonRed"
+        android:layout_marginTop="10dp"
+        android:onClick="navigateSearch"
+        android:text="男朋友" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="album" />
+    <Button
+        android:id="@+id/button1"
+        style="@style/SearchButtonRed"
+        android:onClick="navigateSearch"
+        android:text="老公" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/button2"
+        style="@style/SearchButtonRed"
+        android:onClick="navigateSearch"
+        android:text="男性朋友" />
+
+    <Button
+        android:id="@+id/button3"
+        style="@style/SearchButtonRed"
+        android:onClick="openAdviceFragment"
+        android:text="爸爸" />
+
+    <Button
+        android:id="@+id/button4"
+        style="@style/SearchButtonRed"
+        android:onClick="navigateSearch"
+        android:text="男生" />
+
+</LinearLayout>
