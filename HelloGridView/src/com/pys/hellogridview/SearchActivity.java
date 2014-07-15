@@ -1,5 +1,7 @@
 package com.pys.hellogridview;
 
+import com.pys.hellogridview.MoreActivity.MoreAdviceFragment;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -88,6 +90,10 @@ public class SearchActivity extends ActionBarActivity implements
 	@Override
 	public void onFragmentInteraction(Uri uri) {
 		// TODO Auto-generated method stub
+
+	}
+
+	public void giftSearch(View view) {
 
 	}
 
