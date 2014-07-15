@@ -1,14 +1,94 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Gift.ParentLayoutPadding"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="com.pys.hellogridview.SearchAllFragment" >
+    android:orientation="horizontal"
+    tools:context="com.pys.hellogridview.SearchFemaleFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        tools:context="com.pys.hellogridview.SearchFemaleFragment" >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="artist" />
+        <Button
+            android:id="@+id/button0"
+            style="@style/SearchButtonRed"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/color_red"
+            android:onClick="navigateSearch"
+            android:text="女朋友" />
 
-</FrameLayout>
+        <Button
+            android:id="@+id/button1"
+            style="@style/SearchButtonBlue"
+            android:onClick="navigateSearch"
+            android:text="老婆" />
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/SearchButtonYellow"
+            android:onClick="navigateSearch"
+            android:text="女性朋友" />
+
+        <Button
+            android:id="@+id/button3"
+            style="@style/SearchButtonPink"
+            android:onClick="openAdviceFragment"
+            android:text="妈妈" />
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/SearchButtonPurple"
+            android:onClick="navigateSearch"
+            android:text="女生" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="10dp"
+        android:layout_height="fill_parent" >
+    </View>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        tools:context="com.pys.hellogridview.SearchFemaleFragment" >
+
+        <Button
+            android:id="@+id/button10"
+            style="@style/SearchButtonMale1"
+            android:layout_marginTop="10dp"
+            android:onClick="navigateSearch"
+            android:text="男朋友" />
+
+        <Button
+            android:id="@+id/button11"
+            style="@style/SearchButtonMale2"
+            android:onClick="navigateSearch"
+            android:text="老公" />
+
+        <Button
+            android:id="@+id/button12"
+            style="@style/SearchButtonMale3"
+            android:onClick="navigateSearch"
+            android:text="男性朋友" />
+
+        <Button
+            android:id="@+id/button13"
+            style="@style/SearchButtonMale4"
+            android:onClick="openAdviceFragment"
+            android:text="爸爸" />
+
+        <Button
+            android:id="@+id/button14"
+            style="@style/SearchButtonMale5"
+            android:onClick="navigateSearch"
+            android:text="男生" />
+    </LinearLayout>
+
+</LinearLayout>

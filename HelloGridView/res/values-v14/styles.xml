@@ -48,7 +48,7 @@
     </style>
 
     <style name="SearchButton" parent="android:Widget">
-        <item name="android:textColor">@drawable/more_button_textcolor</item>
+        <item name="android:textColor">@drawable/search_button_textcolor</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -75,6 +75,26 @@
 
     <style name="SearchButtonYellow" parent="SearchButton">
         <item name="android:background">@drawable/button_yellow</item>
+    </style>
+
+    <style name="SearchButtonMale1" parent="SearchButton">
+        <item name="android:background">@drawable/color_male1</item>
+    </style>
+
+    <style name="SearchButtonMale2" parent="SearchButton">
+        <item name="android:background">@drawable/color_male2</item>
+    </style>
+
+    <style name="SearchButtonMale3" parent="SearchButton">
+        <item name="android:background">@drawable/color_male3</item>
+    </style>
+
+    <style name="SearchButtonMale4" parent="SearchButton">
+        <item name="android:background">@drawable/color_male4</item>
+    </style>
+
+    <style name="SearchButtonMale5" parent="SearchButton">
+        <item name="android:background">@drawable/color_male5</item>
     </style>
 
 </resources>
