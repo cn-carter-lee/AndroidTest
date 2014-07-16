@@ -3,6 +3,6 @@
 
     <item android:drawable="@drawable/search_button_background" android:state_pressed="true"/>
     <item android:drawable="@drawable/search_button_background" android:state_focused="true"/>
-    <item android:drawable="@drawable/color_pink"/>
+    <item android:drawable="@drawable/color_male5"/>
 
 </selector>

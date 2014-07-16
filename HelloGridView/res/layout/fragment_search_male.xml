@@ -27,7 +27,7 @@
     <Button
         android:id="@+id/button13"
         style="@style/SearchButtonMale4"
-        android:onClick="openAdviceFragment"
+        android:onClick="giftSearch"
         android:text="爸爸" />
 
     <Button
