@@ -1260,6 +1260,7 @@ containing a value of this type.
         public static final int hello_blank_fragment=0x7f0a001e;
         public static final int hello_world=0x7f0a000e;
         public static final int ic_action_search=0x7f0a0016;
+        public static final int product_actionbar_title=0x7f0a0026;
         public static final int purpose_actionbar_title=0x7f0a0025;
         public static final int share=0x7f0a0015;
         public static final int title_activity_home=0x7f0a0017;

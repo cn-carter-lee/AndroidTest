@@ -27,9 +27,17 @@ public class ProductActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product);
+		
 		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		Utils.SetActionBar(this, actionBar,
+				getString(R.string.product_actionbar_title));
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);		
+		
+		
+		//ActionBar actionBar = getSupportActionBar();
+		// actionBar.setDisplayHomeAsUpEnabled(true);
 
+		
 		// actionBar.hide();
 		// actionBar.setDisplayShowHomeEnabled(false);
 		// actionBar.setDisplayShowTitleEnabled(false);
