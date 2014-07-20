@@ -28,15 +28,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.pys.hellogridview.ProductActivity"
-            android:label="@string/title_activity_product"
-            android:theme="@style/GiftTheme"
-            android:uiOptions="splitActionBarWhenNarrow" >
-            <meta-data
-                android:name="android.support.UI_OPTIONS"
-                android:value="splitActionBarWhenNarrow" />
-        </activity>
-        <activity
             android:name="com.pys.hellogridview.SearchActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/GiftTheme"
@@ -65,6 +56,14 @@
         <activity
             android:name="com.pys.hellogridview.PurposeActivity"
             android:label="@string/app_name"
+            android:theme="@style/GiftTheme" >
+            <meta-data
+                android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow" />
+        </activity>
+        <activity
+            android:name="com.pys.hellogridview.ProductActivity"
+            android:label="@string/title_activity_product"
             android:theme="@style/GiftTheme" >
             <meta-data
                 android:name="android.support.UI_OPTIONS"

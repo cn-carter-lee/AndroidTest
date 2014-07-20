@@ -2,9 +2,9 @@ package com.pys.hellogridview;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
 
 public class Utils {
@@ -22,8 +22,9 @@ public class Utils {
 		}
 	}
 
-	public static void SetActionBar(Activity activity, ActionBar actionBar,
-			String title) {
+	public static void SetActionBar(Activity activity, String title) {
+		ActionBar actionBar = ((ActionBarActivity) activity)
+				.getSupportActionBar();
 		actionBar.setCustomView(R.layout.gift_actonbar);
 		TextView textView = (TextView) activity
 				.findViewById(R.id.gift_actionbar_title);

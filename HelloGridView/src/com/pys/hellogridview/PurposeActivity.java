@@ -18,8 +18,7 @@ public class PurposeActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_purpose);
 		ActionBar actionBar = getSupportActionBar();
-		Utils.SetActionBar(this, actionBar,
-				getString(R.string.purpose_actionbar_title));
+		Utils.SetActionBar(this, getString(R.string.purpose_actionbar_title));
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();

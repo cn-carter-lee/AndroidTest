@@ -1048,7 +1048,6 @@ containing a value of this type.
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
         public static final int action_settings=0x7f050052;
-        public static final int action_share=0x7f050057;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
@@ -1182,22 +1181,26 @@ containing a value of this type.
         public static final int fragment_more_advice=0x7f030022;
         public static final int fragment_product=0x7f030023;
         public static final int fragment_purpose=0x7f030024;
-        public static final int fragment_search_all=0x7f030025;
-        public static final int fragment_search_female=0x7f030026;
-        public static final int fragment_search_male=0x7f030027;
-        public static final int gift_actonbar=0x7f030028;
-        public static final int gift_more_actonbar=0x7f030029;
-        public static final int gift_send_actonbar=0x7f03002a;
-        public static final int row_listview_item=0x7f03002b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03002c;
+        public static final int fragment_search_age=0x7f030025;
+        public static final int fragment_search_all=0x7f030026;
+        public static final int fragment_search_female=0x7f030027;
+        public static final int fragment_search_male=0x7f030028;
+        public static final int fragment_search_product=0x7f030029;
+        public static final int fragment_search_purpose=0x7f03002a;
+        public static final int gift_actonbar=0x7f03002b;
+        public static final int gift_more_actonbar=0x7f03002c;
+        public static final int gift_send_actonbar=0x7f03002d;
+        public static final int row_listview_item=0x7f03002e;
+        public static final int support_simple_spinner_dropdown_item=0x7f03002f;
     }
     public static final class menu {
         public static final int age=0x7f0d0000;
-        public static final int home=0x7f0d0001;
-        public static final int main=0x7f0d0002;
-        public static final int more=0x7f0d0003;
-        public static final int product=0x7f0d0004;
-        public static final int purpose=0x7f0d0005;
+        public static final int base=0x7f0d0001;
+        public static final int home=0x7f0d0002;
+        public static final int main=0x7f0d0003;
+        public static final int more=0x7f0d0004;
+        public static final int product=0x7f0d0005;
+        public static final int purpose=0x7f0d0006;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

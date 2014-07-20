@@ -9,31 +9,31 @@
     <Button
         android:id="@+id/button10"
         style="@style/SearchButtonMale1"
-        android:onClick="giftSearch"
+        android:onClick="searchPerson"
         android:text="男朋友" />
 
     <Button
         android:id="@+id/button11"
         style="@style/SearchButtonMale2"
-        android:onClick="giftSearch"
+        android:onClick="searchPerson"
         android:text="老公" />
 
     <Button
         android:id="@+id/button12"
         style="@style/SearchButtonMale3"
-        android:onClick="giftSearch"
+        android:onClick="searchPerson"
         android:text="男性朋友" />
 
     <Button
         android:id="@+id/button13"
         style="@style/SearchButtonMale4"
-        android:onClick="giftSearch"
+        android:onClick="searchPerson"
         android:text="爸爸" />
 
     <Button
         android:id="@+id/button14"
         style="@style/SearchButtonMale5"
-        android:onClick="giftSearch"
+        android:onClick="searchPerson"
         android:text="男生" />
 
 </LinearLayout>

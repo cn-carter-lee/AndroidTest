@@ -17,31 +17,31 @@
             android:id="@+id/button0"
             style="@style/SearchButtonRed"
             android:layout_width="match_parent"
-            android:onClick="giftSearch"
+            android:onClick="searchPerson"
             android:text="女朋友" />
 
         <Button
             android:id="@+id/button1"
             style="@style/SearchButtonBlue"
-            android:onClick="giftSearch"
+            android:onClick="searchPerson"
             android:text="老婆" />
 
         <Button
             android:id="@+id/button2"
             style="@style/SearchButtonYellow"
-            android:onClick="giftSearch"
+            android:onClick="searchPerson"
             android:text="女性朋友" />
 
         <Button
             android:id="@+id/button3"
             style="@style/SearchButtonPink"
-            android:onClick="giftSearch"
+            android:onClick="searchPerson"
             android:text="妈妈" />
 
         <Button
             android:id="@+id/button4"
             style="@style/SearchButtonPurple"
-            android:onClick="giftSearch"
+            android:onClick="searchPerson"
             android:text="女生" />
     </LinearLayout>
 
@@ -60,31 +60,31 @@
         <Button
             android:id="@+id/button10"
             style="@style/SearchButtonMale1"
-            android:onClick="giftSearch"
+            android:onClick="searchPerson"
             android:text="男朋友" />
 
         <Button
             android:id="@+id/button11"
             style="@style/SearchButtonMale2"
-            android:onClick="giftSearch"
+            android:onClick="searchPerson"
             android:text="老公" />
 
         <Button
             android:id="@+id/button12"
             style="@style/SearchButtonMale3"
-            android:onClick="giftSearch"
+            android:onClick="searchPerson"
             android:text="男性朋友" />
 
         <Button
             android:id="@+id/button13"
             style="@style/SearchButtonMale4"
-            android:onClick="giftSearch"
+            android:onClick="searchPerson"
             android:text="爸爸" />
 
         <Button
             android:id="@+id/button14"
             style="@style/SearchButtonMale5"
-            android:onClick="giftSearch"
+            android:onClick="searchPerson"
             android:text="男生" />
     </LinearLayout>
 

@@ -17,7 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ProductActivity extends ActionBarActivity {
+public class ProductActivity extends BaseActivity {
 	ListView listview;
 	LazyAdapter adapter;
 
@@ -27,17 +27,14 @@ public class ProductActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product);
-		
+
 		ActionBar actionBar = getSupportActionBar();
-		Utils.SetActionBar(this, actionBar,
-				getString(R.string.product_actionbar_title));
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);		
-		
-		
-		//ActionBar actionBar = getSupportActionBar();
+		Utils.SetActionBar(this, getString(R.string.product_actionbar_title));
+		// actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		// ActionBar actionBar = getSupportActionBar();
 		// actionBar.setDisplayHomeAsUpEnabled(true);
 
-		
 		// actionBar.hide();
 		// actionBar.setDisplayShowHomeEnabled(false);
 		// actionBar.setDisplayShowTitleEnabled(false);
@@ -60,19 +57,6 @@ public class ProductActivity extends ActionBarActivity {
 			}
 
 		});
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.product, menu);
-
-		// Set up ShareActionProvider's default share intent
-		MenuItem shareItem = menu.findItem(R.id.action_share);
-		mShareActionProvider = (ShareActionProvider) MenuItemCompat
-				.getActionProvider(shareItem);
-		mShareActionProvider.setShareIntent(getDefaultIntent());
-		return super.onCreateOptionsMenu(menu);
 	}
 
 	private Intent getDefaultIntent() {

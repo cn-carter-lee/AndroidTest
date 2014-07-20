@@ -11,14 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
-public class AgeActivity extends ActionBarActivity {
+public class AgeActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ActionBar actionBar = getSupportActionBar();
-		Utils.SetActionBar(this, actionBar,
-				getString(R.string.age_actionbar_title));
+		Utils.SetActionBar(this, getString(R.string.age_actionbar_title));
 		setContentView(R.layout.activity_age);
 
 		if (savedInstanceState == null) {
