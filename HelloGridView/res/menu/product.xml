@@ -15,22 +15,22 @@
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_gift_home"
-        android:icon="@drawable/ic_action_liwusou"
+        android:icon="@drawable/ic_so_pressed"
         android:title="@string/action_gift_liwuso"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_gift_search"
-        android:icon="@drawable/ic_action_search"
+        android:icon="@drawable/ic_search"
         android:title="@string/action_gift_search"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_gift_favorite"
-        android:icon="@drawable/ic_action_store"
+        android:icon="@drawable/ic_favorite"
         android:title="@string/action_gift_favorite"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_gift_more"
-        android:icon="@drawable/ic_action_more"
+        android:icon="@drawable/ic_more"
         android:title="@string/action_gift_more"
         app:showAsAction="ifRoom"/>
 

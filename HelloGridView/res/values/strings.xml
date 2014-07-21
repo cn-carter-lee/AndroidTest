@@ -27,5 +27,7 @@
     <string name="age_actionbar_title">请选择女朋友的年龄</string>
     <string name="purpose_actionbar_title">请选择送礼目的</string>
     <string name="product_actionbar_title">礼物推荐</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
 
 </resources>

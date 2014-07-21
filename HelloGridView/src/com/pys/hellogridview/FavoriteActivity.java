@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
-public class AgeActivity extends BaseActivity {
+public class FavoriteActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ActionBar actionBar = getSupportActionBar();
-		Utils.SetActionBar(this, getString(R.string.age_actionbar_title));
-		setContentView(R.layout.activity_age);
+		setContentView(R.layout.activity_favorite);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
@@ -30,7 +28,7 @@ public class AgeActivity extends BaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.age, menu);
+		getMenuInflater().inflate(R.menu.favorite, menu);
 		return true;
 	}
 
@@ -57,8 +55,8 @@ public class AgeActivity extends BaseActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_age, container,
-					false);
+			View rootView = inflater.inflate(R.layout.fragment_favorite,
+					container, false);
 			return rootView;
 		}
 	}

@@ -6,15 +6,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class BaseActivity extends ActionBarActivity {
-	private int[] pressedIcons = { R.drawable.ic_action_liwusou,
-			R.drawable.ic_action_liwusou, R.drawable.ic_action_liwusou,
-			R.drawable.ic_action_liwusou };
+	private int[] pressedIcons = { R.drawable.ic_so_pressed,
+			R.drawable.ic_search_pressed, R.drawable.ic_favorite_pressed,
+			R.drawable.ic_more_pressed };
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.base, menu);
-		
-		// menu.getItem(2).setIcon(R.drawable.ic_action_liwusou);
+		int iconIndex = 0;
+		if (this instanceof SearchActivity) {
+			iconIndex = 1;
+		} else if (this instanceof FavoriteActivity) {
+			iconIndex = 2;
+		} else if (this instanceof MoreActivity) {
+			iconIndex = 3;
+		}
+		menu.getItem(iconIndex).setIcon(pressedIcons[iconIndex]);
 		return true;
 	}
 

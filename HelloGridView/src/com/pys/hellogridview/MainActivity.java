@@ -3,15 +3,12 @@ package com.pys.hellogridview;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -27,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
 		final MainActivity activity = this;
 		new android.os.Handler().postDelayed(new Runnable() {
 			public void run() {
-				Intent intent = new Intent(activity, MoreActivity.class);
+				Intent intent = new Intent(activity, SoActivity.class);
 				String message = "";
 				intent.putExtra(EXTRA_MESSAGE, message);
 				startActivity(intent);
@@ -45,30 +42,7 @@ public class MainActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		// int id = item.getItemId();
-		/*
-		 * if (id == R.id.action_settings) { return true; }
-		 */
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
-	}
 }
