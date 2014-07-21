@@ -2,6 +2,7 @@ package com.pys.hellogridview;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -30,4 +31,5 @@ public class Utils {
 				.findViewById(R.id.gift_actionbar_title);
 		textView.setText(title);
 	}
+	
 }

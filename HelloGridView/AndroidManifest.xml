@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.pys.hellogridview.SearchActivity"
+            android:name="com.pys.hellogridview.SoActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/GiftTheme"
             android:uiOptions="splitActionBarWhenNarrow" >

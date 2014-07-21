@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
 		final MainActivity activity = this;
 		new android.os.Handler().postDelayed(new Runnable() {
 			public void run() {
-				Intent intent = new Intent(activity, SearchActivity.class);
+				Intent intent = new Intent(activity, MoreActivity.class);
 				String message = "";
 				intent.putExtra(EXTRA_MESSAGE, message);
 				startActivity(intent);

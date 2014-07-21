@@ -48,8 +48,8 @@
     </style>
 
     <style name="SearchButton" parent="android:Widget">
-      <item name="android:drawableRight">@drawable/search_button_background_right</item>
-        <item name="android:textColor">@drawable/search_button_textcolor</item>
+      <item name="android:drawableRight">@drawable/so_button_background_right</item>
+        <item name="android:textColor">@drawable/so_button_textcolor</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>

@@ -6,11 +6,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class BaseActivity extends ActionBarActivity {
+	private int[] pressedIcons = { R.drawable.ic_action_liwusou,
+			R.drawable.ic_action_liwusou, R.drawable.ic_action_liwusou,
+			R.drawable.ic_action_liwusou };
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.base, menu);
+		
+		// menu.getItem(2).setIcon(R.drawable.ic_action_liwusou);
 		return true;
 	}
 
@@ -29,7 +33,7 @@ public class BaseActivity extends ActionBarActivity {
 			intent = new Intent(activity, MoreActivity.class);
 			break;
 		case R.id.action_gift_search:
-			intent = new Intent(activity, SearchActivity.class);
+			intent = new Intent(activity, SoActivity.class);
 			break;
 		}
 		if (intent != null) {

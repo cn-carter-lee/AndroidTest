@@ -8,11 +8,6 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never"/>
-   <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
     <item
         android:id="@+id/action_gift_home"
         android:icon="@drawable/ic_action_liwusou"
@@ -33,4 +28,5 @@
         android:icon="@drawable/ic_action_more"
         android:title="@string/action_gift_more"
         app:showAsAction="ifRoom"/>
+
 </menu>

@@ -43,7 +43,7 @@ public class ProductActivity extends BaseActivity {
 		 * getSupportFragmentManager().beginTransaction() .add(R.id.container,
 		 * new PlaceholderFragment()).commit(); }
 		 */
-
+		
 		listview = (ListView) findViewById(R.id.listView1);
 		adapter = new LazyAdapter(this, imageUrls);
 		listview.setAdapter(adapter);

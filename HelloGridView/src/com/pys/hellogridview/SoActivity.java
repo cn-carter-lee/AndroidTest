@@ -16,10 +16,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class SearchActivity extends BaseActivity implements
-		SearchAllFragment.OnFragmentInteractionListener,
-		SearchMaleFragment.OnFragmentInteractionListener,
-		SearchFemaleFragment.OnFragmentInteractionListener {
+public class SoActivity extends BaseActivity implements
+		SoAllFragment.OnFragmentInteractionListener,
+		SoMaleFragment.OnFragmentInteractionListener,
+		SoFemaleFragment.OnFragmentInteractionListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,24 +32,24 @@ public class SearchActivity extends BaseActivity implements
 				.newTab()
 				.setText(R.string.gift_all)
 				.setTabListener(
-						new GiftTabListener<SearchAllFragment>(this, "album",
-								SearchAllFragment.class));
+						new SoTabListener<SoAllFragment>(this, "album",
+								SoAllFragment.class));
 		actionBar.addTab(tab);
 
 		tab = actionBar
 				.newTab()
 				.setText(R.string.gift_female)
 				.setTabListener(
-						new GiftTabListener<SearchFemaleFragment>(this,
-								"album", SearchFemaleFragment.class));
+						new SoTabListener<SoFemaleFragment>(this,
+								"album", SoFemaleFragment.class));
 		actionBar.addTab(tab);
 
 		tab = actionBar
 				.newTab()
 				.setText(R.string.gift_male)
 				.setTabListener(
-						new GiftTabListener<SearchMaleFragment>(this, "album",
-								SearchMaleFragment.class));
+						new SoTabListener<SoMaleFragment>(this, "album",
+								SoMaleFragment.class));
 		actionBar.addTab(tab);
 	}
 
@@ -65,7 +65,7 @@ public class SearchActivity extends BaseActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		FragmentTransaction transaction = getSupportFragmentManager()
 				.beginTransaction();
-		SearchAgeFrament newFragment = new SearchAgeFrament();
+		SoAgeFrament newFragment = new SoAgeFrament();
 
 		// transaction.add(0, newFragment);
 		transaction.replace(android.R.id.content, newFragment);
@@ -77,7 +77,7 @@ public class SearchActivity extends BaseActivity implements
 	public void searchAge(View view) {
 		FragmentTransaction transaction = getSupportFragmentManager()
 				.beginTransaction();
-		SearchPurposeFrament newFragment = new SearchPurposeFrament();
+		SoPurposeFrament newFragment = new SoPurposeFrament();
 
 		transaction.replace(android.R.id.content, newFragment);
 		transaction.addToBackStack(null);
@@ -88,21 +88,21 @@ public class SearchActivity extends BaseActivity implements
 	public void searchPurpose(View view) {
 		FragmentTransaction transaction = getSupportFragmentManager()
 				.beginTransaction();
-		SearchProductFrament newFragment = new SearchProductFrament();
+		SoProductFrament newFragment = new SoProductFrament();
 		transaction.replace(android.R.id.content, newFragment);
 		transaction.addToBackStack(null);
 		// Commit the transaction
 		transaction.commit();
 	}
 
-	public static class GiftTabListener<T extends Fragment> implements
+	public static class SoTabListener<T extends Fragment> implements
 			ActionBar.TabListener {
 		private Fragment mFragment;
 		private final Activity mActivity;
 		private final String mTag;
 		private final Class<T> mClass;
 
-		public GiftTabListener(Activity activity, String tag, Class<T> clz) {
+		public SoTabListener(Activity activity, String tag, Class<T> clz) {
 			this.mActivity = activity;
 			this.mTag = tag;
 			this.mClass = clz;
@@ -133,9 +133,9 @@ public class SearchActivity extends BaseActivity implements
 		}
 	}
 
-	public static class SearchAgeFrament extends Fragment {
+	public static class SoAgeFrament extends Fragment {
 
-		public SearchAgeFrament() {
+		public SoAgeFrament() {
 
 		}
 
@@ -144,15 +144,15 @@ public class SearchActivity extends BaseActivity implements
 				Bundle savedInstanceState) {
 			Utils.SetActionBar(this.getActivity(),
 					getString(R.string.age_actionbar_title));
-			View rootView = inflater.inflate(R.layout.fragment_search_age,
+			View rootView = inflater.inflate(R.layout.fragment_so_age,
 					container, false);
 			return rootView;
 		}
 	}
 
-	public static class SearchPurposeFrament extends Fragment {
+	public static class SoPurposeFrament extends Fragment {
 
-		public SearchPurposeFrament() {
+		public SoPurposeFrament() {
 
 		}
 
@@ -161,35 +161,20 @@ public class SearchActivity extends BaseActivity implements
 				Bundle savedInstanceState) {
 			Utils.SetActionBar(this.getActivity(),
 					getString(R.string.purpose_actionbar_title));
-			View rootView = inflater.inflate(R.layout.fragment_search_purpose,
+			View rootView = inflater.inflate(R.layout.fragment_so_purpose,
 					container, false);
 			return rootView;
 		}
 	}
 
-	public static class SearchProductFrament extends Fragment {
+	public static class SoProductFrament extends Fragment {
 		ListView listview;
 		LazyAdapter adapter;
 
 		private ShareActionProvider mShareActionProvider;
 
-		public SearchProductFrament() {
+		public SoProductFrament() {
 
-			final Activity activity = this.getActivity();
-			listview = (ListView) activity.findViewById(R.id.listView1);
-			adapter = new LazyAdapter(activity, imageUrls);
-			listview.setAdapter(adapter);
-			// listview.setAdapter(new ImageAdapter(this));
-
-			listview.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View v,
-						int position, long id) {
-					// TODO Auto-generated method stub
-					Toast.makeText(activity.getApplicationContext(),
-							"" + position, Toast.LENGTH_SHORT).show();
-				}
-
-			});
 		}
 
 		private String imageUrls[] = {
@@ -207,8 +192,14 @@ public class SearchActivity extends BaseActivity implements
 				Bundle savedInstanceState) {
 			Utils.SetActionBar(this.getActivity(),
 					getString(R.string.product_actionbar_title));
-			View rootView = inflater.inflate(R.layout.fragment_search_product,
+			View rootView = inflater.inflate(R.layout.fragment_so_product,
 					container, false);
+			super.onCreate(savedInstanceState);
+			// Populate images info
+			final Activity activity = this.getActivity();
+			listview = (ListView) rootView.findViewById(R.id.listViewProduct);
+			adapter = new LazyAdapter(activity, imageUrls);
+			listview.setAdapter(adapter);
 			return rootView;
 		}
 	}

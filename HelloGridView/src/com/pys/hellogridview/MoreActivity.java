@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 public class MoreActivity extends BaseActivity {
 
+	private Menu menu;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,7 +63,6 @@ public class MoreActivity extends BaseActivity {
 		MoreAdviceFragment newFragment = new MoreAdviceFragment();
 		transaction.replace(R.id.container, newFragment);
 		transaction.addToBackStack(null);
-		// Commit the transaction
 		transaction.commit();
 
 	}
@@ -72,7 +73,6 @@ public class MoreActivity extends BaseActivity {
 		MoreAdviceFragment newFragment = new MoreAdviceFragment();
 		transaction.replace(R.id.container, newFragment);
 		transaction.addToBackStack(null);
-		// Commit the transaction
 		transaction.commit();
 	}
 
@@ -81,9 +81,6 @@ public class MoreActivity extends BaseActivity {
 		Utils.SetActionBar(this, title);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
 	public static class MoreHomeFragment extends Fragment {
 
 		public MoreHomeFragment() {
