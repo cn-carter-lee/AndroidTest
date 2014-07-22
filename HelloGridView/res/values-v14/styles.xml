@@ -37,19 +37,19 @@
     </style>
 
     <style name="GiftMoreButton" parent="android:Widget">
-        <item name="android:drawableRight">@drawable/more_button_background_right</item>
-        <item name="android:textColor">@drawable/more_button_textcolor</item>
+        <item name="android:drawableRight">@drawable/more_btn_background_right</item>
+        <item name="android:textColor">@drawable/more_btn_textcolor</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:gravity">left|center_vertical</item>
-        <item name="android:background">@drawable/more_button_background</item>
+        <item name="android:background">@drawable/more_btn_background</item>
     </style>
 
     <style name="SearchButton" parent="android:Widget">
-      <item name="android:drawableRight">@drawable/so_button_background_right</item>
-        <item name="android:textColor">@drawable/so_button_textcolor</item>
+        <item name="android:drawableRight">@drawable/so_btn_background_right</item>
+        <item name="android:textColor">@drawable/so_btn_textcolor</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -59,43 +59,53 @@
     </style>
 
     <style name="SearchButtonRed" parent="SearchButton">
-        <item name="android:background">@drawable/button_red</item>
+        <item name="android:background">@drawable/btn_red</item>
     </style>
 
     <style name="SearchButtonBlue" parent="SearchButton">
-        <item name="android:background">@drawable/button_blue</item>
+        <item name="android:background">@drawable/btn_blue</item>
     </style>
 
     <style name="SearchButtonPink" parent="SearchButton">
-        <item name="android:background">@drawable/button_pink</item>
+        <item name="android:background">@drawable/btn_pink</item>
     </style>
 
     <style name="SearchButtonPurple" parent="SearchButton">
-        <item name="android:background">@drawable/button_purple</item>
+        <item name="android:background">@drawable/btn_purple</item>
     </style>
 
     <style name="SearchButtonYellow" parent="SearchButton">
-        <item name="android:background">@drawable/button_yellow</item>
+        <item name="android:background">@drawable/btn_yellow</item>
     </style>
 
     <style name="SearchButtonMale1" parent="SearchButton">
-        <item name="android:background">@drawable/button_male1</item>
+        <item name="android:background">@drawable/btn_male1</item>
     </style>
 
     <style name="SearchButtonMale2" parent="SearchButton">
-        <item name="android:background">@drawable/button_male2</item>
+        <item name="android:background">@drawable/btn_male2</item>
     </style>
 
     <style name="SearchButtonMale3" parent="SearchButton">
-        <item name="android:background">@drawable/button_male3</item>
+        <item name="android:background">@drawable/btn_male3</item>
     </style>
 
     <style name="SearchButtonMale4" parent="SearchButton">
-        <item name="android:background">@drawable/button_male4</item>
+        <item name="android:background">@drawable/btn_male4</item>
     </style>
 
     <style name="SearchButtonMale5" parent="SearchButton">
-        <item name="android:background">@drawable/button_male5</item>
+        <item name="android:background">@drawable/btn_male5</item>
+    </style>
+
+    <style name="Gift.Product.Favorite" parent="android:Widget">
+        <item name="android:background">@drawable/bg_btn_product_details</item>
+        <item name="android:textColor">#999999</item>
+    </style>
+
+    <style name="Gift.Product.Favorite_Added" parent="android:Widget">
+        <item name="android:background">@drawable/bg_btn_favorite_added</item>
+        <item name="android:textColor">#ff6600</item>
     </style>
 
 </resources>

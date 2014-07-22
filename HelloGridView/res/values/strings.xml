@@ -29,5 +29,6 @@
     <string name="product_actionbar_title">礼物推荐</string>
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="title_activity_search">SearchActivity</string>
+    <string name="btn_product_detail">礼物详情</string>
 
 </resources>

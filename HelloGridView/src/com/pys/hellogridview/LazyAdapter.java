@@ -41,11 +41,11 @@ public class LazyAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View vi = convertView;
 		if (convertView == null)
-			vi = inflater.inflate(R.layout.row_listview_item, null);
+			vi = inflater.inflate(R.layout.so_product_item, null);
 
 		TextView text = (TextView) vi.findViewById(R.id.text);
 		ImageView image = (ImageView) vi.findViewById(R.id.image);
-		text.setText("item " + position);
+		text.setText(position+"111“— ’≤ÿ"  );
 		imageLoader.DisplayImage(data[position], image);
 		return vi;
 	}
