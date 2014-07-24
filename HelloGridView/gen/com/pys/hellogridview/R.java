@@ -1037,10 +1037,8 @@ containing a value of this type.
         public static final int more_edit_background=0x7f020088;
         public static final int so_btn_background=0x7f020089;
         public static final int so_btn_background_red=0x7f02008a;
-        public static final int so_btn_background_right=0x7f02008b;
-        public static final int so_btn_details_bg=0x7f02008c;
-        public static final int so_btn_right=0x7f02008d;
-        public static final int so_btn_textcolor=0x7f02008e;
+        public static final int so_btn_details_bg=0x7f02008b;
+        public static final int so_btn_textcolor=0x7f02008c;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1051,20 +1049,20 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f050023;
         public static final int action_bar_title=0x7f050022;
         public static final int action_context_bar=0x7f05001d;
-        public static final int action_gift_favorite=0x7f05005b;
-        public static final int action_gift_home=0x7f050059;
-        public static final int action_gift_more=0x7f05005c;
-        public static final int action_gift_more_text=0x7f050053;
-        public static final int action_gift_search=0x7f05005a;
-        public static final int action_gift_send_text=0x7f050054;
+        public static final int action_gift_favorite=0x7f05005c;
+        public static final int action_gift_home=0x7f05005a;
+        public static final int action_gift_more=0x7f05005d;
+        public static final int action_gift_more_text=0x7f050054;
+        public static final int action_gift_search=0x7f05005b;
+        public static final int action_gift_send_text=0x7f050055;
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f050058;
+        public static final int action_settings=0x7f050059;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
-        public static final int btnFavorite=0x7f050057;
+        public static final int btnFavorite=0x7f050058;
         public static final int button0=0x7f05003e;
         public static final int button1=0x7f05003f;
         public static final int button10=0x7f050048;
@@ -1107,7 +1105,8 @@ containing a value of this type.
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
-        public static final int price=0x7f050055;
+        public static final int planets_spinner=0x7f050053;
+        public static final int price=0x7f050056;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
@@ -1128,7 +1127,7 @@ containing a value of this type.
         public static final int split_action_bar=0x7f05001e;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int text=0x7f050056;
+        public static final int text=0x7f050057;
         public static final int textAreaScroller=0x7f050044;
         public static final int textView1=0x7f05003d;
         public static final int title=0x7f05002b;

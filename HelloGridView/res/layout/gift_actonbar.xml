@@ -15,4 +15,9 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
+    <Spinner
+        android:id="@+id/planets_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>
