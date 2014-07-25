@@ -11,7 +11,9 @@ import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 public class SoActivity extends BaseActivity implements
 		SoAllFragment.OnFragmentInteractionListener,
@@ -37,8 +39,8 @@ public class SoActivity extends BaseActivity implements
 				.newTab()
 				.setText(R.string.gift_female)
 				.setTabListener(
-						new SoTabListener<SoFemaleFragment>(this,
-								"album", SoFemaleFragment.class));
+						new SoTabListener<SoFemaleFragment>(this, "album",
+								SoFemaleFragment.class));
 		actionBar.addTab(tab);
 
 		tab = actionBar
@@ -197,6 +199,25 @@ public class SoActivity extends BaseActivity implements
 			listview = (ListView) rootView.findViewById(R.id.listViewProduct);
 			adapter = new LazyAdapter(activity, imageUrls);
 			listview.setAdapter(adapter);
+			// Populate spinner
+			Spinner spinner = (Spinner) this.getActivity().findViewById(
+					R.id.planets_spinner);
+			if (spinner != null) {
+				// Create an ArrayAdapter using the string array and a default
+				// spinner layout
+				ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter
+						.createFromResource(this.getActivity(),
+								R.array.planets_array,
+								android.R.layout.simple_spinner_dropdown_item);
+				// Specify the layout to use when the list of choices appears
+
+				if (arrayAdapter != null) {
+					arrayAdapter
+							.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+					// Apply the adapter to the spinner
+					spinner.setAdapter(arrayAdapter);
+				}
+			}
 			return rootView;
 		}
 	}
