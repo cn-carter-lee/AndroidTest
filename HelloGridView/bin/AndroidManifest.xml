@@ -23,7 +23,6 @@
             android:theme="@style/HomeNoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -71,11 +70,27 @@
         </activity>
         <activity
             android:name="com.pys.hellogridview.FavoriteActivity"
-            android:label="@string/title_activity_favorite" >
+            android:label="@string/title_activity_favorite"
+            android:theme="@style/GiftTheme" >
+            <meta-data
+                android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow" />
         </activity>
         <activity
             android:name="com.pys.hellogridview.SearchActivity"
-            android:label="@string/title_activity_search" >
+            android:label="@string/title_activity_search"
+            android:theme="@style/GiftTheme" >
+            <meta-data
+                android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow" />
+        </activity>
+        <activity
+            android:name="com.pys.hellogridview.Tab1Activity"
+            android:label="@string/title_activity_tab1" >
+        </activity>
+        <activity
+            android:name="com.pys.hellogridview.Tab2Activity"
+            android:label="@string/title_activity_tab2" >
         </activity>
     </application>
 

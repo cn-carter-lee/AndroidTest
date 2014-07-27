@@ -10,21 +10,20 @@
         android:layout_centerInParent="true"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="123456"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
     <Spinner
-        android:id="@+id/planets_spinner"
+        android:id="@+id/search_sorter"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
-        android:background="@drawable/btn_dropdown"
-        android:visibility="visible" />
+        android:background="@drawable/bg_spinner_selector"
+        android:dropDownHorizontalOffset="0dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:visibility="invisible" />
 
-</RelativeLayout><!--
-visible	0	 Visible on screen; the default value.
-invisible	1	 Not displayed, but taken into account during layout (space is left for it).
-gone	2	 Completely hidden, as if the view had not been added.
--->
+</RelativeLayout>

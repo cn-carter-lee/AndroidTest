@@ -16,12 +16,10 @@ import android.widget.TextView;
 
 public class MoreActivity extends BaseActivity {
 
-	private Menu menu;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setActionBarText(getString(R.string.gift_actionbar_more));
+		Utils.SetActionBar(this, getString(R.string.gift_actionbar_more));
 		setContentView(R.layout.activity_more);
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()

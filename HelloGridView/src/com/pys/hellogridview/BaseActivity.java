@@ -36,11 +36,17 @@ public class BaseActivity extends ActionBarActivity {
 		String message = "";
 
 		switch (id) {
-		case R.id.action_gift_more:
-			intent = new Intent(activity, MoreActivity.class);
+		case R.id.action_gift_home:
+			intent = new Intent(activity, SoActivity.class);
 			break;
 		case R.id.action_gift_search:
-			intent = new Intent(activity, SoActivity.class);
+			intent = new Intent(activity, SearchActivity.class);
+			break;
+		case R.id.action_gift_favorite:
+			intent = new Intent(activity, FavoriteActivity.class);
+			break;
+		case R.id.action_gift_more:
+			intent = new Intent(activity, MoreActivity.class);
 			break;
 		}
 		if (intent != null) {

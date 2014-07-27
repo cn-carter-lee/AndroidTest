@@ -31,5 +31,12 @@ public class Utils {
 				.findViewById(R.id.gift_actionbar_title);
 		textView.setText(title);
 	}
-	
+
+	public static void HideActionBar(Activity activity) {
+		ActionBar actionBar = ((ActionBarActivity) activity)
+				.getSupportActionBar();
+		actionBar.setCustomView(R.layout.gift_actonbar);
+		actionBar.hide();
+	}
+
 }

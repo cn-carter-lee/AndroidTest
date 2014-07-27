@@ -30,5 +30,7 @@
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="btn_product_detail">礼物详情</string>
+    <string name="title_activity_tab1">Tab1Activity</string>
+    <string name="title_activity_tab2">Tab2Activity</string>
 
 </resources>

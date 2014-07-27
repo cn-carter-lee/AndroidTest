@@ -47,8 +47,7 @@
         <item name="android:background">@drawable/more_btn_background</item>
     </style>
 
-    <style name="SearchButton" parent="android:Widget">
-        
+    <style name="SoButton" parent="android:Widget">
         <item name="android:textColor">@drawable/so_btn_textcolor</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_width">fill_parent</item>
@@ -58,43 +57,43 @@
         <item name="android:layout_marginBottom">20dp</item>
     </style>
 
-    <style name="SearchButtonRed" parent="SearchButton">
+    <style name="SearchButtonRed" parent="SoButton">
         <item name="android:background">@drawable/btn_red</item>
     </style>
 
-    <style name="SearchButtonBlue" parent="SearchButton">
+    <style name="SearchButtonBlue" parent="SoButton">
         <item name="android:background">@drawable/btn_blue</item>
     </style>
 
-    <style name="SearchButtonPink" parent="SearchButton">
+    <style name="SearchButtonPink" parent="SoButton">
         <item name="android:background">@drawable/btn_pink</item>
     </style>
 
-    <style name="SearchButtonPurple" parent="SearchButton">
+    <style name="SearchButtonPurple" parent="SoButton">
         <item name="android:background">@drawable/btn_purple</item>
     </style>
 
-    <style name="SearchButtonYellow" parent="SearchButton">
+    <style name="SearchButtonYellow" parent="SoButton">
         <item name="android:background">@drawable/btn_yellow</item>
     </style>
 
-    <style name="SearchButtonMale1" parent="SearchButton">
+    <style name="SearchButtonMale1" parent="SoButton">
         <item name="android:background">@drawable/btn_male1</item>
     </style>
 
-    <style name="SearchButtonMale2" parent="SearchButton">
+    <style name="SearchButtonMale2" parent="SoButton">
         <item name="android:background">@drawable/btn_male2</item>
     </style>
 
-    <style name="SearchButtonMale3" parent="SearchButton">
+    <style name="SearchButtonMale3" parent="SoButton">
         <item name="android:background">@drawable/btn_male3</item>
     </style>
 
-    <style name="SearchButtonMale4" parent="SearchButton">
+    <style name="SearchButtonMale4" parent="SoButton">
         <item name="android:background">@drawable/btn_male4</item>
     </style>
 
-    <style name="SearchButtonMale5" parent="SearchButton">
+    <style name="SearchButtonMale5" parent="SoButton">
         <item name="android:background">@drawable/btn_male5</item>
     </style>
 
@@ -118,6 +117,12 @@
         <item name="android:paddingLeft">10sp</item>
         <item name="android:paddingRight">10sp</item>
         <item name="android:textColor">#ff8432</item>
+    </style>
+
+    <style name="Search.Txt" parent="android:Widget"></style>
+
+    <style name="Search.Btn" parent="android:Widget">
+        <item name="android:background">@drawable/search_btn_image</item>
     </style>
 
 </resources>

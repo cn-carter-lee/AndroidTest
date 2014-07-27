@@ -63,7 +63,10 @@
             android:layout_marginBottom="10dip"
             android:layout_marginRight="5dip"
             android:background="@drawable/so_btn_details_bg"
-            android:padding="0dip"
+            android:paddingBottom="0dip"
+            android:paddingLeft="5dip"
+            android:paddingRight="5dip"
+            android:paddingTop="0dip"
             android:text="@string/btn_product_detail"
             android:textColor="#ffffff"
             android:textSize="15sp" />

@@ -1,5 +1,7 @@
 package com.pys.hellogridview;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +13,6 @@ import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -169,6 +170,7 @@ public class SoActivity extends BaseActivity implements
 	public static class SoProductFrament extends Fragment {
 		ListView listview;
 		LazyAdapter adapter;
+		ArrayList<SortItem> sortItems;
 
 		private ShareActionProvider mShareActionProvider;
 
@@ -201,24 +203,23 @@ public class SoActivity extends BaseActivity implements
 			listview.setAdapter(adapter);
 			// Populate spinner
 			Spinner spinner = (Spinner) this.getActivity().findViewById(
-					R.id.planets_spinner);
-			if (spinner != null) {
-				// Create an ArrayAdapter using the string array and a default
-				// spinner layout
-				ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter
-						.createFromResource(this.getActivity(),
-								R.array.planets_array,
-								android.R.layout.simple_spinner_dropdown_item);
-				// Specify the layout to use when the list of choices appears
+					R.id.search_sorter);
 
-				if (arrayAdapter != null) {
-					arrayAdapter
-							.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-					// Apply the adapter to the spinner
-					spinner.setAdapter(arrayAdapter);
-				}
-			}
+			sortItems = populateList();
+
+			SortAdapter myAdapter = new SortAdapter(this.getActivity(),
+					android.R.layout.simple_spinner_item, sortItems);
+			spinner.setAdapter(myAdapter);
+			spinner.setVisibility(View.VISIBLE);
 			return rootView;
+		}
+
+		public ArrayList<SortItem> populateList() {
+			ArrayList<SortItem> items = new ArrayList<SortItem>();
+			items.add(new SortItem("按综合排序", 0, R.drawable.ic_favorite));
+			items.add(new SortItem("按价格排序", 1, R.drawable.ic_favorite));
+			items.add(new SortItem("按人气排序", 2, R.drawable.ic_favorite));
+			return items;
 		}
 	}
 }
