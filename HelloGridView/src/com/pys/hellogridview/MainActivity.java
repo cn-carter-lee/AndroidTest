@@ -16,7 +16,6 @@ public class MainActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_main);
@@ -24,7 +23,7 @@ public class MainActivity extends ActionBarActivity {
 		final MainActivity activity = this;
 		new android.os.Handler().postDelayed(new Runnable() {
 			public void run() {
-				Intent intent = new Intent(activity, SearchActivity.class);
+				Intent intent = new Intent(activity, FavoriteActivity.class);
 				String message = "";
 				intent.putExtra(EXTRA_MESSAGE, message);
 				startActivity(intent);
