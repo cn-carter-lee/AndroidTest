@@ -53,6 +53,9 @@ public class BaseActivity extends ActionBarActivity {
 			intent.putExtra("", message);
 			startActivity(intent);
 		}
+		
+		
+		
 		return super.onOptionsItemSelected(item);
 	}
 }
