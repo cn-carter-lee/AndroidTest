@@ -56,8 +56,9 @@ public class SearchActivity extends BaseActivity {
 		// }
 		// });
 
-		String serverURL = "http://androidexample.com/media/webservice/JsonReturn.php";
-		// new LongOperation().execute(serverURL);
+		String serverURL = "http://www.huajian-china.com/api/test/11";
+		//String serverURL = "http://www.baidu.com";
+		new LongOperation().execute(serverURL);
 	}
 
 	private void setupTab(final View view, final String tag) {
@@ -139,8 +140,8 @@ public class SearchActivity extends BaseActivity {
 				conn.setDoOutput(true);
 				OutputStreamWriter wr = new OutputStreamWriter(
 						conn.getOutputStream());
-				wr.write(data);
-				wr.flush();
+				//wr.write(data);
+				//wr.flush();
 				// Get the server response
 				reader = new BufferedReader(new InputStreamReader(
 						conn.getInputStream()));
@@ -178,15 +179,17 @@ public class SearchActivity extends BaseActivity {
 				String OutputData = "";
 				JSONObject jsonResponse;
 				try {
-					/****** Creates a new JSONObject with name/value mappings from the JSON string. ********/
+					/******
+					 * Creates a new JSONObject with name/value mappings from
+					 * the JSON string.
+					 ********/
 					jsonResponse = new JSONObject(Content);
-					/*****
+					/******
 					 * Returns the value mapped by name if it exists and is a
-					 * JSONArray.
-					 ***/
-					/******* Returns null otherwise. *******/
-					JSONArray jsonMainNode = jsonResponse
-							.optJSONArray("Android");
+					 * JSONArray.********** Returns null otherwise.
+					 *******/
+					JSONArray jsonMainNode = jsonResponse.toJSONArray(null);
+							//.optJSONArray("Android");
 					/*********** Process each JSON Node ************/
 					int lengthJsonArr = jsonMainNode.length();
 					for (int i = 0; i < lengthJsonArr; i++) {
@@ -194,20 +197,20 @@ public class SearchActivity extends BaseActivity {
 						JSONObject jsonChildNode = jsonMainNode
 								.getJSONObject(i);
 						/******* Fetch node values **********/
-						String name = jsonChildNode.optString("name")
+						String name = jsonChildNode.optString("Name")
 								.toString();
-						String number = jsonChildNode.optString("number")
+						String number = jsonChildNode.optString("Id")
 								.toString();
 						String date_added = jsonChildNode.optString(
-								"date_added").toString();
+								"Price").toString();
 
 						OutputData += " Name           : "
 								+ name
 								+ " "
-								+ "Number      : "
+								+ "Id      : "
 								+ number
 								+ "  "
-								+ "Time                : "
+								+ "Price                : "
 								+ date_added
 								+ "  "
 								+ "--------------------------------------------------";
