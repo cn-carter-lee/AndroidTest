@@ -1,9 +1,0 @@
-package com.pys.hellogridview;
-
-import android.content.Context;
-import android.widget.BaseAdapter;
-
-public class ImageAdapter extends BaseAdapter 
-{
-private Context mContext;
-}

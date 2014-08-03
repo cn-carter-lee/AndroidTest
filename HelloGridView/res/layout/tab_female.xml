@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Gift.ParentLayoutPadding"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context="com.pys.hellogridview.SoFemaleFragment" >
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:id="@+id/button0"
+        style="@style/SearchButtonRed"
+        android:onClick="searchPerson"
+        android:text="女朋友" />
+
+    <Button
+        android:id="@+id/button1"
+        style="@style/SearchButtonBlue"
+        android:onClick="searchPerson"
+        android:text="老婆" />
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/SearchButtonYellow"
+        android:onClick="searchPerson"
+        android:text="女性朋友" />
+
+    <Button
+        android:id="@+id/button3"
+        style="@style/SearchButtonPink"
+        android:onClick="searchPerson"
+        android:text="妈妈" />
+
+    <Button
+        android:id="@+id/button4"
+        style="@style/SearchButtonPurple"
+        android:onClick="searchPerson"
+        android:text="女生" />
+
+</LinearLayout>

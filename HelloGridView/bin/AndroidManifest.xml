@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.pys.hellogridview.MainActivity"
+            android:name="com.pys.ui.Main"
             android:label="@string/app_name"
             android:theme="@style/HomeNoActionBar" >
             <intent-filter>
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.pys.hellogridview.SoActivity"
+            android:name="com.pys.ui.SoActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/GiftTheme"
             android:uiOptions="splitActionBarWhenNarrow" >
@@ -36,7 +36,7 @@
                 android:value="splitActionBarWhenNarrow" />
         </activity>
         <activity
-            android:name="com.pys.hellogridview.MoreActivity"
+            android:name="com.pys.ui.MoreActivity"
             android:label="@string/title_activity_more"
             android:theme="@style/GiftTheme"
             android:uiOptions="splitActionBarWhenNarrow" >
@@ -45,7 +45,7 @@
                 android:value="splitActionBarWhenNarrow" />
         </activity>
         <activity
-            android:name="com.pys.hellogridview.AgeActivity"
+            android:name="com.pys.ui.AgeActivity"
             android:label="@string/app_name"
             android:theme="@style/GiftTheme" >
             <meta-data
@@ -53,7 +53,7 @@
                 android:value="splitActionBarWhenNarrow" />
         </activity>
         <activity
-            android:name="com.pys.hellogridview.PurposeActivity"
+            android:name="com.pys.ui.PurposeActivity"
             android:label="@string/app_name"
             android:theme="@style/GiftTheme" >
             <meta-data
@@ -61,7 +61,7 @@
                 android:value="splitActionBarWhenNarrow" />
         </activity>
         <activity
-            android:name="com.pys.hellogridview.ProductActivity"
+            android:name="com.pys.ui.ProductActivity"
             android:label="@string/title_activity_product"
             android:theme="@style/GiftTheme" >
             <meta-data
@@ -69,7 +69,7 @@
                 android:value="splitActionBarWhenNarrow" />
         </activity>
         <activity
-            android:name="com.pys.hellogridview.FavoriteActivity"
+            android:name="com.pys.ui.FavoriteActivity"
             android:label="@string/title_activity_favorite"
             android:theme="@style/GiftTheme" >
             <meta-data
@@ -77,7 +77,7 @@
                 android:value="splitActionBarWhenNarrow" />
         </activity>
         <activity
-            android:name="com.pys.hellogridview.SearchActivity"
+            android:name="com.pys.ui.SearchActivity"
             android:label="@string/title_activity_search"
             android:theme="@style/GiftTheme" >
             <meta-data
@@ -85,11 +85,11 @@
                 android:value="splitActionBarWhenNarrow" />
         </activity>
         <activity
-            android:name="com.pys.hellogridview.Tab1Activity"
+            android:name="com.pys.ui.Tab1Activity"
             android:label="@string/title_activity_tab1" >
         </activity>
         <activity
-            android:name="com.pys.hellogridview.Tab2Activity"
+            android:name="com.pys.ui.Tab2Activity"
             android:label="@string/title_activity_tab2" >
         </activity>
     </application>
