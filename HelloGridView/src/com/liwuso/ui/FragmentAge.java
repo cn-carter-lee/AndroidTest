@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.liwuso.app.R;
 
-public class FragmentAge extends Fragment {
+public class FragmentAge extends BaseFragment {
 
 	public FragmentAge() {
 	}
@@ -16,9 +16,10 @@ public class FragmentAge extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		this.setNavgationTitle("请选择女朋友的年龄");
 		View rootView = inflater.inflate(R.layout.fragment_age, container,
 				false);
+
 		return rootView;
 	}
 

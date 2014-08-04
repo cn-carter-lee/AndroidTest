@@ -35,8 +35,8 @@
         android:id="@+id/btnAdvice"
         style="@style/GiftMoreButton"
         android:layout_below="@+id/btnAgreement"
-        android:onClick="clickMore"
         android:layout_marginTop="30dp"
+        android:onClick="clickMore"
         android:text="意见建议" />
 
     <Button
@@ -53,6 +53,7 @@
         style="@style/GiftMoreButton"
         android:layout_below="@+id/btnContact"
         android:layout_marginTop="30dp"
+        android:onClick="checkVersion"
         android:text="检测新版本" />
 
 </RelativeLayout>

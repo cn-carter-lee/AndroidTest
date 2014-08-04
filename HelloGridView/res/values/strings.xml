@@ -32,5 +32,6 @@
     <string name="btn_product_detail">礼物详情</string>
     <string name="title_activity_tab1">Tab1Activity</string>
     <string name="title_activity_tab2">Tab2Activity</string>
+    <string name="dialog_version">目前已是最新版本:)</string>
 
 </resources>

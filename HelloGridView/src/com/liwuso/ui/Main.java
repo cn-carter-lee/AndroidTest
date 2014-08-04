@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.TextView;
+
 import com.liwuso.app.R;
 
 public class Main extends ActionBarActivity {
@@ -76,6 +78,11 @@ public class Main extends ActionBarActivity {
 		}
 	}
 
+	public void checkVersion(View view) {
+		MyDialogFragment m = new MyDialogFragment();
+		m.show(getSupportFragmentManager(), "missiles");
+	}
+
 	private void relaceFragment(Fragment newFragment) {
 		FragmentTransaction transaction = getSupportFragmentManager()
 				.beginTransaction();
@@ -92,5 +99,10 @@ public class Main extends ActionBarActivity {
 			// menu.getItem(i).setIcon(unPressedIcons[i]);
 		}
 		relaceFragment(newFragment);
+	}
+
+	public void setTitle(String title) {
+		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
+		titleView.setText(title);
 	}
 }

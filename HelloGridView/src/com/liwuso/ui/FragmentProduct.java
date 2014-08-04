@@ -13,8 +13,10 @@ import android.widget.Spinner;
 
 import com.liwuso.utility.LazyAdapter;
 import com.liwuso.app.R;
+import com.liwuso.helper.SortAdapter;
+import com.liwuso.helper.SortItem;
 
-public class FragmentProduct extends Fragment {
+public class FragmentProduct extends BaseFragment {
 	ListView listview;
 	LazyAdapter adapter;
 	ArrayList<SortItem> sortItems;
@@ -36,6 +38,7 @@ public class FragmentProduct extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		this.setNavgationTitle("ÀñÎïÍÆ¼ö");
 		View rootView = inflater.inflate(R.layout.fragment_so_product,
 				container, false);
 		super.onCreate(savedInstanceState);

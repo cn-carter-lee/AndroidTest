@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.liwuso.app.R;
 
-public class FragmentVersion extends Fragment {
+public class FragmentVersion extends BaseFragment {
 
 	public FragmentVersion() {
 	}

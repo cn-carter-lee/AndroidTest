@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.liwuso.utility.LazyAdapter;
 import com.liwuso.utility.Utils;
 import com.liwuso.app.R;
+import com.liwuso.helper.SortAdapter;
+import com.liwuso.helper.SortItem;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -16,12 +18,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-public class SearchFrament extends Fragment {
+public class SearchFrament extends BaseFragment {
 	ListView listview;
 	LazyAdapter adapter;
 	ArrayList<SortItem> sortItems;
-
-	private ShareActionProvider mShareActionProvider;
 
 	public SearchFrament() {
 
@@ -40,8 +40,8 @@ public class SearchFrament extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		//Utils.SetActionBar(this.getActivity(),
-				//getString(R.string.product_actionbar_title));
+		// Utils.SetActionBar(this.getActivity(),
+		// getString(R.string.product_actionbar_title));
 		View rootView = inflater.inflate(R.layout.fragment_so_product,
 				container, false);
 		super.onCreate(savedInstanceState);

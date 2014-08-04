@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.liwuso.app.R;
 
-public class FragmentAdvice extends Fragment {
+public class FragmentAdvice extends BaseFragment {
 
 	public FragmentAdvice() {
 	}
@@ -16,7 +16,7 @@ public class FragmentAdvice extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		this.setNavgationTitle("意见建议");
 		View rootView = inflater.inflate(R.layout.fragment_advice, container,
 				false);
 		return rootView;

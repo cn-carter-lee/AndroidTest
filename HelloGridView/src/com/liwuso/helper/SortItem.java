@@ -1,4 +1,4 @@
-package com.liwuso.ui;
+package com.liwuso.helper;
 
 public class SortItem {
 	private String Name;

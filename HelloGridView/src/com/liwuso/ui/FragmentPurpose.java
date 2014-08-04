@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.liwuso.app.R;
 
-public class FragmentPurpose extends Fragment {
+public class FragmentPurpose extends BaseFragment {
 
 	public FragmentPurpose() {
 	}
@@ -16,6 +16,7 @@ public class FragmentPurpose extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		this.setNavgationTitle("ÇëÑ¡ÔñËÍÀñÄ¿µÄ");
 		View rootView = inflater.inflate(R.layout.fragment_purpose, container,
 				false);
 		return rootView;

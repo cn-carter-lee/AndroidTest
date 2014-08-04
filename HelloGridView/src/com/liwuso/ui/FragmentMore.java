@@ -1,14 +1,13 @@
 package com.liwuso.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.liwuso.app.R;
 
-public class FragmentMore extends Fragment {
+public class FragmentMore extends BaseFragment {
 
 	public FragmentMore() {
 	}
@@ -16,7 +15,7 @@ public class FragmentMore extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		this.setNavgationTitle("¸ü¶à");
 		View rootView = inflater.inflate(R.layout.fragment_more, container,
 				false);
 		return rootView;

@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.liwuso.utility.ImageAdapter;
 import com.liwuso.app.R;
 
-public class FragmentSearch extends Fragment {
+public class FragmentSearch extends BaseFragment {
 	private TabHost mTabHost;
 	private String[] strArr = { "全部", "创意", "经典", "实用", "健康" };
 

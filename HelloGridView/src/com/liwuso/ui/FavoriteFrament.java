@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.liwuso.utility.LazyAdapter;
 import com.liwuso.app.R;
+import com.liwuso.helper.SortItem;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-public class FavoriteFrament extends Fragment {
+public class FavoriteFrament extends BaseFragment {
 
 	public FavoriteFrament() {
 	}
