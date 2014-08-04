@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.pys.ui.MoreActivity$MoreHomeFragment" >
+    tools:context="com.liwuso.ui.MoreActivity$MoreHomeFragment" >
 
     <Button
         android:id="@+id/btnAbout"
@@ -35,7 +35,7 @@
         android:id="@+id/btnAdvice"
         style="@style/GiftMoreButton"
         android:layout_below="@+id/btnAgreement"
-        android:onClick="openAdviceFragment"
+        android:onClick="clickMore"
         android:layout_marginTop="30dp"
         android:text="意见建议" />
 

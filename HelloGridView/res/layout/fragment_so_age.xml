@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context="com.pys.ui.SearchActivity$SearchAgeFrament">
+    tools:context="com.liwuso.ui.SearchActivity$SearchAgeFrament">
 
     <!-- TODO: Update blank fragment layout -->
 
