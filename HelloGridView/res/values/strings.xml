@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="pull_to_refresh_refreshing_label">加载中...</string>
+    <string name="pull_to_refresh_release_label">松开可以刷新</string>
     <string name="app_name">礼物搜</string>
     <string name="hello_world">~~~~ WORLD!</string>
     <string name="action_settings">Settings</string>
@@ -17,6 +19,7 @@
     <string name="action_gift_search">搜索</string>
     <string name="action_gift_favorite">收藏</string>
     <string name="action_gift_more">更多</string>
+    <string name="pull_to_refresh_pull_label">下拉可以刷新</string>
     <string name="title_activity_more">MoreActivity</string>
     <string name="hello_blank_fragment"></string>
     <string name="gift_all">全部</string>
@@ -33,5 +36,6 @@
     <string name="title_activity_tab1">Tab1Activity</string>
     <string name="title_activity_tab2">Tab2Activity</string>
     <string name="dialog_version">目前已是最新版本:)</string>
+    <string name="pull_to_refresh_update">最近更新：</string>
 
 </resources>

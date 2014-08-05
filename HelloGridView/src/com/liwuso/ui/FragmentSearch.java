@@ -14,8 +14,8 @@ import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-import com.liwuso.utility.ImageAdapter;
 import com.liwuso.app.R;
+import com.liwuso.app.adapter.ImageAdapter;
 
 public class FragmentSearch extends BaseFragment {
 	private TabHost mTabHost;

@@ -2,9 +2,9 @@ package com.liwuso.ui;
 
 import java.util.ArrayList;
 
-import com.liwuso.utility.LazyAdapter;
 import com.liwuso.utility.Utils;
 import com.liwuso.app.R;
+import com.liwuso.app.adapter.LazyAdapter;
 import com.liwuso.helper.SortAdapter;
 import com.liwuso.helper.SortItem;
 

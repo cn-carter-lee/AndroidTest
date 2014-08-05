@@ -1,4 +1,4 @@
-package com.liwuso.utility;
+package com.liwuso.app.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liwuso.app.R;
+import com.liwuso.utility.ImageLoader;
 
 public class LazyAdapter extends BaseAdapter {
 

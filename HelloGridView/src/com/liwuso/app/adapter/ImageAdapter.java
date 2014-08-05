@@ -1,6 +1,7 @@
-package com.liwuso.utility;
+package com.liwuso.app.adapter;
 
 import com.liwuso.app.R;
+import com.liwuso.utility.ImageLoader;
 
 import android.app.Activity;
 import android.content.Context;

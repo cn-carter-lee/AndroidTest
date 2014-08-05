@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.liwuso.utility.LazyAdapter;
 import com.liwuso.app.R;
+import com.liwuso.app.adapter.LazyAdapter;
 import com.liwuso.helper.SortAdapter;
 import com.liwuso.helper.SortItem;
 
