@@ -21,5 +21,4 @@ public class FragmentAdvice extends BaseFragment {
 				false);
 		return rootView;
 	}
-
 }

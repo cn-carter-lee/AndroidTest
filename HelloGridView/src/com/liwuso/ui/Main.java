@@ -1,5 +1,6 @@
 package com.liwuso.ui;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -79,8 +80,8 @@ public class Main extends ActionBarActivity {
 	}
 
 	public void checkVersion(View view) {
-		MyDialogFragment m = new MyDialogFragment();
-		m.show(getSupportFragmentManager(), "missiles");
+		MyDialog m = new MyDialog();
+		m.show(getSupportFragmentManager(), "");
 	}
 
 	private void relaceFragment(Fragment newFragment) {

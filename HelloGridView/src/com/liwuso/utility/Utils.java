@@ -13,6 +13,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.liwuso.app.R;
+import com.liwuso.ui.MyDialog;
 
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -94,5 +95,5 @@ public class Utils {
 		} catch (Exception e) {
 		}
 		return Content;
-	}
+	}	
 }
