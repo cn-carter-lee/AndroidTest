@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/frame_btn_news_lastest"
+            style="@style/frame_button"
+            android:text="全部" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@drawable/frame_seperator" />
+
+        <Button
+            android:id="@+id/frame_btn_news_blog"
+            style="@style/frame_button"
+            android:text="女性" />
+
+        <ImageView
+            style="@style/frame_seperator_style"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" />
+
+        <Button
+            android:id="@+id/frame_btn_news_recommend"
+            style="@style/frame_button"
+            android:text="男性" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/Gift.ParentLayoutPadding"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/button0"
+                style="@style/SearchButtonRed"
+                android:layout_width="match_parent"
+                android:onClick="searchPerson"
+                android:text="女朋友" />
+
+            <Button
+                android:id="@+id/button1"
+                style="@style/SearchButtonBlue"
+                android:onClick="searchPerson"
+                android:text="老婆" />
+
+            <Button
+                android:id="@+id/button2"
+                style="@style/SearchButtonYellow"
+                android:onClick="searchPerson"
+                android:text="女性朋友" />
+
+            <Button
+                android:id="@+id/button3"
+                style="@style/SearchButtonPink"
+                android:onClick="searchPerson"
+                android:text="妈妈" />
+
+            <Button
+                android:id="@+id/button4"
+                style="@style/SearchButtonPurple"
+                android:onClick="searchPerson"
+                android:text="女生" />
+
+            <com.liwuso.widget.PullToRefreshListView
+                android:id="@+id/frame_listview_person_female"
+                style="@style/widget_listview" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="fill_parent" >
+        </View>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/button10"
+                style="@style/SearchButtonMale1"
+                android:onClick="searchPerson"
+                android:text="男朋友" />
+
+            <Button
+                android:id="@+id/button11"
+                style="@style/SearchButtonMale2"
+                android:onClick="searchPerson"
+                android:text="老公" />
+
+            <Button
+                android:id="@+id/button12"
+                style="@style/SearchButtonMale3"
+                android:onClick="searchPerson"
+                android:text="男性朋友" />
+
+            <Button
+                android:id="@+id/button13"
+                style="@style/SearchButtonMale4"
+                android:onClick="searchPerson"
+                android:text="爸爸" />
+
+            <Button
+                android:id="@+id/button14"
+                style="@style/SearchButtonMale5"
+                android:onClick="searchPerson"
+                android:text="男生" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

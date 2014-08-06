@@ -22,9 +22,9 @@ public class AppContext extends Application {
 		return info;
 	}
 
-	public PersonList getPersonList(int catalog, int pageIndex, boolean isRefresh)
-			throws AppException {
-		PersonList list = null;
+	public PersonList getPersonList(int catalog, int pageIndex,
+			boolean isRefresh) throws AppException {
+		PersonList list = new PersonList();
 		String key = "newslist_" + catalog + "_" + pageIndex + "_" + PAGE_SIZE;
 
 		int j = 0;

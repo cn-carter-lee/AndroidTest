@@ -9,9 +9,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.R;
@@ -28,6 +31,9 @@ import com.pys.liwuso.bean.Product;
 public class Main extends BaseActivity {
 
 	private ProgressBar mHeadProgress;
+	private ProgressBar lvPerson_foot_progress;
+	private ProgressBar lvNews_foot_progress;
+
 	private int curNewsCatalog = NewsList.CATALOG_ALL;
 
 	private PullToRefreshListView lvNews;
@@ -45,9 +51,6 @@ public class Main extends BaseActivity {
 	private TextView lvNews_foot_more;
 	private TextView lvPerson_foot_more;
 
-	private ProgressBar lvPerson_foot_progress;
-	private ProgressBar lvNews_foot_progress;
-
 	private AppContext appContext;
 
 	@Override
@@ -56,10 +59,17 @@ public class Main extends BaseActivity {
 		setContentView(R.layout.main);
 		appContext = (AppContext) getApplication();
 
-		// /getFragmentManager().beginTransaction()
+		this.initHeadView();
+		// getFragmentManager().beginTransaction()
 		// .add(R.id.container, new FragmentPerson()).commit();
 
-		// this.initFrameListView();
+		this.initFrameListView();
+	}
+
+	private void initHeadView() {
+		mHeadProgress = (ProgressBar) findViewById(R.id.main_head_progress);
+		// TODO: lvPerson_foot_progress = (ProgressBar)
+		// findViewById(R.id.main_head_progress);
 	}
 
 	private void initFrameListView() {
@@ -71,8 +81,8 @@ public class Main extends BaseActivity {
 
 	private void initFrameListViewData() {
 		// 初始化Handler
-		lvNewsHandler = this.getLvHandler(lvNews, lvNewsAdapter,
-				lvNews_foot_more, lvNews_foot_progress, AppContext.PAGE_SIZE);
+		// lvNewsHandler = this.getLvHandler(lvNews, lvNewsAdapter,
+		// lvNews_foot_more, lvNews_foot_progress, AppContext.PAGE_SIZE);
 
 		lvPersonHandler = this.getLvHandler(lvPerson, lvPersonAdapter,
 				lvPerson_foot_more, lvPerson_foot_progress,
@@ -81,15 +91,9 @@ public class Main extends BaseActivity {
 		// Load Person data
 
 		if (lvPersonData.isEmpty()) {
-			loadLvPersonData(curNewsCatalog, 0, lvNewsHandler,
+			loadLvPersonData(curNewsCatalog, 0, lvPersonHandler,
 					UIHelper.LISTVIEW_ACTION_INIT);
 		}
-
-		//
-		// if (lvNewsData.isEmpty()) {
-		// loadLvNewsData(curNewsCatalog, 0, lvNewsHandler,
-		// UIHelper.LISTVIEW_ACTION_INIT);
-		// }
 	}
 
 	private void loadLvNewsData(final int catalog, final int pageIndex,
@@ -126,8 +130,42 @@ public class Main extends BaseActivity {
 	}
 
 	private void initPersonListView() {
-		String[] data = {};
-		lvPersonAdapter = new PersonAdapter(this, data);
+		lvPersonAdapter = new PersonAdapter(this, lvPersonData);
+		lvPerson = (PullToRefreshListView) findViewById(R.id.frame_listview_person_female);
+		lvPerson.setAdapter(lvPersonAdapter);
+
+		lvPerson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO:
+			}
+		});
+		lvPerson.setOnScrollListener(new AbsListView.OnScrollListener() {
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				lvNews.onScrollStateChanged(view, scrollState);
+
+				// 数据为空--不用继续下面代码了
+				if (lvNewsData.isEmpty())
+					return;
+
+				// 判断是否滚动到底部
+				int pageIndex = 1;
+				loadLvPersonData(curNewsCatalog, pageIndex, lvNewsHandler,
+						UIHelper.LISTVIEW_ACTION_SCROLL);
+			}
+
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				lvNews.onScroll(view, firstVisibleItem, visibleItemCount,
+						totalItemCount);
+			}
+		});
+		lvPerson.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+			public void onRefresh() {
+				loadLvPersonData(curNewsCatalog, 0, lvNewsHandler,
+						UIHelper.LISTVIEW_ACTION_REFRESH);
+			}
+		});
 	}
 
 	public void clickBar(View view) {
@@ -225,11 +263,11 @@ public class Main extends BaseActivity {
 					if (msg.what < pageSize) {
 						lv.setTag(UIHelper.LISTVIEW_DATA_FULL);
 						adapter.notifyDataSetChanged();
-						more.setText(R.string.load_full);
+						// more.setText(R.string.load_full);
 					} else if (msg.what == pageSize) {
 						lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
 						adapter.notifyDataSetChanged();
-						more.setText(R.string.load_more);
+						// more.setText(R.string.load_more);
 
 						// 特殊处理-热门动弹不能翻页
 						/*
@@ -249,9 +287,9 @@ public class Main extends BaseActivity {
 				}
 				if (adapter.getCount() == 0) {
 					lv.setTag(UIHelper.LISTVIEW_DATA_EMPTY);
-					more.setText(R.string.load_empty);
+					// more.setText(R.string.load_empty);
 				}
-				progress.setVisibility(ProgressBar.GONE);
+				// progress.setVisibility(ProgressBar.GONE);
 				mHeadProgress.setVisibility(ProgressBar.GONE);
 				if (msg.arg1 == UIHelper.LISTVIEW_ACTION_REFRESH) {
 					lv.onRefreshComplete(getString(R.string.pull_to_refresh_update)

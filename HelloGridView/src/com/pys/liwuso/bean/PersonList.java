@@ -13,8 +13,8 @@ public class PersonList {
 	public final static int CATALOG_SOFTWARE = 3;
 
 	private int catalog;
-	private int pageSize;
-	private int newsCount;
+	private int pageSize = 5;
+	private int personCount;
 	private List<Person> person_list = new ArrayList<Person>();
 
 	public int getCatalog() {
@@ -24,14 +24,13 @@ public class PersonList {
 	public int getPageSize() {
 		return pageSize;
 	}
-	
-	public void Add(Person person)
-	{
+
+	public void Add(Person person) {
 		person_list.add(person);
 	}
 
-	public int getNewsCount() {
-		return newsCount;
+	public int getPersonCount() {
+		return person_list.size();
 	}
 
 	public List<Person> getNewslist() {
