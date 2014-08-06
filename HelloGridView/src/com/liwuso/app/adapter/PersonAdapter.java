@@ -6,22 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.liwuso.app.R;
 import com.liwuso.utility.ImageLoader;
 
-public class LazyAdapter extends BaseAdapter {
+public class PersonAdapter extends BaseAdapter {
 
 	private Activity activity;
 	private String[] data;
 	private static LayoutInflater inflater = null;
 	public ImageLoader imageLoader;
 
-	public LazyAdapter(Activity a, String[] d) {
-		activity = a;
-		data = d;
+	public PersonAdapter(Activity activity, String[] data) {
+		activity = activity;
+		this.data = data;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		imageLoader = new ImageLoader(activity.getApplicationContext());
@@ -42,12 +41,13 @@ public class LazyAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View vi = convertView;
 		if (convertView == null)
-			vi = inflater.inflate(R.layout.product_item, null);
+			vi = inflater.inflate(R.layout.person_item, null);
 
-		TextView text = (TextView) vi.findViewById(R.id.text);
-		ImageView image = (ImageView) vi.findViewById(R.id.image);
-		text.setText(position+"111已收藏"  );
-		imageLoader.DisplayImage(data[position], image);
+		Button button = (Button) vi.findViewById(R.id.btnPerson);
+		button.setText("YYYYYY");
+//		ImageView image = (ImageView) vi.findViewById(R.id.image);
+//		text.setText(position+"111已收藏"  );
+//		imageLoader.DisplayImage(data[position], image);
 		return vi;
 	}
 }

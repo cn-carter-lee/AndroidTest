@@ -8,42 +8,63 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.R;
-import com.liwuso.app.adapter.ImageAdapter;
+import com.liwuso.app.adapter.ListViewNewsAdapter;
+import com.liwuso.app.adapter.PersonAdapter;
 import com.liwuso.app.common.UIHelper;
 import com.liwuso.widget.PullToRefreshListView;
+import com.pys.liwuso.bean.NewsList;
 import com.pys.liwuso.bean.Notice;
+import com.pys.liwuso.bean.Person;
+import com.pys.liwuso.bean.PersonList;
 import com.pys.liwuso.bean.Product;
 
-public class Main extends ActionBarActivity {
+public class Main extends BaseActivity {
 
 	private ProgressBar mHeadProgress;
-	private ImageAdapter lvImageAdapter;
+	private int curNewsCatalog = NewsList.CATALOG_ALL;
+
+	private PullToRefreshListView lvNews;
+	private PullToRefreshListView lvPerson;
+
+	private Handler lvNewsHandler;
+	private Handler lvPersonHandler;
+
+	private PersonAdapter lvPersonAdapter;
+
+	private ListViewNewsAdapter lvNewsAdapter;
 	private List<Product> lvNewsData = new ArrayList<Product>();
+	private List<Person> lvPersonData = new ArrayList<Person>();
+
+	private TextView lvNews_foot_more;
+	private TextView lvPerson_foot_more;
+
+	private ProgressBar lvPerson_foot_progress;
+	private ProgressBar lvNews_foot_progress;
+
+	private AppContext appContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		getSupportFragmentManager().beginTransaction()
-				.add(R.id.container, new FragmentPerson()).commit();
+		appContext = (AppContext) getApplication();
 
-		this.initFrameListView();
+		// /getFragmentManager().beginTransaction()
+		// .add(R.id.container, new FragmentPerson()).commit();
+
+		// this.initFrameListView();
 	}
 
 	private void initFrameListView() {
 		// 初始化listview控件
-		this.initNewsListView();
+		this.initPersonListView();
 		// 加载listview数据
 		this.initFrameListViewData();
 	}
@@ -53,21 +74,60 @@ public class Main extends ActionBarActivity {
 		lvNewsHandler = this.getLvHandler(lvNews, lvNewsAdapter,
 				lvNews_foot_more, lvNews_foot_progress, AppContext.PAGE_SIZE);
 
-		// 加载资讯数据
-		if (lvNewsData.isEmpty()) {
-			loadLvNewsData(curNewsCatalog, 0, lvNewsHandler,
+		lvPersonHandler = this.getLvHandler(lvPerson, lvPersonAdapter,
+				lvPerson_foot_more, lvPerson_foot_progress,
+				AppContext.PAGE_SIZE);
+
+		// Load Person data
+
+		if (lvPersonData.isEmpty()) {
+			loadLvPersonData(curNewsCatalog, 0, lvNewsHandler,
 					UIHelper.LISTVIEW_ACTION_INIT);
 		}
+
+		//
+		// if (lvNewsData.isEmpty()) {
+		// loadLvNewsData(curNewsCatalog, 0, lvNewsHandler,
+		// UIHelper.LISTVIEW_ACTION_INIT);
+		// }
 	}
 
 	private void loadLvNewsData(final int catalog, final int pageIndex,
 			final Handler handler, final int action) {
 		mHeadProgress.setVisibility(ProgressBar.VISIBLE);
-
 	}
 
-	private void initNewsListView() {
+	private void loadLvPersonData(final int catalog, final int pageIndex,
+			final Handler handler, final int action) {
+		mHeadProgress.setVisibility(ProgressBar.VISIBLE);
+		new Thread() {
+			public void run() {
+				Message msg = new Message();
+				boolean isRefresh = false;
+				if (action == UIHelper.LISTVIEW_ACTION_REFRESH
+						|| action == UIHelper.LISTVIEW_ACTION_SCROLL)
+					isRefresh = true;
+				try {
+					PersonList list = appContext.getPersonList(catalog,
+							pageIndex, isRefresh);
+					msg.what = list.getPageSize();
+					msg.obj = list;
+				} catch (AppException e) {
+					e.printStackTrace();
+					msg.what = -1;
+					msg.obj = e;
+				}
+				msg.arg1 = action;
+				msg.arg2 = UIHelper.LISTVIEW_DATATYPE_PERSON;
+				if (curNewsCatalog == catalog)
+					handler.sendMessage(msg);
+			}
+		}.start();
+	}
 
+	private void initPersonListView() {
+		String[] data = {};
+		lvPersonAdapter = new PersonAdapter(this, data);
 	}
 
 	public void clickBar(View view) {
@@ -125,15 +185,16 @@ public class Main extends ActionBarActivity {
 
 	public void checkVersion(View view) {
 		MyDialog m = new MyDialog();
-		m.show(getSupportFragmentManager(), "");
+		// m.show(getSupportFragmentManager(), "");
 	}
 
 	private void relaceFragment(Fragment newFragment) {
-		FragmentTransaction transaction = getSupportFragmentManager()
-				.beginTransaction();
-		transaction.replace(R.id.container, newFragment);
-		transaction.addToBackStack(null);
-		transaction.commit();
+		//
+		// FragmentTransaction transaction = getSupportFragmentManager()
+		// .beginTransaction();
+		// transaction.replace(R.id.container, newFragment);
+		// transaction.addToBackStack(null);
+		// transaction.commit();
 	}
 
 	private void clickFragment(Fragment newFragment, int iconIndex) {

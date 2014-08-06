@@ -13,8 +13,8 @@ import android.widget.Spinner;
 
 import com.liwuso.app.R;
 import com.liwuso.app.adapter.LazyAdapter;
-import com.liwuso.helper.SortAdapter;
-import com.liwuso.helper.SortItem;
+import com.liwuso.app.helper.SortAdapter;
+import com.liwuso.app.helper.SortItem;
 
 public class FragmentProduct extends BaseFragment {
 	ListView listview;

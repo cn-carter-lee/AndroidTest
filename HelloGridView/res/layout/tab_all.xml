@@ -12,37 +12,16 @@
         android:layout_weight="1"
         android:orientation="vertical"
         tools:context="com.pys.hellogridview.SoFemaleFragment" >
-
-        <Button
-            android:id="@+id/button0"
-            style="@style/SearchButtonRed"
+        <ListView
+            android:id="@+id/lvAllFemale"
             android:layout_width="match_parent"
-            android:onClick="searchPerson"
-            android:text="女朋友" />
-
-        <Button
-            android:id="@+id/button1"
-            style="@style/SearchButtonBlue"
-            android:onClick="searchPerson"
-            android:text="老婆" />
-
-        <Button
-            android:id="@+id/button2"
-            style="@style/SearchButtonYellow"
-            android:onClick="searchPerson"
-            android:text="女性朋友" />
-
-        <Button
-            android:id="@+id/button3"
-            style="@style/SearchButtonPink"
-            android:onClick="searchPerson"
-            android:text="妈妈" />
-
-        <Button
-            android:id="@+id/button4"
-            style="@style/SearchButtonPurple"
-            android:onClick="searchPerson"
-            android:text="女生" />
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dip"
+            android:fadingEdge="none"
+            android:listSelector="@android:color/transparent" >
+        </ListView>
     </LinearLayout>
 
     <View
