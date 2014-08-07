@@ -8,7 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 
 public class AppContext extends Application {
-	public static final int PAGE_SIZE = 20;// 默认分页大小
+	public static final int PAGE_SIZE = 20;
 
 	public PackageInfo getPackageInfo() {
 		PackageInfo info = null;
@@ -27,12 +27,16 @@ public class AppContext extends Application {
 		PersonList list = new PersonList();
 		String key = "newslist_" + catalog + "_" + pageIndex + "_" + PAGE_SIZE;
 
-		int j = 0;
+		list.Add(new Person("女朋友"));
+		list.Add(new Person("老婆"));
+		list.Add(new Person("女性朋友"));
+		list.Add(new Person("妈妈"));
+		list.Add(new Person("女生"));
 
+		int j = 0;
 		for (int i = 0; i < 50; i++) {
-			Person p = new Person();
-			p.Name = "XXX";
-			list.Add(p);
+
+			list.Add(new Person("XXX--789"));
 		}
 		//
 		// if(isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {

@@ -18,8 +18,9 @@ import android.widget.TextView;
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.R;
+import com.liwuso.app.adapter.ListViewMaleAdapter;
 import com.liwuso.app.adapter.ListViewNewsAdapter;
-import com.liwuso.app.adapter.PersonAdapter;
+import com.liwuso.app.adapter.ListViewFemaleAdapter;
 import com.liwuso.app.common.UIHelper;
 import com.liwuso.widget.PullToRefreshListView;
 import com.pys.liwuso.bean.NewsList;
@@ -31,25 +32,25 @@ import com.pys.liwuso.bean.Product;
 public class Main extends BaseActivity {
 
 	private ProgressBar mHeadProgress;
-	private ProgressBar lvPerson_foot_progress;
-	private ProgressBar lvNews_foot_progress;
+	private ProgressBar lvFemale_foot_progress;
+	private ProgressBar lvMale_foot_progress;	
 
 	private int curNewsCatalog = NewsList.CATALOG_ALL;
 
-	private PullToRefreshListView lvNews;
-	private PullToRefreshListView lvPerson;
+	private PullToRefreshListView lvFemale;
+	private PullToRefreshListView lvMale;
 
-	private Handler lvNewsHandler;
-	private Handler lvPersonHandler;
+	private Handler lvFemaleHandler;
+	private Handler lvMaleHandler;
 
-	private PersonAdapter lvPersonAdapter;
+	private ListViewFemaleAdapter lvFemaleAdapter;
+	private ListViewMaleAdapter lvMaleAdapter;
 
-	private ListViewNewsAdapter lvNewsAdapter;
-	private List<Product> lvNewsData = new ArrayList<Product>();
-	private List<Person> lvPersonData = new ArrayList<Person>();
+	private List<Person> lvFemaleData = new ArrayList<Person>();
 
-	private TextView lvNews_foot_more;
-	private TextView lvPerson_foot_more;
+	private int lvFemaleSumData;
+	
+	private TextView lvFemale_foot_more;
 
 	private AppContext appContext;
 
@@ -60,9 +61,6 @@ public class Main extends BaseActivity {
 		appContext = (AppContext) getApplication();
 
 		this.initHeadView();
-		// getFragmentManager().beginTransaction()
-		// .add(R.id.container, new FragmentPerson()).commit();
-
 		this.initFrameListView();
 	}
 
@@ -73,32 +71,22 @@ public class Main extends BaseActivity {
 	}
 
 	private void initFrameListView() {
-		// 初始化listview控件
+
 		this.initPersonListView();
-		// 加载listview数据
+
 		this.initFrameListViewData();
 	}
 
 	private void initFrameListViewData() {
-		// 初始化Handler
-		// lvNewsHandler = this.getLvHandler(lvNews, lvNewsAdapter,
-		// lvNews_foot_more, lvNews_foot_progress, AppContext.PAGE_SIZE);
-
-		lvPersonHandler = this.getLvHandler(lvPerson, lvPersonAdapter,
-				lvPerson_foot_more, lvPerson_foot_progress,
+		lvFemaleHandler = this.getLvHandler(lvFemale, lvFemaleAdapter,
+				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
 
 		// Load Person data
-
-		if (lvPersonData.isEmpty()) {
-			loadLvPersonData(curNewsCatalog, 0, lvPersonHandler,
+		if (lvFemaleData.isEmpty()) {
+			loadLvPersonData(curNewsCatalog, 0, lvFemaleHandler,
 					UIHelper.LISTVIEW_ACTION_INIT);
 		}
-	}
-
-	private void loadLvNewsData(final int catalog, final int pageIndex,
-			final Handler handler, final int action) {
-		mHeadProgress.setVisibility(ProgressBar.VISIBLE);
 	}
 
 	private void loadLvPersonData(final int catalog, final int pageIndex,
@@ -130,42 +118,149 @@ public class Main extends BaseActivity {
 	}
 
 	private void initPersonListView() {
-		lvPersonAdapter = new PersonAdapter(this, lvPersonData);
-		lvPerson = (PullToRefreshListView) findViewById(R.id.frame_listview_person_female);
-		lvPerson.setAdapter(lvPersonAdapter);
+		lvFemaleAdapter = new ListViewFemaleAdapter(this, lvFemaleData);
+		lvFemale = (PullToRefreshListView) findViewById(R.id.frame_listview_person_female);
+		lvFemale.setAdapter(lvFemaleAdapter);
 
-		lvPerson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		lvFemale.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO:
 			}
 		});
-		lvPerson.setOnScrollListener(new AbsListView.OnScrollListener() {
+		lvFemale.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				lvNews.onScrollStateChanged(view, scrollState);
+				lvFemale.onScrollStateChanged(view, scrollState);
 
 				// 数据为空--不用继续下面代码了
-				if (lvNewsData.isEmpty())
+				if (lvFemaleData.isEmpty())
 					return;
 
 				// 判断是否滚动到底部
 				int pageIndex = 1;
-				loadLvPersonData(curNewsCatalog, pageIndex, lvNewsHandler,
+				loadLvPersonData(curNewsCatalog, pageIndex, lvFemaleHandler,
 						UIHelper.LISTVIEW_ACTION_SCROLL);
 			}
 
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				lvNews.onScroll(view, firstVisibleItem, visibleItemCount,
+				lvFemale.onScroll(view, firstVisibleItem, visibleItemCount,
 						totalItemCount);
 			}
 		});
-		lvPerson.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+		lvFemale.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 			public void onRefresh() {
-				loadLvPersonData(curNewsCatalog, 0, lvNewsHandler,
+				loadLvPersonData(curNewsCatalog, 0, lvFemaleHandler,
 						UIHelper.LISTVIEW_ACTION_REFRESH);
 			}
 		});
+	}
+
+	private Handler getLvHandler(final PullToRefreshListView lv,
+			final BaseAdapter adapter, final TextView more,
+			final ProgressBar progress, final int pageSize) {
+		return new Handler() {
+			public void handleMessage(Message msg) {
+				if (msg.what >= 0) {
+					// listview数据处理
+					Notice notice = handleLvData(msg.what, msg.obj, msg.arg2,
+							msg.arg1);
+
+					if (msg.what < pageSize) {
+						lv.setTag(UIHelper.LISTVIEW_DATA_FULL);
+						adapter.notifyDataSetChanged();
+						// more.setText(R.string.load_full);
+					} else if (msg.what == pageSize) {
+						lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
+						adapter.notifyDataSetChanged();
+						// more.setText(R.string.load_more);
+					}
+
+				} else if (msg.what == -1) {
+					// 有异常--显示加载出错 & 弹出错误消息
+					lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
+					more.setText(R.string.load_error);
+					((AppException) msg.obj).makeToast(Main.this);
+				}
+				if (adapter.getCount() == 0) {
+					lv.setTag(UIHelper.LISTVIEW_DATA_EMPTY);
+					// more.setText(R.string.load_empty);
+				}
+				// progress.setVisibility(ProgressBar.GONE);
+				mHeadProgress.setVisibility(ProgressBar.GONE);
+				if (msg.arg1 == UIHelper.LISTVIEW_ACTION_REFRESH) {
+					lv.onRefreshComplete(getString(R.string.pull_to_refresh_update)
+							+ new Date().toLocaleString());
+					lv.setSelection(0);
+				} else if (msg.arg1 == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG) {
+					lv.onRefreshComplete();
+					lv.setSelection(0);
+				}
+			}
+		};
+	}
+
+	private Notice handleLvData(int what, Object obj, int objtype,
+			int actiontype) {
+		Notice notice = null;
+		switch (actiontype) {
+		case UIHelper.LISTVIEW_ACTION_INIT:
+		case UIHelper.LISTVIEW_ACTION_REFRESH:
+		case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:
+			int newdata = 0;// 新加载数据-只有刷新动作才会使用到
+			switch (objtype) {
+			case UIHelper.LISTVIEW_DATATYPE_PERSON:
+				PersonList plist = (PersonList) obj;
+				notice = plist.getNotice();
+				lvFemaleSumData = what;
+				if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
+					if (lvFemaleData.size() > 0) {
+						for (Person person1 : plist.getPersonList()) {
+							boolean b = false;
+							for (Person person2 : lvFemaleData) {
+								if (person1.getId() == person2.getId()) {
+									b = true;
+									break;
+								}
+							}
+							if (!b)
+								newdata++;
+						}
+					} else {
+						newdata = what;
+					}
+				}
+				lvFemaleData.clear();
+				lvFemaleData.addAll(plist.getPersonList());
+				break;
+
+			case UIHelper.LISTVIEW_ACTION_SCROLL:
+				switch (objtype) {
+				case UIHelper.LISTVIEW_DATATYPE_PERSON:
+					PersonList list = (PersonList) obj;
+					notice = list.getNotice();
+					lvFemaleSumData += what;
+					if (lvFemaleData.size() > 0) {
+						for (Person person1 : list.getPersonList()) {
+							boolean b = false;
+							for (Person person2 : lvFemaleData) {
+								if (person1.getId() == person2.getId()) {
+									b = true;
+									break;
+								}
+							}
+							if (!b)
+								lvFemaleData.add(person1);
+						}
+					} else {
+						lvFemaleData.addAll(list.getPersonList());
+					}
+					break;
+				}
+				break;
+			}
+		}
+		return notice;
 	}
 
 	public void clickBar(View view) {
@@ -248,66 +343,6 @@ public class Main extends BaseActivity {
 	public void setTitle(String title) {
 		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
 		titleView.setText(title);
-	}
-
-	private Handler getLvHandler(final PullToRefreshListView lv,
-			final BaseAdapter adapter, final TextView more,
-			final ProgressBar progress, final int pageSize) {
-		return new Handler() {
-			public void handleMessage(Message msg) {
-				if (msg.what >= 0) {
-					// listview数据处理
-					Notice notice = handleLvData(msg.what, msg.obj, msg.arg2,
-							msg.arg1);
-
-					if (msg.what < pageSize) {
-						lv.setTag(UIHelper.LISTVIEW_DATA_FULL);
-						adapter.notifyDataSetChanged();
-						// more.setText(R.string.load_full);
-					} else if (msg.what == pageSize) {
-						lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
-						adapter.notifyDataSetChanged();
-						// more.setText(R.string.load_more);
-
-						// 特殊处理-热门动弹不能翻页
-						/*
-						 * if(lv == lvTweet) { TweetList tlist =
-						 * (TweetList)msg.obj; if(lvTweetData.size() ==
-						 * tlist.getTweetCount()){
-						 * lv.setTag(UIHelper.LISTVIEW_DATA_FULL);
-						 * more.setText(R.string.load_full); } }
-						 */
-					}
-
-				} else if (msg.what == -1) {
-					// 有异常--显示加载出错 & 弹出错误消息
-					lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
-					more.setText(R.string.load_error);
-					((AppException) msg.obj).makeToast(Main.this);
-				}
-				if (adapter.getCount() == 0) {
-					lv.setTag(UIHelper.LISTVIEW_DATA_EMPTY);
-					// more.setText(R.string.load_empty);
-				}
-				// progress.setVisibility(ProgressBar.GONE);
-				mHeadProgress.setVisibility(ProgressBar.GONE);
-				if (msg.arg1 == UIHelper.LISTVIEW_ACTION_REFRESH) {
-					lv.onRefreshComplete(getString(R.string.pull_to_refresh_update)
-							+ new Date().toLocaleString());
-					lv.setSelection(0);
-				} else if (msg.arg1 == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG) {
-					lv.onRefreshComplete();
-					lv.setSelection(0);
-				}
-			}
-		};
-	}
-
-	private Notice handleLvData(int what, Object obj, int objtype,
-			int actiontype) {
-		Notice notice = null;
-
-		return notice;
 	}
 
 }

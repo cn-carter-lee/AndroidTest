@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.liwuso.app.R;
 import com.liwuso.app.adapter.LazyAdapter;
-import com.liwuso.app.helper.SortItem;
+import com.liwuso.app.common.SortItem;
 
 import android.app.Activity;
 import android.os.Bundle;

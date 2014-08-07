@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.liwuso.app.AppException;
 
-public class PersonList {
+public class PersonList extends Entity {
 
 	public final static int CATALOG_ALL = 1;
 	public final static int CATALOG_INTEGRATION = 2;
@@ -33,7 +33,7 @@ public class PersonList {
 		return person_list.size();
 	}
 
-	public List<Person> getNewslist() {
+	public List<Person> getPersonList() {
 		return person_list;
 	}
 
