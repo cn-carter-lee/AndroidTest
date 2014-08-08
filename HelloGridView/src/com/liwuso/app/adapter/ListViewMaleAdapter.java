@@ -16,12 +16,9 @@ public class ListViewMaleAdapter extends BaseAdapter {
 	private List<Person> listItems;
 	private LayoutInflater listContainer;
 
-	private int[] itemViewResourceArray = { R.anim.person_female_lisitem0,
-			R.anim.person_female_lisitem1, R.anim.person_female_lisitem2,
-			R.anim.person_female_lisitem3, R.anim.person_female_lisitem4, };
-
-	public final static int SEXTYPE_FEMALE = 0X00;
-	public final static int SEXTYPE_MALE = 0X01;
+	private int[] itemViewResourceArray = { R.anim.person_male_lisitem0,
+			R.anim.person_male_lisitem1, R.anim.person_male_lisitem2,
+			R.anim.person_male_lisitem3, R.anim.person_male_lisitem4, };
 
 	static class ListItemView {
 		public Button button;

@@ -13,27 +13,23 @@
         <Button
             android:id="@+id/frame_btn_news_lastest"
             style="@style/frame_button"
-            android:text="全部" />
+            android:text="@string/person0" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:background="@drawable/frame_seperator" />
+        <ImageView style="@style/frame_button_seperator" />
 
         <Button
             android:id="@+id/frame_btn_news_blog"
             style="@style/frame_button"
-            android:text="女性" />
+            android:enabled="false"
+            android:text="@string/person1" />
 
-        <ImageView
-            style="@style/frame_seperator_style"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent" />
+        <ImageView style="@style/frame_button_seperator" />
 
         <Button
             android:id="@+id/frame_btn_news_recommend"
             style="@style/frame_button"
-            android:text="男性" />
+            android:enabled="false"
+            android:text="@string/person2" />
     </LinearLayout>
 
     <LinearLayout
@@ -55,16 +51,14 @@
 
         <View
             android:layout_width="10dp"
-            android:layout_height="fill_parent"
-            android:visibility="gone" >
+            android:layout_height="fill_parent" >
         </View>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:visibility="gone" >
+            android:orientation="vertical" >
 
             <com.liwuso.widget.PullToRefreshListView
                 android:id="@+id/frame_listview_person_male"

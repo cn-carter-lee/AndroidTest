@@ -19,7 +19,7 @@ import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.R;
 import com.liwuso.app.adapter.ListViewMaleAdapter;
-import com.liwuso.app.adapter.ListViewNewsAdapter;
+
 import com.liwuso.app.adapter.ListViewFemaleAdapter;
 import com.liwuso.app.common.UIHelper;
 import com.liwuso.widget.PullToRefreshListView;
@@ -27,15 +27,14 @@ import com.pys.liwuso.bean.NewsList;
 import com.pys.liwuso.bean.Notice;
 import com.pys.liwuso.bean.Person;
 import com.pys.liwuso.bean.PersonList;
-import com.pys.liwuso.bean.Product;
 
 public class Main extends BaseActivity {
 
 	private ProgressBar mHeadProgress;
 	private ProgressBar lvFemale_foot_progress;
-	private ProgressBar lvMale_foot_progress;	
+	private ProgressBar lvMale_foot_progress;
 
-	private int curNewsCatalog = NewsList.CATALOG_ALL;
+	// private int curNewsCatalog = NewsList.CATALOG_ALL;
 
 	private PullToRefreshListView lvFemale;
 	private PullToRefreshListView lvMale;
@@ -47,9 +46,11 @@ public class Main extends BaseActivity {
 	private ListViewMaleAdapter lvMaleAdapter;
 
 	private List<Person> lvFemaleData = new ArrayList<Person>();
+	private List<Person> lvMaleData = new ArrayList<Person>();
 
 	private int lvFemaleSumData;
-	
+	private int lvMaleSumData;
+
 	private TextView lvFemale_foot_more;
 
 	private AppContext appContext;
@@ -71,57 +72,15 @@ public class Main extends BaseActivity {
 	}
 
 	private void initFrameListView() {
-
-		this.initPersonListView();
-
+		this.initFemaleListView();
+		this.initMaleListView();
 		this.initFrameListViewData();
 	}
 
-	private void initFrameListViewData() {
-		lvFemaleHandler = this.getLvHandler(lvFemale, lvFemaleAdapter,
-				lvFemale_foot_more, lvFemale_foot_progress,
-				AppContext.PAGE_SIZE);
-
-		// Load Person data
-		if (lvFemaleData.isEmpty()) {
-			loadLvPersonData(curNewsCatalog, 0, lvFemaleHandler,
-					UIHelper.LISTVIEW_ACTION_INIT);
-		}
-	}
-
-	private void loadLvPersonData(final int catalog, final int pageIndex,
-			final Handler handler, final int action) {
-		mHeadProgress.setVisibility(ProgressBar.VISIBLE);
-		new Thread() {
-			public void run() {
-				Message msg = new Message();
-				boolean isRefresh = false;
-				if (action == UIHelper.LISTVIEW_ACTION_REFRESH
-						|| action == UIHelper.LISTVIEW_ACTION_SCROLL)
-					isRefresh = true;
-				try {
-					PersonList list = appContext.getPersonList(catalog,
-							pageIndex, isRefresh);
-					msg.what = list.getPageSize();
-					msg.obj = list;
-				} catch (AppException e) {
-					e.printStackTrace();
-					msg.what = -1;
-					msg.obj = e;
-				}
-				msg.arg1 = action;
-				msg.arg2 = UIHelper.LISTVIEW_DATATYPE_PERSON;
-				if (curNewsCatalog == catalog)
-					handler.sendMessage(msg);
-			}
-		}.start();
-	}
-
-	private void initPersonListView() {
+	private void initFemaleListView() {
 		lvFemaleAdapter = new ListViewFemaleAdapter(this, lvFemaleData);
 		lvFemale = (PullToRefreshListView) findViewById(R.id.frame_listview_person_female);
 		lvFemale.setAdapter(lvFemaleAdapter);
-
 		lvFemale.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -138,8 +97,9 @@ public class Main extends BaseActivity {
 
 				// 判断是否滚动到底部
 				int pageIndex = 1;
-				loadLvPersonData(curNewsCatalog, pageIndex, lvFemaleHandler,
-						UIHelper.LISTVIEW_ACTION_SCROLL);
+				loadLvPersonData(0, pageIndex, lvFemaleHandler,
+						UIHelper.LISTVIEW_ACTION_SCROLL,
+						UIHelper.LISTVIEW_DATATYPE_FEMALE);
 			}
 
 			public void onScroll(AbsListView view, int firstVisibleItem,
@@ -150,10 +110,71 @@ public class Main extends BaseActivity {
 		});
 		lvFemale.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 			public void onRefresh() {
-				loadLvPersonData(curNewsCatalog, 0, lvFemaleHandler,
-						UIHelper.LISTVIEW_ACTION_REFRESH);
+				loadLvPersonData(0, 0, lvFemaleHandler,
+						UIHelper.LISTVIEW_ACTION_REFRESH,
+						UIHelper.LISTVIEW_DATATYPE_FEMALE);
 			}
 		});
+
+	}
+
+	private void initMaleListView() {
+		lvMaleAdapter = new ListViewMaleAdapter(this, lvMaleData);
+		lvMale = (PullToRefreshListView) findViewById(R.id.frame_listview_person_male);
+		lvMale.setAdapter(lvMaleAdapter);
+
+		lvMale.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO:
+			}
+		});
+		lvMale.setOnScrollListener(new AbsListView.OnScrollListener() {
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				lvMale.onScrollStateChanged(view, scrollState);
+				// 数据为空--不用继续下面代码了
+				if (lvMaleData.isEmpty())
+					return;
+				// 判断是否滚动到底部
+				int pageIndex = 1;
+				loadLvPersonData(1, pageIndex, lvFemaleHandler,
+						UIHelper.LISTVIEW_ACTION_SCROLL,
+						UIHelper.LISTVIEW_DATATYPE_MALE);
+			}
+
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				lvMale.onScroll(view, firstVisibleItem, visibleItemCount,
+						totalItemCount);
+			}
+		});
+		lvMale.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+			public void onRefresh() {
+				loadLvPersonData(1, 0, lvFemaleHandler,
+						UIHelper.LISTVIEW_ACTION_REFRESH,
+						UIHelper.LISTVIEW_DATATYPE_MALE);
+			}
+		});
+	}
+
+	private void initFrameListViewData() {
+		lvFemaleHandler = this.getLvHandler(lvFemale, lvFemaleAdapter,
+				lvFemale_foot_more, lvFemale_foot_progress,
+				AppContext.PAGE_SIZE);
+
+		lvMaleHandler = this.getLvHandler(lvMale, lvMaleAdapter,
+				lvFemale_foot_more, lvFemale_foot_progress,
+				AppContext.PAGE_SIZE);
+
+		// Load Person data
+		if (lvFemaleData.isEmpty()) {
+			loadLvPersonData(0, 0, lvFemaleHandler,
+					UIHelper.LISTVIEW_ACTION_INIT,
+					UIHelper.LISTVIEW_DATATYPE_FEMALE);
+			loadLvPersonData(1, 0, lvMaleHandler,
+					UIHelper.LISTVIEW_ACTION_INIT,
+					UIHelper.LISTVIEW_DATATYPE_MALE);
+		}
 	}
 
 	private Handler getLvHandler(final PullToRefreshListView lv,
@@ -162,7 +183,6 @@ public class Main extends BaseActivity {
 		return new Handler() {
 			public void handleMessage(Message msg) {
 				if (msg.what >= 0) {
-					// listview数据处理
 					Notice notice = handleLvData(msg.what, msg.obj, msg.arg2,
 							msg.arg1);
 
@@ -200,6 +220,34 @@ public class Main extends BaseActivity {
 		};
 	}
 
+	private void loadLvPersonData(final int catalog, final int pageIndex,
+			final Handler handler, final int action, final int dataType) {
+		mHeadProgress.setVisibility(ProgressBar.VISIBLE);
+		new Thread() {
+			public void run() {
+				Message msg = new Message();
+				boolean isRefresh = false;
+				if (action == UIHelper.LISTVIEW_ACTION_REFRESH
+						|| action == UIHelper.LISTVIEW_ACTION_SCROLL)
+					isRefresh = true;
+				try {
+					PersonList list = appContext.getPersonList(catalog,
+							pageIndex, isRefresh);
+					msg.what = list.getPageSize();
+					msg.obj = list;
+				} catch (AppException e) {
+					e.printStackTrace();
+					msg.what = -1;
+					msg.obj = e;
+				}
+				msg.arg1 = action;
+				msg.arg2 = dataType;
+				// if (curNewsCatalog == catalog)
+				handler.sendMessage(msg);
+			}
+		}.start();
+	}
+
 	private Notice handleLvData(int what, Object obj, int objtype,
 			int actiontype) {
 		Notice notice = null;
@@ -209,13 +257,13 @@ public class Main extends BaseActivity {
 		case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:
 			int newdata = 0;// 新加载数据-只有刷新动作才会使用到
 			switch (objtype) {
-			case UIHelper.LISTVIEW_DATATYPE_PERSON:
-				PersonList plist = (PersonList) obj;
-				notice = plist.getNotice();
+			case UIHelper.LISTVIEW_DATATYPE_FEMALE:
+				PersonList femalelist = (PersonList) obj;
+				notice = femalelist.getNotice();
 				lvFemaleSumData = what;
 				if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
 					if (lvFemaleData.size() > 0) {
-						for (Person person1 : plist.getPersonList()) {
+						for (Person person1 : femalelist.getPersonList()) {
 							boolean b = false;
 							for (Person person2 : lvFemaleData) {
 								if (person1.getId() == person2.getId()) {
@@ -231,12 +279,37 @@ public class Main extends BaseActivity {
 					}
 				}
 				lvFemaleData.clear();
-				lvFemaleData.addAll(plist.getPersonList());
+				lvFemaleData.addAll(femalelist.getPersonList());
+				break;
+
+			case UIHelper.LISTVIEW_DATATYPE_MALE:
+				PersonList malelist = (PersonList) obj;
+				notice = malelist.getNotice();
+				lvMaleSumData = what;
+				if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
+					if (lvFemaleData.size() > 0) {
+						for (Person person1 : malelist.getPersonList()) {
+							boolean b = false;
+							for (Person person2 : lvMaleData) {
+								if (person1.getId() == person2.getId()) {
+									b = true;
+									break;
+								}
+							}
+							if (!b)
+								newdata++;
+						}
+					} else {
+						newdata = what;
+					}
+				}
+				lvMaleData.clear();
+				lvMaleData.addAll(malelist.getPersonList());
 				break;
 
 			case UIHelper.LISTVIEW_ACTION_SCROLL:
 				switch (objtype) {
-				case UIHelper.LISTVIEW_DATATYPE_PERSON:
+				case UIHelper.LISTVIEW_DATATYPE_FEMALE:
 					PersonList list = (PersonList) obj;
 					notice = list.getNotice();
 					lvFemaleSumData += what;
@@ -254,6 +327,26 @@ public class Main extends BaseActivity {
 						}
 					} else {
 						lvFemaleData.addAll(list.getPersonList());
+					}
+					break;
+				case UIHelper.LISTVIEW_DATATYPE_MALE:
+					PersonList malelist2 = (PersonList) obj;
+					notice = malelist2.getNotice();
+					lvMaleSumData += what;
+					if (lvMaleData.size() > 0) {
+						for (Person person1 : malelist2.getPersonList()) {
+							boolean b = false;
+							for (Person person2 : lvMaleData) {
+								if (person1.getId() == person2.getId()) {
+									b = true;
+									break;
+								}
+							}
+							if (!b)
+								lvMaleData.add(person1);
+						}
+					} else {
+						lvMaleData.addAll(malelist2.getPersonList());
 					}
 					break;
 				}

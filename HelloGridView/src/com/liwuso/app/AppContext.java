@@ -25,18 +25,26 @@ public class AppContext extends Application {
 	public PersonList getPersonList(int catalog, int pageIndex,
 			boolean isRefresh) throws AppException {
 		PersonList list = new PersonList();
-		String key = "newslist_" + catalog + "_" + pageIndex + "_" + PAGE_SIZE;
+		String key = "person_list_" + catalog + "_" + pageIndex + "_"
+				+ PAGE_SIZE;
+		if (catalog == 0) {
+			list.Add(new Person("女朋友"));
+			list.Add(new Person("老婆"));
+			list.Add(new Person("女性朋友"));
+			list.Add(new Person("妈妈"));
+			list.Add(new Person("女生"));
 
-		list.Add(new Person("女朋友"));
-		list.Add(new Person("老婆"));
-		list.Add(new Person("女性朋友"));
-		list.Add(new Person("妈妈"));
-		list.Add(new Person("女生"));
+		} else if (catalog == 1) {
+			list.Add(new Person("男朋友"));
+			list.Add(new Person("老公"));
+			list.Add(new Person("男性朋友"));
+			list.Add(new Person("爸爸"));
+			list.Add(new Person("男生"));
 
+		}
 		int j = 0;
 		for (int i = 0; i < 50; i++) {
-
-			list.Add(new Person("XXX--789"));
+			list.Add(new Person("YYYY--789"));
 		}
 		//
 		// if(isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
