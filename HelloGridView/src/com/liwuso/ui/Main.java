@@ -12,17 +12,19 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.R;
 import com.liwuso.app.adapter.ListViewMaleAdapter;
-
 import com.liwuso.app.adapter.ListViewFemaleAdapter;
 import com.liwuso.app.common.UIHelper;
-import com.liwuso.widget.PullToRefreshListView;
+import com.liwuso.app.widget.PullToRefreshListView;
 import com.pys.liwuso.bean.NewsList;
 import com.pys.liwuso.bean.Notice;
 import com.pys.liwuso.bean.Person;
@@ -50,8 +52,23 @@ public class Main extends BaseActivity {
 
 	private int lvFemaleSumData;
 	private int lvMaleSumData;
+	
+	private int mCurSel;
 
 	private TextView lvFemale_foot_more;
+
+	LinearLayout frame_layout_female;
+	View frame_layout_sepeartor;
+	LinearLayout frame_layout_male;
+
+	private Button framebtn_All;
+	private Button framebtn_Female;
+	private Button framebtn_Male;
+
+	private Button fbLiwuso;
+	private Button fbSearch;
+	private Button fbFavorite;
+	private Button fbMore;
 
 	private AppContext appContext;
 
@@ -62,13 +79,84 @@ public class Main extends BaseActivity {
 		appContext = (AppContext) getApplication();
 
 		this.initHeadView();
+		this.initFootBar();
+
+		this.initFrameButton();
 		this.initFrameListView();
 	}
+	
+    @Override
+    protected void onResume() {
+    	super.onResume();
+		// if(mViewCount == 0) mViewCount = 4;
+		// if(mCurSel == 0 && !fbNews.isChecked()) {
+		// fbNews.setChecked(true);
+		// fbQuestion.setChecked(false);
+		// fbTweet.setChecked(false);
+		// fbactive.setChecked(false);
+		// }
+		// //读取左右滑动配置
+		// mScrollLayout.setIsScroll(appContext.isScroll());
+    	
+    	
+    }
 
 	private void initHeadView() {
 		mHeadProgress = (ProgressBar) findViewById(R.id.main_head_progress);
 		// TODO: lvPerson_foot_progress = (ProgressBar)
 		// findViewById(R.id.main_head_progress);
+	}
+
+	private void initFootBar() {
+		fbLiwuso = (Button) findViewById(R.id.bottom_btn_so);
+		fbSearch = (Button) findViewById(R.id.bottom_btn_search);
+		fbFavorite = (Button) findViewById(R.id.bottom_btn_favorite);
+		fbMore = (Button) findViewById(R.id.bottom_btn_more);
+	}
+
+	private void initFrameButton() {
+		frame_layout_female = (LinearLayout) findViewById(R.id.frame_layout_female);
+		frame_layout_sepeartor = (View) findViewById(R.id.frame_layout_sepeartor);
+		frame_layout_male = (LinearLayout) findViewById(R.id.frame_layout_male);
+
+		framebtn_All = (Button) findViewById(R.id.frame_btn_all);
+		framebtn_Female = (Button) findViewById(R.id.frame_btn_female);
+		framebtn_Male = (Button) findViewById(R.id.frame_btn_male);
+		framebtn_All.setEnabled(false);
+
+		framebtn_All.setOnClickListener(framePersonBtnClick(framebtn_All, 0));
+		framebtn_Female.setOnClickListener(framePersonBtnClick(framebtn_Female,
+				1));
+		framebtn_Male.setOnClickListener(framePersonBtnClick(framebtn_Male, 2));
+
+	}
+
+	private View.OnClickListener framePersonBtnClick(final Button btn,
+			final int catalog) {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+
+				framebtn_All.setEnabled(framebtn_All != btn);
+				framebtn_Female.setEnabled(framebtn_Female != btn);
+				framebtn_Male.setEnabled(framebtn_Male != btn);
+
+				// curNewsCatalog = catalog;
+				if (btn == framebtn_All) {
+					frame_layout_female.setVisibility(View.VISIBLE);
+					frame_layout_sepeartor.setVisibility(View.VISIBLE);
+					frame_layout_male.setVisibility(View.VISIBLE);
+				} else if (btn == framebtn_Female) {
+					frame_layout_female.setVisibility(View.VISIBLE);
+					frame_layout_male.setVisibility(View.GONE);
+					frame_layout_sepeartor.setVisibility(View.GONE);
+				} else if (btn == framebtn_Male) {
+					frame_layout_male.setVisibility(View.VISIBLE);
+					frame_layout_female.setVisibility(View.GONE);
+					frame_layout_sepeartor.setVisibility(View.GONE);
+
+				}
+			}
+		};
 	}
 
 	private void initFrameListView() {
@@ -359,16 +447,16 @@ public class Main extends BaseActivity {
 	public void clickBar(View view) {
 		int viewId = view.getId();
 		switch (viewId) {
-		case R.id.bottom_btn0:
+		case R.id.bottom_btn_so:
 			clickFragment(new FragmentPerson(), 0);
 			break;
-		case R.id.bottom_btn1:
+		case R.id.bottom_btn_search:
 			clickFragment(new FragmentSearch(), 1);
 			break;
-		case R.id.bottom_btn2:
+		case R.id.bottom_btn_favorite:
 			clickFragment(new FavoriteFrament(), 2);
 			break;
-		case R.id.bottom_btn3:
+		case R.id.bottom_btn_more:
 			clickFragment(new FragmentMore(), 3);
 			break;
 		}

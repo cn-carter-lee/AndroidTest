@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="pull_to_refresh_refreshing_label">加载中...</string>
     <string name="pull_to_refresh_release_label">松开可以刷新</string>
     <string name="app_name">礼物搜</string>
@@ -39,5 +40,6 @@
     <string name="person0">全部</string>
     <string name="person1">女性</string>
     <string name="person2">男性</string>
+    <string name="image_content"></string>
 
 </resources>

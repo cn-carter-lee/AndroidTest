@@ -8,35 +8,28 @@
     android:orientation="horizontal" >
 
     <Button
-        android:id="@+id/bottom_btn0"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/btn_ic_so"
+        android:id="@+id/bottom_btn_so"
+        style="@style/footer_btn"
+        android:background="@drawable/footer_ic_so_bg"
+        android:enabled="false"
         android:onClick="clickBar" />
 
     <Button
-        android:id="@+id/bottom_btn1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/btn_ic_search"
+        android:id="@+id/bottom_btn_search"
+        style="@style/footer_btn"
+        android:background="@drawable/footer_ic_search_bg"
         android:onClick="clickBar" />
 
     <Button
-        android:id="@+id/bottom_btn2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/btn_ic_favorite"
+        android:id="@+id/bottom_btn_favorite"
+        style="@style/footer_btn"
+        android:background="@drawable/footer_ic_favorite_bg"
         android:onClick="clickBar" />
 
     <Button
-        android:id="@+id/bottom_btn3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/btn_ic_more"
+        android:id="@+id/bottom_btn_more"
+        style="@style/footer_btn"
+        android:background="@drawable/footer_ic_more_bg"
         android:onClick="clickBar" />
 
 </LinearLayout>

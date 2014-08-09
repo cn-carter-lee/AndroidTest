@@ -1,4 +1,4 @@
-package com.liwuso.widget;
+package com.liwuso.app.widget;
 
 import com.liwuso.app.R;
 import android.content.Context;

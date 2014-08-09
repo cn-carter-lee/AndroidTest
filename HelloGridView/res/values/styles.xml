@@ -29,18 +29,17 @@
     <style name="frame_button">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_weight">1</item>frame_button_bg
+        <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/frame_button_bg</item>
-        <item name="android:textColor">@drawable/frame_button_txt</item>          
+        <item name="android:textColor">@drawable/frame_button_txt</item>
     </style>
-    
+
     <style name="frame_button_seperator">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:contentDescription">@string/image_content</item>
         <item name="android:background">@drawable/frame_seperator</item>
-    </style>    
-
-   
+    </style>
 
     <style name="widget_listview">
         <item name="android:layout_width">fill_parent</item>
@@ -51,5 +50,12 @@
         <item name="android:background">@color/full_transparent</item>
         <item name="android:scrollingCache">false</item>
     </style>
+    
+    <style name="footer_btn">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>    
+    </style>    
 
 </resources>

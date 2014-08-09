@@ -11,28 +11,27 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/frame_btn_news_lastest"
+            android:id="@+id/frame_btn_all"
             style="@style/frame_button"
             android:text="@string/person0" />
 
         <ImageView style="@style/frame_button_seperator" />
 
         <Button
-            android:id="@+id/frame_btn_news_blog"
+            android:id="@+id/frame_btn_female"
             style="@style/frame_button"
-            android:enabled="false"
             android:text="@string/person1" />
 
         <ImageView style="@style/frame_button_seperator" />
 
         <Button
-            android:id="@+id/frame_btn_news_recommend"
+            android:id="@+id/frame_btn_male"
             style="@style/frame_button"
-            android:enabled="false"
             android:text="@string/person2" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/frame_layout_female"
         style="@style/Gift.ParentLayoutPadding"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -44,23 +43,25 @@
             android:layout_weight="1"
             android:orientation="vertical" >
 
-            <com.liwuso.widget.PullToRefreshListView
+            <com.liwuso.app.widget.PullToRefreshListView
                 android:id="@+id/frame_listview_person_female"
                 style="@style/widget_listview" />
         </LinearLayout>
 
         <View
+            android:id="@+id/frame_layout_sepeartor"
             android:layout_width="10dp"
             android:layout_height="fill_parent" >
         </View>
 
         <LinearLayout
+            android:id="@+id/frame_layout_male"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:orientation="vertical" >
 
-            <com.liwuso.widget.PullToRefreshListView
+            <com.liwuso.app.widget.PullToRefreshListView
                 android:id="@+id/frame_listview_person_male"
                 style="@style/widget_listview" />
         </LinearLayout>
