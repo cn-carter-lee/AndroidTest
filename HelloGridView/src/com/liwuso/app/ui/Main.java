@@ -10,23 +10,28 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.R;
+import com.liwuso.app.adapter.ImageAdapter;
 import com.liwuso.app.adapter.ListViewAgeAdapter;
 import com.liwuso.app.adapter.ListViewFemaleAdapter;
 import com.liwuso.app.adapter.ListViewMaleAdapter;
 import com.liwuso.app.adapter.ListViewProductAdapter;
 import com.liwuso.app.adapter.ListViewPurposeAdapter;
 import com.liwuso.app.common.UIHelper;
+import com.liwuso.app.widget.PullToRefreshGridView;
 import com.liwuso.app.widget.PullToRefreshListView;
 import com.liwuso.app.widget.ScrollLayout;
 import com.pys.liwuso.bean.Age;
@@ -98,12 +103,20 @@ public class Main extends BaseActivity {
 	private Button fbFavorite;
 	private Button fbMore;
 
+	private LinearLayout searchCategoryBar;
+
+	private List<Button> searchTabButtons = new ArrayList<Button>();
+
 	private Button btnMoreAbout;
 	private Button btnMoreQuestion;
 	private Button btnMoreAgreement;
 	private Button btnMoreAdvice;
 	private Button btnMoreContact;
 	private Button btnMoreCheckVertion;
+
+	// Search
+
+	private PullToRefreshGridView gvSearchProduct;
 
 	private AppContext appContext;
 
@@ -150,7 +163,8 @@ public class Main extends BaseActivity {
 	private void initFrameButton() {
 		// ScrollLayout
 		slSo = (ScrollLayout) findViewById(R.id.main_scrolllayout_so);
-		slMore = (ScrollLayout) findViewById(R.id.main_scrolllayout_so);
+		slMore = (ScrollLayout) findViewById(R.id.main_scrolllayout_more);
+
 		// So
 		frame_layout_female = (LinearLayout) findViewById(R.id.frame_layout_female);
 		frame_layout_sepeartor = (View) findViewById(R.id.frame_layout_sepeartor);
@@ -167,7 +181,19 @@ public class Main extends BaseActivity {
 		framebtn_Male.setOnClickListener(framePersonBtnClick(framebtn_Male, 2));
 
 		// Search
+		searchCategoryBar = (LinearLayout) findViewById(R.id.search_category_bar);
 
+		for (int i = 0; i < 4; i++) {
+			Button tempButton = (Button) getLayoutInflater().inflate(
+					R.anim.search_tab_button, searchCategoryBar, false);
+			tempButton.setText(String.valueOf(i));
+			searchCategoryBar.addView(tempButton);
+		}
+		if (searchCategoryBar.getChildCount() > 0)
+			searchCategoryBar.getChildAt(0).setEnabled(false);
+
+		gvSearchProduct = (PullToRefreshGridView) findViewById(R.id.frame_search_gridview_product);
+		this.loadSearchProduct();
 		// Favorite
 
 		// More
@@ -918,6 +944,19 @@ public class Main extends BaseActivity {
 		titleView.setText(title);
 	}
 
+	// Search
+
+	private void loadSearchProduct() {
+		gvSearchProduct.setAdapter(new ImageAdapter(this, this));
+
+		gvSearchProduct.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
+
+			}
+		});
+	}
+
 	// More
 
 	private View.OnClickListener frameMoreBtnClick(final int item_index) {
@@ -929,7 +968,7 @@ public class Main extends BaseActivity {
 				// View rootView = inflater.inflate(R.layout.more_info,
 				// container, false);
 				int cuuuuu = slMore.getCurScreen();
-			
+
 				slMore.scrollToScreen(cuuuuu);
 				TextView myTextView = (TextView) findViewById(R.id.txtMoreInfo);
 				myTextView.setText(Html.fromHtml(getResources().getStringArray(
