@@ -8,17 +8,42 @@
     <include layout="@layout/main_header" />
 
     <com.liwuso.app.widget.ScrollLayout
-        android:id="@+id/main_scrolllayout"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:id="@+id/main_scrolllayout_so"
+        style="@style/main_srcoll_layout"
+        android:visibility="gone" >
 
         <include layout="@layout/frame_person" />
 
         <include layout="@layout/frame_age" />
 
         <include layout="@layout/frame_purpose" />
+
         <include layout="@layout/frame_product" />
+    </com.liwuso.app.widget.ScrollLayout>
+
+    <com.liwuso.app.widget.ScrollLayout
+        android:id="@+id/main_scrolllayout_search"
+        style="@style/main_srcoll_layout" >
+
+        <include layout="@layout/frame_search" />
+    </com.liwuso.app.widget.ScrollLayout>
+
+    <com.liwuso.app.widget.ScrollLayout
+        android:id="@+id/main_scrolllayout_favorite"
+        style="@style/main_srcoll_layout"
+        android:visibility="gone" >
+    </com.liwuso.app.widget.ScrollLayout>
+
+    <com.liwuso.app.widget.ScrollLayout
+        android:id="@+id/main_scrolllayout_more"
+        style="@style/main_srcoll_layout"
+        android:visibility="gone" >
+
+        <include layout="@layout/frame_more" />
+
+        <include layout="@layout/frame_more_info" />
+
+        <include layout="@layout/frame_more_advice" />
     </com.liwuso.app.widget.ScrollLayout>
 
     <include layout="@layout/main_footer" />

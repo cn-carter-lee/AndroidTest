@@ -11,25 +11,21 @@
         android:id="@+id/bottom_btn_so"
         style="@style/footer_btn"
         android:background="@drawable/footer_ic_so_bg"
-        android:enabled="false"
-        android:onClick="clickBar" />
+        android:enabled="false" />
 
     <Button
         android:id="@+id/bottom_btn_search"
         style="@style/footer_btn"
-        android:background="@drawable/footer_ic_search_bg"
-        android:onClick="clickBar" />
+        android:background="@drawable/footer_ic_search_bg" />
 
     <Button
         android:id="@+id/bottom_btn_favorite"
         style="@style/footer_btn"
-        android:background="@drawable/footer_ic_favorite_bg"
-        android:onClick="clickBar" />
+        android:background="@drawable/footer_ic_favorite_bg" />
 
     <Button
         android:id="@+id/bottom_btn_more"
         style="@style/footer_btn"
-        android:background="@drawable/footer_ic_more_bg"
-        android:onClick="clickBar" />
+        android:background="@drawable/footer_ic_more_bg" />
 
 </LinearLayout>

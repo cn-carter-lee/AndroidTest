@@ -8,30 +8,8 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <Button
-        android:id="@+id/button0"
-        style="@style/SearchButtonRed"
-        android:text="13-17岁" />
-
-    <Button
-        android:id="@+id/button1"
-        style="@style/SearchButtonBlue"
-        android:onClick="searchAge"
-        android:text="18-24岁" />
-
-    <Button
-        android:id="@+id/button2"
-        style="@style/SearchButtonYellow"
-        android:text="25-34岁" />
-
-    <Button
-        android:id="@+id/button3"
-        style="@style/SearchButtonPink"
-        android:text="35-44岁" />
-
-    <Button
-        android:id="@+id/button4"
-        style="@style/SearchButtonPurple"
-        android:text="45-59岁" />
+    <com.liwuso.app.widget.PullToRefreshListView
+        android:id="@+id/frame_listview_age"
+        style="@style/widget_listview" />
 
 </LinearLayout>

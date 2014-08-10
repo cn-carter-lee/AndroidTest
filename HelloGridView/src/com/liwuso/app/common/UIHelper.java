@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 import com.liwuso.app.AppManager;
 import com.liwuso.app.R;
-import com.liwuso.ui.Main;
+import com.liwuso.app.ui.Main;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,16 +15,19 @@ import android.widget.ProgressBar;
 
 public class UIHelper {
 	public final static int LISTVIEW_ACTION_INIT = 0x01;
-	public final static int LISTVIEW_ACTION_SCROLL = 0x03;	
+	public final static int LISTVIEW_ACTION_SCROLL = 0x03;
 	public final static int LISTVIEW_ACTION_REFRESH = 0x02;
 	public final static int LISTVIEW_ACTION_CHANGE_CATALOG = 0x04;
-	
+
 	public final static int LISTVIEW_DATA_FULL = 0x03;
 	public final static int LISTVIEW_DATA_MORE = 0x01;
 	public final static int LISTVIEW_DATA_EMPTY = 0x04;
 
 	public final static int LISTVIEW_DATATYPE_FEMALE = 0x01;
 	public final static int LISTVIEW_DATATYPE_MALE = 0x02;
+	public final static int LISTVIEW_DATATYPE_AGE = 0x03;
+	public final static int LISTVIEW_DATATYPE_PURPOSE = 0x04;
+	public final static int LISTVIEW_DATATYPE_PRODUCT = 0x05;
 
 	/** ±Ì«ÈÕº∆¨∆•≈‰ */
 	private static Pattern facePattern = Pattern

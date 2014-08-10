@@ -8,7 +8,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 
-import com.liwuso.ui.Main;
+import com.liwuso.app.ui.Main;
 
 public class AppStart extends Activity {
     
