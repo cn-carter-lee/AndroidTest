@@ -46,7 +46,6 @@ public class ListViewAgeAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ListItemView listItemView = null;
-
 		if (convertView == null) {
 			convertView = listContainer.inflate(itemViewResourceArray[position
 					% itemViewResourceArray.length], null);
@@ -57,9 +56,7 @@ public class ListViewAgeAdapter extends BaseAdapter {
 		} else {
 			listItemView = (ListItemView) convertView.getTag();
 		}
-
 		Age age = listItems.get(position);
-
 		listItemView.button.setText(age.Name);
 		return convertView;
 	}

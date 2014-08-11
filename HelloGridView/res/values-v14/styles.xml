@@ -121,7 +121,7 @@
     <style name="Search.Txt" parent="android:Widget"></style>
 
     <style name="Search.Btn" parent="android:Widget">
-        <item name="android:background">@drawable/search_btn_image</item>
+        <item name="android:background">@drawable/img_search_btn</item>
     </style>
 
     <style name="footbar">

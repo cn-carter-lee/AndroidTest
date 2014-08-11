@@ -9,8 +9,7 @@
 
     <com.liwuso.app.widget.ScrollLayout
         android:id="@+id/main_scrolllayout_so"
-        style="@style/main_srcoll_layout"
-        android:visibility="gone" >
+        style="@style/main_srcoll_layout" >
 
         <include layout="@layout/frame_person" />
 
@@ -31,7 +30,8 @@
 
     <com.liwuso.app.widget.ScrollLayout
         android:id="@+id/main_scrolllayout_favorite"
-        style="@style/main_srcoll_layout" >
+        style="@style/main_srcoll_layout"
+        android:visibility="gone" >
 
         <include layout="@layout/frame_favorite" />
 

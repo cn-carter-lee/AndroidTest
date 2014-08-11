@@ -51,16 +51,14 @@ public class ImageAdapter extends BaseAdapter {
 	}
 
 	// reference to our images
-	private Integer[] mThumbIds = {
-
-	R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
+	private Integer[] mThumbIds = { R.drawable.sample_0, R.drawable.sample_0,
 			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
 			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
 			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
 			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
 			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
 			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
-			R.drawable.sample_0
+			R.drawable.sample_0, R.drawable.sample_0
 
 	};
 }

@@ -38,13 +38,13 @@
             android:id="@+id/favorite_product_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
+            android:layout_below="@+id/favorite_product_title"
             android:text="¥168.00"
             android:textColor="#ff6600"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/favorite_product_number"
             style="@style/Gift.Product.Favorite_Added"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -23,8 +23,9 @@ public class ListViewFavoriteProductAdapter extends BaseAdapter {
 	public ImageLoader imageLoader;
 
 	static class ListItemView {
-		public TextView text;
+		public TextView title;
 		public TextView price;
+		public TextView number;
 		public ImageView image;
 	}
 
@@ -54,10 +55,14 @@ public class ListViewFavoriteProductAdapter extends BaseAdapter {
 			convertView = listContainer.inflate(R.layout.favorite_item, null);
 
 			listItemView = new ListItemView();
-			listItemView.text = (TextView) convertView
+			listItemView.title = (TextView) convertView
 					.findViewById(R.id.favorite_product_title);
 			listItemView.price = (TextView) convertView
 					.findViewById(R.id.favorite_product_price);
+
+			listItemView.number = (TextView) convertView
+					.findViewById(R.id.favorite_product_number);
+
 			listItemView.image = (ImageView) convertView
 					.findViewById(R.id.favorite_product_image);
 			convertView.setTag(listItemView);
@@ -67,8 +72,9 @@ public class ListViewFavoriteProductAdapter extends BaseAdapter {
 
 		Product product = listItems.get(position);
 
-		listItemView.text.setText(product.Name);
+		listItemView.title.setText(product.Name);
 		listItemView.price.setText(product.Price);
+		listItemView.number.setText("1020»À ’≤ÿ");
 		imageLoader.DisplayImage(product.ImageUrl, listItemView.image);
 		return convertView;
 	}

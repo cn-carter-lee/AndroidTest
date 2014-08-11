@@ -49,6 +49,8 @@ public class Main extends BaseActivity {
 
 	//
 	private ScrollLayout slSo;
+	private ScrollLayout slSearch;
+	private ScrollLayout slFavorite;
 	private ScrollLayout slMore;
 
 	private ProgressBar mHeadProgress;
@@ -128,12 +130,12 @@ public class Main extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		appContext = (AppContext) getApplication();
-
 		this.initHeadView();
+		this.initBody();
 		this.initFootBar();
-
 		this.initFrameButton();
 		this.initFrameListView();
+		this.setTitle("您要送谁礼物?");
 	}
 
 	@Override
@@ -156,11 +158,25 @@ public class Main extends BaseActivity {
 		// findViewById(R.id.main_head_progress);
 	}
 
+	private void initBody() {
+		slSo = (ScrollLayout) findViewById(R.id.main_scrolllayout_so);
+		slSearch = (ScrollLayout) findViewById(R.id.main_scrolllayout_search);
+		slFavorite = (ScrollLayout) findViewById(R.id.main_scrolllayout_favorite);
+		slMore = (ScrollLayout) findViewById(R.id.main_scrolllayout_more);
+	}
+
 	private void initFootBar() {
 		fbLiwuso = (Button) findViewById(R.id.bottom_btn_so);
+		fbLiwuso.setOnClickListener(selectFootBar(1));
+
 		fbSearch = (Button) findViewById(R.id.bottom_btn_search);
+		fbSearch.setOnClickListener(selectFootBar(2));
+
 		fbFavorite = (Button) findViewById(R.id.bottom_btn_favorite);
+		fbFavorite.setOnClickListener(selectFootBar(3));
+
 		fbMore = (Button) findViewById(R.id.bottom_btn_more);
+		fbMore.setOnClickListener(selectFootBar(4));
 	}
 
 	private void initFrameButton() {
@@ -1056,9 +1072,46 @@ public class Main extends BaseActivity {
 		relaceFragment(newFragment);
 	}
 
-	public void setTitle(String title) {
+	// Top
+	private void setTitle(String title) {
 		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
 		titleView.setText(title);
+	}
+
+	// Body
+	private void showBodyLayout(int i) {
+		if (i == 1)
+			slSo.setVisibility(View.VISIBLE);
+		else
+			slSo.setVisibility(View.GONE);
+
+		if (i == 2)
+			slSearch.setVisibility(View.VISIBLE);
+		else
+			slSearch.setVisibility(View.GONE);
+
+		if (i == 3)
+			slFavorite.setVisibility(View.VISIBLE);
+		else
+			slFavorite.setVisibility(View.GONE);
+
+		if (i == 4)
+			slMore.setVisibility(View.VISIBLE);
+		else
+			slMore.setVisibility(View.GONE);
+	}
+
+	// Footer
+	private View.OnClickListener selectFootBar(final int i) {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				fbLiwuso.setEnabled(i != 1);
+				fbSearch.setEnabled(i != 2);
+				fbFavorite.setEnabled(i != 3);
+				fbMore.setEnabled(i != 4);
+				showBodyLayout(i);
+			}
+		};
 	}
 
 	// Search
