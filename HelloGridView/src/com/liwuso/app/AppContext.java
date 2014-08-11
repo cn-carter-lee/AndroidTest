@@ -80,9 +80,8 @@ public class AppContext extends Application {
 	public AgeList getAgeList(int catalog, int pageIndex, boolean isRefresh)
 			throws AppException {
 		AgeList list = new AgeList();
-		String key = "age_list_" + catalog + "_" + pageIndex + "_"
-				+ PAGE_SIZE;
-	
+		String key = "age_list_" + catalog + "_" + pageIndex + "_" + PAGE_SIZE;
+
 		for (int i = 0; i < 20; i++) {
 			Age age = new Age();
 			age.Name = "OOOOO";
@@ -91,12 +90,12 @@ public class AppContext extends Application {
 		return list;
 	}
 
-	public PurposeList getPurposeList(int catalog, int pageIndex, boolean isRefresh)
-			throws AppException {
+	public PurposeList getPurposeList(int catalog, int pageIndex,
+			boolean isRefresh) throws AppException {
 		PurposeList list = new PurposeList();
 		String key = "purpose_list_" + catalog + "_" + pageIndex + "_"
 				+ PAGE_SIZE;
-	
+
 		for (int i = 0; i < 20; i++) {
 			Purpose purposea = new Purpose();
 			purposea.Name = "PPPPPPPPPPPPPPPPPP";
@@ -104,7 +103,7 @@ public class AppContext extends Application {
 		}
 		return list;
 	}
-	
+
 	public ProductList getProductList(int catalog, int pageIndex,
 			boolean isRefresh) throws AppException {
 		ProductList list = new ProductList();
@@ -123,4 +122,24 @@ public class AppContext extends Application {
 		}
 		return list;
 	}
+
+	public ProductList getFavoriteProductList(int catalog, int pageIndex,
+			boolean isRefresh) throws AppException {
+		ProductList list = new ProductList();
+		String key = "product_list_" + catalog + "_" + pageIndex + "_"
+				+ PAGE_SIZE;
+		String[] urls = {
+				"http://g.hiphotos.baidu.com/image/pic/item/42166d224f4a20a4e0b49b3e92529822730ed0a5.jpg",
+				"http://img10.360buyimg.com/n1/g16/M00/02/11/rBEbRlNsQowIAAAAAAFkrAtZTckAAAfyQM6YFsAAWTE992.jpg",
+				"http://images.sports.cn/Image/2014/06/29/0832351428.jpg" };
+		for (int i = 0; i < 20; i++) {
+			Product product = new Product();
+			product.Name = "FFFFFFFF";
+			product.Price = "1200";
+			product.ImageUrl = urls[i % 3];
+			list.Add(product);
+		}
+		return list;
+	}
+
 }

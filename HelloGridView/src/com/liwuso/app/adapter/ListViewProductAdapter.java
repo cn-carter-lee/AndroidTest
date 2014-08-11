@@ -59,7 +59,7 @@ public class ListViewProductAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 
-			convertView = listContainer.inflate(R.layout.product_item, null);
+			convertView = listContainer.inflate(R.layout.search_item, null);
 
 			listItemView = new ListItemView();
 			listItemView.text = (TextView) convertView.findViewById(R.id.title);

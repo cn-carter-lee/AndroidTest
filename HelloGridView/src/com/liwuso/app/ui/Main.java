@@ -26,6 +26,7 @@ import com.liwuso.app.AppException;
 import com.liwuso.app.R;
 import com.liwuso.app.adapter.ImageAdapter;
 import com.liwuso.app.adapter.ListViewAgeAdapter;
+import com.liwuso.app.adapter.ListViewFavoriteProductAdapter;
 import com.liwuso.app.adapter.ListViewFemaleAdapter;
 import com.liwuso.app.adapter.ListViewMaleAdapter;
 import com.liwuso.app.adapter.ListViewProductAdapter;
@@ -61,30 +62,35 @@ public class Main extends BaseActivity {
 	private PullToRefreshListView lvAge;
 	private PullToRefreshListView lvPurpose;
 	private PullToRefreshListView lvProduct;
+	private PullToRefreshListView lvFavoriteProduct;
 
 	private Handler lvFemaleHandler;
 	private Handler lvMaleHandler;
 	private Handler lvAgeHandler;
 	private Handler lvPurposeHandler;
 	private Handler lvProductHandler;
+	private Handler lvFavoriteProductHandler;
 
 	private ListViewFemaleAdapter lvFemaleAdapter;
 	private ListViewMaleAdapter lvMaleAdapter;
 	private ListViewAgeAdapter lvAgeAdapter;
 	private ListViewPurposeAdapter lvPurposeAdapter;
 	private ListViewProductAdapter lvProductAdapter;
+	private ListViewFavoriteProductAdapter lvFavoriteProductAdapter;
 
 	private List<Person> lvFemaleData = new ArrayList<Person>();
 	private List<Person> lvMaleData = new ArrayList<Person>();
 	private List<Age> lvAgeData = new ArrayList<Age>();
 	private List<Purpose> lvPurposeData = new ArrayList<Purpose>();
 	private List<Product> lvProductData = new ArrayList<Product>();
+	private List<Product> lvFavoriteProductData = new ArrayList<Product>();
 
 	private int lvFemaleSumData;
 	private int lvMaleSumData;
 	private int lvAgeSumData;
 	private int lvPurposeSumData;
 	private int lvProductSumData;
+	private int lvFavoriteProductSumData;
 
 	private int mCurSel;
 
@@ -105,8 +111,6 @@ public class Main extends BaseActivity {
 
 	private LinearLayout searchCategoryBar;
 
-	private List<Button> searchTabButtons = new ArrayList<Button>();
-
 	private Button btnMoreAbout;
 	private Button btnMoreQuestion;
 	private Button btnMoreAgreement;
@@ -115,7 +119,6 @@ public class Main extends BaseActivity {
 	private Button btnMoreCheckVertion;
 
 	// Search
-
 	private PullToRefreshGridView gvSearchProduct;
 
 	private AppContext appContext;
@@ -245,6 +248,7 @@ public class Main extends BaseActivity {
 		this.initAgeListView();
 		this.initPurposeView();
 		this.initProductListView();
+		this.initFavoriteProductListView();
 		this.initFrameListViewData();
 	}
 
@@ -447,6 +451,51 @@ public class Main extends BaseActivity {
 				});
 	}
 
+	private void initFavoriteProductListView() {
+		lvFavoriteProductAdapter = new ListViewFavoriteProductAdapter(this,
+				lvFavoriteProductData);
+		lvFavoriteProduct = (PullToRefreshListView) findViewById(R.id.frame_listview_favorite_product);
+		lvFavoriteProduct.setAdapter(lvFavoriteProductAdapter);
+
+		lvFavoriteProduct
+				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						// TODO:
+					}
+				});
+		lvFavoriteProduct
+				.setOnScrollListener(new AbsListView.OnScrollListener() {
+					public void onScrollStateChanged(AbsListView view,
+							int scrollState) {
+						lvPurpose.onScrollStateChanged(view, scrollState);
+						// 数据为空--不用继续下面代码�?
+						if (lvFavoriteProductData.isEmpty())
+							return;
+						// 判断是否滚动到底�?
+						int pageIndex = 1;
+						loadLvData(1, pageIndex, lvFavoriteProductHandler,
+								UIHelper.LISTVIEW_ACTION_SCROLL,
+								UIHelper.LISTVIEW_DATATYPE_PURPOSE);
+					}
+
+					public void onScroll(AbsListView view,
+							int firstVisibleItem, int visibleItemCount,
+							int totalItemCount) {
+						lvPurpose.onScroll(view, firstVisibleItem,
+								visibleItemCount, totalItemCount);
+					}
+				});
+		lvFavoriteProduct
+				.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+					public void onRefresh() {
+						loadLvData(1, 0, lvFavoriteProductHandler,
+								UIHelper.LISTVIEW_ACTION_REFRESH,
+								UIHelper.LISTVIEW_DATATYPE_PURPOSE);
+					}
+				});
+	}
+
 	private void initFrameListViewData() {
 		lvFemaleHandler = this.getLvHandler(lvFemale, lvFemaleAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
@@ -465,6 +514,9 @@ public class Main extends BaseActivity {
 		lvProductHandler = this.getLvHandler(lvProduct, lvProductAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
+		lvFavoriteProductHandler = this.getLvHandler(lvFavoriteProduct,
+				lvFavoriteProductAdapter, lvFemale_foot_more,
+				lvFemale_foot_progress, AppContext.PAGE_SIZE);
 
 		// Load Person data
 		if (lvFemaleData.isEmpty()) {
@@ -482,6 +534,9 @@ public class Main extends BaseActivity {
 			loadLvData(1, 0, lvProductHandler, UIHelper.LISTVIEW_ACTION_INIT,
 					UIHelper.LISTVIEW_DATATYPE_PRODUCT);
 
+			loadLvData(1, 0, lvFavoriteProductHandler,
+					UIHelper.LISTVIEW_ACTION_INIT,
+					UIHelper.LISTVIEW_DATATYPE_FAVORITEPRODUCT);
 		}
 	}
 
@@ -564,6 +619,14 @@ public class Main extends BaseActivity {
 						msg.what = productlist.getPageSize();
 						msg.obj = productlist;
 						break;
+					case UIHelper.LISTVIEW_DATATYPE_FAVORITEPRODUCT:
+						ProductList favoriteproductlist = appContext
+								.getFavoriteProductList(catalog, pageIndex,
+										isRefresh);
+						msg.what = favoriteproductlist.getPageSize();
+						msg.obj = favoriteproductlist;
+						break;
+
 					}
 				} catch (AppException e) {
 					e.printStackTrace();
@@ -596,6 +659,8 @@ public class Main extends BaseActivity {
 			break;
 		case UIHelper.LISTVIEW_DATATYPE_PRODUCT:
 			handleLvDataProduct(what, obj, objtype, actiontype);
+		case UIHelper.LISTVIEW_DATATYPE_FAVORITEPRODUCT:
+			handleLvDataFavoriteProduct(what, obj, objtype, actiontype);
 			break;
 		}
 
@@ -862,6 +927,58 @@ public class Main extends BaseActivity {
 		}
 	}
 
+	private void handleLvDataFavoriteProduct(int what, Object obj, int objtype,
+			int actiontype) {
+		switch (actiontype) {
+		case UIHelper.LISTVIEW_ACTION_INIT:
+		case UIHelper.LISTVIEW_ACTION_REFRESH:
+		case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:
+			int newdata = 0;// 新加载数�?只有刷新动作才会使用�?
+			ProductList productlist = (ProductList) obj;
+			lvFavoriteProductSumData = what;
+			if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
+				if (lvFavoriteProductData.size() > 0) {
+					for (Product product1 : productlist.getProductList()) {
+						boolean b = false;
+						for (Product product2 : lvFavoriteProductData) {
+							if (product1.getId() == product2.getId()) {
+								b = true;
+								break;
+							}
+						}
+						if (!b)
+							newdata++;
+					}
+				} else {
+					newdata = what;
+				}
+			}
+			lvFavoriteProductData.clear();
+			lvFavoriteProductData.addAll(productlist.getProductList());
+
+		case UIHelper.LISTVIEW_ACTION_SCROLL:
+			ProductList list = (ProductList) obj;
+			lvProductSumData += what;
+			if (lvProductData.size() > 0) {
+				for (Product purpose1 : list.getProductList()) {
+					boolean b = false;
+					for (Product purpose2 : lvFavoriteProductData) {
+						if (purpose1.getId() == purpose2.getId()) {
+							b = true;
+							break;
+						}
+					}
+					if (!b)
+						lvFavoriteProductData.add(purpose1);
+				}
+			} else {
+				lvFavoriteProductData.addAll(list.getProductList());
+			}
+
+			break;
+		}
+	}
+
 	public void clickBar(View view) {
 		int viewId = view.getId();
 		switch (viewId) {
@@ -948,7 +1065,6 @@ public class Main extends BaseActivity {
 
 	private void loadSearchProduct() {
 		gvSearchProduct.setAdapter(new ImageAdapter(this, this));
-
 		gvSearchProduct.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
@@ -956,6 +1072,8 @@ public class Main extends BaseActivity {
 			}
 		});
 	}
+
+	// Favorite
 
 	// More
 

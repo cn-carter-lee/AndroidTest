@@ -42,7 +42,7 @@ public class LazyAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View vi = convertView;
 		if (convertView == null)
-			vi = inflater.inflate(R.layout.product_item, null);
+			vi = inflater.inflate(R.layout.search_item, null);
 
 		TextView text = (TextView) vi.findViewById(R.id.text);
 		ImageView image = (ImageView) vi.findViewById(R.id.image);
