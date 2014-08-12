@@ -5,12 +5,13 @@
     android:background="@color/nav_bg" >
 
     <Button
-        android:id="@+id/btnQuestion"
+        android:id="@+id/btnTopNavPre"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dip"
-        android:background="@drawable/top_nav_btn_pre_selector" />
+        android:background="@drawable/top_nav_btn_pre_selector"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/main_head_progress"

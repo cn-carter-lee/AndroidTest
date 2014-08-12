@@ -10,12 +10,10 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,18 +45,17 @@ import com.pys.liwuso.bean.PurposeList;
 
 public class Main extends BaseActivity {
 
-	//
-	private ScrollLayout slSo;
-	private ScrollLayout slSearch;
-	private ScrollLayout slFavorite;
-	private ScrollLayout slMore;
-
+	private int[] slResourceArray = { R.id.main_scrolllayout_so,
+			R.id.main_scrolllayout_search, R.id.main_scrolllayout_favorite,
+			R.id.main_scrolllayout_more };
+	private ScrollLayout[] slArray = new ScrollLayout[4];
+	private int currentSlIndex = 0;
+	private int[] currentSlVisibleArray = { 0, 0, 0, 0 };
 	private ProgressBar mHeadProgress;
 	private ProgressBar lvFemale_foot_progress;
 	private ProgressBar lvMale_foot_progress;
 
 	// private int curNewsCatalog = NewsList.CATALOG_ALL;
-
 	private PullToRefreshListView lvFemale;
 	private PullToRefreshListView lvMale;
 	private PullToRefreshListView lvAge;
@@ -106,20 +103,21 @@ public class Main extends BaseActivity {
 	private Button framebtn_Female;
 	private Button framebtn_Male;
 
-	private Button fbLiwuso;
-	private Button fbSearch;
-	private Button fbFavorite;
-	private Button fbMore;
+	private int[] fbResourceArray = { R.id.bottom_btn_so,
+			R.id.bottom_btn_search, R.id.bottom_btn_favorite,
+			R.id.bottom_btn_more };
+	private Button[] footBtnArray = new Button[4];
 
 	private LinearLayout searchCategoryBar;
+	private int[] moreBtnResourceArray = { R.id.btn_more_about,
+			R.id.btn_more_question, R.id.btn_more_agreement,
+			R.id.btn_more_contact, R.id.btn_more_advice,
+			R.id.btn_more_check_vertion };
+	private Button[] moreBtnArray = new Button[6];
 
-	private Button btnMoreAbout;
-	private Button btnMoreQuestion;
-	private Button btnMoreAgreement;
-	private Button btnMoreAdvice;
-	private Button btnMoreContact;
-	private Button btnMoreCheckVertion;
-
+	// Top nav bar
+	private Button btnTopNavPre;
+	// private int currentTopNavIndex = 0;
 	// Search
 	private PullToRefreshGridView gvSearchProduct;
 
@@ -130,9 +128,7 @@ public class Main extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		appContext = (AppContext) getApplication();
-		this.initHeadView();
-		this.initBody();
-		this.initFootBar();
+		this.initMainView();
 		this.initFrameButton();
 		this.initFrameListView();
 		this.setTitle("您要送谁礼物?");
@@ -152,38 +148,27 @@ public class Main extends BaseActivity {
 		// mScrollLayout.setIsScroll(appContext.isScroll());
 	}
 
-	private void initHeadView() {
+	private void initMainView() {
+		// Top
+		btnTopNavPre = (Button) findViewById(R.id.btnTopNavPre);
+		btnTopNavPre.setOnClickListener(frameTopNavPreBtnClick());
 		mHeadProgress = (ProgressBar) findViewById(R.id.main_head_progress);
 		// TODO: lvPerson_foot_progress = (ProgressBar)
 		// findViewById(R.id.main_head_progress);
-	}
-
-	private void initBody() {
-		slSo = (ScrollLayout) findViewById(R.id.main_scrolllayout_so);
-		slSearch = (ScrollLayout) findViewById(R.id.main_scrolllayout_search);
-		slFavorite = (ScrollLayout) findViewById(R.id.main_scrolllayout_favorite);
-		slMore = (ScrollLayout) findViewById(R.id.main_scrolllayout_more);
-	}
-
-	private void initFootBar() {
-		fbLiwuso = (Button) findViewById(R.id.bottom_btn_so);
-		fbLiwuso.setOnClickListener(selectFootBar(1));
-
-		fbSearch = (Button) findViewById(R.id.bottom_btn_search);
-		fbSearch.setOnClickListener(selectFootBar(2));
-
-		fbFavorite = (Button) findViewById(R.id.bottom_btn_favorite);
-		fbFavorite.setOnClickListener(selectFootBar(3));
-
-		fbMore = (Button) findViewById(R.id.bottom_btn_more);
-		fbMore.setOnClickListener(selectFootBar(4));
+		// Body
+		for (int i = 0; i < slArray.length; i++) {
+			ScrollLayout scrollLayout = (ScrollLayout) findViewById(slResourceArray[i]);
+			slArray[i] = scrollLayout;
+		}
+		// Footer
+		for (int i = 0; i < footBtnArray.length; i++) {
+			Button footBtn = (Button) findViewById(fbResourceArray[i]);
+			footBtn.setOnClickListener(selectFootBar(i));
+			footBtnArray[i] = footBtn;
+		}
 	}
 
 	private void initFrameButton() {
-		// ScrollLayout
-		slSo = (ScrollLayout) findViewById(R.id.main_scrolllayout_so);
-		slMore = (ScrollLayout) findViewById(R.id.main_scrolllayout_more);
-
 		// So
 		frame_layout_female = (LinearLayout) findViewById(R.id.frame_layout_female);
 		frame_layout_sepeartor = (View) findViewById(R.id.frame_layout_sepeartor);
@@ -216,18 +201,11 @@ public class Main extends BaseActivity {
 		// Favorite
 
 		// More
-		btnMoreAbout = (Button) findViewById(R.id.btn_more_about);
-		btnMoreQuestion = (Button) findViewById(R.id.btn_more_question);
-		btnMoreAgreement = (Button) findViewById(R.id.btn_more_agreement);
-		btnMoreContact = (Button) findViewById(R.id.btn_more_contact);
-		btnMoreAbout.setOnClickListener(frameMoreBtnClick(0));
-		btnMoreQuestion.setOnClickListener(frameMoreBtnClick(1));
-		btnMoreAgreement.setOnClickListener(frameMoreBtnClick(2));
-		btnMoreContact.setOnClickListener(frameMoreBtnClick(3));
-
-		btnMoreAdvice = (Button) findViewById(R.id.btn_more_advice);
-		btnMoreCheckVertion = (Button) findViewById(R.id.btn_more_check_vertion);
-
+		for (int i = 0; i < moreBtnArray.length; i++) {
+			Button moreButton = (Button) findViewById(moreBtnResourceArray[i]);
+			moreBtnArray[i] = moreButton;
+			moreButton.setOnClickListener(frameMoreBtnClick(i));
+		}
 	}
 
 	private View.OnClickListener framePersonBtnClick(final Button btn,
@@ -540,19 +518,6 @@ public class Main extends BaseActivity {
 					UIHelper.LISTVIEW_DATATYPE_FEMALE);
 			loadLvData(1, 0, lvMaleHandler, UIHelper.LISTVIEW_ACTION_INIT,
 					UIHelper.LISTVIEW_DATATYPE_MALE);
-
-			loadLvData(1, 0, lvAgeHandler, UIHelper.LISTVIEW_ACTION_INIT,
-					UIHelper.LISTVIEW_DATATYPE_AGE);
-
-			loadLvData(1, 0, lvPurposeHandler, UIHelper.LISTVIEW_ACTION_INIT,
-					UIHelper.LISTVIEW_DATATYPE_PURPOSE);
-
-			loadLvData(1, 0, lvProductHandler, UIHelper.LISTVIEW_ACTION_INIT,
-					UIHelper.LISTVIEW_DATATYPE_PRODUCT);
-
-			loadLvData(1, 0, lvFavoriteProductHandler,
-					UIHelper.LISTVIEW_ACTION_INIT,
-					UIHelper.LISTVIEW_DATATYPE_FAVORITEPRODUCT);
 		}
 	}
 
@@ -995,127 +960,50 @@ public class Main extends BaseActivity {
 		}
 	}
 
-	public void clickBar(View view) {
-		int viewId = view.getId();
-		switch (viewId) {
-		case R.id.bottom_btn_so:
-			clickFragment(new FragmentPerson(), 0);
-			break;
-		case R.id.bottom_btn_search:
-			clickFragment(new FragmentSearch(), 1);
-			break;
-		case R.id.bottom_btn_favorite:
-			clickFragment(new FavoriteFrament(), 2);
-			break;
-		case R.id.bottom_btn_more:
-			clickFragment(new FragmentMore(), 3);
-			break;
-		}
-	}
-
-	public void searchPerson(View view) {
-		relaceFragment(new FragmentAge());
-	}
-
-	public void searchAge(View view) {
-		relaceFragment(new FragmentPurpose());
-	}
-
-	public void searchPurpose(View view) {
-		relaceFragment(new FragmentProduct());
-	}
-
-	public void clickMore(View view) {
-		switch (view.getId()) {
-		case R.id.btnAbout:
-			relaceFragment(new FragmentMoreInfo(0));
-			break;
-		case R.id.btnQuestion:
-			relaceFragment(new FragmentMoreInfo(1));
-			break;
-		case R.id.btnAgreement:
-			relaceFragment(new FragmentMoreInfo(2));
-			break;
-		case R.id.btnContact:
-			relaceFragment(new FragmentMoreInfo(3));
-			break;
-		case R.id.btnAdvice:
-			relaceFragment(new FragmentAdvice());
-			break;
-		case R.id.btnCheckVertion:
-			relaceFragment(new FragmentVersion());
-			break;
-		}
-	}
-
-	public void checkVersion(View view) {
-		MyDialog m = new MyDialog();
-		// m.show(getSupportFragmentManager(), "");
-	}
-
-	private void relaceFragment(Fragment newFragment) {
-		//
-		// FragmentTransaction transaction = getSupportFragmentManager()
-		// .beginTransaction();
-		// transaction.replace(R.id.container, newFragment);
-		// transaction.addToBackStack(null);
-		// transaction.commit();
-	}
-
-	private void clickFragment(Fragment newFragment, int iconIndex) {
-		for (int i = 0; i < 4; i++) {
-			// if (i == iconIndex)
-			// menu.getItem(i).setIcon(pressedIcons[i]);
-			// else
-			// menu.getItem(i).setIcon(unPressedIcons[i]);
-		}
-		relaceFragment(newFragment);
-	}
-
 	// Top
 	private void setTitle(String title) {
 		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
 		titleView.setText(title);
 	}
 
-	// Body
-	private void showBodyLayout(int i) {
-		if (i == 1)
-			slSo.setVisibility(View.VISIBLE);
-		else
-			slSo.setVisibility(View.GONE);
-
-		if (i == 2)
-			slSearch.setVisibility(View.VISIBLE);
-		else
-			slSearch.setVisibility(View.GONE);
-
-		if (i == 3)
-			slFavorite.setVisibility(View.VISIBLE);
-		else
-			slFavorite.setVisibility(View.GONE);
-
-		if (i == 4)
-			slMore.setVisibility(View.VISIBLE);
-		else
-			slMore.setVisibility(View.GONE);
-	}
-
 	// Footer
-	private View.OnClickListener selectFootBar(final int i) {
+	private View.OnClickListener selectFootBar(final int itemIndex) {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-				fbLiwuso.setEnabled(i != 1);
-				fbSearch.setEnabled(i != 2);
-				fbFavorite.setEnabled(i != 3);
-				fbMore.setEnabled(i != 4);
-				showBodyLayout(i);
+				currentSlIndex = itemIndex;
+				for (int i = 0; i < footBtnArray.length; i++) {
+					footBtnArray[i].setEnabled(i != itemIndex);
+					if (i == itemIndex)
+						slArray[i].setVisibility(View.VISIBLE);
+					else
+						slArray[i].setVisibility(View.GONE);
+				}
+
+				// Set nav bar
+				if (slArray[itemIndex].currentVisibleScreen > 0)
+					btnTopNavPre.setVisibility(View.VISIBLE);
+				else
+					btnTopNavPre.setVisibility(View.GONE);
+				currentSlIndex = itemIndex;
+				// Load data
+				switch (itemIndex) {
+				case 0:
+					break;
+				case 1:
+					loadSearchProduct();
+					break;
+				case 2:
+					loadFavorite();
+					break;
+				case 3:
+					loadMore();
+					break;
+				}
 			}
 		};
 	}
 
 	// Search
-
 	private void loadSearchProduct() {
 		gvSearchProduct.setAdapter(new ImageAdapter(this, this));
 		gvSearchProduct.setOnItemClickListener(new OnItemClickListener() {
@@ -1127,50 +1015,60 @@ public class Main extends BaseActivity {
 	}
 
 	// Favorite
+	private void loadFavorite() {
+		if (lvFavoriteProductData.isEmpty())
+			loadLvData(1, 0, lvFavoriteProductHandler,
+					UIHelper.LISTVIEW_ACTION_INIT,
+					UIHelper.LISTVIEW_DATATYPE_FAVORITEPRODUCT);
+	}
 
 	// More
+	private void loadMore() {
+		setTitle("更多");
+	}
 
 	private View.OnClickListener frameMoreBtnClick(final int item_index) {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-
-				// this.setNavgationTitle(getResources().getStringArray(
-				// R.array.more_info_title)[item_index]);
-				// View rootView = inflater.inflate(R.layout.more_info,
-				// container, false);
-				int cuuuuu = slMore.getCurScreen();
-
-				slMore.scrollToScreen(cuuuuu);
-				TextView myTextView = (TextView) findViewById(R.id.txtMoreInfo);
-				myTextView.setText(Html.fromHtml(getResources().getStringArray(
-						R.array.more_info)[item_index]));
-
-				// MoreActivity a = (MoreActivity) this.getActivity();
-				// a.setActionBarText(getResources().getStringArray(
-				// R.array.gift_more_about_title)[item_index]);
-
-				//
-				// framebtn_All.setEnabled(framebtn_All != btn);
-				// framebtn_Female.setEnabled(framebtn_Female != btn);
-				// framebtn_Male.setEnabled(framebtn_Male != btn);
-				//
-				// // curNewsCatalog = catalog;
-				// if (btn == framebtn_All) {
-				// frame_layout_female.setVisibility(View.VISIBLE);
-				// frame_layout_sepeartor.setVisibility(View.VISIBLE);
-				// frame_layout_male.setVisibility(View.VISIBLE);
-				// } else if (btn == framebtn_Female) {
-				// frame_layout_female.setVisibility(View.VISIBLE);
-				// frame_layout_male.setVisibility(View.GONE);
-				// frame_layout_sepeartor.setVisibility(View.GONE);
-				// } else if (btn == framebtn_Male) {
-				// frame_layout_male.setVisibility(View.VISIBLE);
-				// frame_layout_female.setVisibility(View.GONE);
-				// frame_layout_sepeartor.setVisibility(View.GONE);
-				//
-				// }
+				if (item_index < 4) {
+					TextView myTextView = (TextView) findViewById(R.id.txtMoreInfo);
+					myTextView.setText(Html.fromHtml(getResources()
+							.getStringArray(R.array.more_info)[item_index]));
+					slArray[currentSlIndex].scrollToScreen(1);
+				} else if (item_index == 4) {
+					// Advice
+					slArray[3].scrollToScreen(2);
+				} else if (item_index == 5) {
+					// Check version
+					CustomDialog m = new CustomDialog();
+					m.show(getSupportFragmentManager(), "");
+					return;
+				}
+				slArray[currentSlIndex].currentVisibleScreen++;
+				setTopBtnPreVisible(true);
 			}
 		};
 	}
 
+	// Top
+	private View.OnClickListener frameTopNavPreBtnClick() {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				if (slArray[currentSlIndex].currentVisibleScreen > 0) {
+					slArray[currentSlIndex].currentVisibleScreen--;
+					slArray[currentSlIndex]
+							.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+					if (slArray[currentSlIndex].currentVisibleScreen == 0)
+						btnTopNavPre.setVisibility(View.GONE);
+				}
+			}
+		};
+	}
+
+	private void setTopBtnPreVisible(boolean visibility) {
+		if (visibility)
+			btnTopNavPre.setVisibility(View.VISIBLE);
+		else
+			btnTopNavPre.setVisibility(View.GONE);
+	}
 }

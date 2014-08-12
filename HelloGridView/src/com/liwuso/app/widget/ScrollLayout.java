@@ -22,17 +22,20 @@ public class ScrollLayout extends ViewGroup {
 	private int mTouchSlop;
 	private float mLastMotionX;
 	private float mLastMotionY;
-    private OnViewChangeListener mOnViewChangeListener;
+	private OnViewChangeListener mOnViewChangeListener;
+	
+	public int currentVisibleScreen = 0;
+	/**
+	 * 设置是否可左右滑动
+	 * 
+	 * @author liux
+	 */
+	private boolean isScroll = false;
 
-    /**
-     * 设置是否可左右滑动
-     * @author liux
-     */
-    private boolean isScroll = true;
-    public void setIsScroll(boolean b) {
-    	this.isScroll = b;
-    }
-    
+	public void setIsScroll(boolean b) {
+		this.isScroll = b;
+	}
+
 	public ScrollLayout(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
@@ -61,7 +64,7 @@ public class ScrollLayout extends ViewGroup {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		//Log.e(TAG, "onMeasure");
+		// Log.e(TAG, "onMeasure");
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		final int width = MeasureSpec.getSize(widthMeasureSpec);
 		final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -95,41 +98,41 @@ public class ScrollLayout extends ViewGroup {
 	}
 
 	public void snapToScreen(int whichScreen) {
-		//是否可滑动
-		if(!isScroll) {
+		// 是否可滑动
+		if (!isScroll) {
 			this.setToScreen(whichScreen);
 			return;
 		}
-		
+
 		scrollToScreen(whichScreen);
 	}
 
-	public void scrollToScreen(int whichScreen) {		
+	public void scrollToScreen(int whichScreen) {
 		// get the valid layout page
 		whichScreen = Math.max(0, Math.min(whichScreen, getChildCount() - 1));
 		if (getScrollX() != (whichScreen * getWidth())) {
 			final int delta = whichScreen * getWidth() - getScrollX();
 			mScroller.startScroll(getScrollX(), 0, delta, 0,
-					Math.abs(delta) * 1);//持续滚动时间 以毫秒为单位
+					Math.abs(delta) * 1);// 持续滚动时间 以毫秒为单位
 			mCurScreen = whichScreen;
 			invalidate(); // Redraw the layout
-            
-			if (mOnViewChangeListener != null)
-            {
-            	mOnViewChangeListener.OnViewChange(mCurScreen);
-            }
+
+			if (mOnViewChangeListener != null) {
+				mOnViewChangeListener.OnViewChange(mCurScreen);
+			}
+			
+			this.currentVisibleScreen = whichScreen;
 		}
 	}
-	
+
 	public void setToScreen(int whichScreen) {
 		whichScreen = Math.max(0, Math.min(whichScreen, getChildCount() - 1));
 		mCurScreen = whichScreen;
 		scrollTo(whichScreen * getWidth(), 0);
-		
-        if (mOnViewChangeListener != null)
-        {
-        	mOnViewChangeListener.OnViewChange(mCurScreen);
-        }
+
+		if (mOnViewChangeListener != null) {
+			mOnViewChangeListener.OnViewChange(mCurScreen);
+		}
 	}
 
 	public int getCurScreen() {
@@ -146,11 +149,11 @@ public class ScrollLayout extends ViewGroup {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		//是否可滑动
-		if(!isScroll) {
+		// 是否可滑动
+		if (!isScroll) {
 			return false;
 		}
-		
+
 		if (mVelocityTracker == null) {
 			mVelocityTracker = VelocityTracker.obtain();
 		}
@@ -160,45 +163,45 @@ public class ScrollLayout extends ViewGroup {
 		final float y = event.getY();
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
-			//Log.e(TAG, "event down!");
+			// Log.e(TAG, "event down!");
 			if (!mScroller.isFinished()) {
 				mScroller.abortAnimation();
 			}
 			mLastMotionX = x;
-			
-			//---------------New Code----------------------
+
+			// ---------------New Code----------------------
 			mLastMotionY = y;
-			//---------------------------------------------
-			
+			// ---------------------------------------------
+
 			break;
 		case MotionEvent.ACTION_MOVE:
 			int deltaX = (int) (mLastMotionX - x);
-			
-			//---------------New Code----------------------
+
+			// ---------------New Code----------------------
 			int deltaY = (int) (mLastMotionY - y);
-			if(Math.abs(deltaX) < 200 && Math.abs(deltaY) > 10)
+			if (Math.abs(deltaX) < 200 && Math.abs(deltaY) > 10)
 				break;
 			mLastMotionY = y;
-			//-------------------------------------
-			
+			// -------------------------------------
+
 			mLastMotionX = x;
 			scrollBy(deltaX, 0);
 			break;
 		case MotionEvent.ACTION_UP:
-			//Log.e(TAG, "event : up");
+			// Log.e(TAG, "event : up");
 			// if (mTouchState == TOUCH_STATE_SCROLLING) {
 			final VelocityTracker velocityTracker = mVelocityTracker;
 			velocityTracker.computeCurrentVelocity(1000);
 			int velocityX = (int) velocityTracker.getXVelocity();
-			//Log.e(TAG, "velocityX:" + velocityX);
+			// Log.e(TAG, "velocityX:" + velocityX);
 			if (velocityX > SNAP_VELOCITY && mCurScreen > 0) {
 				// Fling enough to move left
-				//Log.e(TAG, "snap left");
+				// Log.e(TAG, "snap left");
 				snapToScreen(mCurScreen - 1);
 			} else if (velocityX < -SNAP_VELOCITY
 					&& mCurScreen < getChildCount() - 1) {
 				// Fling enough to move right
-				//Log.e(TAG, "snap right");
+				// Log.e(TAG, "snap right");
 				snapToScreen(mCurScreen + 1);
 			} else {
 				snapToDestination();
@@ -219,7 +222,7 @@ public class ScrollLayout extends ViewGroup {
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
-		//Log.e(TAG, "onInterceptTouchEvent-slop:" + mTouchSlop);
+		// Log.e(TAG, "onInterceptTouchEvent-slop:" + mTouchSlop);
 		final int action = ev.getAction();
 		if ((action == MotionEvent.ACTION_MOVE)
 				&& (mTouchState != TOUCH_STATE_REST)) {
@@ -247,18 +250,19 @@ public class ScrollLayout extends ViewGroup {
 		}
 		return mTouchState != TOUCH_STATE_REST;
 	}
-	
+
 	/**
 	 * 设置屏幕切换监听器
+	 * 
 	 * @param listener
 	 */
-	public void SetOnViewChangeListener(OnViewChangeListener listener)
-	{
+	public void SetOnViewChangeListener(OnViewChangeListener listener) {
 		mOnViewChangeListener = listener;
 	}
 
 	/**
 	 * 屏幕切换监听器
+	 * 
 	 * @author liux
 	 */
 	public interface OnViewChangeListener {
