@@ -7,7 +7,6 @@ import java.util.List;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.view.View;
 import android.widget.AbsListView;
@@ -16,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -45,12 +45,14 @@ import com.pys.liwuso.bean.PurposeList;
 
 public class Main extends BaseActivity {
 
+	private RelativeLayout mainHeaderBar;
+
 	private int[] slResourceArray = { R.id.main_scrolllayout_so,
 			R.id.main_scrolllayout_search, R.id.main_scrolllayout_favorite,
 			R.id.main_scrolllayout_more };
 	private ScrollLayout[] slArray = new ScrollLayout[4];
 	private int currentSlIndex = 0;
-	private int[] currentSlVisibleArray = { 0, 0, 0, 0 };
+
 	private ProgressBar mHeadProgress;
 	private ProgressBar lvFemale_foot_progress;
 	private ProgressBar lvMale_foot_progress;
@@ -109,6 +111,8 @@ public class Main extends BaseActivity {
 	private Button[] footBtnArray = new Button[4];
 
 	private LinearLayout searchCategoryBar;
+	private Button[] searchTabButtons;
+	private Button btnSearch;
 	private int[] moreBtnResourceArray = { R.id.btn_more_about,
 			R.id.btn_more_question, R.id.btn_more_agreement,
 			R.id.btn_more_contact, R.id.btn_more_advice,
@@ -150,6 +154,7 @@ public class Main extends BaseActivity {
 
 	private void initMainView() {
 		// Top
+		mainHeaderBar = (RelativeLayout) findViewById(R.id.main_header_bar);
 		btnTopNavPre = (Button) findViewById(R.id.btnTopNavPre);
 		btnTopNavPre.setOnClickListener(frameTopNavPreBtnClick());
 		mHeadProgress = (ProgressBar) findViewById(R.id.main_head_progress);
@@ -185,12 +190,19 @@ public class Main extends BaseActivity {
 		framebtn_Male.setOnClickListener(framePersonBtnClick(framebtn_Male, 2));
 
 		// Search
+		btnSearch = (Button) findViewById(R.id.btnSearch);
+		btnSearch.setOnClickListener(frameSearchBtnClick());
 		searchCategoryBar = (LinearLayout) findViewById(R.id.search_category_bar);
-
+		searchTabButtons = new Button[4];
 		for (int i = 0; i < 4; i++) {
 			Button tempButton = (Button) getLayoutInflater().inflate(
 					R.anim.search_tab_button, searchCategoryBar, false);
 			tempButton.setText(String.valueOf(i));
+
+			tempButton.setOnClickListener(frameSearchTabBtnClick(i));
+
+			searchTabButtons[i] = tempButton;
+
 			searchCategoryBar.addView(tempButton);
 		}
 		if (searchCategoryBar.getChildCount() > 0)
@@ -961,9 +973,45 @@ public class Main extends BaseActivity {
 	}
 
 	// Top
+	private void setTopNavBarVisible(boolean visibility) {
+		if (visibility)
+			mainHeaderBar.setVisibility(View.VISIBLE);
+		else
+			mainHeaderBar.setVisibility(View.GONE);
+	}
+
 	private void setTitle(String title) {
 		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
 		titleView.setText(title);
+	}
+
+	private View.OnClickListener frameTopNavPreBtnClick() {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				switch (currentSlIndex) {
+				case 0:
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					slArray[currentSlIndex].currentVisibleScreen = 0;
+					slArray[currentSlIndex].scrollToScreen(0);
+					setTopBtnPreVisible(false);
+					setTitle("更多");
+					break;
+				}
+
+			}
+		};
+	}
+
+	private void setTopBtnPreVisible(boolean visibility) {
+		if (visibility)
+			btnTopNavPre.setVisibility(View.VISIBLE);
+		else
+			btnTopNavPre.setVisibility(View.GONE);
 	}
 
 	// Footer
@@ -972,6 +1020,7 @@ public class Main extends BaseActivity {
 			public void onClick(View v) {
 				currentSlIndex = itemIndex;
 				for (int i = 0; i < footBtnArray.length; i++) {
+					setTopNavBarVisible(true);
 					footBtnArray[i].setEnabled(i != itemIndex);
 					if (i == itemIndex)
 						slArray[i].setVisibility(View.VISIBLE);
@@ -979,7 +1028,7 @@ public class Main extends BaseActivity {
 						slArray[i].setVisibility(View.GONE);
 				}
 
-				// Set nav bar
+				// Set nav pre button
 				if (slArray[itemIndex].currentVisibleScreen > 0)
 					btnTopNavPre.setVisibility(View.VISIBLE);
 				else
@@ -991,12 +1040,14 @@ public class Main extends BaseActivity {
 					break;
 				case 1:
 					loadSearchProduct();
+					setTopNavBarVisible(false);
 					break;
 				case 2:
 					loadFavorite();
+					setTitle("我的收藏(2)");
 					break;
 				case 3:
-					loadMore();
+					setTitle("更多");
 					break;
 				}
 			}
@@ -1014,6 +1065,27 @@ public class Main extends BaseActivity {
 		});
 	}
 
+	private View.OnClickListener frameSearchBtnClick() {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				loadSearchProduct();
+			}
+		};
+	}
+
+	private View.OnClickListener frameSearchTabBtnClick(final int itemIndex) {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				for (int i = 0; i < searchTabButtons.length; i++) {
+					searchTabButtons[i].setEnabled(i != itemIndex);
+				}
+
+				// Load data
+				loadSearchProduct();
+			}
+		};
+	}
+
 	// Favorite
 	private void loadFavorite() {
 		if (lvFavoriteProductData.isEmpty())
@@ -1023,18 +1095,14 @@ public class Main extends BaseActivity {
 	}
 
 	// More
-	private void loadMore() {
-		setTitle("更多");
-	}
-
 	private View.OnClickListener frameMoreBtnClick(final int item_index) {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
 				if (item_index < 4) {
+
 					TextView myTextView = (TextView) findViewById(R.id.txtMoreInfo);
 					myTextView.setText(Html.fromHtml(getResources()
 							.getStringArray(R.array.more_info)[item_index]));
-					slArray[currentSlIndex].scrollToScreen(1);
 				} else if (item_index == 4) {
 					// Advice
 					slArray[3].scrollToScreen(2);
@@ -1044,31 +1112,12 @@ public class Main extends BaseActivity {
 					m.show(getSupportFragmentManager(), "");
 					return;
 				}
+				setTitle(getResources().getStringArray(R.array.more_info_title)[item_index]);
+				slArray[currentSlIndex].scrollToScreen(1);
 				slArray[currentSlIndex].currentVisibleScreen++;
 				setTopBtnPreVisible(true);
 			}
 		};
 	}
 
-	// Top
-	private View.OnClickListener frameTopNavPreBtnClick() {
-		return new View.OnClickListener() {
-			public void onClick(View v) {
-				if (slArray[currentSlIndex].currentVisibleScreen > 0) {
-					slArray[currentSlIndex].currentVisibleScreen--;
-					slArray[currentSlIndex]
-							.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-					if (slArray[currentSlIndex].currentVisibleScreen == 0)
-						btnTopNavPre.setVisibility(View.GONE);
-				}
-			}
-		};
-	}
-
-	private void setTopBtnPreVisible(boolean visibility) {
-		if (visibility)
-			btnTopNavPre.setVisibility(View.VISIBLE);
-		else
-			btnTopNavPre.setVisibility(View.GONE);
-	}
 }
