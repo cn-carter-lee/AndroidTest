@@ -16,12 +16,12 @@
             android:text="@string/so_current_tip" />
 
         <TextView
-            android:id="@+id/current_person"
+            android:id="@+id/txt_so_purpose_personname"
             style="@style/so_current_navbar_item"
             android:text="女朋友 " />
 
         <TextView
-            android:id="@+id/current_age"
+            android:id="@+id/txt_so_purpose_agename"
             style="@style/so_current_navbar_item"
             android:text="13-17岁" />
     </LinearLayout>

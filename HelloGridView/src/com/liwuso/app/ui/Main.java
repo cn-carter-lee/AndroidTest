@@ -43,6 +43,18 @@ import com.pys.liwuso.bean.Purpose;
 import com.pys.liwuso.bean.PurposeList;
 
 public class Main extends BaseActivity {
+
+	private Person currentPerson = null;
+	private Age currentAge = null;
+	private Purpose currentPurpose = null;
+
+	private TextView txtSoAgePersonName;
+	private TextView txtSoPurposePersoname;
+	private TextView txtSoPurposeAgeName;
+	private TextView txtSoProductPersonName;
+	private TextView txtSoProductAgeName;
+	private TextView txtSoProductPurposeName;
+
 	private RelativeLayout mainHeaderBar;
 	private int[] slResourceArray = { R.id.main_scrolllayout_so,
 			R.id.main_scrolllayout_search, R.id.main_scrolllayout_favorite,
@@ -121,6 +133,9 @@ public class Main extends BaseActivity {
 	// Search
 	private PullToRefreshGridView gvSearchProduct;
 
+	private Button btnMoreAdviceSubmit;
+	private Button btnMoreAdviceQuersion;
+
 	private AppContext appContext;
 
 	@Override
@@ -129,7 +144,7 @@ public class Main extends BaseActivity {
 		setContentView(R.layout.main);
 		appContext = (AppContext) getApplication();
 		this.initMainView();
-		this.initFrameButton();
+		this.initFrameButtons();
 		this.initFrameListView();
 	}
 
@@ -166,9 +181,10 @@ public class Main extends BaseActivity {
 			footBtn.setOnClickListener(selectFootBar(i));
 			footBtnArray[i] = footBtn;
 		}
+
 	}
 
-	private void initFrameButton() {
+	private void initFrameButtons() {
 		// So
 		frame_layout_female = (LinearLayout) findViewById(R.id.frame_layout_female);
 		frame_layout_sepeartor = (View) findViewById(R.id.frame_layout_sepeartor);
@@ -183,6 +199,14 @@ public class Main extends BaseActivity {
 		framebtn_Female.setOnClickListener(framePersonBtnClick(framebtn_Female,
 				1));
 		framebtn_Male.setOnClickListener(framePersonBtnClick(framebtn_Male, 2));
+
+		txtSoAgePersonName = (TextView) findViewById(R.id.txt_so_age_personname);
+		txtSoPurposePersoname = (TextView) findViewById(R.id.txt_so_purpose_personname);
+		txtSoPurposeAgeName = (TextView) findViewById(R.id.txt_so_purpose_agename);
+		txtSoProductPersonName = (TextView) findViewById(R.id.txt_so_product_personname);
+		txtSoProductAgeName = (TextView) findViewById(R.id.txt_so_product_agename);
+		txtSoProductPurposeName = (TextView) findViewById(R.id.txt_so_product_purposename);
+		;
 
 		// Search
 		btnSearch = (Button) findViewById(R.id.btnSearch);
@@ -213,6 +237,11 @@ public class Main extends BaseActivity {
 			moreBtnArray[i] = moreButton;
 			moreButton.setOnClickListener(frameMoreBtnClick(i));
 		}
+
+		btnMoreAdviceSubmit = (Button) findViewById(R.id.btn_more_advice_submit);
+		btnMoreAdviceSubmit.setOnClickListener(frameMoreAdviceBtnClick());
+		btnMoreAdviceQuersion = (Button) findViewById(R.id.btn_more_advice_quersion);
+		btnMoreAdviceQuersion.setOnClickListener(frameMoreBtnClick(1));
 	}
 
 	private View.OnClickListener framePersonBtnClick(final Button btn,
@@ -257,14 +286,14 @@ public class Main extends BaseActivity {
 		lvFemale.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				currentPerson = lvFemaleData.get(position - 1);
+				setSoNavInfo();
 				slArray[currentSlIndex].currentVisibleScreen++;
 				slArray[currentSlIndex]
 						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-				setTopBtnPreVisible(true);
-
 				loadLvData(1, 0, lvAgeHandler, UIHelper.LISTVIEW_ACTION_INIT,
 						UIHelper.LISTVIEW_DATATYPE_AGE);
-
+				setTopTitle();
 			}
 		});
 		lvFemale.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -305,12 +334,15 @@ public class Main extends BaseActivity {
 		lvMale.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				currentPerson = lvMaleData.get(position - 1);
+				setSoNavInfo();
 				slArray[currentSlIndex].currentVisibleScreen++;
 				slArray[currentSlIndex]
 						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
 				setTopBtnPreVisible(true);
 				loadLvData(1, 0, lvAgeHandler, UIHelper.LISTVIEW_ACTION_INIT,
 						UIHelper.LISTVIEW_DATATYPE_AGE);
+				setTopTitle();
 			}
 		});
 		lvMale.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -349,13 +381,15 @@ public class Main extends BaseActivity {
 		lvAge.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				currentAge = lvAgeData.get(position - 1);
 				slArray[currentSlIndex].currentVisibleScreen++;
 				slArray[currentSlIndex]
 						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-				setTopBtnPreVisible(true);
+				setSoNavInfo();
 				loadLvData(1, 0, lvPurposeHandler,
 						UIHelper.LISTVIEW_ACTION_INIT,
 						UIHelper.LISTVIEW_DATATYPE_PURPOSE);
+				setTopTitle();
 			}
 		});
 		lvAge.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -394,13 +428,23 @@ public class Main extends BaseActivity {
 		lvPurpose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				slArray[currentSlIndex].currentVisibleScreen++;
-				slArray[currentSlIndex]
-						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-				setTopBtnPreVisible(true);
-				loadLvData(1, 0, lvProductHandler,
-						UIHelper.LISTVIEW_ACTION_INIT,
-						UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+				currentPurpose = lvPurposeData.get(position - 1);
+				final WaitDialog waitDialog = new WaitDialog();
+				waitDialog.show(getSupportFragmentManager(), "");
+				Handler sleepHandler = new Handler();
+				sleepHandler.postDelayed(new Runnable() {
+					public void run() {
+						waitDialog.dismiss();
+						setSoNavInfo();
+						slArray[currentSlIndex].currentVisibleScreen++;
+						slArray[currentSlIndex]
+								.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+						loadLvData(1, 0, lvProductHandler,
+								UIHelper.LISTVIEW_ACTION_INIT,
+								UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+						setTopTitle();
+					}
+				}, 3000);
 			}
 		});
 		lvPurpose.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -440,7 +484,7 @@ public class Main extends BaseActivity {
 		lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO:
+
 			}
 		});
 		lvProduct.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -781,6 +825,7 @@ public class Main extends BaseActivity {
 
 	private void handleLvDataProduct(int what, Object obj, int objtype,
 			int actiontype) {
+		setSoNavInfo();
 		switch (actiontype) {
 		case UIHelper.LISTVIEW_ACTION_INIT:
 		case UIHelper.LISTVIEW_ACTION_REFRESH:
@@ -987,15 +1032,31 @@ public class Main extends BaseActivity {
 		}
 	}
 
+	// So nav
+	private void setSoNavInfo() {
+		if (currentPerson != null) {
+			txtSoAgePersonName.setText(currentPerson.Name);
+			txtSoPurposePersoname.setText(currentPerson.Name);
+			txtSoProductPersonName.setText(currentPerson.Name);
+		}
+		if (currentAge != null) {
+			txtSoPurposeAgeName.setText(currentAge.Name);
+			txtSoProductAgeName.setText(currentAge.Name);
+		}
+		if (currentPurpose != null) {
+			txtSoProductPurposeName.setText(currentPurpose.Name);
+		}
+	}
+
 	// Top
-	private void setTopNavBarVisible(boolean visibility) {
+	private void setTopNavBarVisibility(boolean visibility) {
 		if (visibility)
 			mainHeaderBar.setVisibility(View.VISIBLE);
 		else
 			mainHeaderBar.setVisibility(View.GONE);
 	}
 
-	private void setTitle(String title) {
+	private void setTopTitle() {
 		String strTitle = "";
 		switch (currentSlIndex) {
 		case 0:
@@ -1004,7 +1065,7 @@ public class Main extends BaseActivity {
 				strTitle = "您要送谁礼物?";
 				break;
 			case 1:
-				strTitle = "请选择{女朋友}的年龄";
+				strTitle = String.format("请选择%s的年龄", currentPerson.Name);
 				break;
 			case 2:
 				strTitle = "请选择送礼目的";
@@ -1025,21 +1086,17 @@ public class Main extends BaseActivity {
 			case 0:
 				strTitle = "更多";
 				break;
-			case 1:
-				strTitle = "{}";
-				break;
-			case 2:
-				strTitle = "意见建议";
+			default:
+				strTitle = getResources().getStringArray(
+						R.array.more_info_title)[slArray[currentSlIndex].currentVisibleScreen - 1];
 				break;
 			}
 			break;
 		}
-
+		setTopNavBarVisibility(currentSlIndex != 1);
 		if (slArray[currentSlIndex].currentVisibleScreen > 0)
 			setTopBtnPreVisible(true);
-
 		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
-		// titleView.setText(title);
 		titleView.setText(strTitle);
 	}
 
@@ -1062,10 +1119,9 @@ public class Main extends BaseActivity {
 					slArray[currentSlIndex].currentVisibleScreen = 0;
 					slArray[currentSlIndex].scrollToScreen(0);
 					setTopBtnPreVisible(false);
-					setTitle("更多");
 					break;
 				}
-
+				setTopTitle();
 			}
 		};
 	}
@@ -1078,12 +1134,13 @@ public class Main extends BaseActivity {
 	}
 
 	// Footer
+
+	// Foot
 	private View.OnClickListener selectFootBar(final int itemIndex) {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
 				currentSlIndex = itemIndex;
 				for (int i = 0; i < footBtnArray.length; i++) {
-					setTopNavBarVisible(true);
 					footBtnArray[i].setEnabled(i != itemIndex);
 					if (i == itemIndex)
 						slArray[i].setVisibility(View.VISIBLE);
@@ -1097,22 +1154,7 @@ public class Main extends BaseActivity {
 				else
 					btnTopNavPre.setVisibility(View.GONE);
 				currentSlIndex = itemIndex;
-				// Load data
-				switch (itemIndex) {
-				case 0:
-					break;
-				case 1:
-					loadSearchProduct();
-					setTopNavBarVisible(false);
-					break;
-				case 2:
-					loadFavorite();
-					setTitle("我的收藏(2)");
-					break;
-				case 3:
-					setTitle("更多");
-					break;
-				}
+				setTopTitle();
 			}
 		};
 	}
@@ -1165,23 +1207,30 @@ public class Main extends BaseActivity {
 					TextView myTextView = (TextView) findViewById(R.id.txtMoreInfo);
 					myTextView.setText(Html.fromHtml(getResources()
 							.getStringArray(R.array.more_info)[item_index]));
+					slArray[currentSlIndex].scrollToScreen(1);
 				} else if (item_index == 4) {
 					// Advice
 					slArray[3].scrollToScreen(2);
 				} else if (item_index == 5) {
 					// Check version
-					CustomDialog m = new CustomDialog();
+					CustomDialog m = new CustomDialog(
+							(getString(R.string.dialog_version)));
 					m.show(getSupportFragmentManager(), "");
 					return;
 				}
-				setTitle(getResources().getStringArray(R.array.more_info_title)[item_index]);
-				
-				
-				slArray[currentSlIndex].scrollToScreen(1);
-				slArray[currentSlIndex].currentVisibleScreen++;
-				
-				
-				setTopBtnPreVisible(true);
+
+				slArray[currentSlIndex].currentVisibleScreen = item_index + 1;
+				setTopTitle();
+			}
+		};
+	}
+
+	private View.OnClickListener frameMoreAdviceBtnClick() {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				CustomDialog m = new CustomDialog(
+						(getString(R.string.dialog_submit)));
+				m.show(getSupportFragmentManager(), "");
 			}
 		};
 	}

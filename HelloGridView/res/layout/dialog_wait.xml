@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/dialog_bg"
+    android:gravity="center" >
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:src="@anim/waiting" />
+
+    <TextView
+        android:id="@+id/dialog_text"
+        android:layout_width="fill_parent"
+        android:layout_height="70dip"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="@string/dialog_wait"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

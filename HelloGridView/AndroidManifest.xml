@@ -91,14 +91,6 @@
                 android:name="android.support.UI_OPTIONS"
                 android:value="splitActionBarWhenNarrow" />
         </activity>
-        <activity
-            android:name="com.liwuso.app.ui.Tab1Activity"
-            android:label="@string/title_activity_tab1" >
-        </activity>
-        <activity
-            android:name="com.liwuso.app.ui.Tab2Activity"
-            android:label="@string/title_activity_tab2" >
-        </activity>
     </application>
 
 </manifest>

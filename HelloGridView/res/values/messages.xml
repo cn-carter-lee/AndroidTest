@@ -18,5 +18,8 @@
     <string name="sure">确定</string>
     <string name="app_menu_surelogout">确定退出程序吗？</string>
     <string name="cancle">取消</string>
+    <string name="dialog_version">目前已是最新版本:)</string>
+    <string name="dialog_submit">您的建议已经成功提交:)</string>
+    <string name="dialog_wait">正在搜索最佳礼物</string>
 
 </resources>

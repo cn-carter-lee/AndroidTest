@@ -39,7 +39,7 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/button0"
+            android:id="@+id/btn_more_advice_submit"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="0.4"
@@ -54,7 +54,7 @@
         </View>
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/btn_more_advice_quersion"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="0.4"
