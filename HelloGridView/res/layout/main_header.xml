@@ -26,7 +26,7 @@
         android:layout_centerInParent="true"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text=""
+        android:text="您要送谁礼物"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white"
         android:textSize="18sp" />

@@ -6,40 +6,27 @@
     tools:context="com.liwuso.app.ui.SearchProductFrament" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#f9f9fa"
-        android:orientation="horizontal"
-        android:paddingBottom="10dip"
-        android:paddingTop="10dip" >
+        style="@style/so_current_navbar"
+        android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/current_nav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="您已经选择:   "
-            android:textColor="#000000"
-            android:textSize="15sp" />
+            style="@style/so_current_navbar_tip"
+            android:text="@string/so_current_tip" />
 
         <TextView
             android:id="@+id/current_person"
-            style="@style/So.Txt.Nav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/so_current_navbar_item"
             android:text="女朋友 " />
 
         <TextView
             android:id="@+id/current_age"
-            style="@style/So.Txt.Nav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/so_current_navbar_item"
             android:text="13-17岁" />
 
         <TextView
             android:id="@+id/current_purpose"
-            style="@style/So.Txt.Nav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/so_current_navbar_item"
             android:text="生日礼物" />
     </LinearLayout>
 

@@ -1,12 +1,15 @@
 package com.liwuso.app.adapter;
 
 import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.liwuso.app.R;
 import com.pys.liwuso.bean.Person;
 
@@ -21,7 +24,7 @@ public class ListViewMaleAdapter extends BaseAdapter {
 			R.anim.person_male_lisitem3, R.anim.person_male_lisitem4, };
 
 	static class ListItemView {
-		public Button button;
+		public TextView text;
 	}
 
 	public ListViewMaleAdapter(Context context, List<Person> data) {
@@ -44,14 +47,12 @@ public class ListViewMaleAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ListItemView listItemView = null;
-
 		if (convertView == null) {
-
 			convertView = listContainer.inflate(itemViewResourceArray[position
 					% itemViewResourceArray.length], null);
 
 			listItemView = new ListItemView();
-			listItemView.button = (Button) convertView
+			listItemView.text = (TextView) convertView
 					.findViewById(R.id.btnPerson);
 			convertView.setTag(listItemView);
 		} else {
@@ -60,7 +61,7 @@ public class ListViewMaleAdapter extends BaseAdapter {
 
 		Person person = listItems.get(position);
 
-		listItemView.button.setText(person.Name);
+		listItemView.text.setText(person.Name);
 		return convertView;
 	}
 }

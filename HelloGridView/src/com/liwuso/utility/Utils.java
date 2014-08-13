@@ -35,21 +35,21 @@ public class Utils {
 		}
 	}
 
-	public static void SetActionBar(Activity activity, String title) {
-		ActionBar actionBar = ((ActionBarActivity) activity)
-				.getSupportActionBar();
-		actionBar.setCustomView(R.layout.gift_actonbar);
-		TextView textView = (TextView) activity
-				.findViewById(R.id.gift_actionbar_title);
-		textView.setText(title);
-	}
-
-	public static void HideActionBar(Activity activity) {
-		ActionBar actionBar = ((ActionBarActivity) activity)
-				.getSupportActionBar();
-		actionBar.setCustomView(R.layout.gift_actonbar);
-		actionBar.hide();
-	}
+//	public static void SetActionBar(Activity activity, String title) {
+//		ActionBar actionBar = ((ActionBarActivity) activity)
+//				.getSupportActionBar();
+//		actionBar.setCustomView(R.layout.gift_actonbar);
+//		TextView textView = (TextView) activity
+//				.findViewById(R.id.gift_actionbar_title);
+//		textView.setText(title);
+//	}
+//
+//	public static void HideActionBar(Activity activity) {
+//		ActionBar actionBar = ((ActionBarActivity) activity)
+//				.getSupportActionBar();
+//		actionBar.setCustomView(R.layout.gift_actonbar);
+//		actionBar.hide();
+//	}
 
 	public static String convertStreamToString(InputStream is) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));

@@ -45,7 +45,8 @@
 
             <com.liwuso.app.widget.PullToRefreshListView
                 android:id="@+id/frame_listview_person_female"
-                style="@style/widget_listview" />
+                style="@style/widget_listview"
+                android:descendantFocusability="blocksDescendants" />
         </LinearLayout>
 
         <View
@@ -59,6 +60,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical" >
 
             <com.liwuso.app.widget.PullToRefreshListView

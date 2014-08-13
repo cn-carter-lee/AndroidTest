@@ -3,11 +3,11 @@ package com.liwuso.app.ui;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -18,7 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
-
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.R;
@@ -44,9 +43,7 @@ import com.pys.liwuso.bean.Purpose;
 import com.pys.liwuso.bean.PurposeList;
 
 public class Main extends BaseActivity {
-
 	private RelativeLayout mainHeaderBar;
-
 	private int[] slResourceArray = { R.id.main_scrolllayout_so,
 			R.id.main_scrolllayout_search, R.id.main_scrolllayout_favorite,
 			R.id.main_scrolllayout_more };
@@ -57,7 +54,6 @@ public class Main extends BaseActivity {
 	private ProgressBar lvFemale_foot_progress;
 	private ProgressBar lvMale_foot_progress;
 
-	// private int curNewsCatalog = NewsList.CATALOG_ALL;
 	private PullToRefreshListView lvFemale;
 	private PullToRefreshListView lvMale;
 	private PullToRefreshListView lvAge;
@@ -135,7 +131,6 @@ public class Main extends BaseActivity {
 		this.initMainView();
 		this.initFrameButton();
 		this.initFrameListView();
-		this.setTitle("您要送谁礼物?");
 	}
 
 	@Override
@@ -224,11 +219,9 @@ public class Main extends BaseActivity {
 			final int catalog) {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-
 				framebtn_All.setEnabled(framebtn_All != btn);
 				framebtn_Female.setEnabled(framebtn_Female != btn);
 				framebtn_Male.setEnabled(framebtn_Male != btn);
-
 				// curNewsCatalog = catalog;
 				if (btn == framebtn_All) {
 					frame_layout_female.setVisibility(View.VISIBLE);
@@ -242,7 +235,6 @@ public class Main extends BaseActivity {
 					frame_layout_male.setVisibility(View.VISIBLE);
 					frame_layout_female.setVisibility(View.GONE);
 					frame_layout_sepeartor.setVisibility(View.GONE);
-
 				}
 			}
 		};
@@ -265,7 +257,14 @@ public class Main extends BaseActivity {
 		lvFemale.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO:
+				slArray[currentSlIndex].currentVisibleScreen++;
+				slArray[currentSlIndex]
+						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+				setTopBtnPreVisible(true);
+
+				loadLvData(1, 0, lvAgeHandler, UIHelper.LISTVIEW_ACTION_INIT,
+						UIHelper.LISTVIEW_DATATYPE_AGE);
+
 			}
 		});
 		lvFemale.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -296,7 +295,6 @@ public class Main extends BaseActivity {
 						UIHelper.LISTVIEW_DATATYPE_FEMALE);
 			}
 		});
-
 	}
 
 	private void initMaleListView() {
@@ -307,7 +305,12 @@ public class Main extends BaseActivity {
 		lvMale.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO:
+				slArray[currentSlIndex].currentVisibleScreen++;
+				slArray[currentSlIndex]
+						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+				setTopBtnPreVisible(true);
+				loadLvData(1, 0, lvAgeHandler, UIHelper.LISTVIEW_ACTION_INIT,
+						UIHelper.LISTVIEW_DATATYPE_AGE);
 			}
 		});
 		lvMale.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -338,46 +341,6 @@ public class Main extends BaseActivity {
 		});
 	}
 
-	private void initProductListView() {
-		lvProductAdapter = new ListViewProductAdapter(this, lvProductData);
-		lvProduct = (PullToRefreshListView) findViewById(R.id.frame_listview_product);
-		lvProduct.setAdapter(lvProductAdapter);
-
-		lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO:
-			}
-		});
-		lvProduct.setOnScrollListener(new AbsListView.OnScrollListener() {
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				lvProduct.onScrollStateChanged(view, scrollState);
-				// 数据为空--不用继续下面代码�?
-				if (lvProductData.isEmpty())
-					return;
-				// 判断是否滚动到底�?
-				int pageIndex = 1;
-				loadLvData(1, pageIndex, lvProductHandler,
-						UIHelper.LISTVIEW_ACTION_SCROLL,
-						UIHelper.LISTVIEW_DATATYPE_PRODUCT);
-			}
-
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-				lvProduct.onScroll(view, firstVisibleItem, visibleItemCount,
-						totalItemCount);
-			}
-		});
-		lvProduct
-				.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-					public void onRefresh() {
-						loadLvData(1, 0, lvProductHandler,
-								UIHelper.LISTVIEW_ACTION_REFRESH,
-								UIHelper.LISTVIEW_DATATYPE_MALE);
-					}
-				});
-	}
-
 	private void initAgeListView() {
 		lvAgeAdapter = new ListViewAgeAdapter(this, lvAgeData);
 		lvAge = (PullToRefreshListView) findViewById(R.id.frame_listview_age);
@@ -386,7 +349,13 @@ public class Main extends BaseActivity {
 		lvAge.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO:
+				slArray[currentSlIndex].currentVisibleScreen++;
+				slArray[currentSlIndex]
+						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+				setTopBtnPreVisible(true);
+				loadLvData(1, 0, lvPurposeHandler,
+						UIHelper.LISTVIEW_ACTION_INIT,
+						UIHelper.LISTVIEW_DATATYPE_PURPOSE);
 			}
 		});
 		lvAge.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -425,7 +394,13 @@ public class Main extends BaseActivity {
 		lvPurpose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO:
+				slArray[currentSlIndex].currentVisibleScreen++;
+				slArray[currentSlIndex]
+						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+				setTopBtnPreVisible(true);
+				loadLvData(1, 0, lvProductHandler,
+						UIHelper.LISTVIEW_ACTION_INIT,
+						UIHelper.LISTVIEW_DATATYPE_PRODUCT);
 			}
 		});
 		lvPurpose.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -453,6 +428,46 @@ public class Main extends BaseActivity {
 						loadLvData(1, 0, lvPurposeHandler,
 								UIHelper.LISTVIEW_ACTION_REFRESH,
 								UIHelper.LISTVIEW_DATATYPE_PURPOSE);
+					}
+				});
+	}
+
+	private void initProductListView() {
+		lvProductAdapter = new ListViewProductAdapter(this, lvProductData);
+		lvProduct = (PullToRefreshListView) findViewById(R.id.frame_listview_product);
+		lvProduct.setAdapter(lvProductAdapter);
+
+		lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO:
+			}
+		});
+		lvProduct.setOnScrollListener(new AbsListView.OnScrollListener() {
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				lvProduct.onScrollStateChanged(view, scrollState);
+				// 数据为空--不用继续下面代码�?
+				if (lvProductData.isEmpty())
+					return;
+				// 判断是否滚动到底�?
+				int pageIndex = 1;
+				loadLvData(1, pageIndex, lvProductHandler,
+						UIHelper.LISTVIEW_ACTION_SCROLL,
+						UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+			}
+
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				lvProduct.onScroll(view, firstVisibleItem, visibleItemCount,
+						totalItemCount);
+			}
+		});
+		lvProduct
+				.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+					public void onRefresh() {
+						loadLvData(1, 0, lvProductHandler,
+								UIHelper.LISTVIEW_ACTION_REFRESH,
+								UIHelper.LISTVIEW_DATATYPE_MALE);
 					}
 				});
 	}
@@ -981,8 +996,51 @@ public class Main extends BaseActivity {
 	}
 
 	private void setTitle(String title) {
+		String strTitle = "";
+		switch (currentSlIndex) {
+		case 0:
+			switch (slArray[currentSlIndex].currentVisibleScreen) {
+			case 0:
+				strTitle = "您要送谁礼物?";
+				break;
+			case 1:
+				strTitle = "请选择{女朋友}的年龄";
+				break;
+			case 2:
+				strTitle = "请选择送礼目的";
+				break;
+			case 3:
+				strTitle = "礼物推荐";
+				break;
+			}
+			break;
+		case 1:
+			strTitle = "";
+			break;
+		case 2:
+			strTitle = "我的收藏({2})";
+			break;
+		case 3:
+			switch (slArray[currentSlIndex].currentVisibleScreen) {
+			case 0:
+				strTitle = "更多";
+				break;
+			case 1:
+				strTitle = "{}";
+				break;
+			case 2:
+				strTitle = "意见建议";
+				break;
+			}
+			break;
+		}
+
+		if (slArray[currentSlIndex].currentVisibleScreen > 0)
+			setTopBtnPreVisible(true);
+
 		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
-		titleView.setText(title);
+		// titleView.setText(title);
+		titleView.setText(strTitle);
 	}
 
 	private View.OnClickListener frameTopNavPreBtnClick() {
@@ -990,6 +1048,11 @@ public class Main extends BaseActivity {
 			public void onClick(View v) {
 				switch (currentSlIndex) {
 				case 0:
+					slArray[currentSlIndex].currentVisibleScreen--;
+					slArray[currentSlIndex]
+							.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+					if (slArray[currentSlIndex].currentVisibleScreen == 0)
+						setTopBtnPreVisible(false);
 					break;
 				case 1:
 					break;
@@ -1099,7 +1162,6 @@ public class Main extends BaseActivity {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
 				if (item_index < 4) {
-
 					TextView myTextView = (TextView) findViewById(R.id.txtMoreInfo);
 					myTextView.setText(Html.fromHtml(getResources()
 							.getStringArray(R.array.more_info)[item_index]));
@@ -1113,11 +1175,24 @@ public class Main extends BaseActivity {
 					return;
 				}
 				setTitle(getResources().getStringArray(R.array.more_info_title)[item_index]);
+				
+				
 				slArray[currentSlIndex].scrollToScreen(1);
 				slArray[currentSlIndex].currentVisibleScreen++;
+				
+				
 				setTopBtnPreVisible(true);
 			}
 		};
+	}
+
+	// Exit application
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		boolean flag = true;
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			UIHelper.Exit(this);
+		}
+		return flag;
 	}
 
 }

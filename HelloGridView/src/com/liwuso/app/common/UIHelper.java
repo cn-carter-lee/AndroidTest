@@ -92,4 +92,25 @@ public class UIHelper {
 		builder.show();
 	}
 
+	
+	// ÍË³ö
+	public static void Exit(final Context cont)
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(cont);
+		builder.setIcon(android.R.drawable.ic_dialog_info);
+		builder.setTitle(R.string.app_menu_surelogout);
+		builder.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				//ÍË³ö
+				AppManager.getAppManager().AppExit(cont);
+			}
+		});
+		builder.setNegativeButton(R.string.cancle, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.show();
+	}
 }

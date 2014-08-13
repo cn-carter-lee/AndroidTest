@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.liwuso.app.R;
 import com.pys.liwuso.bean.Purpose;
 
@@ -22,7 +24,7 @@ public class ListViewPurposeAdapter extends BaseAdapter {
 			R.anim.purpose_lisitem3, R.anim.purpose_lisitem4, };
 
 	static class ListItemView {
-		public Button button;
+		public TextView text;
 	}
 
 	public ListViewPurposeAdapter(Context context, List<Purpose> data) {
@@ -51,7 +53,7 @@ public class ListViewPurposeAdapter extends BaseAdapter {
 					% itemViewResourceArray.length], null);
 
 			listItemView = new ListItemView();
-			listItemView.button = (Button) convertView
+			listItemView.text = (TextView) convertView
 					.findViewById(R.id.btnPurpose);
 			convertView.setTag(listItemView);
 		} else {
@@ -60,7 +62,7 @@ public class ListViewPurposeAdapter extends BaseAdapter {
 
 		Purpose purpose = listItems.get(position);
 
-		listItemView.button.setText(purpose.Name);
+		listItemView.text.setText(purpose.Name);
 		return convertView;
 	}
 }

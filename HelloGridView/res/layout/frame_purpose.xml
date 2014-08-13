@@ -6,9 +6,27 @@
     android:orientation="vertical"
     tools:context="com.liwuso.app.ui.PurposeActivity$PlaceholderFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        style="@style/so_current_navbar"
+        android:orientation="horizontal" >
 
-       <com.liwuso.app.widget.PullToRefreshListView
+        <TextView
+            android:id="@+id/current_nav"
+            style="@style/so_current_navbar_tip"
+            android:text="@string/so_current_tip" />
+
+        <TextView
+            android:id="@+id/current_person"
+            style="@style/so_current_navbar_item"
+            android:text="女朋友 " />
+
+        <TextView
+            android:id="@+id/current_age"
+            style="@style/so_current_navbar_item"
+            android:text="13-17岁" />
+    </LinearLayout>
+
+    <com.liwuso.app.widget.PullToRefreshListView
         android:id="@+id/frame_listview_purpose"
         style="@style/widget_listview" />
 

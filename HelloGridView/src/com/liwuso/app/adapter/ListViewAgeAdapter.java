@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.liwuso.app.R;
 import com.pys.liwuso.bean.Age;
@@ -23,7 +24,7 @@ public class ListViewAgeAdapter extends BaseAdapter {
 			R.anim.age_lisitem4, };
 
 	static class ListItemView {
-		public Button button;
+		public TextView text;
 	}
 
 	public ListViewAgeAdapter(Context context, List<Age> data) {
@@ -50,14 +51,14 @@ public class ListViewAgeAdapter extends BaseAdapter {
 			convertView = listContainer.inflate(itemViewResourceArray[position
 					% itemViewResourceArray.length], null);
 			listItemView = new ListItemView();
-			listItemView.button = (Button) convertView
+			listItemView.text = (TextView) convertView
 					.findViewById(R.id.btnAge);
 			convertView.setTag(listItemView);
 		} else {
 			listItemView = (ListItemView) convertView.getTag();
 		}
 		Age age = listItems.get(position);
-		listItemView.button.setText(age.Name);
+		listItemView.text.setText(age.Name);
 		return convertView;
 	}
 }

@@ -6,7 +6,20 @@
     android:orientation="vertical"
     tools:context="com.pys.hellogridview.SearchActivity$SearchAgeFrament" >
 
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        style="@style/so_current_navbar"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/current_nav"
+            style="@style/so_current_navbar_tip"
+            android:text="@string/so_current_tip" />
+
+        <TextView
+            android:id="@+id/current_person"
+            style="@style/so_current_navbar_item"
+            android:text="女朋友 " />
+    </LinearLayout>
 
     <com.liwuso.app.widget.PullToRefreshListView
         android:id="@+id/frame_listview_age"

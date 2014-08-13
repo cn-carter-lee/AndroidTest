@@ -1,12 +1,15 @@
 package com.liwuso.app.adapter;
 
 import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.liwuso.app.R;
 import com.pys.liwuso.bean.Person;
 
@@ -18,13 +21,12 @@ public class ListViewFemaleAdapter extends BaseAdapter {
 
 	private int[] itemViewResourceArray = { R.anim.person_female_lisitem0,
 			R.anim.person_female_lisitem1, R.anim.person_female_lisitem2,
-			R.anim.person_female_lisitem3, R.anim.person_female_lisitem4, };
-
+			R.anim.person_female_lisitem3, R.anim.person_female_lisitem4 };
 	public final static int SEXTYPE_FEMALE = 0X00;
 	public final static int SEXTYPE_MALE = 0X01;
 
 	static class ListItemView {
-		public Button button;
+		public TextView text;
 	}
 
 	public ListViewFemaleAdapter(Context context, List<Person> data) {
@@ -54,7 +56,7 @@ public class ListViewFemaleAdapter extends BaseAdapter {
 					% itemViewResourceArray.length], null);
 
 			listItemView = new ListItemView();
-			listItemView.button = (Button) convertView
+			listItemView.text = (TextView) convertView
 					.findViewById(R.id.btnPerson);
 			convertView.setTag(listItemView);
 		} else {
@@ -63,7 +65,7 @@ public class ListViewFemaleAdapter extends BaseAdapter {
 
 		Person person = listItems.get(position);
 
-		listItemView.button.setText(person.Name);
+		listItemView.text.setText(person.Name);
 		return convertView;
 	}
 }
