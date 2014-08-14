@@ -1,7 +1,18 @@
 package com.liwuso.app;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InvalidClassException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+import com.liwuso.net.ApiClient;
 import com.pys.liwuso.bean.Age;
 import com.pys.liwuso.bean.AgeList;
+import com.pys.liwuso.bean.Notice;
 import com.pys.liwuso.bean.Person;
 import com.pys.liwuso.bean.PersonList;
 import com.pys.liwuso.bean.Product;
@@ -10,8 +21,11 @@ import com.pys.liwuso.bean.Purpose;
 import com.pys.liwuso.bean.PurposeList;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class AppContext extends Application {
 	public static final int PAGE_SIZE = 20;
@@ -26,6 +40,78 @@ public class AppContext extends Application {
 		if (info == null)
 			info = new PackageInfo();
 		return info;
+	}
+
+	public boolean isNetworkConnected() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo ni = cm.getActiveNetworkInfo();
+		return ni != null && ni.isConnectedOrConnecting();
+	}
+
+	private boolean isReadDataCache(String cachefile) {
+		return readObject(cachefile) != null;
+	}
+
+	public Serializable readObject(String file) {
+		if (!isExistDataCache(file))
+			return null;
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		try {
+			fis = openFileInput(file);
+			ois = new ObjectInputStream(fis);
+			return (Serializable) ois.readObject();
+		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+			// ·´ÐòÁÐ»¯Ê§°Ü - É¾³ý»º´æÎÄ¼þ
+			if (e instanceof InvalidClassException) {
+				File data = getFileStreamPath(file);
+				data.delete();
+			}
+		} finally {
+			try {
+				ois.close();
+			} catch (Exception e) {
+			}
+			try {
+				fis.close();
+			} catch (Exception e) {
+			}
+		}
+		return null;
+	}
+
+	private boolean isExistDataCache(String cachefile) {
+		boolean exist = false;
+		File data = getFileStreamPath(cachefile);
+		if (data.exists())
+			exist = true;
+		return exist;
+	}
+
+	public boolean saveObject(Serializable ser, String file) {
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		try {
+			fos = openFileOutput(file, MODE_PRIVATE);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(ser);
+			oos.flush();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				oos.close();
+			} catch (Exception e) {
+			}
+			try {
+				fos.close();
+			} catch (Exception e) {
+			}
+		}
 	}
 
 	public PersonList getPersonList(int catalog, int pageIndex,
@@ -73,35 +159,37 @@ public class AppContext extends Application {
 			list.Add(new Person(36, "µÜµÜ"));
 		}
 
-		//
-		// if(isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
-		// try{
-		// list = ApiClient.getNewsList(this, catalog, pageIndex, PAGE_SIZE);
-		// if(list != null && pageIndex == 0){
-		// Notice notice = list.getNotice();
-		// list.setNotice(null);
-		// list.setCacheKey(key);
-		// saveObject(list, key);
-		// list.setNotice(notice);
-		// }
-		// }catch(AppException e){
-		// list = (PersonList)readObject(key);
-		// if(list == null)
-		// throw e;
-		// }
-		// } else {
-		// list = (PersonList)readObject(key);
-		// if(list == null)
-		// list = new PersonList();
-		// }
-
 		return list;
 	}
 
 	public AgeList getAgeList(int catalog, int pageIndex, boolean isRefresh)
 			throws AppException {
-		AgeList list = new AgeList();
 		String key = "age_list_" + catalog + "_" + pageIndex + "_" + PAGE_SIZE;
+		AgeList list;
+		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
+			try {
+				list = ApiClient
+						.getAgeList(this, catalog, pageIndex, PAGE_SIZE);
+				if (list != null && pageIndex == 0) {
+					// Notice notice = list.getNotice();
+					// list.setNotice(null);
+					list.setCacheKey(key);
+					saveObject(list, key);
+					// list.setNotice(notice);
+				}
+			} catch (AppException e) {
+				list = (AgeList) readObject(key);
+				if (list == null)
+					throw e;
+			}
+		} else {
+			list = (AgeList) readObject(key);
+			if (list == null)
+				list = new AgeList();
+		}
+
+		list = new AgeList();
+
 		for (int i = 0; i < 20; i++) {
 			Age age = new Age();
 			age.Name = "OOOOO";
@@ -148,7 +236,7 @@ public class AppContext extends Application {
 		ProductList list = new ProductList();
 		String key = "product_list_" + catalog + "_" + pageIndex + "_"
 				+ PAGE_SIZE;
-		String[] urls = {s
+		String[] urls = {
 				"http://g.hiphotos.baidu.com/image/pic/item/42166d224f4a20a4e0b49b3e92529822730ed0a5.jpg",
 				"http://img10.360buyimg.com/n1/g16/M00/02/11/rBEbRlNsQowIAAAAAAFkrAtZTckAAAfyQM6YFsAAWTE992.jpg",
 				"http://images.sports.cn/Image/2014/06/29/0832351428.jpg" };

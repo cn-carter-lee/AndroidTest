@@ -167,7 +167,7 @@ public class Main extends BaseActivity {
 		mainHeaderBar = (RelativeLayout) findViewById(R.id.main_header_bar);
 		btnTopNavPre = (Button) findViewById(R.id.btnTopNavPre);
 		btnTopNavPre.setOnClickListener(frameTopNavPreBtnClick());
-		
+
 		// TODO: lvPerson_foot_progress = (ProgressBar)
 		// findViewById(R.id.main_head_progress);
 		// Body
@@ -365,7 +365,7 @@ public class Main extends BaseActivity {
 		});
 		lvMale.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 			public void onRefresh() {
-				loadLvData(1, 0, lvFemaleHandler,
+				loadLvData(1, 0, lvMaleHandler,
 						UIHelper.LISTVIEW_ACTION_REFRESH,
 						UIHelper.LISTVIEW_DATATYPE_MALE);
 			}
@@ -1143,6 +1143,18 @@ public class Main extends BaseActivity {
 						slArray[i].setVisibility(View.VISIBLE);
 					else
 						slArray[i].setVisibility(View.GONE);
+				}
+
+				switch (itemIndex) {
+				case 0:
+					break;
+				case 1:
+					break;
+				case 2:
+					loadFavorite();
+					break;
+				case 3:
+					break;
 				}
 
 				// Set nav pre button

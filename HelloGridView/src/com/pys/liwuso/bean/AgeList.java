@@ -5,9 +5,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import android.util.Xml;
+
 import com.liwuso.app.AppException;
 
-public class AgeList {
+public class AgeList extends Entity{
 
 	public final static int CATALOG_ALL = 1;
 	public final static int CATALOG_INTEGRATION = 2;
@@ -39,8 +44,8 @@ public class AgeList {
 		return agelist;
 	}
 
-	public static AgeList parse(InputStream inputStream)
-			throws IOException, AppException {
+	public static AgeList parse(InputStream inputStream) throws IOException,
+			AppException {
 		AgeList agelist = new AgeList();
 
 		return agelist;

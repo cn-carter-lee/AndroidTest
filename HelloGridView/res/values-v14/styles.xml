@@ -11,6 +11,11 @@
         <item name="android:paddingTop">@dimen/activity_vertical_margin</item>
     </style>
 
+    <style name="Gift.ParentLeftRightPadding" parent="android:Widget">
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+    </style>
+
     <style name="HomeNoActionBar" parent="Theme.AppCompat.Light">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
