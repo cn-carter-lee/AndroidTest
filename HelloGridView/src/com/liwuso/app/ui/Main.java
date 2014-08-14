@@ -62,7 +62,7 @@ public class Main extends BaseActivity {
 	private ScrollLayout[] slArray = new ScrollLayout[4];
 	private int currentSlIndex = 0;
 
-	private ProgressBar mHeadProgress;
+	// private ProgressBar mHeadProgress;
 	private ProgressBar lvFemale_foot_progress;
 	private ProgressBar lvMale_foot_progress;
 
@@ -167,7 +167,7 @@ public class Main extends BaseActivity {
 		mainHeaderBar = (RelativeLayout) findViewById(R.id.main_header_bar);
 		btnTopNavPre = (Button) findViewById(R.id.btnTopNavPre);
 		btnTopNavPre.setOnClickListener(frameTopNavPreBtnClick());
-		mHeadProgress = (ProgressBar) findViewById(R.id.main_head_progress);
+		
 		// TODO: lvPerson_foot_progress = (ProgressBar)
 		// findViewById(R.id.main_head_progress);
 		// Body
@@ -181,7 +181,6 @@ public class Main extends BaseActivity {
 			footBtn.setOnClickListener(selectFootBar(i));
 			footBtnArray[i] = footBtn;
 		}
-
 	}
 
 	private void initFrameButtons() {
@@ -621,7 +620,7 @@ public class Main extends BaseActivity {
 					// more.setText(R.string.load_empty);
 				}
 				// progress.setVisibility(ProgressBar.GONE);
-				mHeadProgress.setVisibility(ProgressBar.GONE);
+				// mHeadProgress.setVisibility(ProgressBar.GONE);
 				if (msg.arg1 == UIHelper.LISTVIEW_ACTION_REFRESH) {
 					lv.onRefreshComplete(getString(R.string.pull_to_refresh_update)
 							+ new Date().toLocaleString());
@@ -636,7 +635,7 @@ public class Main extends BaseActivity {
 
 	private void loadLvData(final int catalog, final int pageIndex,
 			final Handler handler, final int action, final int dataType) {
-		mHeadProgress.setVisibility(ProgressBar.VISIBLE);
+		// mHeadProgress.setVisibility(ProgressBar.VISIBLE);
 		new Thread() {
 			public void run() {
 				Message msg = new Message();
@@ -1134,8 +1133,6 @@ public class Main extends BaseActivity {
 	}
 
 	// Footer
-
-	// Foot
 	private View.OnClickListener selectFootBar(final int itemIndex) {
 		return new View.OnClickListener() {
 			public void onClick(View v) {

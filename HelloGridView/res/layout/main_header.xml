@@ -13,12 +13,6 @@
         android:background="@drawable/top_nav_btn_pre_selector"
         android:visibility="gone" />
 
-    <ProgressBar
-        android:id="@+id/main_head_progress"
-        style="@style/loading_small"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5.0dip" />
-
     <TextView
         android:id="@+id/navbar_title"
         android:layout_width="wrap_content"

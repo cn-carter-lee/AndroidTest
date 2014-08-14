@@ -34,24 +34,45 @@ public class AppContext extends Application {
 		String key = "person_list_" + catalog + "_" + pageIndex + "_"
 				+ PAGE_SIZE;
 		if (catalog == 0) {
-			list.Add(new Person("女朋友"));
-			list.Add(new Person("老婆"));
-			list.Add(new Person("女性朋友"));
-			list.Add(new Person("妈妈"));
-			list.Add(new Person("女生"));
-
+			list.Add(new Person(1, "女朋友"));
+			list.Add(new Person(3, "女生"));
+			list.Add(new Person(2, "女性朋友"));
+			list.Add(new Person(9, "小女孩"));
+			list.Add(new Person(5, "老婆"));
+			list.Add(new Person(4, "姐姐"));
+			list.Add(new Person(35, "妹妹"));
+			list.Add(new Person(6, "妈妈"));
+			list.Add(new Person(7, "女同学"));
+			list.Add(new Person(8, "女性长辈"));
+			list.Add(new Person(10, "女儿"));
+			list.Add(new Person(11, "女老师"));
+			list.Add(new Person(12, "女领导"));
+			list.Add(new Person(13, "女同事"));
+			list.Add(new Person(14, "女性老人"));
+			list.Add(new Person(15, "女客户"));
+			list.Add(new Person(16, "女-外国人"));
+			list.Add(new Person(17, "其他女性"));
 		} else if (catalog == 1) {
-			list.Add(new Person("男朋友"));
-			list.Add(new Person("老公"));
-			list.Add(new Person("男性朋友"));
-			list.Add(new Person("爸爸"));
-			list.Add(new Person("男生"));
-
+			list.Add(new Person(18, "男朋友"));
+			list.Add(new Person(21, "男生"));
+			list.Add(new Person(19, "男性朋友"));
+			list.Add(new Person(20, "老公"));
+			list.Add(new Person(22, "爸爸"));
+			list.Add(new Person(23, "哥哥"));
+			list.Add(new Person(24, "男领导"));
+			list.Add(new Person(25, "男同学"));
+			list.Add(new Person(26, "男性长辈"));
+			list.Add(new Person(27, "小男孩"));
+			list.Add(new Person(28, "男性老人"));
+			list.Add(new Person(29, "男同事"));
+			list.Add(new Person(30, "儿子"));
+			list.Add(new Person(31, "男老师"));
+			list.Add(new Person(32, "男客户"));
+			list.Add(new Person(33, "男-外国人"));
+			list.Add(new Person(34, "其他男性"));
+			list.Add(new Person(36, "弟弟"));
 		}
 
-		for (int i = 0; i < 50; i++) {
-			list.Add(new Person("YYYY--789"));
-		}
 		//
 		// if(isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
 		// try{
@@ -81,7 +102,6 @@ public class AppContext extends Application {
 			throws AppException {
 		AgeList list = new AgeList();
 		String key = "age_list_" + catalog + "_" + pageIndex + "_" + PAGE_SIZE;
-
 		for (int i = 0; i < 20; i++) {
 			Age age = new Age();
 			age.Name = "OOOOO";
@@ -128,7 +148,7 @@ public class AppContext extends Application {
 		ProductList list = new ProductList();
 		String key = "product_list_" + catalog + "_" + pageIndex + "_"
 				+ PAGE_SIZE;
-		String[] urls = {
+		String[] urls = {s
 				"http://g.hiphotos.baidu.com/image/pic/item/42166d224f4a20a4e0b49b3e92529822730ed0a5.jpg",
 				"http://img10.360buyimg.com/n1/g16/M00/02/11/rBEbRlNsQowIAAAAAAFkrAtZTckAAAfyQM6YFsAAWTE992.jpg",
 				"http://images.sports.cn/Image/2014/06/29/0832351428.jpg" };
