@@ -610,7 +610,7 @@ public class Main extends BaseActivity {
 					}
 
 				} else if (msg.what == -1) {
-					// 有异�?-显示加载出错 & 弹出错误消息
+					// exeption
 					lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
 					more.setText(R.string.load_error);
 					((AppException) msg.obj).makeToast(Main.this);
