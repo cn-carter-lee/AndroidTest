@@ -27,7 +27,7 @@ import com.liwuso.app.adapter.ListViewFavoriteProductAdapter;
 import com.liwuso.app.adapter.ListViewFemaleAdapter;
 import com.liwuso.app.adapter.ListViewMaleAdapter;
 import com.liwuso.app.adapter.ListViewProductAdapter;
-import com.liwuso.app.adapter.ListViewPurposeAdapter;
+import com.liwuso.app.adapter.ListViewAimAdapter;
 import com.liwuso.app.common.UIHelper;
 import com.liwuso.app.widget.PullToRefreshGridView;
 import com.liwuso.app.widget.PullToRefreshListView;
@@ -39,14 +39,14 @@ import com.pys.liwuso.bean.Person;
 import com.pys.liwuso.bean.PersonList;
 import com.pys.liwuso.bean.Product;
 import com.pys.liwuso.bean.ProductList;
-import com.pys.liwuso.bean.Purpose;
-import com.pys.liwuso.bean.PurposeList;
+import com.pys.liwuso.bean.Aim;
+import com.pys.liwuso.bean.AimList;
 
 public class Main extends BaseActivity {
 
 	private Person currentPerson = null;
 	private Age currentAge = null;
-	private Purpose currentPurpose = null;
+	private Aim currentAim = null;
 
 	private TextView txtSoAgePersonName;
 	private TextView txtSoPurposePersoname;
@@ -83,14 +83,14 @@ public class Main extends BaseActivity {
 	private ListViewFemaleAdapter lvFemaleAdapter;
 	private ListViewMaleAdapter lvMaleAdapter;
 	private ListViewAgeAdapter lvAgeAdapter;
-	private ListViewPurposeAdapter lvPurposeAdapter;
+	private ListViewAimAdapter lvPurposeAdapter;
 	private ListViewProductAdapter lvProductAdapter;
 	private ListViewFavoriteProductAdapter lvFavoriteProductAdapter;
 
 	private List<Person> lvFemaleData = new ArrayList<Person>();
 	private List<Person> lvMaleData = new ArrayList<Person>();
 	private List<Age> lvAgeData = new ArrayList<Age>();
-	private List<Purpose> lvPurposeData = new ArrayList<Purpose>();
+	private List<Aim> lvPurposeData = new ArrayList<Aim>();
 	private List<Product> lvProductData = new ArrayList<Product>();
 	private List<Product> lvFavoriteProductData = new ArrayList<Product>();
 
@@ -339,7 +339,7 @@ public class Main extends BaseActivity {
 				slArray[currentSlIndex]
 						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
 				setTopBtnPreVisible(true);
-				loadLvData(1, 0, lvAgeHandler, UIHelper.LISTVIEW_ACTION_INIT,
+				loadLvData(2, 0, lvAgeHandler, UIHelper.LISTVIEW_ACTION_INIT,
 						UIHelper.LISTVIEW_DATATYPE_AGE);
 				setTopTitle();
 			}
@@ -420,14 +420,14 @@ public class Main extends BaseActivity {
 	}
 
 	private void initPurposeView() {
-		lvPurposeAdapter = new ListViewPurposeAdapter(this, lvPurposeData);
+		lvPurposeAdapter = new ListViewAimAdapter(this, lvPurposeData);
 		lvPurpose = (PullToRefreshListView) findViewById(R.id.frame_listview_purpose);
 		lvPurpose.setAdapter(lvPurposeAdapter);
 
 		lvPurpose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				currentPurpose = lvPurposeData.get(position - 1);
+				currentAim = lvPurposeData.get(position - 1);
 				final WaitDialog waitDialog = new WaitDialog();
 				waitDialog.show(getSupportFragmentManager(), "");
 				Handler sleepHandler = new Handler();
@@ -633,7 +633,7 @@ public class Main extends BaseActivity {
 		};
 	}
 
-	private void loadLvData(final int catalog, final int pageIndex,
+	private void loadLvData(final int sexId, final int pageIndex,
 			final Handler handler, final int action, final int dataType) {
 		// mHeadProgress.setVisibility(ProgressBar.VISIBLE);
 		new Thread() {
@@ -648,31 +648,32 @@ public class Main extends BaseActivity {
 					case UIHelper.LISTVIEW_DATATYPE_FEMALE:
 					case UIHelper.LISTVIEW_DATATYPE_MALE:
 						PersonList personlist = appContext.getPersonList(
-								catalog, pageIndex, isRefresh);
+								sexId, isRefresh);
 						msg.what = personlist.getPageSize();
 						msg.obj = personlist;
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_AGE:
-						AgeList agelist = appContext.getAgeList(catalog,
-								pageIndex, isRefresh);
+						AgeList agelist = appContext.getAgeList(sexId,
+								currentPerson.getId(), pageIndex, isRefresh);
 						msg.what = agelist.getPageSize();
 						msg.obj = agelist;
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_PURPOSE:
-						PurposeList purposelist = appContext.getPurposeList(
-								catalog, pageIndex, isRefresh);
+						AimList purposelist = appContext.getAimList(
+								sexId, currentPerson.getId(),
+								currentAge.getId(), isRefresh);
 						msg.what = purposelist.getPageSize();
 						msg.obj = purposelist;
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_PRODUCT:
 						ProductList productlist = appContext.getProductList(
-								catalog, pageIndex, isRefresh);
+								sexId,currentPerson.getId(),currentAge.getId(),currentAim.getId(), pageIndex, isRefresh);
 						msg.what = productlist.getPageSize();
 						msg.obj = productlist;
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_FAVORITEPRODUCT:
 						ProductList favoriteproductlist = appContext
-								.getFavoriteProductList(catalog, pageIndex,
+								.getFavoriteProductList(sexId, pageIndex,
 										isRefresh);
 						msg.what = favoriteproductlist.getPageSize();
 						msg.obj = favoriteproductlist;
@@ -934,13 +935,13 @@ public class Main extends BaseActivity {
 		case UIHelper.LISTVIEW_ACTION_REFRESH:
 		case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:
 			int newdata = 0;// 新加载数�?只有刷新动作才会使用�?
-			PurposeList purposelist = (PurposeList) obj;
+			AimList purposelist = (AimList) obj;
 			lvProductSumData = what;
 			if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
 				if (lvPurposeData.size() > 0) {
-					for (Purpose purpose1 : purposelist.getPurposeList()) {
+					for (Aim purpose1 : purposelist.getPurposeList()) {
 						boolean b = false;
-						for (Purpose purpose2 : lvPurposeData) {
+						for (Aim purpose2 : lvPurposeData) {
 							if (purpose1.getId() == purpose2.getId()) {
 								b = true;
 								break;
@@ -957,12 +958,12 @@ public class Main extends BaseActivity {
 			lvPurposeData.addAll(purposelist.getPurposeList());
 
 		case UIHelper.LISTVIEW_ACTION_SCROLL:
-			PurposeList list = (PurposeList) obj;
+			AimList list = (AimList) obj;
 			lvProductSumData += what;
 			if (lvProductData.size() > 0) {
-				for (Purpose purpose1 : list.getPurposeList()) {
+				for (Aim purpose1 : list.getPurposeList()) {
 					boolean b = false;
-					for (Purpose purpose2 : lvPurposeData) {
+					for (Aim purpose2 : lvPurposeData) {
 						if (purpose1.getId() == purpose2.getId()) {
 							b = true;
 							break;
@@ -1042,8 +1043,8 @@ public class Main extends BaseActivity {
 			txtSoPurposeAgeName.setText(currentAge.Name);
 			txtSoProductAgeName.setText(currentAge.Name);
 		}
-		if (currentPurpose != null) {
-			txtSoProductPurposeName.setText(currentPurpose.Name);
+		if (currentAim != null) {
+			txtSoProductPurposeName.setText(currentAim.Name);
 		}
 	}
 

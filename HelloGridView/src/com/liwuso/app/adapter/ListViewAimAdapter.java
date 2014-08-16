@@ -11,12 +11,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.liwuso.app.R;
-import com.pys.liwuso.bean.Purpose;
+import com.pys.liwuso.bean.Aim;
 
-public class ListViewPurposeAdapter extends BaseAdapter {
+public class ListViewAimAdapter extends BaseAdapter {
 
 	private Context context;
-	private List<Purpose> listItems;
+	private List<Aim> listItems;
 	private LayoutInflater listContainer;
 
 	private int[] itemViewResourceArray = { R.anim.purpose_lisitem0,
@@ -27,7 +27,7 @@ public class ListViewPurposeAdapter extends BaseAdapter {
 		public TextView text;
 	}
 
-	public ListViewPurposeAdapter(Context context, List<Purpose> data) {
+	public ListViewAimAdapter(Context context, List<Aim> data) {
 		this.context = context;
 		this.listContainer = LayoutInflater.from(context);
 		this.listItems = data;
@@ -60,7 +60,7 @@ public class ListViewPurposeAdapter extends BaseAdapter {
 			listItemView = (ListItemView) convertView.getTag();
 		}
 
-		Purpose purpose = listItems.get(position);
+		Aim purpose = listItems.get(position);
 
 		listItemView.text.setText(purpose.Name);
 		return convertView;

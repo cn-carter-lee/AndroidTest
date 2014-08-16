@@ -13,17 +13,16 @@ import android.util.Xml;
 import com.liwuso.app.AppException;
 import com.liwuso.app.common.StringUtils;
 
-public class AgeList extends Entity {
+public class AimList extends Entity {
 
 	public final static int CATALOG_ALL = 1;
 	public final static int CATALOG_INTEGRATION = 2;
 	public final static int CATALOG_SOFTWARE = 3;
 
 	private int catalog;
-	private int pageSize;
-	private int ageCount;
-	private Person person;
-	private List<Age> agelist = new ArrayList<Age>();
+	private int pageSize = 0;
+	private int purposeCount;
+	private List<Aim> purposelist = new ArrayList<Aim>();
 
 	public int getCatalog() {
 		return catalog;
@@ -33,22 +32,22 @@ public class AgeList extends Entity {
 		return pageSize;
 	}
 
-	public void Add(Age age) {
-		agelist.add(age);
+	public void Add(Aim purpose) {
+		purposelist.add(purpose);
 	}
 
 	public int getProductCount() {
-		return agelist.size();
+		return purposelist.size();
 	}
 
-	public List<Age> getAgeList() {
-		return agelist;
+	public List<Aim> getPurposeList() {
+		return purposelist;
 	}
 
-	public static AgeList parseAge(InputStream inputStream) throws IOException,
+	public static AimList parse(InputStream inputStream) throws IOException,
 			AppException {
-		AgeList agelist = new AgeList();
-		Age age = null;
+		AimList purposelist = new AimList();
+		Aim purpose = null;
 
 		XmlPullParser xmlParser = Xml.newPullParser();
 		try {
@@ -60,22 +59,23 @@ public class AgeList extends Entity {
 				String tag = xmlParser.getName();
 				switch (evtType) {
 				case XmlPullParser.START_TAG:
-					if (tag.equalsIgnoreCase(Age.NODE_START)) {
-						age = new Age();
-					} else if (age != null) {
-						if (tag.equalsIgnoreCase(Age.NODE_ID)) {
-							age.id = StringUtils.toInt(xmlParser.nextText(), 0);
-						} else if (tag.equalsIgnoreCase(Age.NODE_NAME)) {
-							age.Name = xmlParser.nextText();
+					if (tag.equalsIgnoreCase(Aim.NODE_START)) {
+						purpose = new Aim();
+					} else if (purpose != null) {
+						if (tag.equalsIgnoreCase(Aim.NODE_ID)) {
+							purpose.id = StringUtils.toInt(
+									xmlParser.nextText(), 0);
+						} else if (tag.equalsIgnoreCase(Aim.NODE_NAME)) {
+							purpose.Name = xmlParser.nextText();
 						}
 					}
 
 					break;
 				case XmlPullParser.END_TAG:
 					// 如果遇到标签结束，则把对象添加进集合中
-					if (tag.equalsIgnoreCase("item") && age != null) {
-						agelist.Add(age);
-						age = null;
+					if (tag.equalsIgnoreCase("item") && purpose != null) {
+						purposelist.Add(purpose);
+						purpose = null;
 					}
 					break;
 				}
@@ -90,6 +90,6 @@ public class AgeList extends Entity {
 			inputStream.close();
 		}
 
-		return agelist;
+		return purposelist;
 	}
 }

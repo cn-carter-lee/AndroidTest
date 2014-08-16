@@ -24,9 +24,6 @@ public class ListViewProductAdapter extends BaseAdapter {
 	private List<Product> listItems;
 	private LayoutInflater listContainer;
 
-	private int[] itemViewResourceArray = { R.anim.person_male_lisitem0,
-			R.anim.person_male_lisitem1, R.anim.person_male_lisitem2,
-			R.anim.person_male_lisitem3, R.anim.person_male_lisitem4, };
 	public ImageLoader imageLoader;
 
 	static class ListItemView {

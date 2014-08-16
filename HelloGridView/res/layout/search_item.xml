@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/hello_world"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/product_blank" />
     </RelativeLayout>
 
     <RelativeLayout

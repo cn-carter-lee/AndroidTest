@@ -18,6 +18,8 @@ import org.apache.http.HttpClientConnection;
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.pys.liwuso.bean.AgeList;
+import com.pys.liwuso.bean.AimList;
+import com.pys.liwuso.bean.ProductList;
 import com.pys.liwuso.bean.URLs;
 
 public class ApiClient {
@@ -34,18 +36,45 @@ public class ApiClient {
 	private static String appUserAgent;
 
 	public static AgeList getAgeList(AppContext appContext, final int catalog,
-			final int pageIndex, final int pageSize) throws AppException {
+			final int personId, final int pageIndex, final int pageSize)
+			throws AppException {
 
-		String newUrl = _MakeURL(URLs.AGE_LIST, new HashMap<String, Object>() {
-			{
-				put("catalog", catalog);
-				put("pageIndex", pageIndex);
-				put("pageSize", pageSize);
-			}
-		});
+		String newUrl = URLs.AGE_LIST + catalog + '-' + personId;
 
 		try {
-			return AgeList.parse(http_get(appContext, newUrl));
+			return AgeList.parseAge(http_get(appContext, newUrl));
+		} catch (Exception e) {
+			if (e instanceof AppException)
+				throw (AppException) e;
+			throw AppException.network(e);
+		}
+	}
+
+	public static AimList getPurposeList(AppContext appContext,
+			final int sexId, final int personId, final int ageId)
+			throws AppException {
+
+		String newUrl = URLs.BASE_API_URL + sexId + '-' + personId + '-'
+				+ ageId;
+
+		try {
+			return AimList.parse(http_get(appContext, newUrl));
+		} catch (Exception e) {
+			if (e instanceof AppException)
+				throw (AppException) e;
+			throw AppException.network(e);
+		}
+	}
+
+	public static ProductList getProductList(AppContext appContext,
+			final int sexId, final int personId, final int ageId, int aimId,
+			int pageIndex) throws AppException {
+
+		String newUrl = URLs.BASE_API_URL + sexId + '-' + personId + '-'
+				+ ageId + '-' + aimId + "?p=" + pageIndex;
+
+		try {
+			return ProductList.parse(http_get(appContext, newUrl));
 		} catch (Exception e) {
 			if (e instanceof AppException)
 				throw (AppException) e;

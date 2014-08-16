@@ -17,8 +17,8 @@ import com.pys.liwuso.bean.Person;
 import com.pys.liwuso.bean.PersonList;
 import com.pys.liwuso.bean.Product;
 import com.pys.liwuso.bean.ProductList;
-import com.pys.liwuso.bean.Purpose;
-import com.pys.liwuso.bean.PurposeList;
+import com.pys.liwuso.bean.Aim;
+import com.pys.liwuso.bean.AimList;
 
 import android.app.Application;
 import android.content.Context;
@@ -114,12 +114,11 @@ public class AppContext extends Application {
 		}
 	}
 
-	public PersonList getPersonList(int catalog, int pageIndex,
-			boolean isRefresh) throws AppException {
+	public PersonList getPersonList(int sexId, boolean isRefresh)
+			throws AppException {
 		PersonList list = new PersonList();
-		String key = "person_list_" + catalog + "_" + pageIndex + "_"
-				+ PAGE_SIZE;
-		if (catalog == 0) {
+		String key = "person_list_" + sexId;
+		if (sexId == 0) {
 			list.Add(new Person(1, "女朋友"));
 			list.Add(new Person(3, "女生"));
 			list.Add(new Person(2, "女性朋友"));
@@ -138,7 +137,7 @@ public class AppContext extends Application {
 			list.Add(new Person(15, "女客户"));
 			list.Add(new Person(16, "女-外国人"));
 			list.Add(new Person(17, "其他女性"));
-		} else if (catalog == 1) {
+		} else if (sexId == 1) {
 			list.Add(new Person(18, "男朋友"));
 			list.Add(new Person(21, "男生"));
 			list.Add(new Person(19, "男性朋友"));
@@ -155,80 +154,99 @@ public class AppContext extends Application {
 			list.Add(new Person(31, "男老师"));
 			list.Add(new Person(32, "男客户"));
 			list.Add(new Person(33, "男-外国人"));
-			list.Add(new Person(34, "其他男性"));
 			list.Add(new Person(36, "弟弟"));
+			list.Add(new Person(34, "其他男性"));
 		}
 
 		return list;
 	}
 
-	public AgeList getAgeList(int catalog, int pageIndex, boolean isRefresh)
-			throws AppException {
+	public AgeList getAgeList(int catalog, int personId, int pageIndex,
+			boolean isRefresh) throws AppException {
 		String key = "age_list_" + catalog + "_" + pageIndex + "_" + PAGE_SIZE;
 		AgeList list;
-		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
-			try {
-				list = ApiClient
-						.getAgeList(this, catalog, pageIndex, PAGE_SIZE);
-				if (list != null && pageIndex == 0) {
-					// Notice notice = list.getNotice();
-					// list.setNotice(null);
-					list.setCacheKey(key);
-					saveObject(list, key);
-					// list.setNotice(notice);
-				}
-			} catch (AppException e) {
-				list = (AgeList) readObject(key);
-				if (list == null)
-					throw e;
+		// if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
+		try {
+			list = ApiClient.getAgeList(this, catalog, personId, pageIndex,
+					PAGE_SIZE);
+			if (list != null && pageIndex == 0) {
+				// Notice notice = list.getNotice();
+				// list.setNotice(null);
+				list.setCacheKey(key);
+				saveObject(list, key);
+				// list.setNotice(notice);
 			}
-		} else {
+		} catch (AppException e) {
 			list = (AgeList) readObject(key);
 			if (list == null)
-				list = new AgeList();
+				throw e;
 		}
+		// } else {
+		// list = (AgeList) readObject(key);
+		// if (list == null)
+		// list = new AgeList();
+		// }
 
-		list = new AgeList();
-
-		for (int i = 0; i < 20; i++) {
-			Age age = new Age();
-			age.Name = "OOOOO";
-			list.Add(age);
-		}
 		return list;
 	}
 
-	public PurposeList getPurposeList(int catalog, int pageIndex,
+	public AimList getAimList(int sexId, int personId, int ageId,
 			boolean isRefresh) throws AppException {
-		PurposeList list = new PurposeList();
-		String key = "purpose_list_" + catalog + "_" + pageIndex + "_"
-				+ PAGE_SIZE;
+		AimList aimList = new AimList();
+		String key = "purpose_list_" + sexId + "_" + "_" + PAGE_SIZE;
 
-		for (int i = 0; i < 20; i++) {
-			Purpose purposea = new Purpose();
-			purposea.Name = "PPPPPPPPPPPPPPPPPP";
-			list.Add(purposea);
+		try {
+			aimList = ApiClient.getPurposeList(this, sexId, personId, ageId);
+			if (aimList != null) {
+				// Notice notice = list.getNotice();
+				// list.setNotice(null);
+				aimList.setCacheKey(key);
+				saveObject(aimList, key);
+				// list.setNotice(notice);
+			}
+		} catch (AppException e) {
+			aimList = (AimList) readObject(key);
+			if (aimList == null)
+				throw e;
 		}
-		return list;
+		return aimList;
 	}
 
-	public ProductList getProductList(int catalog, int pageIndex,
-			boolean isRefresh) throws AppException {
-		ProductList list = new ProductList();
-		String key = "product_list_" + catalog + "_" + pageIndex + "_"
-				+ PAGE_SIZE;
-		String[] urls = {
-				"http://g.hiphotos.baidu.com/image/pic/item/42166d224f4a20a4e0b49b3e92529822730ed0a5.jpg",
-				"http://www.liwuso.com/Uploads/cpc/86.jpg",
-				"http://images.sports.cn/Image/2014/06/29/0832351428.jpg" };
-		for (int i = 0; i < 20; i++) {
-			Product product = new Product();
-			product.Name = "OOOOO";
-			product.Price = "1200";
-			product.ImageUrl = urls[i % 3];
-			list.Add(product);
+	public ProductList getProductList(int sexId, int personId, int ageId,
+			int aimId, int pageIndex, boolean isRefresh) throws AppException {
+		ProductList productList = new ProductList();
+		String key = "product_list_" + sexId + "_" + personId + "_" + ageId
+				+ "_" + aimId + "_" + "_" + pageIndex + "_" + PAGE_SIZE;
+
+		// String[] urls = {
+		// "http://g.hiphotos.baidu.com/image/pic/item/42166d224f4a20a4e0b49b3e92529822730ed0a5.jpg",
+		// "http://www.liwuso.com/Uploads/cpc/86.jpg",
+		// "http://images.sports.cn/Image/2014/06/29/0832351428.jpg" };
+		// for (int i = 0; i < 20; i++) {
+		// Product product = new Product();
+		// product.Name = "OOOOO";
+		// product.Price = "1200";
+		// product.ImageUrl = urls[i % 3];
+		// list.Add(product);
+		// }
+
+		try {
+			productList = ApiClient.getProductList(this, sexId, personId,
+					ageId, aimId, pageIndex);
+			if (productList != null) {
+				// Notice notice = list.getNotice();
+				// list.setNotice(null);
+				productList.setCacheKey(key);
+				saveObject(productList, key);
+				// list.setNotice(notice);
+			}
+		} catch (AppException e) {
+			productList = (ProductList) readObject(key);
+			if (productList == null)
+				throw e;
 		}
-		return list;
+
+		return productList;
 	}
 
 	public ProductList getFavoriteProductList(int catalog, int pageIndex,
