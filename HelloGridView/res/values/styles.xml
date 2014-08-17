@@ -88,8 +88,7 @@
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:dividerHeight">20dip</item>
-        <item name="android:fadingEdge">none</item>
-        <item name="android:background">@color/full_transparent</item>
+        <item name="android:fadingEdge">none</item>       
         <item name="android:scrollingCache">false</item>
     </style>
 

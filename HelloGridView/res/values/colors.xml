@@ -15,12 +15,11 @@
     <color name="lemonyellow">#FFFACD</color>
     <color name="graywhite">#F5F5F5</color>
     <color name="grayslate">#708090</color>
-    <color name="lightblue">#0083FF</color>
-    <color name="full_transparent">#00000000</color>
+    <color name="lightblue">#0083FF</color>    
     <color name="half_transparent">#aa000000</color>
     <color name="transparent">#00000000</color>
     <color name="nav_bg">#ff8432</color>
     <color name="container">#f3f3f3</color>
-    
+    <color name="listitem_black">#ff000000</color>
 
 </resources>

@@ -11,7 +11,7 @@
         android:layout_width="100dip"
         android:layout_height="100dip"
         android:gravity="center_horizontal"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/product_blank" />
 
     <TextView
         android:id="@+id/title"

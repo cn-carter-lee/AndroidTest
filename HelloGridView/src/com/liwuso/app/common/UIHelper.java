@@ -19,8 +19,9 @@ public class UIHelper {
 	public final static int LISTVIEW_ACTION_REFRESH = 0x02;
 	public final static int LISTVIEW_ACTION_CHANGE_CATALOG = 0x04;
 
-	public final static int LISTVIEW_DATA_FULL = 0x03;
 	public final static int LISTVIEW_DATA_MORE = 0x01;
+	public final static int LISTVIEW_DATA_LOADING = 0x02;
+	public final static int LISTVIEW_DATA_FULL = 0x03;
 	public final static int LISTVIEW_DATA_EMPTY = 0x04;
 
 	public final static int LISTVIEW_DATATYPE_FEMALE = 0x01;
@@ -28,7 +29,7 @@ public class UIHelper {
 	public final static int LISTVIEW_DATATYPE_AGE = 0x03;
 	public final static int LISTVIEW_DATATYPE_PURPOSE = 0x04;
 	public final static int LISTVIEW_DATATYPE_PRODUCT = 0x05;
-	public final static int LISTVIEW_DATATYPE_FAVORITEPRODUCT = 0X06;
+	public final static int LISTVIEW_DATATYPE_FAVORITE = 0X06;
 
 	/** ±Ì«ÈÕº∆¨∆•≈‰ */
 	private static Pattern facePattern = Pattern

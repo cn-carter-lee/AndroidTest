@@ -22,6 +22,10 @@ public class ProductList extends Entity {
 	private int catalog;
 	private int pageSize;
 	private int productCount;
+
+	// 该分类总数量
+	public int totalCount;
+
 	private List<Product> productlist = new ArrayList<Product>();
 
 	public int getCatalog() {
@@ -59,7 +63,10 @@ public class ProductList extends Entity {
 				String tag = xmlParser.getName();
 				switch (evtType) {
 				case XmlPullParser.START_TAG:
-					if (tag.equalsIgnoreCase(Product.NODE_START)) {
+					if (tag.equalsIgnoreCase(Product.NODE_TOTAL_COUNT)) {
+						productList.totalCount = StringUtils.toInt(
+								xmlParser.nextText(), 0);
+					} else if (tag.equalsIgnoreCase(Product.NODE_START)) {
 						product = new Product();
 					} else if (product != null) {
 						if (tag.equalsIgnoreCase(Product.NODE_ID)) {

@@ -16,18 +16,15 @@
 
         <TextView
             android:id="@+id/txt_so_product_personname"
-            style="@style/so_current_navbar_item"
-            android:text="女朋友 " />
+            style="@style/so_current_navbar_item" />
 
         <TextView
             android:id="@+id/txt_so_product_agename"
-            style="@style/so_current_navbar_item"
-            android:text="13-17岁" />
+            style="@style/so_current_navbar_item" />
 
         <TextView
             android:id="@+id/txt_so_product_purposename"
-            style="@style/so_current_navbar_item"
-            android:text="生日礼物" />
+            style="@style/so_current_navbar_item" />
     </LinearLayout>
 
     <com.liwuso.app.widget.PullToRefreshListView

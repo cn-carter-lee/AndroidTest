@@ -12,9 +12,9 @@ public class SortItem {
 	}
 
 	
-	public SortItem(String cName, int cPopulation, int flagImage) {
+	public SortItem(String cName, int typeid, int flagImage) {
 		Name = cName;
-		TypeId = cPopulation;
+		TypeId = typeid;
 		imageFlag = flagImage;
 	}
 
@@ -22,7 +22,7 @@ public class SortItem {
 		return Name;
 	}
 
-	public long getTypeId() {
+	public int getTypeId() {
 		return TypeId;
 	}
 

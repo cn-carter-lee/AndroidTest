@@ -52,6 +52,7 @@
             android:paddingBottom="10dip"
             android:paddingLeft="25dip"
             android:paddingTop="10dip"
+            android:text="已收藏"
             android:textSize="15sp" />
 
         <Button

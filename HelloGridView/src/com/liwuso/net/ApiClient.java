@@ -82,6 +82,21 @@ public class ApiClient {
 		}
 	}
 
+	public static ProductList getFavoriteList(AppContext appContext,
+			final String productIds, int pageIndex) throws AppException {
+
+		String newUrl = URLs.BASE_API_URL + "list?ids=" + productIds + "&p="
+				+ pageIndex;
+
+		try {
+			return ProductList.parse(http_get(appContext, newUrl));
+		} catch (Exception e) {
+			if (e instanceof AppException)
+				throw (AppException) e;
+			throw AppException.network(e);
+		}
+	}
+
 	private static String _MakeURL(String p_url, Map<String, Object> params) {
 		StringBuilder url = new StringBuilder(p_url);
 		if (url.indexOf("?") < 0)

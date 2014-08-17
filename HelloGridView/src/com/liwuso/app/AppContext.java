@@ -217,19 +217,6 @@ public class AppContext extends Application {
 		ProductList productList = new ProductList();
 		String key = "product_list_" + sexId + "_" + personId + "_" + ageId
 				+ "_" + aimId + "_" + "_" + pageIndex + "_" + PAGE_SIZE;
-
-		// String[] urls = {
-		// "http://g.hiphotos.baidu.com/image/pic/item/42166d224f4a20a4e0b49b3e92529822730ed0a5.jpg",
-		// "http://www.liwuso.com/Uploads/cpc/86.jpg",
-		// "http://images.sports.cn/Image/2014/06/29/0832351428.jpg" };
-		// for (int i = 0; i < 20; i++) {
-		// Product product = new Product();
-		// product.Name = "OOOOO";
-		// product.Price = "1200";
-		// product.ImageUrl = urls[i % 3];
-		// list.Add(product);
-		// }
-
 		try {
 			productList = ApiClient.getProductList(this, sexId, personId,
 					ageId, aimId, pageIndex);
@@ -249,23 +236,23 @@ public class AppContext extends Application {
 		return productList;
 	}
 
-	public ProductList getFavoriteProductList(int catalog, int pageIndex,
+	public ProductList getFavoriteList(String productIds, int pageIndex,
 			boolean isRefresh) throws AppException {
-		ProductList list = new ProductList();
-		String key = "product_list_" + catalog + "_" + pageIndex + "_"
-				+ PAGE_SIZE;
-		String[] urls = {
-				"http://g.hiphotos.baidu.com/image/pic/item/42166d224f4a20a4e0b49b3e92529822730ed0a5.jpg",
-				"http://img10.360buyimg.com/n1/g16/M00/02/11/rBEbRlNsQowIAAAAAAFkrAtZTckAAAfyQM6YFsAAWTE992.jpg",
-				"http://images.sports.cn/Image/2014/06/29/0832351428.jpg" };
-		for (int i = 0; i < 20; i++) {
-			Product product = new Product();
-			product.Name = "FFFFFFFF";
-			product.Price = "1200";
-			product.ImageUrl = urls[i % 3];
-			list.Add(product);
+		ProductList productList = new ProductList();
+		String key = "favorite_list_" + pageIndex + "_" + PAGE_SIZE;
+		try {
+			productList = ApiClient
+					.getFavoriteList(this, productIds, pageIndex);
+			if (productList != null) {
+				productList.setCacheKey(key);
+				saveObject(productList, key);
+			}
+		} catch (AppException e) {
+			productList = (ProductList) readObject(key);
+			if (productList == null)
+				throw e;
 		}
-		return list;
+		return productList;
 	}
 
 }

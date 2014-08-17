@@ -1,8 +1,12 @@
 package com.liwuso.app.ui;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,39 +15,47 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
+
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.R;
 import com.liwuso.app.adapter.ImageAdapter;
 import com.liwuso.app.adapter.ListViewAgeAdapter;
-import com.liwuso.app.adapter.ListViewFavoriteProductAdapter;
+import com.liwuso.app.adapter.ListViewFavoriteAdapter;
 import com.liwuso.app.adapter.ListViewFemaleAdapter;
 import com.liwuso.app.adapter.ListViewMaleAdapter;
 import com.liwuso.app.adapter.ListViewProductAdapter;
 import com.liwuso.app.adapter.ListViewAimAdapter;
+import com.liwuso.app.common.SortAdapter;
+import com.liwuso.app.common.SortItem;
+import com.liwuso.app.common.StringUtils;
 import com.liwuso.app.common.UIHelper;
 import com.liwuso.app.widget.PullToRefreshGridView;
 import com.liwuso.app.widget.PullToRefreshListView;
 import com.liwuso.app.widget.ScrollLayout;
 import com.pys.liwuso.bean.Age;
 import com.pys.liwuso.bean.AgeList;
+import com.pys.liwuso.bean.AimList;
 import com.pys.liwuso.bean.Notice;
 import com.pys.liwuso.bean.Person;
 import com.pys.liwuso.bean.PersonList;
 import com.pys.liwuso.bean.Product;
 import com.pys.liwuso.bean.ProductList;
 import com.pys.liwuso.bean.Aim;
-import com.pys.liwuso.bean.AimList;
 
-public class Main extends BaseActivity {
+public class Main extends BaseActivity implements OnItemSelectedListener {
 
+	private int currentSexId = 1;
 	private Person currentPerson = null;
 	private Age currentAge = null;
 	private Aim currentAim = null;
@@ -62,6 +74,12 @@ public class Main extends BaseActivity {
 	private ScrollLayout[] slArray = new ScrollLayout[4];
 	private int currentSlIndex = 0;
 
+	private View lvProduct_footer;
+	private View lvFavorite_footer;
+
+	private ProgressBar lvProduct_foot_progress;
+	private ProgressBar lvFavorite_foot_progress;
+
 	// private ProgressBar mHeadProgress;
 	private ProgressBar lvFemale_foot_progress;
 	private ProgressBar lvMale_foot_progress;
@@ -71,7 +89,7 @@ public class Main extends BaseActivity {
 	private PullToRefreshListView lvAge;
 	private PullToRefreshListView lvPurpose;
 	private PullToRefreshListView lvProduct;
-	private PullToRefreshListView lvFavoriteProduct;
+	private PullToRefreshListView lvFavorite;
 
 	private Handler lvFemaleHandler;
 	private Handler lvMaleHandler;
@@ -85,7 +103,7 @@ public class Main extends BaseActivity {
 	private ListViewAgeAdapter lvAgeAdapter;
 	private ListViewAimAdapter lvPurposeAdapter;
 	private ListViewProductAdapter lvProductAdapter;
-	private ListViewFavoriteProductAdapter lvFavoriteProductAdapter;
+	private ListViewFavoriteAdapter lvFavoriteAdapter;
 
 	private List<Person> lvFemaleData = new ArrayList<Person>();
 	private List<Person> lvMaleData = new ArrayList<Person>();
@@ -101,10 +119,9 @@ public class Main extends BaseActivity {
 	private int lvProductSumData;
 	private int lvFavoriteProductSumData;
 
-	private int mCurSel;
-
 	private TextView lvFemale_foot_more;
 
+	// So person
 	LinearLayout frame_layout_female;
 	View frame_layout_sepeartor;
 	LinearLayout frame_layout_male;
@@ -129,7 +146,8 @@ public class Main extends BaseActivity {
 
 	// Top nav bar
 	private Button btnTopNavPre;
-	// private int currentTopNavIndex = 0;
+	private Spinner spinner;
+
 	// Search
 	private PullToRefreshGridView gvSearchProduct;
 
@@ -146,28 +164,31 @@ public class Main extends BaseActivity {
 		this.initMainView();
 		this.initFrameButtons();
 		this.initFrameListView();
+		checkNetwork();
+		writeFavoriteFile();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// if(mViewCount == 0) mViewCount = 4;
-		// if(mCurSel == 0 && !fbNews.isChecked()) {
-		// fbNews.setChecked(true);
-		// fbQuestion.setChecked(false);
-		// fbTweet.setChecked(false);
-		// fbactive.setChecked(false);
-		// }
-		// //读取左右滑动配置
-		// mScrollLayout.setIsScroll(appContext.isScroll());
 	}
 
 	private void initMainView() {
 		// Top
 		mainHeaderBar = (RelativeLayout) findViewById(R.id.main_header_bar);
 		btnTopNavPre = (Button) findViewById(R.id.btnTopNavPre);
+
 		btnTopNavPre.setOnClickListener(frameTopNavPreBtnClick());
 
+		spinner = (Spinner) findViewById(R.id.search_spinner);
+		ArrayList<SortItem> items = new ArrayList<SortItem>();
+		items.add(new SortItem("按综合排序", 0, R.drawable.ic_favorite));
+		items.add(new SortItem("按价格排序", 1, R.drawable.ic_favorite));
+		items.add(new SortItem("按人气排序", 2, R.drawable.ic_favorite));
+		SortAdapter myAdapter = new SortAdapter(this,
+				android.R.layout.simple_spinner_item, items);
+		spinner.setAdapter(myAdapter);
+		spinner.setOnItemSelectedListener(this);
 		// TODO: lvPerson_foot_progress = (ProgressBar)
 		// findViewById(R.id.main_head_progress);
 		// Body
@@ -211,11 +232,13 @@ public class Main extends BaseActivity {
 		btnSearch = (Button) findViewById(R.id.btnSearch);
 		btnSearch.setOnClickListener(frameSearchBtnClick());
 		searchCategoryBar = (LinearLayout) findViewById(R.id.search_category_bar);
-		searchTabButtons = new Button[4];
-		for (int i = 0; i < 4; i++) {
+		String[] strTabArray = { "全部", "创意", "经典", "实用", "健康" };
+		searchTabButtons = new Button[strTabArray.length];
+
+		for (int i = 0; i < strTabArray.length; i++) {
 			Button tempButton = (Button) getLayoutInflater().inflate(
 					R.anim.search_tab_button, searchCategoryBar, false);
-			tempButton.setText(String.valueOf(i));
+			tempButton.setText(strTabArray[i]);
 
 			tempButton.setOnClickListener(frameSearchTabBtnClick(i));
 
@@ -274,7 +297,7 @@ public class Main extends BaseActivity {
 		this.initAgeListView();
 		this.initPurposeView();
 		this.initProductListView();
-		this.initFavoriteProductListView();
+		this.initFavoriteListView();
 		this.initFrameListViewData();
 	}
 
@@ -290,7 +313,9 @@ public class Main extends BaseActivity {
 				slArray[currentSlIndex].currentVisibleScreen++;
 				slArray[currentSlIndex]
 						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-				loadLvData(1, 0, lvAgeHandler, UIHelper.LISTVIEW_ACTION_INIT,
+				currentSexId = 1;
+				loadLvData(currentSexId, 0, lvAgeHandler,
+						UIHelper.LISTVIEW_ACTION_INIT,
 						UIHelper.LISTVIEW_DATATYPE_AGE);
 				setTopTitle();
 			}
@@ -339,7 +364,9 @@ public class Main extends BaseActivity {
 				slArray[currentSlIndex]
 						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
 				setTopBtnPreVisible(true);
-				loadLvData(2, 0, lvAgeHandler, UIHelper.LISTVIEW_ACTION_INIT,
+				currentSexId = 2;
+				loadLvData(currentSexId, 0, lvAgeHandler,
+						UIHelper.LISTVIEW_ACTION_INIT,
 						UIHelper.LISTVIEW_DATATYPE_AGE);
 				setTopTitle();
 			}
@@ -478,6 +505,11 @@ public class Main extends BaseActivity {
 	private void initProductListView() {
 		lvProductAdapter = new ListViewProductAdapter(this, lvProductData);
 		lvProduct = (PullToRefreshListView) findViewById(R.id.frame_listview_product);
+		lvProduct_footer = getLayoutInflater().inflate(
+				R.layout.listview_footer, null);
+		lvProduct_foot_progress = (ProgressBar) lvProduct_footer
+				.findViewById(R.id.listview_foot_progress);
+		lvProduct.addFooterView(lvProduct_footer);
 		lvProduct.setAdapter(lvProductAdapter);
 
 		lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -492,11 +524,29 @@ public class Main extends BaseActivity {
 				// 数据为空--不用继续下面代码�?
 				if (lvProductData.isEmpty())
 					return;
-				// 判断是否滚动到底�?
-				int pageIndex = 1;
-				loadLvData(1, pageIndex, lvProductHandler,
-						UIHelper.LISTVIEW_ACTION_SCROLL,
-						UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+				// 判断是否滚动到底部
+				boolean scrollEnd = false;
+				try {
+					if (view.getPositionForView(lvProduct_footer) == view
+							.getLastVisiblePosition()) {
+						scrollEnd = true;
+					}
+				} catch (Exception e) {
+					scrollEnd = false;
+				}
+
+				int lvDataState = StringUtils.toInt(lvProduct.getTag());
+				// if (scrollEnd && lvDataState == UIHelper.LISTVIEW_DATA_MORE
+				// && lvProductSumData != lvProduct.totalCount) {
+				if (scrollEnd && lvProductSumData != lvProduct.totalCount) {
+					lvProduct.setTag(UIHelper.LISTVIEW_DATA_LOADING);
+					lvProduct_foot_progress.setVisibility(View.VISIBLE);
+					// 当前pageIndex, pagesize is 10 here.
+					int pageIndex = lvProductSumData / 10 + 1;
+					loadLvData(currentSexId, pageIndex, lvProductHandler,
+							UIHelper.LISTVIEW_ACTION_SCROLL,
+							UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+				}
 			}
 
 			public void onScroll(AbsListView view, int firstVisibleItem,
@@ -515,47 +565,51 @@ public class Main extends BaseActivity {
 				});
 	}
 
-	private void initFavoriteProductListView() {
-		lvFavoriteProductAdapter = new ListViewFavoriteProductAdapter(this,
+	private void initFavoriteListView() {
+		lvFavoriteAdapter = new ListViewFavoriteAdapter(this,
 				lvFavoriteProductData);
-		lvFavoriteProduct = (PullToRefreshListView) findViewById(R.id.frame_listview_favorite_product);
-		lvFavoriteProduct.setAdapter(lvFavoriteProductAdapter);
+		lvFavorite = (PullToRefreshListView) findViewById(R.id.frame_listview_favorite_product);
+		lvFavorite_footer = getLayoutInflater().inflate(
+				R.layout.listview_footer, null);
+		lvFavorite_foot_progress = (ProgressBar) lvFavorite_footer
+				.findViewById(R.id.listview_foot_progress);
+		// lvFavorite.addFooterView(lvFavorite_footer);
+		lvFavorite.setAdapter(lvFavoriteAdapter);
 
-		lvFavoriteProduct
+		lvFavorite
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
 						// TODO:
 					}
 				});
-		lvFavoriteProduct
-				.setOnScrollListener(new AbsListView.OnScrollListener() {
-					public void onScrollStateChanged(AbsListView view,
-							int scrollState) {
-						lvPurpose.onScrollStateChanged(view, scrollState);
-						// 数据为空--不用继续下面代码�?
-						if (lvFavoriteProductData.isEmpty())
-							return;
-						// 判断是否滚动到底�?
-						int pageIndex = 1;
-						loadLvData(1, pageIndex, lvFavoriteProductHandler,
-								UIHelper.LISTVIEW_ACTION_SCROLL,
-								UIHelper.LISTVIEW_DATATYPE_PURPOSE);
-					}
+		lvFavorite.setOnScrollListener(new AbsListView.OnScrollListener() {
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				lvFavorite.onScrollStateChanged(view, scrollState);
 
-					public void onScroll(AbsListView view,
-							int firstVisibleItem, int visibleItemCount,
-							int totalItemCount) {
-						lvPurpose.onScroll(view, firstVisibleItem,
-								visibleItemCount, totalItemCount);
-					}
-				});
-		lvFavoriteProduct
+				// 数据为空--不用继续下面代码�?
+				if (lvFavoriteProductData.isEmpty())
+					return;
+
+				// 判断是否滚动到底�?
+				// int pageIndex = 1;
+				// loadLvData(1, pageIndex, lvFavoriteProductHandler,
+				// UIHelper.LISTVIEW_ACTION_SCROLL,
+				// UIHelper.LISTVIEW_DATATYPE_FAVORITE);
+			}
+
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				lvFavorite.onScroll(view, firstVisibleItem, visibleItemCount,
+						totalItemCount);
+			}
+		});
+		lvFavorite
 				.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 					public void onRefresh() {
 						loadLvData(1, 0, lvFavoriteProductHandler,
 								UIHelper.LISTVIEW_ACTION_REFRESH,
-								UIHelper.LISTVIEW_DATATYPE_PURPOSE);
+								UIHelper.LISTVIEW_DATATYPE_FAVORITE);
 					}
 				});
 	}
@@ -578,9 +632,9 @@ public class Main extends BaseActivity {
 		lvProductHandler = this.getLvHandler(lvProduct, lvProductAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
-		lvFavoriteProductHandler = this.getLvHandler(lvFavoriteProduct,
-				lvFavoriteProductAdapter, lvFemale_foot_more,
-				lvFemale_foot_progress, AppContext.PAGE_SIZE);
+		lvFavoriteProductHandler = this.getLvHandler(lvFavorite,
+				lvFavoriteAdapter, lvFemale_foot_more, lvFemale_foot_progress,
+				AppContext.PAGE_SIZE);
 
 		// Load Person data
 		if (lvFemaleData.isEmpty()) {
@@ -612,7 +666,8 @@ public class Main extends BaseActivity {
 				} else if (msg.what == -1) {
 					// exeption
 					lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
-					more.setText(R.string.load_error);
+					// Should be add message here
+					// more.setText(R.string.load_error);
 					((AppException) msg.obj).makeToast(Main.this);
 				}
 				if (adapter.getCount() == 0) {
@@ -647,8 +702,8 @@ public class Main extends BaseActivity {
 					switch (dataType) {
 					case UIHelper.LISTVIEW_DATATYPE_FEMALE:
 					case UIHelper.LISTVIEW_DATATYPE_MALE:
-						PersonList personlist = appContext.getPersonList(
-								sexId, isRefresh);
+						PersonList personlist = appContext.getPersonList(sexId,
+								isRefresh);
 						msg.what = personlist.getPageSize();
 						msg.obj = personlist;
 						break;
@@ -659,23 +714,26 @@ public class Main extends BaseActivity {
 						msg.obj = agelist;
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_PURPOSE:
-						AimList purposelist = appContext.getAimList(
-								sexId, currentPerson.getId(),
-								currentAge.getId(), isRefresh);
+						AimList purposelist = appContext.getAimList(sexId,
+								currentPerson.getId(), currentAge.getId(),
+								isRefresh);
 						msg.what = purposelist.getPageSize();
 						msg.obj = purposelist;
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_PRODUCT:
 						ProductList productlist = appContext.getProductList(
-								sexId,currentPerson.getId(),currentAge.getId(),currentAim.getId(), pageIndex, isRefresh);
-						msg.what = productlist.getPageSize();
+								sexId, currentPerson.getId(),
+								currentAge.getId(), currentAim.getId(),
+								pageIndex, isRefresh);
+						lvProduct.totalCount = productlist.totalCount;
+						msg.what = productlist.getProductCount();
 						msg.obj = productlist;
 						break;
-					case UIHelper.LISTVIEW_DATATYPE_FAVORITEPRODUCT:
+					case UIHelper.LISTVIEW_DATATYPE_FAVORITE:
 						ProductList favoriteproductlist = appContext
-								.getFavoriteProductList(sexId, pageIndex,
+								.getFavoriteList(readFavoriteFile(), pageIndex,
 										isRefresh);
-						msg.what = favoriteproductlist.getPageSize();
+						msg.what = getFavoriteCount();
 						msg.obj = favoriteproductlist;
 						break;
 
@@ -711,8 +769,8 @@ public class Main extends BaseActivity {
 			break;
 		case UIHelper.LISTVIEW_DATATYPE_PRODUCT:
 			handleLvDataProduct(what, obj, objtype, actiontype);
-		case UIHelper.LISTVIEW_DATATYPE_FAVORITEPRODUCT:
-			handleLvDataFavoriteProduct(what, obj, objtype, actiontype);
+		case UIHelper.LISTVIEW_DATATYPE_FAVORITE:
+			handleLvDataFavorite(what, obj, objtype, actiontype);
 			break;
 		}
 
@@ -852,7 +910,7 @@ public class Main extends BaseActivity {
 			}
 			lvProductData.clear();
 			lvProductData.addAll(productlist.getProductList());
-
+			break;
 		case UIHelper.LISTVIEW_ACTION_SCROLL:
 			ProductList list = (ProductList) obj;
 			lvProductSumData += what;
@@ -936,7 +994,7 @@ public class Main extends BaseActivity {
 		case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:
 			int newdata = 0;// 新加载数�?只有刷新动作才会使用�?
 			AimList purposelist = (AimList) obj;
-			lvProductSumData = what;
+			lvPurposeSumData = what;
 			if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
 				if (lvPurposeData.size() > 0) {
 					for (Aim purpose1 : purposelist.getPurposeList()) {
@@ -959,8 +1017,8 @@ public class Main extends BaseActivity {
 
 		case UIHelper.LISTVIEW_ACTION_SCROLL:
 			AimList list = (AimList) obj;
-			lvProductSumData += what;
-			if (lvProductData.size() > 0) {
+			lvPurposeSumData += what;
+			if (lvPurposeData.size() > 0) {
 				for (Aim purpose1 : list.getPurposeList()) {
 					boolean b = false;
 					for (Aim purpose2 : lvPurposeData) {
@@ -980,7 +1038,7 @@ public class Main extends BaseActivity {
 		}
 	}
 
-	private void handleLvDataFavoriteProduct(int what, Object obj, int objtype,
+	private void handleLvDataFavorite(int what, Object obj, int objtype,
 			int actiontype) {
 		switch (actiontype) {
 		case UIHelper.LISTVIEW_ACTION_INIT:
@@ -1008,24 +1066,25 @@ public class Main extends BaseActivity {
 			}
 			lvFavoriteProductData.clear();
 			lvFavoriteProductData.addAll(productlist.getProductList());
-
+			break;
 		case UIHelper.LISTVIEW_ACTION_SCROLL:
 			ProductList list = (ProductList) obj;
-			lvProductSumData += what;
+			lvFavoriteProductSumData += what;
 			if (lvProductData.size() > 0) {
-				for (Product purpose1 : list.getProductList()) {
-					boolean b = false;
-					for (Product purpose2 : lvFavoriteProductData) {
-						if (purpose1.getId() == purpose2.getId()) {
-							b = true;
-							break;
-						}
-					}
-					if (!b)
-						lvFavoriteProductData.add(purpose1);
-				}
+
+				// for (Product purpose1 : list.getProductList()) {
+				// boolean b = false;
+				// for (Product purpose2 : lvFavoriteProductData) {
+				// if (purpose1.getId() == purpose2.getId()) {
+				// b = true;
+				// break;
+				// }
+				// }
+				// if (!b)
+				// lvFavoriteProductData.add(purpose1);
+				// }
 			} else {
-				lvFavoriteProductData.addAll(list.getProductList());
+				// lvFavoriteProductData.addAll(list.getProductList());
 			}
 
 			break;
@@ -1057,6 +1116,7 @@ public class Main extends BaseActivity {
 	}
 
 	private void setTopTitle() {
+		boolean spinnerVisibily = false;
 		String strTitle = "";
 		switch (currentSlIndex) {
 		case 0:
@@ -1072,6 +1132,7 @@ public class Main extends BaseActivity {
 				break;
 			case 3:
 				strTitle = "礼物推荐";
+				spinnerVisibily = true;
 				break;
 			}
 			break;
@@ -1079,7 +1140,7 @@ public class Main extends BaseActivity {
 			strTitle = "";
 			break;
 		case 2:
-			strTitle = "我的收藏({2})";
+			strTitle = String.format("我的收藏(%d)", getFavoriteCount());
 			break;
 		case 3:
 			switch (slArray[currentSlIndex].currentVisibleScreen) {
@@ -1098,6 +1159,7 @@ public class Main extends BaseActivity {
 			setTopBtnPreVisible(true);
 		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
 		titleView.setText(strTitle);
+		spinner.setVisibility(spinnerVisibily ? View.VISIBLE : View.GONE);
 	}
 
 	private View.OnClickListener frameTopNavPreBtnClick() {
@@ -1206,7 +1268,7 @@ public class Main extends BaseActivity {
 		if (lvFavoriteProductData.isEmpty())
 			loadLvData(1, 0, lvFavoriteProductHandler,
 					UIHelper.LISTVIEW_ACTION_INIT,
-					UIHelper.LISTVIEW_DATATYPE_FAVORITEPRODUCT);
+					UIHelper.LISTVIEW_DATATYPE_FAVORITE);
 	}
 
 	// More
@@ -1254,4 +1316,79 @@ public class Main extends BaseActivity {
 		return flag;
 	}
 
+	private void checkNetwork() {
+		if (!appContext.isNetworkConnected()) {
+			Toast.makeText(this, "没有可用的网络连接!", Toast.LENGTH_LONG).show();
+		}
+	}
+
+	private void writeFavoriteFile() {
+		String filename = "liwuso_data";
+		String string = "887,718,109,571";
+		FileOutputStream outputStream;
+
+		try {
+			outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+			outputStream.write(string.getBytes());
+			outputStream.close();
+			// Toast.makeText(getBaseContext(), "file saved",
+			// Toast.LENGTH_SHORT)
+			// .show();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private String readFavoriteFile() {
+		String result = "";
+		String filename = "liwuso_data";
+		try {
+			FileInputStream fin = openFileInput(filename);
+			int c;
+
+			while ((c = fin.read()) != -1) {
+				result = result + Character.toString((char) c);
+			}
+			// Toast.makeText(getBaseContext(), "file read:" + temp,
+			// Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
+
+		}
+		return result;
+	}
+
+	private int getFavoriteCount() {
+		int result = 0;
+		try {
+			String[] product_id_array = readFavoriteFile().split(",");
+			result = product_id_array.length;
+		} catch (Exception e) {
+
+		}
+		return result;
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int pos,
+			long id) {
+		// TODO Auto-generated method stub
+		SortItem sortItem = (SortItem) parent.getItemAtPosition(pos);
+		switch (sortItem.getTypeId()) {
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		}
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+		// TODO Auto-generated method stub
+
+	}
+
+	// String item = parent.getItemAtPosition(pos).toString();
 }

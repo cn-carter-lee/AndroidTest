@@ -14,7 +14,7 @@ import com.liwuso.app.R;
 import com.liwuso.utility.ImageLoader;
 import com.pys.liwuso.bean.Product;
 
-public class ListViewFavoriteProductAdapter extends BaseAdapter {
+public class ListViewFavoriteAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<Product> listItems;
@@ -28,7 +28,7 @@ public class ListViewFavoriteProductAdapter extends BaseAdapter {
 		public ImageView image;
 	}
 
-	public ListViewFavoriteProductAdapter(Context context, List<Product> data) {
+	public ListViewFavoriteAdapter(Context context, List<Product> data) {
 		this.context = context;
 		this.listContainer = LayoutInflater.from(context);
 		this.listItems = data;

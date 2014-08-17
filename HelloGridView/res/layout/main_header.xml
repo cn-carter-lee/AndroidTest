@@ -3,7 +3,7 @@
     android:id="@+id/main_header_bar"
     android:layout_width="fill_parent"
     android:layout_height="50dp"
-    android:background="@color/nav_bg">
+    android:background="@color/nav_bg" >
 
     <Button
         android:id="@+id/btnTopNavPre"
@@ -26,7 +26,7 @@
         android:textSize="18sp" />
 
     <Spinner
-        android:id="@+id/search_sorter"
+        android:id="@+id/search_spinner"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
@@ -34,6 +34,6 @@
         android:dropDownHorizontalOffset="0dip"
         android:paddingLeft="10dip"
         android:paddingRight="10dip"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
 </RelativeLayout>

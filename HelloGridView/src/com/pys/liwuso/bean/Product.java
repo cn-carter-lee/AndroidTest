@@ -2,6 +2,7 @@ package com.pys.liwuso.bean;
 
 public class Product extends Entity {
 
+	public final static String NODE_TOTAL_COUNT = "total_count";
 	public final static String NODE_START = "item";
 	public final static String NODE_ID = "id";
 	public final static String NODE_URL = "url";
