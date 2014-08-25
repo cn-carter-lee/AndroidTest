@@ -7,6 +7,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/android-support-v7-appcompat"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="D:/Carter/AndroidTest/HelloGridView/libs/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/cli/Desktop/TestProject/Android_Test/HelloGridView/libs/commons-httpclient-3.1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
