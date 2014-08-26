@@ -94,7 +94,7 @@ public class UIHelper {
 	}
 
 	
-	// ÍË³ö
+	// Exit dialog
 	public static void Exit(final Context cont)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(cont);
@@ -103,7 +103,7 @@ public class UIHelper {
 		builder.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
-				//ÍË³ö
+				// Exit
 				AppManager.getAppManager().AppExit(cont);
 			}
 		});

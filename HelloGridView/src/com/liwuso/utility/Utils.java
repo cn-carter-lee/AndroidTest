@@ -12,9 +12,11 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.liwuso.app.AppManager;
 import com.liwuso.app.R;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -33,23 +35,7 @@ public class Utils {
 			}
 		} catch (Exception ex) {
 		}
-	}
-
-//	public static void SetActionBar(Activity activity, String title) {
-//		ActionBar actionBar = ((ActionBarActivity) activity)
-//				.getSupportActionBar();
-//		actionBar.setCustomView(R.layout.gift_actonbar);
-//		TextView textView = (TextView) activity
-//				.findViewById(R.id.gift_actionbar_title);
-//		textView.setText(title);
-//	}
-//
-//	public static void HideActionBar(Activity activity) {
-//		ActionBar actionBar = ((ActionBarActivity) activity)
-//				.getSupportActionBar();
-//		actionBar.setCustomView(R.layout.gift_actonbar);
-//		actionBar.hide();
-//	}
+	}	
 
 	public static String convertStreamToString(InputStream is) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));

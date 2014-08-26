@@ -226,7 +226,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		txtSoProductPersonName = (TextView) findViewById(R.id.txt_so_product_personname);
 		txtSoProductAgeName = (TextView) findViewById(R.id.txt_so_product_agename);
 		txtSoProductPurposeName = (TextView) findViewById(R.id.txt_so_product_purposename);
-		;
 
 		// Search
 		btnSearch = (Button) findViewById(R.id.btnSearch);
@@ -1162,28 +1161,38 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		spinner.setVisibility(spinnerVisibily ? View.VISIBLE : View.GONE);
 	}
 
+	private void backUpplerLevel() {
+		if(slArray[currentSlIndex].currentVisibleScreen==0 && currentSlIndex!=0)
+		{
+			currentSlIndex = 0;
+			slArray[0].currentVisibleScreen++;
+		}
+				
+		switch (currentSlIndex) {
+		case 0:
+			slArray[currentSlIndex].currentVisibleScreen--;
+			slArray[currentSlIndex]
+					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+			if (slArray[currentSlIndex].currentVisibleScreen == 0)
+				setTopBtnPreVisible(false);
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			slArray[currentSlIndex].currentVisibleScreen = 0;
+			slArray[currentSlIndex].scrollToScreen(0);
+			setTopBtnPreVisible(false);
+			break;
+		}
+		setTopTitle();				
+	}
+
 	private View.OnClickListener frameTopNavPreBtnClick() {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-				switch (currentSlIndex) {
-				case 0:
-					slArray[currentSlIndex].currentVisibleScreen--;
-					slArray[currentSlIndex]
-							.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-					if (slArray[currentSlIndex].currentVisibleScreen == 0)
-						setTopBtnPreVisible(false);
-					break;
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					slArray[currentSlIndex].currentVisibleScreen = 0;
-					slArray[currentSlIndex].scrollToScreen(0);
-					setTopBtnPreVisible(false);
-					break;
-				}
-				setTopTitle();
+				backUpplerLevel();
 			}
 		};
 	}
@@ -1312,6 +1321,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		boolean flag = true;
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			UIHelper.Exit(this);
+			// backUpplerLevel();
 		}
 		return flag;
 	}

@@ -30,7 +30,7 @@
             android:id="@+id/favorite_product_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CDEXXXXXXXXXXX"
+            android:text=""
             android:textColor="#333333"
             android:textSize="15sp" />
 
