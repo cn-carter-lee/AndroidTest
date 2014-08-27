@@ -22,8 +22,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 
-// import com.technotalkative.loadwebimage.R;
-
 public class ImageLoader {
 
 	MemoryCache memoryCache = new MemoryCache();

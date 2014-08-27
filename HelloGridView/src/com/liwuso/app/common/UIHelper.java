@@ -30,7 +30,8 @@ public class UIHelper {
 	public final static int LISTVIEW_DATATYPE_PURPOSE = 0x04;
 	public final static int LISTVIEW_DATATYPE_PRODUCT = 0x05;
 	public final static int LISTVIEW_DATATYPE_FAVORITE = 0X06;
-
+	public final static int LISTVIEW_DATATYPE_PERSON = 0x07;
+	
 	/** ±Ì«ÈÕº∆¨∆•≈‰ */
 	private static Pattern facePattern = Pattern
 			.compile("\\[{1}([0-9]\\d*)\\]{1}");

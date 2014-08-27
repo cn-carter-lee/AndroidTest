@@ -12,6 +12,8 @@ import java.io.Serializable;
 import com.liwuso.net.ApiClient;
 import com.pys.liwuso.bean.Age;
 import com.pys.liwuso.bean.AgeList;
+import com.pys.liwuso.bean.MixedPerson;
+import com.pys.liwuso.bean.MixedPersonList;
 import com.pys.liwuso.bean.Notice;
 import com.pys.liwuso.bean.Person;
 import com.pys.liwuso.bean.PersonList;
@@ -114,49 +116,72 @@ public class AppContext extends Application {
 		}
 	}
 
+	private PersonList getMalePersonList() {
+		PersonList list = new PersonList();
+		list.Add(new Person(18, "男朋友"));
+		list.Add(new Person(21, "男生"));
+		list.Add(new Person(19, "男性朋友"));
+		list.Add(new Person(20, "老公"));
+		list.Add(new Person(22, "爸爸"));
+		list.Add(new Person(25, "男同学"));
+		list.Add(new Person(23, "哥哥"));
+		list.Add(new Person(36, "弟弟"));
+		list.Add(new Person(26, "男长辈"));
+		list.Add(new Person(31, "男老师"));
+		list.Add(new Person(27, "孩子"));
+		list.Add(new Person(30, "儿子"));
+		list.Add(new Person(29, "男同事"));
+		list.Add(new Person(24, "男领导"));
+		list.Add(new Person(28, "老人"));
+		list.Add(new Person(32, "男客户"));
+		list.Add(new Person(33, "外国人"));
+		list.Add(new Person(34, "其他人"));
+		return list;
+	}
+
+	private PersonList getFemalePersonList() {
+		PersonList list = new PersonList();
+		list.Add(new Person(1, "女朋友"));
+		list.Add(new Person(3, "女生"));
+		list.Add(new Person(2, "女性朋友"));
+		list.Add(new Person(5, "老婆"));
+		list.Add(new Person(6, "妈妈"));
+		list.Add(new Person(7, "女同学"));
+		list.Add(new Person(4, "姐姐"));
+		list.Add(new Person(35, "妹妹"));
+		list.Add(new Person(8, "女长辈"));
+		list.Add(new Person(11, "女老师"));
+		list.Add(new Person(0, "孩子"));
+		list.Add(new Person(10, "女儿"));
+		list.Add(new Person(13, "女同事"));
+		list.Add(new Person(12, "女领导"));
+		list.Add(new Person(14, "老人"));
+		list.Add(new Person(15, "女客户"));
+		list.Add(new Person(16, "外国人"));
+		list.Add(new Person(17, "其他人"));
+		return list;
+	}
+
 	public PersonList getPersonList(int sexId, boolean isRefresh)
 			throws AppException {
 		PersonList list = new PersonList();
 		String key = "person_list_" + sexId;
-		if (sexId == 0) {
-			list.Add(new Person(1, "女朋友"));
-			list.Add(new Person(3, "女生"));
-			list.Add(new Person(2, "女性朋友"));
-			list.Add(new Person(9, "小女孩"));
-			list.Add(new Person(5, "老婆"));
-			list.Add(new Person(4, "姐姐"));
-			list.Add(new Person(35, "妹妹"));
-			list.Add(new Person(6, "妈妈"));
-			list.Add(new Person(7, "女同学"));
-			list.Add(new Person(8, "女性长辈"));
-			list.Add(new Person(10, "女儿"));
-			list.Add(new Person(11, "女老师"));
-			list.Add(new Person(12, "女领导"));
-			list.Add(new Person(13, "女同事"));
-			list.Add(new Person(14, "女性老人"));
-			list.Add(new Person(15, "女客户"));
-			list.Add(new Person(16, "女-外国人"));
-			list.Add(new Person(17, "其他女性"));
-		} else if (sexId == 1) {
-			list.Add(new Person(18, "男朋友"));
-			list.Add(new Person(21, "男生"));
-			list.Add(new Person(19, "男性朋友"));
-			list.Add(new Person(20, "老公"));
-			list.Add(new Person(22, "爸爸"));
-			list.Add(new Person(23, "哥哥"));
-			list.Add(new Person(24, "男领导"));
-			list.Add(new Person(25, "男同学"));
-			list.Add(new Person(26, "男性长辈"));
-			list.Add(new Person(27, "小男孩"));
-			list.Add(new Person(28, "男性老人"));
-			list.Add(new Person(29, "男同事"));
-			list.Add(new Person(30, "儿子"));
-			list.Add(new Person(31, "男老师"));
-			list.Add(new Person(32, "男客户"));
-			list.Add(new Person(33, "男-外国人"));
-			list.Add(new Person(36, "弟弟"));
-			list.Add(new Person(34, "其他男性"));
-		}
+		if (sexId == 0)
+			list = getFemalePersonList();
+		else if (sexId == 1)
+			list = getMalePersonList();
+		return list;
+	}
+
+	public MixedPersonList getMixedPersonList(boolean isRefresh)
+			throws AppException {
+		PersonList femalelist = getFemalePersonList();
+		PersonList malelist = getMalePersonList();
+		MixedPersonList list = new MixedPersonList();
+		for(int i=0;i<femalelist.getPersonCount()&&i<malelist.getPersonCount();i++)
+		{
+			list.Add(new MixedPerson(femalelist.getPersonList().get(i),malelist.getPersonList().get(i)));
+		}		
 
 		return list;
 	}

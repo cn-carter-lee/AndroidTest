@@ -15,7 +15,7 @@
             android:id="@+id/image"
             android:layout_width="150dip"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/hello_world"
+            android:contentDescription="@string/blank"
             android:scaleType="centerCrop"
             android:src="@drawable/product_blank" />
     </RelativeLayout>

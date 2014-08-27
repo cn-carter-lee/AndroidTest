@@ -34,6 +34,7 @@ import com.liwuso.app.adapter.ListViewAgeAdapter;
 import com.liwuso.app.adapter.ListViewFavoriteAdapter;
 import com.liwuso.app.adapter.ListViewFemaleAdapter;
 import com.liwuso.app.adapter.ListViewMaleAdapter;
+import com.liwuso.app.adapter.ListViewPersonAdapter;
 import com.liwuso.app.adapter.ListViewProductAdapter;
 import com.liwuso.app.adapter.ListViewAimAdapter;
 import com.liwuso.app.common.SortAdapter;
@@ -46,6 +47,8 @@ import com.liwuso.app.widget.ScrollLayout;
 import com.pys.liwuso.bean.Age;
 import com.pys.liwuso.bean.AgeList;
 import com.pys.liwuso.bean.AimList;
+import com.pys.liwuso.bean.MixedPerson;
+import com.pys.liwuso.bean.MixedPersonList;
 import com.pys.liwuso.bean.Notice;
 import com.pys.liwuso.bean.Person;
 import com.pys.liwuso.bean.PersonList;
@@ -71,6 +74,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private int[] slResourceArray = { R.id.main_scrolllayout_so,
 			R.id.main_scrolllayout_search, R.id.main_scrolllayout_favorite,
 			R.id.main_scrolllayout_more };
+
+	private ScrollLayout personScrollLayout;
+
 	private ScrollLayout[] slArray = new ScrollLayout[4];
 	private int currentSlIndex = 0;
 
@@ -84,6 +90,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private ProgressBar lvFemale_foot_progress;
 	private ProgressBar lvMale_foot_progress;
 
+	private PullToRefreshListView lvPerson;
 	private PullToRefreshListView lvFemale;
 	private PullToRefreshListView lvMale;
 	private PullToRefreshListView lvAge;
@@ -91,6 +98,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private PullToRefreshListView lvProduct;
 	private PullToRefreshListView lvFavorite;
 
+	private Handler lvPersonHandler;
 	private Handler lvFemaleHandler;
 	private Handler lvMaleHandler;
 	private Handler lvAgeHandler;
@@ -98,6 +106,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private Handler lvProductHandler;
 	private Handler lvFavoriteProductHandler;
 
+	private ListViewPersonAdapter lvPersonAdapter;
 	private ListViewFemaleAdapter lvFemaleAdapter;
 	private ListViewMaleAdapter lvMaleAdapter;
 	private ListViewAgeAdapter lvAgeAdapter;
@@ -105,6 +114,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private ListViewProductAdapter lvProductAdapter;
 	private ListViewFavoriteAdapter lvFavoriteAdapter;
 
+	private List<MixedPerson> lvPersonData = new ArrayList<MixedPerson>();
 	private List<Person> lvFemaleData = new ArrayList<Person>();
 	private List<Person> lvMaleData = new ArrayList<Person>();
 	private List<Age> lvAgeData = new ArrayList<Age>();
@@ -112,6 +122,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private List<Product> lvProductData = new ArrayList<Product>();
 	private List<Product> lvFavoriteProductData = new ArrayList<Product>();
 
+	private int lvPersonSumData;
 	private int lvFemaleSumData;
 	private int lvMaleSumData;
 	private int lvAgeSumData;
@@ -123,7 +134,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	// So person
 	LinearLayout frame_layout_female;
-	View frame_layout_sepeartor;
 	LinearLayout frame_layout_male;
 
 	private Button framebtn_All;
@@ -206,8 +216,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	private void initFrameButtons() {
 		// So
+		personScrollLayout = (ScrollLayout) findViewById(R.id.main_scrolllayout_person);
 		frame_layout_female = (LinearLayout) findViewById(R.id.frame_layout_female);
-		frame_layout_sepeartor = (View) findViewById(R.id.frame_layout_sepeartor);
+
 		frame_layout_male = (LinearLayout) findViewById(R.id.frame_layout_male);
 
 		framebtn_All = (Button) findViewById(R.id.frame_btn_all);
@@ -272,25 +283,23 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				framebtn_All.setEnabled(framebtn_All != btn);
 				framebtn_Female.setEnabled(framebtn_Female != btn);
 				framebtn_Male.setEnabled(framebtn_Male != btn);
-				// curNewsCatalog = catalog;
 				if (btn == framebtn_All) {
-					frame_layout_female.setVisibility(View.VISIBLE);
-					frame_layout_sepeartor.setVisibility(View.VISIBLE);
-					frame_layout_male.setVisibility(View.VISIBLE);
+
+					personScrollLayout.scrollToScreen(0);
+
 				} else if (btn == framebtn_Female) {
-					frame_layout_female.setVisibility(View.VISIBLE);
-					frame_layout_male.setVisibility(View.GONE);
-					frame_layout_sepeartor.setVisibility(View.GONE);
+
+					personScrollLayout.scrollToScreen(1);
 				} else if (btn == framebtn_Male) {
-					frame_layout_male.setVisibility(View.VISIBLE);
-					frame_layout_female.setVisibility(View.GONE);
-					frame_layout_sepeartor.setVisibility(View.GONE);
+
+					personScrollLayout.scrollToScreen(2);
 				}
 			}
 		};
 	}
 
 	private void initFrameListView() {
+		this.initPersonListView();
 		this.initFemaleListView();
 		this.initMaleListView();
 		this.initAgeListView();
@@ -298,6 +307,54 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		this.initProductListView();
 		this.initFavoriteListView();
 		this.initFrameListViewData();
+	}
+
+	private void initPersonListView() {
+		lvPersonAdapter = new ListViewPersonAdapter(this, lvPersonData);
+		lvPerson = (PullToRefreshListView) findViewById(R.id.frame_listview_person);
+		lvPerson.setAdapter(lvPersonAdapter);
+
+		lvPerson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				currentPerson = lvPersonData.get(position - 1).female;
+				setSoNavInfo();
+				slArray[currentSlIndex].currentVisibleScreen++;
+				slArray[currentSlIndex]
+						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+				currentSexId = 1;
+				loadLvData(currentSexId, 0, lvAgeHandler,
+						UIHelper.LISTVIEW_ACTION_INIT,
+						UIHelper.LISTVIEW_DATATYPE_AGE);
+				setTopTitle();
+			}
+		});
+		lvPerson.setOnScrollListener(new AbsListView.OnScrollListener() {
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				lvPerson.onScrollStateChanged(view, scrollState);
+
+				if (lvPersonData.isEmpty())
+					return;
+
+				int pageIndex = 1;
+				loadLvData(0, pageIndex, lvPersonHandler,
+						UIHelper.LISTVIEW_ACTION_SCROLL,
+						UIHelper.LISTVIEW_DATATYPE_PERSON);
+			}
+
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				lvPerson.onScroll(view, firstVisibleItem, visibleItemCount,
+						totalItemCount);
+			}
+		});
+		lvPerson.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+			public void onRefresh() {
+				loadLvData(0, 0, lvPersonHandler,
+						UIHelper.LISTVIEW_ACTION_REFRESH,
+						UIHelper.LISTVIEW_DATATYPE_PERSON);
+			}
+		});
 	}
 
 	private void initFemaleListView() {
@@ -614,6 +671,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	private void initFrameListViewData() {
+		lvPersonHandler = this.getLvHandler(lvPerson, lvPersonAdapter,
+				lvFemale_foot_more, lvFemale_foot_progress,
+				AppContext.PAGE_SIZE);
+		
 		lvFemaleHandler = this.getLvHandler(lvFemale, lvFemaleAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
@@ -637,6 +698,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 		// Load Person data
 		if (lvFemaleData.isEmpty()) {
+			loadLvData(0, 0, lvPersonHandler, UIHelper.LISTVIEW_ACTION_INIT,
+					UIHelper.LISTVIEW_DATATYPE_PERSON);
+
 			loadLvData(0, 0, lvFemaleHandler, UIHelper.LISTVIEW_ACTION_INIT,
 					UIHelper.LISTVIEW_DATATYPE_FEMALE);
 			loadLvData(1, 0, lvMaleHandler, UIHelper.LISTVIEW_ACTION_INIT,
@@ -699,6 +763,12 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					isRefresh = true;
 				try {
 					switch (dataType) {
+					case UIHelper.LISTVIEW_DATATYPE_PERSON:
+						MixedPersonList mixedPersonList = appContext
+								.getMixedPersonList(isRefresh);
+						msg.what = mixedPersonList.getPageSize();
+						msg.obj = mixedPersonList;
+						break;
 					case UIHelper.LISTVIEW_DATATYPE_FEMALE:
 					case UIHelper.LISTVIEW_DATATYPE_MALE:
 						PersonList personlist = appContext.getPersonList(sexId,
@@ -744,7 +814,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				}
 				msg.arg1 = action;
 				msg.arg2 = dataType;
-				// if (curNewsCatalog == catalog)
 				handler.sendMessage(msg);
 			}
 		}.start();
@@ -754,6 +823,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			int actiontype) {
 		Notice notice = null;
 		switch (objtype) {
+		case UIHelper.LISTVIEW_DATATYPE_PERSON:
+			handleLvDataPerson(what, obj, objtype, actiontype);
+			break;
 		case UIHelper.LISTVIEW_DATATYPE_FEMALE:
 			handleLvDataFemale(what, obj, objtype, actiontype);
 			break;
@@ -774,6 +846,59 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		}
 
 		return notice;
+	}
+
+	private void handleLvDataPerson(int what, Object obj, int objtype,
+			int actiontype) {
+		switch (actiontype) {
+		case UIHelper.LISTVIEW_ACTION_INIT:
+		case UIHelper.LISTVIEW_ACTION_REFRESH:
+		case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:
+			int newdata = 0;
+			MixedPersonList mixedpersonlistlist = (MixedPersonList) obj;
+			lvFemaleSumData = what;
+			if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
+				if (lvFemaleData.size() > 0) {
+					for (MixedPerson mixedperson1 : mixedpersonlistlist
+							.getMixedPersonList()) {
+						boolean b = false;
+						for (MixedPerson mixedperson2 : lvPersonData) {
+							if (mixedperson1.getId() == mixedperson2.getId()) {
+								b = true;
+								break;
+							}
+						}
+						if (!b)
+							newdata++;
+					}
+				} else {
+					newdata = what;
+				}
+			}
+			lvPersonData.clear();
+			lvPersonData.addAll(mixedpersonlistlist.getMixedPersonList());
+
+		case UIHelper.LISTVIEW_ACTION_SCROLL:
+			MixedPersonList list = (MixedPersonList) obj;
+			lvPersonSumData += what;
+			if (lvPersonData.size() > 0) {
+				for (MixedPerson mixedperson1 : list.getMixedPersonList()) {
+					boolean b = false;
+					for (MixedPerson mixedperson2 : lvPersonData) {
+						if (mixedperson1.getId() == mixedperson2.getId()) {
+							b = true;
+							break;
+						}
+					}
+					if (!b)
+						lvPersonData.add(mixedperson1);
+				}
+			} else {
+				lvPersonData.addAll(list.getMixedPersonList());
+			}
+
+			break;
+		}
 	}
 
 	private void handleLvDataFemale(int what, Object obj, int objtype,
@@ -1121,16 +1246,17 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		case 0:
 			switch (slArray[currentSlIndex].currentVisibleScreen) {
 			case 0:
-				strTitle = "您要送谁礼物?";
+				strTitle = getString(R.string.nav_send_person);
 				break;
 			case 1:
-				strTitle = String.format("请选择%s的年龄", currentPerson.Name);
+				strTitle = String.format(getString(R.string.nav_send_age),
+						currentPerson.Name);
 				break;
 			case 2:
-				strTitle = "请选择送礼目的";
+				strTitle = getString(R.string.nav_send_aim);
 				break;
 			case 3:
-				strTitle = "礼物推荐";
+				strTitle = getString(R.string.nav_send_product);
 				spinnerVisibily = true;
 				break;
 			}
@@ -1139,12 +1265,13 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			strTitle = "";
 			break;
 		case 2:
-			strTitle = String.format("我的收藏(%d)", getFavoriteCount());
+			strTitle = String.format(getString(R.string.nav_favorite),
+					getFavoriteCount());
 			break;
 		case 3:
 			switch (slArray[currentSlIndex].currentVisibleScreen) {
 			case 0:
-				strTitle = "更多";
+				strTitle = getString(R.string.nav_more);
 				break;
 			default:
 				strTitle = getResources().getStringArray(
@@ -1162,12 +1289,12 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	private void backUpplerLevel() {
-		if(slArray[currentSlIndex].currentVisibleScreen==0 && currentSlIndex!=0)
-		{
+		if (slArray[currentSlIndex].currentVisibleScreen == 0
+				&& currentSlIndex != 0) {
 			currentSlIndex = 0;
 			slArray[0].currentVisibleScreen++;
 		}
-				
+
 		switch (currentSlIndex) {
 		case 0:
 			slArray[currentSlIndex].currentVisibleScreen--;
@@ -1186,7 +1313,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			setTopBtnPreVisible(false);
 			break;
 		}
-		setTopTitle();				
+		setTopTitle();
 	}
 
 	private View.OnClickListener frameTopNavPreBtnClick() {
@@ -1399,6 +1526,4 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		// TODO Auto-generated method stub
 
 	}
-
-	// String item = parent.getItemAtPosition(pos).toString();
 }
