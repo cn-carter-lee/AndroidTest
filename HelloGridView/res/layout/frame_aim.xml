@@ -1,10 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Gift.ParentLeftRightPadding"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    tools:context="com.liwuso.app.ui.PurposeActivity$PlaceholderFragment" >
+    android:orientation="vertical">
 
     <LinearLayout
         style="@style/so_current_navbar"
@@ -17,17 +15,22 @@
 
         <TextView
             android:id="@+id/txt_so_purpose_personname"
-            style="@style/so_current_navbar_item"
-            android:text="女朋友 " />
+            style="@style/so_current_navbar_item" />
 
         <TextView
             android:id="@+id/txt_so_purpose_agename"
-            style="@style/so_current_navbar_item"
-            android:text="13-17岁" />
+            style="@style/so_current_navbar_item" />
     </LinearLayout>
 
-    <com.liwuso.app.widget.PullToRefreshListView
-        android:id="@+id/frame_listview_purpose"
-        style="@style/widget_listview" />
+    <LinearLayout
+        style="@style/Gift.ParentLeftRightPadding"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <com.liwuso.app.widget.PullToRefreshListView
+            android:id="@+id/frame_listview_purpose"
+            style="@style/widget_listview" />
+    </LinearLayout>
 
 </LinearLayout>

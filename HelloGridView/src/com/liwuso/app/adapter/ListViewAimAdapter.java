@@ -23,7 +23,7 @@ public class ListViewAimAdapter extends BaseAdapter {
 			R.anim.purpose_lisitem1, R.anim.purpose_lisitem2,
 			R.anim.purpose_lisitem3, R.anim.purpose_lisitem4, };
 
-	static class ListItemView {
+	static class CustomListItemView {
 		public Button text;
 	}
 
@@ -46,22 +46,21 @@ public class ListViewAimAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ListItemView listItemView = null;
-
-		if (convertView == null) {
-			convertView = listContainer.inflate(itemViewResourceArray[position
-					% itemViewResourceArray.length], null);
-
-			listItemView = new ListItemView();
-			listItemView.text = (Button) convertView
-					.findViewById(R.id.btnPurpose);
-			convertView.setTag(listItemView);
-		} else {
-			listItemView = (ListItemView) convertView.getTag();
-		}
+		CustomListItemView listItemView = null;
+		convertView = listContainer.inflate(itemViewResourceArray[position
+				% itemViewResourceArray.length], null);
+		listItemView = new CustomListItemView();
+		listItemView.text = (Button) convertView.findViewById(R.id.btnPurpose);
+		convertView.setTag(listItemView);
 		Aim aim = listItems.get(position);
 		listItemView.text.setText(aim.Name);
 		listItemView.text.setTag(aim);
 		return convertView;
 	}
+
+	@Override
+	public boolean isEnabled(int position) {
+		return false;
+	}
+
 }

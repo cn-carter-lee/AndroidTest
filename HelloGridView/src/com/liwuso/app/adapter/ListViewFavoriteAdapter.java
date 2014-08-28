@@ -21,7 +21,7 @@ public class ListViewFavoriteAdapter extends BaseAdapter {
 	private LayoutInflater listContainer;
 	public ImageLoader imageLoader;
 
-	static class ListItemView {
+	static class CustomListItemView {
 		public TextView title;
 		public TextView price;
 		public TextView number;
@@ -48,26 +48,26 @@ public class ListViewFavoriteAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ListItemView listItemView = null;
+		CustomListItemView listItemView = null;
 
-		if (convertView == null) {
-			convertView = listContainer.inflate(R.layout.favorite_item, null);
+		// if (convertView == null) {
+		convertView = listContainer.inflate(R.layout.favorite_item, null);
 
-			listItemView = new ListItemView();
-			listItemView.title = (TextView) convertView
-					.findViewById(R.id.favorite_product_title);
-			listItemView.price = (TextView) convertView
-					.findViewById(R.id.favorite_product_price);
+		listItemView = new CustomListItemView();
+		listItemView.title = (TextView) convertView
+				.findViewById(R.id.favorite_product_title);
+		listItemView.price = (TextView) convertView
+				.findViewById(R.id.favorite_product_price);
 
-			listItemView.number = (TextView) convertView
-					.findViewById(R.id.favorite_product_number);
+		listItemView.number = (TextView) convertView
+				.findViewById(R.id.favorite_product_number);
 
-			listItemView.image = (ImageView) convertView
-					.findViewById(R.id.favorite_product_image);
-			convertView.setTag(listItemView);
-		} else {
-			listItemView = (ListItemView) convertView.getTag();
-		}
+		listItemView.image = (ImageView) convertView
+				.findViewById(R.id.favorite_product_image);
+		convertView.setTag(listItemView);
+		// } else {
+		// listItemView = (CustomListItemView) convertView.getTag();
+		// }
 
 		Product product = listItems.get(position);
 
@@ -76,5 +76,10 @@ public class ListViewFavoriteAdapter extends BaseAdapter {
 		listItemView.number.setText("1020»À ’≤ÿ");
 		imageLoader.DisplayImage(product.ImageUrl, listItemView.image);
 		return convertView;
+	}
+
+	@Override
+	public boolean isEnabled(int position) {
+		return false;
 	}
 }

@@ -35,7 +35,7 @@
     <string name="person1">女性</string>
     <string name="person2">男性</string>
     <string name="image_content"></string>
-    <string name="so_current_tip">您已经选择:   </string>
+    <string name="so_current_tip">您已经选择：   </string>
     <string name="blank"></string>
 
     <string-array name="more_info">

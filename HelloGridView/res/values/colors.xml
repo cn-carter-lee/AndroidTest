@@ -19,7 +19,7 @@
     <color name="half_transparent">#aa000000</color>
     <color name="transparent">#00000000</color>
     <color name="nav_bg">#ff8432</color>
-    <color name="container">#f3f3f3</color>
+    <color name="container">#cccccc</color>
     <color name="listitem_black">#ff000000</color>
 
 </resources>

@@ -2,4 +2,4 @@
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/btnAge"
     style="@style/SearchButtonPurple"
-    android:onClick="clickAgeBtn" />
+    android:onClick="clickPersonBtn" />

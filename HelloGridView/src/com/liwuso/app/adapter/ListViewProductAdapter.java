@@ -26,7 +26,7 @@ public class ListViewProductAdapter extends BaseAdapter {
 
 	public ImageLoader imageLoader;
 
-	static class ListItemView {
+	static class CustomListItemView {
 		public TextView text;
 		public TextView price;
 		public ImageView image;
@@ -52,29 +52,22 @@ public class ListViewProductAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ListItemView listItemView = null;
-
-		if (convertView == null) {
-
-			convertView = listContainer.inflate(R.layout.search_item, null);
-
-			listItemView = new ListItemView();
-			listItemView.text = (TextView) convertView.findViewById(R.id.title);
-			listItemView.price = (TextView) convertView
-					.findViewById(R.id.price);
-			listItemView.image = (ImageView) convertView
-					.findViewById(R.id.image);
-			convertView.setTag(listItemView);
-		} else {
-			listItemView = (ListItemView) convertView.getTag();
-		}
-
+		CustomListItemView listItemView = null;
+		convertView = listContainer.inflate(R.layout.search_item, null);
+		listItemView = new CustomListItemView();
+		listItemView.text = (TextView) convertView.findViewById(R.id.title);
+		listItemView.price = (TextView) convertView.findViewById(R.id.price);
+		listItemView.image = (ImageView) convertView.findViewById(R.id.image);
+		convertView.setTag(listItemView);
 		Product product = listItems.get(position);
-
 		listItemView.text.setText(product.Name);
 		listItemView.price.setText(product.Price);
 		imageLoader.DisplayImage(product.ImageUrl, listItemView.image);
-
 		return convertView;
+	}
+
+	@Override
+	public boolean isEnabled(int position) {
+		return false;
 	}
 }

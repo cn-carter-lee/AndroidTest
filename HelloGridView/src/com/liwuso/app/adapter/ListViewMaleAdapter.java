@@ -23,7 +23,7 @@ public class ListViewMaleAdapter extends BaseAdapter {
 			R.anim.person_male_lisitem1, R.anim.person_male_lisitem2,
 			R.anim.person_male_lisitem3, R.anim.person_male_lisitem4, };
 
-	static class ListItemView {
+	static class CustomListItemView {
 		public Button text;
 	}
 
@@ -46,21 +46,23 @@ public class ListViewMaleAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ListItemView listItemView = null;
-		if (convertView == null) {
-			convertView = listContainer.inflate(itemViewResourceArray[position
-					% itemViewResourceArray.length], null);
-			listItemView = new ListItemView();
-			listItemView.text = (Button) convertView
-					.findViewById(R.id.btnPerson);
-			convertView.setTag(listItemView);
-		} else {
-			listItemView = (ListItemView) convertView.getTag();
-		}
+		CustomListItemView listItemView = null;
+
+		convertView = listContainer.inflate(itemViewResourceArray[position
+				% itemViewResourceArray.length], null);
+		listItemView = new CustomListItemView();
+		listItemView.text = (Button) convertView.findViewById(R.id.btnPerson);
+		convertView.setTag(listItemView);
 
 		Person person = listItems.get(position);
 		listItemView.text.setText(person.Name);
 		listItemView.text.setTag(person);
 		return convertView;
 	}
+
+	@Override
+	public boolean isEnabled(int position) {
+		return false;
+	}
+
 }

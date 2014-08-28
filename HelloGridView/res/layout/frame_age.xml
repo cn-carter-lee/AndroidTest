@@ -1,10 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Gift.ParentLeftRightPadding"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    tools:context="com.pys.hellogridview.SearchActivity$SearchAgeFrament" >
+    android:orientation="vertical" >
 
     <LinearLayout
         style="@style/so_current_navbar"
@@ -17,12 +15,18 @@
 
         <TextView
             android:id="@+id/txt_so_age_personname"
-            style="@style/so_current_navbar_item"
-            android:text="" />
+            style="@style/so_current_navbar_item" />
     </LinearLayout>
 
-    <com.liwuso.app.widget.PullToRefreshListView
-        android:id="@+id/frame_listview_age"
-        style="@style/widget_listview" />
+    <LinearLayout
+        style="@style/Gift.ParentLeftRightPadding"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <com.liwuso.app.widget.PullToRefreshListView
+            android:id="@+id/frame_listview_age"
+            style="@style/widget_listview" />
+    </LinearLayout>
 
 </LinearLayout>

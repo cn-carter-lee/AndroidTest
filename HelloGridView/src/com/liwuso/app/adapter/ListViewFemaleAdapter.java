@@ -25,7 +25,7 @@ public class ListViewFemaleAdapter extends BaseAdapter {
 	public final static int SEXTYPE_FEMALE = 0X00;
 	public final static int SEXTYPE_MALE = 0X01;
 
-	static class ListItemView {
+	static class CustomListItemView {
 		public Button text;
 	}
 
@@ -48,24 +48,24 @@ public class ListViewFemaleAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ListItemView listItemView = null;
+		CustomListItemView listItemView = null;
 
-		if (convertView == null) {
+		convertView = listContainer.inflate(itemViewResourceArray[position
+				% itemViewResourceArray.length], null);
 
-			convertView = listContainer.inflate(itemViewResourceArray[position
-					% itemViewResourceArray.length], null);
-
-			listItemView = new ListItemView();
-			listItemView.text = (Button) convertView
-					.findViewById(R.id.btnPerson);
-			convertView.setTag(listItemView);
-		} else {
-			listItemView = (ListItemView) convertView.getTag();
-		}
+		listItemView = new CustomListItemView();
+		listItemView.text = (Button) convertView.findViewById(R.id.btnPerson);
+		convertView.setTag(listItemView);
 
 		Person person = listItems.get(position);
 		listItemView.text.setText(person.Name);
 		listItemView.text.setTag(person);
 		return convertView;
 	}
+
+	@Override
+	public boolean isEnabled(int position) {
+		return false;
+	}
+
 }

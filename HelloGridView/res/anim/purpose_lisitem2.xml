@@ -2,4 +2,4 @@
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/btnPurpose"
     style="@style/SearchButtonYellow"
-    android:onClick="clickAimBtn"/>
+    android:onClick="clickPersonBtn"/>

@@ -23,7 +23,7 @@ public class ListViewPersonAdapter extends BaseAdapter {
 	public final static int SEXTYPE_FEMALE = 0X00;
 	public final static int SEXTYPE_MALE = 0X01;
 
-	static class ListItemView {
+	static class CustomListItemView {
 		public Button button1;
 		public Button button2;
 	}
@@ -47,19 +47,16 @@ public class ListViewPersonAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ListItemView listItemView = null;
-		if (convertView == null) {
-			convertView = listContainer.inflate(itemViewResourceArray[position
-					% itemViewResourceArray.length], null);
-			listItemView = new ListItemView();
-			listItemView.button1 = (Button) convertView
-					.findViewById(R.id.btnPerson1);
-			listItemView.button2 = (Button) convertView
-					.findViewById(R.id.btnPerson2);
-			convertView.setTag(listItemView);
-		} else {
-			listItemView = (ListItemView) convertView.getTag();
-		}
+		CustomListItemView listItemView = null;
+
+		convertView = listContainer.inflate(itemViewResourceArray[position
+				% itemViewResourceArray.length], null);
+		listItemView = new CustomListItemView();
+		listItemView.button1 = (Button) convertView
+				.findViewById(R.id.btnPerson1);
+		listItemView.button2 = (Button) convertView
+				.findViewById(R.id.btnPerson2);
+		convertView.setTag(listItemView);
 
 		MixedPerson mixedPerson = listItems.get(position);
 		listItemView.button1.setText(mixedPerson.female.Name);
@@ -69,8 +66,8 @@ public class ListViewPersonAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	// @Override
-	// public boolean isEnabled(int position) {
-	// return false;
-	// }
+	@Override
+	public boolean isEnabled(int position) {
+		return false;
+	}
 }

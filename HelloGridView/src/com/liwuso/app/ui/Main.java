@@ -1451,45 +1451,49 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	public void clickPersonBtn(View view) {
-		Person person = (Person) view.getTag();
-		currentPerson = person;// lvPersonData.get(position - 1).female;
-		setSoNavInfo();
-		slArray[currentSlIndex].currentVisibleScreen++;
-		slArray[currentSlIndex]
-				.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-		loadLvData(currentPerson.Sex, 0, lvAgeHandler,
-				UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_AGE);
-		setTopTitle();
-	}
-
-	public void clickAgeBtn(View view) {
-		currentAge = (Age) view.getTag();
-		slArray[currentSlIndex].currentVisibleScreen++;
-		slArray[currentSlIndex]
-				.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-		setSoNavInfo();
-		loadLvData(1, 0, lvPurposeHandler, UIHelper.LISTVIEW_ACTION_INIT,
-				UIHelper.LISTVIEW_DATATYPE_PURPOSE);
-		setTopTitle();
-	}
-	
-	public void clickAimBtn(View view) {
-		currentAim =(Aim)view.getTag();
-		final WaitDialog waitDialog = new WaitDialog();
-		waitDialog.show(getSupportFragmentManager(), "");
-		Handler sleepHandler = new Handler();
-		sleepHandler.postDelayed(new Runnable() {
-			public void run() {
-				waitDialog.dismiss();
+		try {
+			if (view.getTag() instanceof Person) {
+				Person person = (Person) view.getTag();
+				currentPerson = person;// lvPersonData.get(position - 1).female;
 				setSoNavInfo();
 				slArray[currentSlIndex].currentVisibleScreen++;
 				slArray[currentSlIndex]
 						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-				loadLvData(1, 0, lvProductHandler,
+				loadLvData(currentPerson.Sex, 0, lvAgeHandler,
 						UIHelper.LISTVIEW_ACTION_INIT,
-						UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+						UIHelper.LISTVIEW_DATATYPE_AGE);
 				setTopTitle();
+			} else if (view.getTag() instanceof Age) {
+				currentAge = (Age) view.getTag();
+				slArray[currentSlIndex].currentVisibleScreen++;
+				slArray[currentSlIndex]
+						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+				setSoNavInfo();
+				loadLvData(1, 0, lvPurposeHandler,
+						UIHelper.LISTVIEW_ACTION_INIT,
+						UIHelper.LISTVIEW_DATATYPE_PURPOSE);
+				setTopTitle();
+			} else if (view.getTag() instanceof Aim) {
+				currentAim = (Aim) view.getTag();
+				final WaitDialog waitDialog = new WaitDialog();
+				waitDialog.show(getSupportFragmentManager(), "");
+				Handler sleepHandler = new Handler();
+				sleepHandler.postDelayed(new Runnable() {
+					public void run() {
+						waitDialog.dismiss();
+						setSoNavInfo();
+						slArray[currentSlIndex].currentVisibleScreen++;
+						slArray[currentSlIndex]
+								.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+						loadLvData(1, 0, lvProductHandler,
+								UIHelper.LISTVIEW_ACTION_INIT,
+								UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+						setTopTitle();
+					}
+				}, 3000);
 			}
-		}, 3000);
+		} catch (Exception e) {
+
+		}
 	}
 }

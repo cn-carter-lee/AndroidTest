@@ -15,7 +15,7 @@
 
         <include layout="@layout/frame_age" />
 
-        <include layout="@layout/frame_purpose" />
+        <include layout="@layout/frame_aim" />
 
         <include layout="@layout/frame_product" />
     </com.liwuso.app.widget.ScrollLayout>
