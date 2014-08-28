@@ -24,7 +24,7 @@ public class ListViewAgeAdapter extends BaseAdapter {
 			R.anim.age_lisitem4, };
 
 	static class ListItemView {
-		public TextView text;
+		public Button text;
 	}
 
 	public ListViewAgeAdapter(Context context, List<Age> data) {
@@ -51,7 +51,7 @@ public class ListViewAgeAdapter extends BaseAdapter {
 			convertView = listContainer.inflate(itemViewResourceArray[position
 					% itemViewResourceArray.length], null);
 			listItemView = new ListItemView();
-			listItemView.text = (TextView) convertView
+			listItemView.text = (Button) convertView
 					.findViewById(R.id.btnAge);
 			convertView.setTag(listItemView);
 		} else {
@@ -59,6 +59,7 @@ public class ListViewAgeAdapter extends BaseAdapter {
 		}
 		Age age = listItems.get(position);
 		listItemView.text.setText(age.Name);
+		listItemView.text.setTag(age);
 		return convertView;
 	}
 }

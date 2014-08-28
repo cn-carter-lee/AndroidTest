@@ -117,48 +117,50 @@ public class AppContext extends Application {
 	}
 
 	private PersonList getMalePersonList() {
+		int sex = 2;
 		PersonList list = new PersonList();
-		list.Add(new Person(18, "男朋友"));
-		list.Add(new Person(21, "男生"));
-		list.Add(new Person(19, "男性朋友"));
-		list.Add(new Person(20, "老公"));
-		list.Add(new Person(22, "爸爸"));
-		list.Add(new Person(25, "男同学"));
-		list.Add(new Person(23, "哥哥"));
-		list.Add(new Person(36, "弟弟"));
-		list.Add(new Person(26, "男长辈"));
-		list.Add(new Person(31, "男老师"));
-		list.Add(new Person(27, "孩子"));
-		list.Add(new Person(30, "儿子"));
-		list.Add(new Person(29, "男同事"));
-		list.Add(new Person(24, "男领导"));
-		list.Add(new Person(28, "老人"));
-		list.Add(new Person(32, "男客户"));
-		list.Add(new Person(33, "外国人"));
-		list.Add(new Person(34, "其他人"));
+		list.Add(new Person(18, "男朋友", sex));
+		list.Add(new Person(21, "男生", sex));
+		list.Add(new Person(19, "男性朋友", sex));
+		list.Add(new Person(20, "老公", sex));
+		list.Add(new Person(22, "爸爸", sex));
+		list.Add(new Person(25, "男同学", sex));
+		list.Add(new Person(23, "哥哥", sex));
+		list.Add(new Person(36, "弟弟", sex));
+		list.Add(new Person(26, "男长辈", sex));
+		list.Add(new Person(31, "男老师", sex));
+		list.Add(new Person(27, "孩子", sex));
+		list.Add(new Person(30, "儿子", sex));
+		list.Add(new Person(29, "男同事", sex));
+		list.Add(new Person(24, "男领导", sex));
+		list.Add(new Person(28, "老人", sex));
+		list.Add(new Person(32, "男客户", sex));
+		list.Add(new Person(33, "外国人", sex));
+		list.Add(new Person(34, "其他人", sex));
 		return list;
 	}
 
 	private PersonList getFemalePersonList() {
+		int sex = 1;
 		PersonList list = new PersonList();
-		list.Add(new Person(1, "女朋友"));
-		list.Add(new Person(3, "女生"));
-		list.Add(new Person(2, "女性朋友"));
-		list.Add(new Person(5, "老婆"));
-		list.Add(new Person(6, "妈妈"));
-		list.Add(new Person(7, "女同学"));
-		list.Add(new Person(4, "姐姐"));
-		list.Add(new Person(35, "妹妹"));
-		list.Add(new Person(8, "女长辈"));
-		list.Add(new Person(11, "女老师"));
-		list.Add(new Person(0, "孩子"));
-		list.Add(new Person(10, "女儿"));
-		list.Add(new Person(13, "女同事"));
-		list.Add(new Person(12, "女领导"));
-		list.Add(new Person(14, "老人"));
-		list.Add(new Person(15, "女客户"));
-		list.Add(new Person(16, "外国人"));
-		list.Add(new Person(17, "其他人"));
+		list.Add(new Person(1, "女朋友", sex));
+		list.Add(new Person(3, "女生", sex));
+		list.Add(new Person(2, "女性朋友", sex));
+		list.Add(new Person(5, "老婆", sex));
+		list.Add(new Person(6, "妈妈", sex));
+		list.Add(new Person(7, "女同学", sex));
+		list.Add(new Person(4, "姐姐", sex));
+		list.Add(new Person(35, "妹妹", sex));
+		list.Add(new Person(8, "女长辈", sex));
+		list.Add(new Person(11, "女老师", sex));
+		list.Add(new Person(0, "孩子", sex));
+		list.Add(new Person(10, "女儿", sex));
+		list.Add(new Person(13, "女同事", sex));
+		list.Add(new Person(12, "女领导", sex));
+		list.Add(new Person(14, "老人", sex));
+		list.Add(new Person(15, "女客户", sex));
+		list.Add(new Person(16, "外国人", sex));
+		list.Add(new Person(17, "其他人", sex));
 		return list;
 	}
 
@@ -178,10 +180,11 @@ public class AppContext extends Application {
 		PersonList femalelist = getFemalePersonList();
 		PersonList malelist = getMalePersonList();
 		MixedPersonList list = new MixedPersonList();
-		for(int i=0;i<femalelist.getPersonCount()&&i<malelist.getPersonCount();i++)
-		{
-			list.Add(new MixedPerson(femalelist.getPersonList().get(i),malelist.getPersonList().get(i)));
-		}		
+		for (int i = 0; i < femalelist.getPersonCount()
+				&& i < malelist.getPersonCount(); i++) {
+			list.Add(new MixedPerson(femalelist.getPersonList().get(i),
+					malelist.getPersonList().get(i)));
+		}
 
 		return list;
 	}

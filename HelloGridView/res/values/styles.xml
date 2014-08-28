@@ -74,6 +74,15 @@
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/frame_button_bg</item>
         <item name="android:textColor">@drawable/frame_button_txt</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="mixed_person_wrapper">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">0dip</item>
+        <item name="android:layout_margin">0dip</item>
     </style>
 
     <style name="frame_button_seperator">
@@ -88,7 +97,7 @@
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:dividerHeight">20dip</item>
-        <item name="android:fadingEdge">none</item>       
+        <item name="android:fadingEdge">none</item>
         <item name="android:scrollingCache">false</item>
     </style>
 

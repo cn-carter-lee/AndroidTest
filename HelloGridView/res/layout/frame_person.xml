@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/transparent"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -36,18 +37,21 @@
 
     <com.liwuso.app.widget.ScrollLayout
         android:id="@+id/main_scrolllayout_person"
-        style="@style/main_srcoll_layout" >
+        style="@style/main_srcoll_layout"
+        android:background="@color/transparent" >
 
         <LinearLayout
             style="@style/Gift.ParentLayoutPadding"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:background="@color/transparent"
             android:orientation="horizontal" >
 
             <com.liwuso.app.widget.PullToRefreshListView
                 android:id="@+id/frame_listview_person"
                 style="@style/widget_listview"
-                android:descendantFocusability="blocksDescendants" />
+                android:background="@color/transparent"
+                android:listSelector="@android:color/transparent" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,7 +65,8 @@
             <com.liwuso.app.widget.PullToRefreshListView
                 android:id="@+id/frame_listview_person_female"
                 style="@style/widget_listview"
-                android:descendantFocusability="blocksDescendants" />
+                android:descendantFocusability="blocksDescendants"
+                android:listSelector="@android:color/transparent" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +79,8 @@
 
             <com.liwuso.app.widget.PullToRefreshListView
                 android:id="@+id/frame_listview_person_male"
-                style="@style/widget_listview" />
+                style="@style/widget_listview"
+                android:listSelector="@android:color/transparent" />
         </LinearLayout>
     </com.liwuso.app.widget.ScrollLayout>
 

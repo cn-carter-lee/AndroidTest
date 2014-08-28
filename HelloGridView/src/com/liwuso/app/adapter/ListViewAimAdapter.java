@@ -24,7 +24,7 @@ public class ListViewAimAdapter extends BaseAdapter {
 			R.anim.purpose_lisitem3, R.anim.purpose_lisitem4, };
 
 	static class ListItemView {
-		public TextView text;
+		public Button text;
 	}
 
 	public ListViewAimAdapter(Context context, List<Aim> data) {
@@ -53,16 +53,15 @@ public class ListViewAimAdapter extends BaseAdapter {
 					% itemViewResourceArray.length], null);
 
 			listItemView = new ListItemView();
-			listItemView.text = (TextView) convertView
+			listItemView.text = (Button) convertView
 					.findViewById(R.id.btnPurpose);
 			convertView.setTag(listItemView);
 		} else {
 			listItemView = (ListItemView) convertView.getTag();
 		}
-
-		Aim purpose = listItems.get(position);
-
-		listItemView.text.setText(purpose.Name);
+		Aim aim = listItems.get(position);
+		listItemView.text.setText(aim.Name);
+		listItemView.text.setTag(aim);
 		return convertView;
 	}
 }

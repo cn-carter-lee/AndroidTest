@@ -7,8 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
-
+import android.widget.Button;
 import com.liwuso.app.R;
 import com.pys.liwuso.bean.MixedPerson;
 
@@ -25,8 +24,8 @@ public class ListViewPersonAdapter extends BaseAdapter {
 	public final static int SEXTYPE_MALE = 0X01;
 
 	static class ListItemView {
-		public TextView text1;
-		public TextView text2;
+		public Button button1;
+		public Button button2;
 	}
 
 	public ListViewPersonAdapter(Context context, List<MixedPerson> data) {
@@ -49,16 +48,13 @@ public class ListViewPersonAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ListItemView listItemView = null;
-
 		if (convertView == null) {
-
 			convertView = listContainer.inflate(itemViewResourceArray[position
 					% itemViewResourceArray.length], null);
-
 			listItemView = new ListItemView();
-			listItemView.text1 = (TextView) convertView
+			listItemView.button1 = (Button) convertView
 					.findViewById(R.id.btnPerson1);
-			listItemView.text2 = (TextView) convertView
+			listItemView.button2 = (Button) convertView
 					.findViewById(R.id.btnPerson2);
 			convertView.setTag(listItemView);
 		} else {
@@ -66,9 +62,15 @@ public class ListViewPersonAdapter extends BaseAdapter {
 		}
 
 		MixedPerson mixedPerson = listItems.get(position);
-
-		listItemView.text1.setText(mixedPerson.female.Name);
-		listItemView.text2.setText(mixedPerson.male.Name);
+		listItemView.button1.setText(mixedPerson.female.Name);
+		listItemView.button1.setTag(mixedPerson.female);
+		listItemView.button2.setText(mixedPerson.male.Name);
+		listItemView.button2.setTag(mixedPerson.male);
 		return convertView;
 	}
+
+	// @Override
+	// public boolean isEnabled(int position) {
+	// return false;
+	// }
 }

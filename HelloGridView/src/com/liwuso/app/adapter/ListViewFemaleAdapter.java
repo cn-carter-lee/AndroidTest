@@ -26,7 +26,7 @@ public class ListViewFemaleAdapter extends BaseAdapter {
 	public final static int SEXTYPE_MALE = 0X01;
 
 	static class ListItemView {
-		public TextView text;
+		public Button text;
 	}
 
 	public ListViewFemaleAdapter(Context context, List<Person> data) {
@@ -56,7 +56,7 @@ public class ListViewFemaleAdapter extends BaseAdapter {
 					% itemViewResourceArray.length], null);
 
 			listItemView = new ListItemView();
-			listItemView.text = (TextView) convertView
+			listItemView.text = (Button) convertView
 					.findViewById(R.id.btnPerson);
 			convertView.setTag(listItemView);
 		} else {
@@ -64,8 +64,8 @@ public class ListViewFemaleAdapter extends BaseAdapter {
 		}
 
 		Person person = listItems.get(position);
-
 		listItemView.text.setText(person.Name);
+		listItemView.text.setTag(person);
 		return convertView;
 	}
 }

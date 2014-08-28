@@ -24,7 +24,7 @@ public class ListViewMaleAdapter extends BaseAdapter {
 			R.anim.person_male_lisitem3, R.anim.person_male_lisitem4, };
 
 	static class ListItemView {
-		public TextView text;
+		public Button text;
 	}
 
 	public ListViewMaleAdapter(Context context, List<Person> data) {
@@ -50,9 +50,8 @@ public class ListViewMaleAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = listContainer.inflate(itemViewResourceArray[position
 					% itemViewResourceArray.length], null);
-
 			listItemView = new ListItemView();
-			listItemView.text = (TextView) convertView
+			listItemView.text = (Button) convertView
 					.findViewById(R.id.btnPerson);
 			convertView.setTag(listItemView);
 		} else {
@@ -60,8 +59,8 @@ public class ListViewMaleAdapter extends BaseAdapter {
 		}
 
 		Person person = listItems.get(position);
-
 		listItemView.text.setText(person.Name);
+		listItemView.text.setTag(person);
 		return convertView;
 	}
 }

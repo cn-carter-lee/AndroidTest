@@ -22,5 +22,6 @@
     <string name="dialog_submit">您的建议已经成功提交:)</string>
     <string name="dialog_wait">正在搜索最佳礼物</string>
     <string name="load_ing">加载中···</string>
-
+    <string name="no_internet_access">没有可用的网络连接!</string>
+
 </resources>

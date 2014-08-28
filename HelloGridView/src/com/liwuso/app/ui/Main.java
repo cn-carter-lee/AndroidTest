@@ -58,7 +58,6 @@ import com.pys.liwuso.bean.Aim;
 
 public class Main extends BaseActivity implements OnItemSelectedListener {
 
-	private int currentSexId = 1;
 	private Person currentPerson = null;
 	private Age currentAge = null;
 	private Aim currentAim = null;
@@ -313,22 +312,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		lvPersonAdapter = new ListViewPersonAdapter(this, lvPersonData);
 		lvPerson = (PullToRefreshListView) findViewById(R.id.frame_listview_person);
 		lvPerson.setAdapter(lvPersonAdapter);
-
-		lvPerson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				currentPerson = lvPersonData.get(position - 1).female;
-				setSoNavInfo();
-				slArray[currentSlIndex].currentVisibleScreen++;
-				slArray[currentSlIndex]
-						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-				currentSexId = 1;
-				loadLvData(currentSexId, 0, lvAgeHandler,
-						UIHelper.LISTVIEW_ACTION_INIT,
-						UIHelper.LISTVIEW_DATATYPE_AGE);
-				setTopTitle();
-			}
-		});
 		lvPerson.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				lvPerson.onScrollStateChanged(view, scrollState);
@@ -361,21 +344,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		lvFemaleAdapter = new ListViewFemaleAdapter(this, lvFemaleData);
 		lvFemale = (PullToRefreshListView) findViewById(R.id.frame_listview_person_female);
 		lvFemale.setAdapter(lvFemaleAdapter);
-		lvFemale.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				currentPerson = lvFemaleData.get(position - 1);
-				setSoNavInfo();
-				slArray[currentSlIndex].currentVisibleScreen++;
-				slArray[currentSlIndex]
-						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-				currentSexId = 1;
-				loadLvData(currentSexId, 0, lvAgeHandler,
-						UIHelper.LISTVIEW_ACTION_INIT,
-						UIHelper.LISTVIEW_DATATYPE_AGE);
-				setTopTitle();
-			}
-		});
 		lvFemale.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				lvFemale.onScrollStateChanged(view, scrollState);
@@ -410,23 +378,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		lvMaleAdapter = new ListViewMaleAdapter(this, lvMaleData);
 		lvMale = (PullToRefreshListView) findViewById(R.id.frame_listview_person_male);
 		lvMale.setAdapter(lvMaleAdapter);
-
-		lvMale.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				currentPerson = lvMaleData.get(position - 1);
-				setSoNavInfo();
-				slArray[currentSlIndex].currentVisibleScreen++;
-				slArray[currentSlIndex]
-						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-				setTopBtnPreVisible(true);
-				currentSexId = 2;
-				loadLvData(currentSexId, 0, lvAgeHandler,
-						UIHelper.LISTVIEW_ACTION_INIT,
-						UIHelper.LISTVIEW_DATATYPE_AGE);
-				setTopTitle();
-			}
-		});
 		lvMale.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				lvMale.onScrollStateChanged(view, scrollState);
@@ -506,29 +457,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		lvPurposeAdapter = new ListViewAimAdapter(this, lvPurposeData);
 		lvPurpose = (PullToRefreshListView) findViewById(R.id.frame_listview_purpose);
 		lvPurpose.setAdapter(lvPurposeAdapter);
-
-		lvPurpose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				currentAim = lvPurposeData.get(position - 1);
-				final WaitDialog waitDialog = new WaitDialog();
-				waitDialog.show(getSupportFragmentManager(), "");
-				Handler sleepHandler = new Handler();
-				sleepHandler.postDelayed(new Runnable() {
-					public void run() {
-						waitDialog.dismiss();
-						setSoNavInfo();
-						slArray[currentSlIndex].currentVisibleScreen++;
-						slArray[currentSlIndex]
-								.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-						loadLvData(1, 0, lvProductHandler,
-								UIHelper.LISTVIEW_ACTION_INIT,
-								UIHelper.LISTVIEW_DATATYPE_PRODUCT);
-						setTopTitle();
-					}
-				}, 3000);
-			}
-		});
 		lvPurpose.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				lvPurpose.onScrollStateChanged(view, scrollState);
@@ -599,7 +527,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					lvProduct_foot_progress.setVisibility(View.VISIBLE);
 					// 当前pageIndex, pagesize is 10 here.
 					int pageIndex = lvProductSumData / 10 + 1;
-					loadLvData(currentSexId, pageIndex, lvProductHandler,
+					loadLvData(currentPerson.Sex, pageIndex, lvProductHandler,
 							UIHelper.LISTVIEW_ACTION_SCROLL,
 							UIHelper.LISTVIEW_DATATYPE_PRODUCT);
 				}
@@ -674,7 +602,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		lvPersonHandler = this.getLvHandler(lvPerson, lvPersonAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
-		
+
 		lvFemaleHandler = this.getLvHandler(lvFemale, lvFemaleAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
@@ -1455,7 +1383,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	private void checkNetwork() {
 		if (!appContext.isNetworkConnected()) {
-			Toast.makeText(this, "没有可用的网络连接!", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, getString(R.string.no_internet_access),
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -1463,15 +1392,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		String filename = "liwuso_data";
 		String string = "887,718,109,571";
 		FileOutputStream outputStream;
-
 		try {
 			outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
 			outputStream.write(string.getBytes());
 			outputStream.close();
-			// Toast.makeText(getBaseContext(), "file saved",
-			// Toast.LENGTH_SHORT)
-			// .show();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1524,6 +1448,48 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
 		// TODO Auto-generated method stub
+	}
 
+	public void clickPersonBtn(View view) {
+		Person person = (Person) view.getTag();
+		currentPerson = person;// lvPersonData.get(position - 1).female;
+		setSoNavInfo();
+		slArray[currentSlIndex].currentVisibleScreen++;
+		slArray[currentSlIndex]
+				.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+		loadLvData(currentPerson.Sex, 0, lvAgeHandler,
+				UIHelper.LISTVIEW_ACTION_INIT, UIHelper.LISTVIEW_DATATYPE_AGE);
+		setTopTitle();
+	}
+
+	public void clickAgeBtn(View view) {
+		currentAge = (Age) view.getTag();
+		slArray[currentSlIndex].currentVisibleScreen++;
+		slArray[currentSlIndex]
+				.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+		setSoNavInfo();
+		loadLvData(1, 0, lvPurposeHandler, UIHelper.LISTVIEW_ACTION_INIT,
+				UIHelper.LISTVIEW_DATATYPE_PURPOSE);
+		setTopTitle();
+	}
+	
+	public void clickAimBtn(View view) {
+		currentAim =(Aim)view.getTag();
+		final WaitDialog waitDialog = new WaitDialog();
+		waitDialog.show(getSupportFragmentManager(), "");
+		Handler sleepHandler = new Handler();
+		sleepHandler.postDelayed(new Runnable() {
+			public void run() {
+				waitDialog.dismiss();
+				setSoNavInfo();
+				slArray[currentSlIndex].currentVisibleScreen++;
+				slArray[currentSlIndex]
+						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+				loadLvData(1, 0, lvProductHandler,
+						UIHelper.LISTVIEW_ACTION_INIT,
+						UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+				setTopTitle();
+			}
+		}, 3000);
 	}
 }
