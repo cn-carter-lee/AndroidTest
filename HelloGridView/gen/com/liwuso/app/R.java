@@ -835,6 +835,7 @@ containing a value of this type.
         public static final int black=0x7f070004;
         public static final int blue=0x7f07000a;
         public static final int container=0x7f070016;
+        public static final int favorite_txt_selector_color=0x7f070019;
         public static final int gold=0x7f070007;
         public static final int gray=0x7f070005;
         public static final int grayslate=0x7f070011;

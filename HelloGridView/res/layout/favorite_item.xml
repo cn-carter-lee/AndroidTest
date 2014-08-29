@@ -39,7 +39,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/favorite_product_title"
-            android:text="¥168.00"
             android:textColor="#ff6600"
             android:textSize="15sp" />
 

@@ -107,7 +107,7 @@
 
     <style name="Gift.Product.Favorite_Btn" parent="android:Widget">
         <item name="android:background">@drawable/favorite_btn_selector_bg</item>
-        <item name="android:textColor">#ff6600</item>
+        <item name="android:textColor">@color/favorite_txt_selector_color</item>
     </style>
 
     <style name="Search.Txt" parent="android:Widget"></style>
