@@ -23,5 +23,6 @@
     <string name="dialog_wait">正在搜索最佳礼物</string>
     <string name="load_ing">加载中···</string>
     <string name="no_internet_access">没有可用的网络连接!</string>
-
+    <string name="alert_exit">再按一次将退出礼物搜</string>
+
 </resources>

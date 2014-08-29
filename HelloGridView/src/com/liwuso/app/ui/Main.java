@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
+import com.liwuso.app.AppManager;
 import com.liwuso.app.R;
 import com.liwuso.app.adapter.ImageAdapter;
 import com.liwuso.app.adapter.ListViewAgeAdapter;
@@ -44,6 +45,7 @@ import com.liwuso.app.common.UIHelper;
 import com.liwuso.app.widget.PullToRefreshGridView;
 import com.liwuso.app.widget.PullToRefreshListView;
 import com.liwuso.app.widget.ScrollLayout;
+import com.liwuso.utility.Utils;
 import com.pys.liwuso.bean.Age;
 import com.pys.liwuso.bean.AgeList;
 import com.pys.liwuso.bean.AimList;
@@ -58,6 +60,8 @@ import com.pys.liwuso.bean.Aim;
 
 public class Main extends BaseActivity implements OnItemSelectedListener {
 
+	private boolean shouldExit = false;
+	private Context context = null;
 	private Person currentPerson = null;
 	private Age currentAge = null;
 	private Aim currentAim = null;
@@ -167,6 +171,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Utils.context = this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		appContext = (AppContext) getApplication();
@@ -174,7 +179,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		this.initFrameButtons();
 		this.initFrameListView();
 		checkNetwork();
-		writeFavoriteFile();
+		Utils.writeFavoriteFile(this);
 	}
 
 	@Override
@@ -728,9 +733,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_FAVORITE:
 						ProductList favoriteproductlist = appContext
-								.getFavoriteList(readFavoriteFile(), pageIndex,
-										isRefresh);
-						msg.what = getFavoriteCount();
+								.getFavoriteList(Utils.readFavoriteFile(),
+										pageIndex, isRefresh);
+						msg.what = Utils.getFavoriteCount();
 						msg.obj = favoriteproductlist;
 						break;
 
@@ -1179,6 +1184,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			case 1:
 				strTitle = String.format(getString(R.string.nav_send_age),
 						currentPerson.Name);
+				setSoNavInfo();
 				break;
 			case 2:
 				strTitle = getString(R.string.nav_send_aim);
@@ -1194,7 +1200,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			break;
 		case 2:
 			strTitle = String.format(getString(R.string.nav_favorite),
-					getFavoriteCount());
+					Utils.getFavoriteCount());
 			break;
 		case 3:
 			switch (slArray[currentSlIndex].currentVisibleScreen) {
@@ -1217,31 +1223,41 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	private void backUpplerLevel() {
-		if (slArray[currentSlIndex].currentVisibleScreen == 0
-				&& currentSlIndex != 0) {
-			currentSlIndex = 0;
-			slArray[0].currentVisibleScreen++;
+		if (currentSlIndex == 0
+				&& slArray[currentSlIndex].currentVisibleScreen == 0) {
+			if (shouldExit) {
+				AppManager.getAppManager().AppExit(this);
+			} else {
+				shouldExit = true;
+				Toast.makeText(this, getString(R.string.alert_exit),
+						Toast.LENGTH_LONG).show();
+			}
+			return;
 		}
 
 		switch (currentSlIndex) {
 		case 0:
 			slArray[currentSlIndex].currentVisibleScreen--;
-			slArray[currentSlIndex]
-					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
 			if (slArray[currentSlIndex].currentVisibleScreen == 0)
 				setTopBtnPreVisible(false);
 			break;
 		case 1:
-			break;
 		case 2:
+			currentSlIndex = 0;
+			setTopBtnPreVisible(false);
 			break;
 		case 3:
-			slArray[currentSlIndex].currentVisibleScreen = 0;
-			slArray[currentSlIndex].scrollToScreen(0);
+			if (slArray[currentSlIndex].currentVisibleScreen > 0)
+				slArray[currentSlIndex].currentVisibleScreen = 0;
+			else
+				currentSlIndex = 0;
 			setTopBtnPreVisible(false);
 			break;
 		}
-		setTopTitle();
+		slArray[currentSlIndex]
+				.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+		// setTopTitle();
+		selectFootNavBar(currentSlIndex);
 	}
 
 	private View.OnClickListener frameTopNavPreBtnClick() {
@@ -1260,37 +1276,41 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	// Footer
+
+	private void selectFootNavBar(final int itemIndex) {
+		currentSlIndex = itemIndex;
+		for (int i = 0; i < footBtnArray.length; i++) {
+			footBtnArray[i].setEnabled(i != itemIndex);
+			if (i == itemIndex)
+				slArray[i].setVisibility(View.VISIBLE);
+			else
+				slArray[i].setVisibility(View.GONE);
+		}
+		switch (itemIndex) {
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+			loadFavorite();
+			break;
+		case 3:
+			break;
+		}
+
+		// Set nav pre button
+		if (slArray[itemIndex].currentVisibleScreen > 0)
+			btnTopNavPre.setVisibility(View.VISIBLE);
+		else
+			btnTopNavPre.setVisibility(View.GONE);
+		currentSlIndex = itemIndex;
+		setTopTitle();
+	}
+
 	private View.OnClickListener selectFootBar(final int itemIndex) {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-				currentSlIndex = itemIndex;
-				for (int i = 0; i < footBtnArray.length; i++) {
-					footBtnArray[i].setEnabled(i != itemIndex);
-					if (i == itemIndex)
-						slArray[i].setVisibility(View.VISIBLE);
-					else
-						slArray[i].setVisibility(View.GONE);
-				}
-
-				switch (itemIndex) {
-				case 0:
-					break;
-				case 1:
-					break;
-				case 2:
-					loadFavorite();
-					break;
-				case 3:
-					break;
-				}
-
-				// Set nav pre button
-				if (slArray[itemIndex].currentVisibleScreen > 0)
-					btnTopNavPre.setVisibility(View.VISIBLE);
-				else
-					btnTopNavPre.setVisibility(View.GONE);
-				currentSlIndex = itemIndex;
-				setTopTitle();
+				selectFootNavBar(itemIndex);
 			}
 		};
 	}
@@ -1373,12 +1393,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	// Exit application
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		boolean flag = true;
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			UIHelper.Exit(this);
-			// backUpplerLevel();
+			backUpplerLevel();
 		}
-		return flag;
+		return true;
 	}
 
 	private void checkNetwork() {
@@ -1386,48 +1404,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			Toast.makeText(this, getString(R.string.no_internet_access),
 					Toast.LENGTH_LONG).show();
 		}
-	}
-
-	private void writeFavoriteFile() {
-		String filename = "liwuso_data";
-		String string = "887,718,109,571";
-		FileOutputStream outputStream;
-		try {
-			outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-			outputStream.write(string.getBytes());
-			outputStream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private String readFavoriteFile() {
-		String result = "";
-		String filename = "liwuso_data";
-		try {
-			FileInputStream fin = openFileInput(filename);
-			int c;
-
-			while ((c = fin.read()) != -1) {
-				result = result + Character.toString((char) c);
-			}
-			// Toast.makeText(getBaseContext(), "file read:" + temp,
-			// Toast.LENGTH_SHORT).show();
-		} catch (Exception e) {
-
-		}
-		return result;
-	}
-
-	private int getFavoriteCount() {
-		int result = 0;
-		try {
-			String[] product_id_array = readFavoriteFile().split(",");
-			result = product_id_array.length;
-		} catch (Exception e) {
-
-		}
-		return result;
 	}
 
 	@Override
@@ -1451,49 +1427,41 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	public void clickPersonBtn(View view) {
-		try {
-			if (view.getTag() instanceof Person) {
-				Person person = (Person) view.getTag();
-				currentPerson = person;// lvPersonData.get(position - 1).female;
-				setSoNavInfo();
-				slArray[currentSlIndex].currentVisibleScreen++;
-				slArray[currentSlIndex]
-						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-				loadLvData(currentPerson.Sex, 0, lvAgeHandler,
-						UIHelper.LISTVIEW_ACTION_INIT,
-						UIHelper.LISTVIEW_DATATYPE_AGE);
-				setTopTitle();
-			} else if (view.getTag() instanceof Age) {
-				currentAge = (Age) view.getTag();
-				slArray[currentSlIndex].currentVisibleScreen++;
-				slArray[currentSlIndex]
-						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-				setSoNavInfo();
-				loadLvData(1, 0, lvPurposeHandler,
-						UIHelper.LISTVIEW_ACTION_INIT,
-						UIHelper.LISTVIEW_DATATYPE_PURPOSE);
-				setTopTitle();
-			} else if (view.getTag() instanceof Aim) {
-				currentAim = (Aim) view.getTag();
-				final WaitDialog waitDialog = new WaitDialog();
-				waitDialog.show(getSupportFragmentManager(), "");
-				Handler sleepHandler = new Handler();
-				sleepHandler.postDelayed(new Runnable() {
-					public void run() {
-						waitDialog.dismiss();
-						setSoNavInfo();
-						slArray[currentSlIndex].currentVisibleScreen++;
-						slArray[currentSlIndex]
-								.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-						loadLvData(1, 0, lvProductHandler,
-								UIHelper.LISTVIEW_ACTION_INIT,
-								UIHelper.LISTVIEW_DATATYPE_PRODUCT);
-						setTopTitle();
-					}
-				}, 3000);
-			}
-		} catch (Exception e) {
-
+		if (view.getTag() instanceof Person) {
+			Person person = (Person) view.getTag();
+			currentPerson = person;
+			loadLvData(currentPerson.Sex, 0, lvAgeHandler,
+					UIHelper.LISTVIEW_ACTION_INIT,
+					UIHelper.LISTVIEW_DATATYPE_AGE);
+			slArray[currentSlIndex].currentVisibleScreen++;
+			slArray[currentSlIndex]
+					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+			setTopTitle();
+		} else if (view.getTag() instanceof Age) {
+			currentAge = (Age) view.getTag();
+			loadLvData(1, 0, lvPurposeHandler, UIHelper.LISTVIEW_ACTION_INIT,
+					UIHelper.LISTVIEW_DATATYPE_PURPOSE);
+			slArray[currentSlIndex].currentVisibleScreen++;
+			slArray[currentSlIndex]
+					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+			setTopTitle();
+		} else if (view.getTag() instanceof Aim) {
+			currentAim = (Aim) view.getTag();
+			final WaitDialog waitDialog = new WaitDialog();
+			waitDialog.show(getSupportFragmentManager(), "");
+			Handler sleepHandler = new Handler();
+			sleepHandler.postDelayed(new Runnable() {
+				public void run() {
+					waitDialog.dismiss();
+					slArray[currentSlIndex].currentVisibleScreen++;
+					slArray[currentSlIndex]
+							.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+					setTopTitle();
+					loadLvData(1, 0, lvProductHandler,
+							UIHelper.LISTVIEW_ACTION_INIT,
+							UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+				}
+			}, 3000);
 		}
 	}
 }

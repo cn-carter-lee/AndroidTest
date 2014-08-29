@@ -105,8 +105,8 @@
         <item name="android:textColor">#999999</item>
     </style>
 
-    <style name="Gift.Product.Favorite_Added" parent="android:Widget">
-        <item name="android:background">@drawable/bg_btn_favorite_added</item>
+    <style name="Gift.Product.Favorite_Btn" parent="android:Widget">
+        <item name="android:background">@drawable/favorite_btn_selector_bg</item>
         <item name="android:textColor">#ff6600</item>
     </style>
 

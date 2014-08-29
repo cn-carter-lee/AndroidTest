@@ -27,32 +27,29 @@
         android:paddingLeft="10dip" >
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#333333"
+            android:textColor="@color/product_name"
             android:textSize="15sp" />
 
         <TextView
             android:id="@+id/price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
-            android:text="¥168.00"
-            android:textColor="#ff6600"
+            android:layout_below="@+id/name"
+            android:textColor="@color/orange"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/text"
-            style="@style/Gift.Product.Favorite_Added"
+            android:id="@+id/favorite_text"
+            style="@style/Gift.Product.Favorite_Btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:paddingBottom="10dip"
             android:paddingLeft="25dip"
             android:paddingTop="10dip"
-            android:text="已收藏"
             android:textSize="15sp" />
 
         <Button

@@ -1,6 +1,8 @@
 package com.liwuso.utility;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,6 +25,9 @@ import android.util.Log;
 import android.widget.TextView;
 
 public class Utils {
+
+	public static Context context = null;
+
 	public static void CopyStream(InputStream is, OutputStream os) {
 		final int buffer_size = 1024;
 		try {
@@ -35,7 +40,7 @@ public class Utils {
 			}
 		} catch (Exception ex) {
 		}
-	}	
+	}
 
 	public static String convertStreamToString(InputStream is) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -80,5 +85,58 @@ public class Utils {
 		} catch (Exception e) {
 		}
 		return Content;
-	}	
+	}
+
+	// Favorite
+
+	public static void addFavorite(int id) {
+
+	}
+
+	public static String[] getFavoriteArray() {
+		String[] product_id_array = readFavoriteFile().split(",");
+		return product_id_array;
+	}
+
+	public static void writeFavoriteFile(Context context) {
+		String filename = "liwuso_data";
+		String string = "887,718,109,571";
+		FileOutputStream outputStream;
+		try {
+			outputStream = context.openFileOutput(filename,
+					Context.MODE_PRIVATE);
+			outputStream.write(string.getBytes());
+			outputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static String readFavoriteFile() {
+		String result = "";
+		String filename = "liwuso_data";
+		try {
+			FileInputStream fin = context.openFileInput(filename);
+			int c;
+
+			while ((c = fin.read()) != -1) {
+				result = result + Character.toString((char) c);
+			}
+			// Toast.makeText(getBaseContext(), "file read:" + temp,
+			// Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
+
+		}
+		return result;
+	}
+
+	public static int getFavoriteCount() {
+		int result = 0;
+		try {
+			result = getFavoriteArray().length;
+		} catch (Exception e) {
+
+		}
+		return result;
+	}
 }

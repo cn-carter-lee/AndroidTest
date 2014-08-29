@@ -12,14 +12,15 @@
     <color name="purple">#800080</color>
     <color name="pink">#FFC0CB</color>
     <color name="orange">#FF6600</color>
+    <color name="product_name">#333333</color>
     <color name="lemonyellow">#FFFACD</color>
     <color name="graywhite">#F5F5F5</color>
     <color name="grayslate">#708090</color>
-    <color name="lightblue">#0083FF</color>    
+    <color name="lightblue">#0083FF</color>
     <color name="half_transparent">#aa000000</color>
     <color name="transparent">#00000000</color>
     <color name="nav_bg">#ff8432</color>
-    <color name="container">#cccccc</color>
+    <color name="container">#f3f3f3</color>
     <color name="listitem_black">#ff000000</color>
 
 </resources>

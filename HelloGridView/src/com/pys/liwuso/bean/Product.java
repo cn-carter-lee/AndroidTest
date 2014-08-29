@@ -16,4 +16,6 @@ public class Product extends Entity {
 	public String Url;
 	public String ImageUrl;
 	public String Liked;
+
+	public boolean favorite;
 }
