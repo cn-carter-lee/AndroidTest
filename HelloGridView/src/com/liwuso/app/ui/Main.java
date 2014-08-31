@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -150,7 +153,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	private LinearLayout searchCategoryBar;
 	private Button[] searchTabButtons;
-	private Button btnSearch;
+
 	private int[] moreBtnResourceArray = { R.id.btn_more_about,
 			R.id.btn_more_question, R.id.btn_more_agreement,
 			R.id.btn_more_contact, R.id.btn_more_advice,
@@ -162,6 +165,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private Spinner spinner;
 
 	// Search
+	private Button btnSearch;
+	private EditText txtSearch;
 	private PullToRefreshGridView gvSearchProduct;
 
 	private Button btnMoreAdviceSubmit;
@@ -171,6 +176,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		this.context = this;
 		Utils.context = this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
@@ -245,6 +251,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		// Search
 		btnSearch = (Button) findViewById(R.id.btnSearch);
 		btnSearch.setOnClickListener(frameSearchBtnClick());
+		txtSearch = (EditText) findViewById(R.id.editSearchText);
 		searchCategoryBar = (LinearLayout) findViewById(R.id.search_category_bar);
 		String[] strTabArray = { "全部", "创意", "经典", "实用", "健康" };
 		searchTabButtons = new Button[strTabArray.length];
@@ -1148,7 +1155,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		}
 	}
 
-	// So nav
+	// So navigation bar
 	private void setSoNavInfo() {
 		if (currentPerson != null) {
 			txtSoAgePersonName.setText(currentPerson.Name);
@@ -1218,6 +1225,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		setTopNavBarVisibility(currentSlIndex != 1);
 		if (slArray[currentSlIndex].currentVisibleScreen > 0)
 			setTopBtnPreVisible(true);
+		if (currentSlIndex == 2)
+			setTopBtnPreVisible(false);
 		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
 		titleView.setText(strTitle);
 		spinner.setVisibility(spinnerVisibily ? View.VISIBLE : View.GONE);
@@ -1257,7 +1266,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		}
 		slArray[currentSlIndex]
 				.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-		// setTopTitle();
 		selectFootNavBar(currentSlIndex);
 	}
 
@@ -1329,7 +1337,15 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private View.OnClickListener frameSearchBtnClick() {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-				loadSearchProduct();
+				try {
+					String url = String.format(
+							"http://s8.m.taobao.com/munion/search.htm?q=%s",
+							txtSearch.getText());
+					Utils.PRODUCT_URL = URLDecoder.decode(url, "UTF-8");
+					Intent intent = new Intent(context, TaoBao.class);
+					startActivity(intent);
+				} catch (Exception e) {
+				}
 			}
 		};
 	}
@@ -1360,6 +1376,31 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						UIHelper.LISTVIEW_ACTION_INIT,
 						UIHelper.LISTVIEW_DATATYPE_FAVORITE);
 		}
+	}
+
+	public void findNew(View view) {
+		currentSlIndex = 0;
+		slArray[currentSlIndex].currentVisibleScreen = 0;
+		slArray[currentSlIndex].setToScreen(0);
+		selectFootNavBar(0);
+	}
+
+	public void deleteProductFromFavorite(View view) {
+		final int location = (Integer) view.getTag();
+		final int product_id = lvFavoriteProductData.get(location).getId();
+		AlertDialog.Builder adb = new AlertDialog.Builder(Main.this);
+		adb.setTitle("删除?");
+		adb.setMessage("确定要删除该商品吗? ");
+		adb.setNegativeButton("取消", null);
+		adb.setPositiveButton("删除", new AlertDialog.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				Utils.deleteFavorite(product_id);
+				lvFavoriteProductData.remove(location);
+				lvFavoriteAdapter.notifyDataSetChanged();
+				setTopTitle();
+			}
+		});
+		adb.show();
 	}
 
 	// More

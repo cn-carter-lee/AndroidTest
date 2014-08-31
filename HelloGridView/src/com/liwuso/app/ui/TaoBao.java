@@ -18,7 +18,7 @@ public class TaoBao extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.taobao_details);
+		setContentView(R.layout.frame_taobao);
 
 		btnTopNavPre = (Button) findViewById(R.id.btnTopNavPre);
 

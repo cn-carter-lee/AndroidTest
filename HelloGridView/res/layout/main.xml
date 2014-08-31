@@ -50,6 +50,14 @@
         <include layout="@layout/frame_more_advice" />
     </com.liwuso.app.widget.ScrollLayout>
 
+    <com.liwuso.app.widget.ScrollLayout
+        android:id="@+id/main_scrolllayout_taobao"
+        style="@style/main_srcoll_layout"
+        android:visibility="gone" >
+
+        <include layout="@layout/frame_taobao" />
+    </com.liwuso.app.widget.ScrollLayout>
+
     <include layout="@layout/main_footer" />
 
 </LinearLayout>

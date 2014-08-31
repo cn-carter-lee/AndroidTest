@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="#ffffff"
+    style="@style/product_root"
     android:baselineAligned="false"
     android:orientation="horizontal" >
 
@@ -13,12 +11,8 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="150dip"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/blank"
-            android:onClick="clickProductDetails"
-            android:scaleType="centerCrop"
-            android:src="@drawable/product_blank" />
+            style="@style/product_image"
+            android:contentDescription="@string/blank" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -29,64 +23,25 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:onClick="clickProductDetails"
-            android:textColor="@color/product_name"
-            android:textSize="15sp" />
+            style="@style/product_name" />
 
         <TextView
             android:id="@+id/price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
-            android:textColor="@color/orange"
-            android:textSize="15sp" />
+            style="@style/product_price" />
 
         <Button
             android:id="@+id/btn_no_favorite"
-            style="@style/Gift.Product.Favorite_Btn_Add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/bg_btn_favorite_add"
-            android:onClick="addFavoriteProduct"
-            android:paddingBottom="10dip"
-            android:paddingLeft="25dip"
-            android:paddingTop="10dip"
-            android:textSize="15sp" />
+            style="@style/product_add_favorite" />
 
         <Button
             android:id="@+id/btn_favorite"
-            style="@style/Gift.Product.Favorite_Btn_Added"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/bg_btn_favorite_added"
+            style="@style/product_added_favorite"
             android:onClick="deleteFavoriteProduct"
-            android:paddingBottom="10dip"
-            android:paddingLeft="25dip"
-            android:paddingTop="10dip"
-            android:text="已收藏"
-            android:textSize="15sp" />
+            android:text="@string/favorite_added" />
 
         <Button
             android:id="@+id/btn_details"
-            android:layout_width="wrap_content"
-            android:layout_height="25dip"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="10dip"
-            android:background="@drawable/so_btn_details_bg"
-            android:onClick="clickProductDetails"
-            android:paddingBottom="0dip"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip"
-            android:paddingTop="0dip"
-            android:text="@string/btn_product_detail"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+            style="@style/product_details" />
     </RelativeLayout>
 
 </LinearLayout>

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/search_edit_background"
-            android:hint="请输入关键字搜索礼物"
+            android:hint="@string/search_txt"
             android:padding="8sp"
             android:textSize="15sp" >
         </EditText>
@@ -43,14 +43,13 @@
 
     <com.liwuso.app.widget.PullToRefreshGridView
         android:id="@+id/frame_search_gridview_product"
-        style="@style/widget_listview"
+        style="@style/search_widget_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="90dp"
         android:gravity="center"
         android:horizontalSpacing="1dp"
-        android:numColumns="auto_fit"
+        android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp" />
+        android:verticalSpacing="0dp" />
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,9 +23,11 @@ public class ListViewFavoriteAdapter extends BaseAdapter {
 	public ImageLoader imageLoader;
 
 	static class CustomListItemView {
-		public TextView title;
+		public TextView name;
 		public TextView price;
 		public TextView number;
+		public Button favorite;
+		public Button details;
 		public ImageView image;
 	}
 
@@ -49,32 +52,31 @@ public class ListViewFavoriteAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		CustomListItemView listItemView = null;
-
-		// if (convertView == null) {
 		convertView = listContainer.inflate(R.layout.favorite_item, null);
-
 		listItemView = new CustomListItemView();
-		listItemView.title = (TextView) convertView
-				.findViewById(R.id.favorite_product_title);
+		listItemView.name = (TextView) convertView
+				.findViewById(R.id.favorite_product_name);
 		listItemView.price = (TextView) convertView
 				.findViewById(R.id.favorite_product_price);
 
-		listItemView.number = (TextView) convertView
-				.findViewById(R.id.favorite_product_number);
-
 		listItemView.image = (ImageView) convertView
-				.findViewById(R.id.favorite_product_image);
+				.findViewById(R.id.product_image);
+		
+		listItemView.favorite = (Button) convertView
+				.findViewById(R.id.btn_favorite);
+		listItemView.favorite.setTag(position);
+		
+		listItemView.details = (Button) convertView
+				.findViewById(R.id.btn_favorite_details);
 		convertView.setTag(listItemView);
-		// } else {
-		// listItemView = (CustomListItemView) convertView.getTag();
-		// }
 
 		Product product = listItems.get(position);
-
-		listItemView.title.setText(product.Name);
+		listItemView.name.setText(product.Name);
+		listItemView.name.setTag(product);
 		listItemView.price.setText(product.Price);
-		listItemView.number.setText("1020»À ’≤ÿ");
+		listItemView.details.setTag(product);
 		imageLoader.DisplayImage(product.ImageUrl, listItemView.image);
+		listItemView.image.setTag(product);
 		return convertView;
 	}
 

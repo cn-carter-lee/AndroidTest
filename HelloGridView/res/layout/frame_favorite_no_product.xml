@@ -6,34 +6,33 @@
     android:layout_gravity="center_horizontal"
     android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ProgressBar
+        android:id="@+id/notfound_progressBar"
+        android:layout_width="64dip"
+        android:layout_height="64dip"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dip"
-        android:src="@drawable/favorite_omg" />
+        android:indeterminateDrawable="@anim/not_found" />
 
     <TextView
-        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip"
         android:gravity="center_horizontal"
-        android:text="矮油，您还没有收藏任何礼物~"
+        android:text="@string/favorite_not_found"
         android:textColor="#333333"
         android:textSize="15sp" />
 
     <Button
-        android:id="@+id/button10"
         android:layout_width="150dip"
-        android:layout_height="30dip"
+        android:layout_height="40dip"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dip"
         android:background="@drawable/btn_red"
+        android:onClick="findNew"
         android:padding="5dip"
-        android:text="去发现礼物"
-        android:textColor="#ffffff"
+        android:text="@string/favorite_find_new"
+        android:textColor="@color/white"
         android:textSize="15sp" />
 
 </LinearLayout>
