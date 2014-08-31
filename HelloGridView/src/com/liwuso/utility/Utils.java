@@ -123,7 +123,6 @@ public class Utils {
 
 	public static String[] getFavoriteArray() {
 		return readFavoriteFile().split(",");
-
 	}
 
 	public static List<String> getFavoriteList() {

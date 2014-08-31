@@ -15,6 +15,10 @@ import android.os.Message;
 import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -79,12 +83,13 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private RelativeLayout mainHeaderBar;
 	private int[] slResourceArray = { R.id.main_scrolllayout_so,
 			R.id.main_scrolllayout_search, R.id.main_scrolllayout_favorite,
-			R.id.main_scrolllayout_more };
+			R.id.main_scrolllayout_more, R.id.main_scrolllayout_taobao };
 
 	private ScrollLayout personScrollLayout;
 
-	private ScrollLayout[] slArray = new ScrollLayout[4];
+	private ScrollLayout[] slArray = new ScrollLayout[5];
 	private int currentSlIndex = 0;
+	private int preTaobaolIndex = 0;
 
 	private View lvProduct_footer;
 	private View lvFavorite_footer;
@@ -172,6 +177,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private Button btnMoreAdviceSubmit;
 	private Button btnMoreAdviceQuersion;
 
+	private WebView webView;
+
 	private AppContext appContext;
 
 	@Override
@@ -184,7 +191,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		this.initMainView();
 		this.initFrameButtons();
 		this.initFrameListView();
-		Utils.writeFavoriteFile("");
 		checkNetwork();
 	}
 
@@ -285,6 +291,31 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		btnMoreAdviceSubmit.setOnClickListener(frameMoreAdviceBtnClick());
 		btnMoreAdviceQuersion = (Button) findViewById(R.id.btn_more_advice_quersion);
 		btnMoreAdviceQuersion.setOnClickListener(frameMoreBtnClick(1));
+
+		// Taobao
+		webView = (WebView) findViewById(R.id.webview);
+		webView.setWebViewClient(new WebViewClient() {
+			// Load opened URL in the application instead of standard browser
+			// application
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				view.loadUrl(url);
+				return true;
+			}
+		});
+
+		webView.setWebChromeClient(new WebChromeClient() {
+			// Set progress bar during loading
+			public void onProgressChanged(WebView view, int progress) {
+				// BrowserActivity.this.setProgress(progress * 100);
+			}
+		});
+
+		// Enable some feature like Javascript and pinch zoom
+		WebSettings websettings = webView.getSettings();
+		websettings.setJavaScriptEnabled(true); // Warning! You can have XSS
+												// vulnerabilities!
+		websettings.setBuiltInZoomControls(true);
+
 	}
 
 	private View.OnClickListener framePersonBtnClick(final Button btn,
@@ -434,7 +465,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				loadLvData(1, 0, lvPurposeHandler,
 						UIHelper.LISTVIEW_ACTION_INIT,
 						UIHelper.LISTVIEW_DATATYPE_PURPOSE);
-				setTopTitle();
+				setTopState();
 			}
 		});
 		lvAge.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -534,14 +565,18 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				int lvDataState = StringUtils.toInt(lvProduct.getTag());
 				// if (scrollEnd && lvDataState == UIHelper.LISTVIEW_DATA_MORE
 				// && lvProductSumData != lvProduct.totalCount) {
-				if (scrollEnd && lvProductSumData != lvProduct.totalCount) {
-					lvProduct.setTag(UIHelper.LISTVIEW_DATA_LOADING);
-					lvProduct_foot_progress.setVisibility(View.VISIBLE);
-					// 当前pageIndex, pagesize is 10 here.
-					int pageIndex = lvProductSumData / 10 + 1;
-					loadLvData(currentPerson.Sex, pageIndex, lvProductHandler,
-							UIHelper.LISTVIEW_ACTION_SCROLL,
-							UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+				if (scrollEnd) {
+					if (lvProductSumData != lvProduct.totalCount) {
+						lvProduct.setTag(UIHelper.LISTVIEW_DATA_LOADING);
+						lvProduct_foot_progress.setVisibility(View.VISIBLE);
+						// 当前pageIndex, pagesize is 10 here.
+						int pageIndex = lvProductSumData / 10 + 1;
+						loadLvData(currentPerson.Sex, pageIndex,
+								lvProductHandler,
+								UIHelper.LISTVIEW_ACTION_SCROLL,
+								UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+					} else
+						lvProduct_foot_progress.setVisibility(View.GONE);
 				}
 			}
 
@@ -780,6 +815,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			break;
 		case UIHelper.LISTVIEW_DATATYPE_PRODUCT:
 			handleLvDataProduct(what, obj, objtype, actiontype);
+			break;
 		case UIHelper.LISTVIEW_DATATYPE_FAVORITE:
 			handleLvDataFavorite(what, obj, objtype, actiontype);
 			break;
@@ -977,6 +1013,14 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			break;
 		case UIHelper.LISTVIEW_ACTION_SCROLL:
 			ProductList list = (ProductList) obj;
+			// ///////////////////////////////////////////////////////////////////////////////////
+			// ///////////////////////////////////////////////////////////////////////////////////
+			// ///////////////////////////////////////////////////////////////////////////////////
+			// ///////////////////////////////////////////////////////////////////////////////////
+			// ///////////////////////////////////////////////////////////////////////////////////
+			// ///////////////////////////////////////////////////////////////////////////////////
+			// ///////////////////////////////////////////////////////////////////////////////////
+			// ///////////////////////////////////////////////////////////////////////////////////
 			lvProductSumData += what;
 			if (lvProductData.size() > 0) {
 				for (Product product1 : list.getProductList()) {
@@ -1179,7 +1223,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			mainHeaderBar.setVisibility(View.GONE);
 	}
 
-	private void setTopTitle() {
+	private void setTopState() {
 		boolean spinnerVisibily = false;
 		String strTitle = "";
 		switch (currentSlIndex) {
@@ -1221,12 +1265,17 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				break;
 			}
 			break;
+		case 4:
+			strTitle = getString(R.string.nav_taobao);
+			break;
 		}
 		setTopNavBarVisibility(currentSlIndex != 1);
 		if (slArray[currentSlIndex].currentVisibleScreen > 0)
 			setTopBtnPreVisible(true);
 		if (currentSlIndex == 2)
 			setTopBtnPreVisible(false);
+		if (currentSlIndex == 4)
+			setTopBtnPreVisible(true);
 		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
 		titleView.setText(strTitle);
 		spinner.setVisibility(spinnerVisibily ? View.VISIBLE : View.GONE);
@@ -1248,25 +1297,24 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		switch (currentSlIndex) {
 		case 0:
 			slArray[currentSlIndex].currentVisibleScreen--;
-			if (slArray[currentSlIndex].currentVisibleScreen == 0)
-				setTopBtnPreVisible(false);
 			break;
 		case 1:
 		case 2:
 			currentSlIndex = 0;
-			setTopBtnPreVisible(false);
 			break;
 		case 3:
 			if (slArray[currentSlIndex].currentVisibleScreen > 0)
 				slArray[currentSlIndex].currentVisibleScreen = 0;
 			else
 				currentSlIndex = 0;
-			setTopBtnPreVisible(false);
+			break;
+		case 4:
+			currentSlIndex = preTaobaolIndex;
 			break;
 		}
 		slArray[currentSlIndex]
 				.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-		selectFootNavBar(currentSlIndex);
+		selectScrollLayout(currentSlIndex);
 	}
 
 	private View.OnClickListener frameTopNavPreBtnClick() {
@@ -1285,10 +1333,15 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	// Footer
-	private void selectFootNavBar(final int itemIndex) {
+	private void selectScrollLayout(final int itemIndex) {
+		if (itemIndex == 4)
+			preTaobaolIndex = currentSlIndex;
 		currentSlIndex = itemIndex;
-		for (int i = 0; i < footBtnArray.length; i++) {
-			footBtnArray[i].setEnabled(i != itemIndex);
+		for (int i = 0; i < slArray.length; i++) {
+			// footer bars
+			if (i < footBtnArray.length)
+				footBtnArray[i].setEnabled(i != currentSlIndex);
+			// scroll layout
 			if (i == itemIndex)
 				slArray[i].setVisibility(View.VISIBLE);
 			else
@@ -1304,25 +1357,30 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			break;
 		case 3:
 			break;
+		case 4:
+			loadTaobao();
+			break;
 		}
 
 		// Set nav pre button
-		if (slArray[itemIndex].currentVisibleScreen > 0)
+		if (slArray[currentSlIndex].currentVisibleScreen > 0
+				|| currentSlIndex == 4)
 			btnTopNavPre.setVisibility(View.VISIBLE);
 		else
 			btnTopNavPre.setVisibility(View.GONE);
-		currentSlIndex = itemIndex;
-		setTopTitle();
+
+		setTopState();
 	}
 
 	private View.OnClickListener selectFootBar(final int itemIndex) {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-				selectFootNavBar(itemIndex);
+				selectScrollLayout(itemIndex);
 			}
 		};
 	}
 
+	// Search
 	// Search
 	private void loadSearchProduct() {
 		gvSearchProduct.setAdapter(new ImageAdapter(this, this));
@@ -1342,8 +1400,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 							"http://s8.m.taobao.com/munion/search.htm?q=%s",
 							txtSearch.getText());
 					Utils.PRODUCT_URL = URLDecoder.decode(url, "UTF-8");
-					Intent intent = new Intent(context, TaoBao.class);
-					startActivity(intent);
+					selectScrollLayout(4);
 				} catch (Exception e) {
 				}
 			}
@@ -1361,6 +1418,19 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				loadSearchProduct();
 			}
 		};
+	}
+
+	public void clickSearchItem(View view) {
+		try {
+			Utils.PRODUCT_URL = URLDecoder
+					.decode("http://s.m.taobao.com/h5?q=%E9%85%8D%E4%BB%B6&topSearch=1&from=1&abtest=7&sst=1&sid=10c7a04c13fff8f8a942032ff1b1453b&v=0",
+							"UTF-8");
+
+			selectScrollLayout(4);
+
+		} catch (Exception e) {
+		}
+
 	}
 
 	// Favorite
@@ -1382,7 +1452,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		currentSlIndex = 0;
 		slArray[currentSlIndex].currentVisibleScreen = 0;
 		slArray[currentSlIndex].setToScreen(0);
-		selectFootNavBar(0);
+		selectScrollLayout(0);
 	}
 
 	public void deleteProductFromFavorite(View view) {
@@ -1397,7 +1467,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				Utils.deleteFavorite(product_id);
 				lvFavoriteProductData.remove(location);
 				lvFavoriteAdapter.notifyDataSetChanged();
-				setTopTitle();
+				setTopState();
 			}
 		});
 		adb.show();
@@ -1424,7 +1494,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				}
 
 				slArray[currentSlIndex].currentVisibleScreen = item_index + 1;
-				setTopTitle();
+				setTopState();
 			}
 		};
 	}
@@ -1437,6 +1507,11 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				m.show(getSupportFragmentManager(), "");
 			}
 		};
+	}
+
+	// Taobao
+	private void loadTaobao() {
+		webView.loadUrl(Utils.PRODUCT_URL);
 	}
 
 	// Exit application
@@ -1484,7 +1559,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			slArray[currentSlIndex].currentVisibleScreen++;
 			slArray[currentSlIndex]
 					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-			setTopTitle();
+			setTopState();
 		} else if (view.getTag() instanceof Age) {
 			currentAge = (Age) view.getTag();
 			loadLvData(1, 0, lvPurposeHandler, UIHelper.LISTVIEW_ACTION_INIT,
@@ -1492,7 +1567,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			slArray[currentSlIndex].currentVisibleScreen++;
 			slArray[currentSlIndex]
 					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-			setTopTitle();
+			setTopState();
 		} else if (view.getTag() instanceof Aim) {
 			currentAim = (Aim) view.getTag();
 			final WaitDialog waitDialog = new WaitDialog();
@@ -1505,7 +1580,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					slArray[currentSlIndex].currentVisibleScreen++;
 					slArray[currentSlIndex]
 							.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-					setTopTitle();
+					setTopState();
 					loadLvData(1, 0, lvProductHandler,
 							UIHelper.LISTVIEW_ACTION_INIT,
 							UIHelper.LISTVIEW_DATATYPE_PRODUCT);
@@ -1539,10 +1614,12 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			Product product = (Product) view.getTag();
 			try {
 				Utils.PRODUCT_URL = URLDecoder.decode(product.Url, "UTF-8");
-				Intent intent = new Intent(this, TaoBao.class);
-				startActivity(intent);
+
+				selectScrollLayout(4);
+
 			} catch (Exception e) {
 			}
 		}
 	}
+
 }
