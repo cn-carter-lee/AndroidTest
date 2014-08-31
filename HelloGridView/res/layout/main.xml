@@ -33,9 +33,9 @@
         style="@style/main_srcoll_layout"
         android:visibility="gone" >
 
-        <include layout="@layout/frame_favorite" />
-
         <include layout="@layout/frame_favorite_no_product" />
+
+        <include layout="@layout/frame_favorite" />
     </com.liwuso.app.widget.ScrollLayout>
 
     <com.liwuso.app.widget.ScrollLayout

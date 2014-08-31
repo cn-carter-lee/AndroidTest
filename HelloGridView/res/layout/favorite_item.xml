@@ -44,7 +44,7 @@
 
         <TextView
             android:id="@+id/favorite_product_number"
-            style="@style/Gift.Product.Favorite_Btn"
+            style="@style/Gift.Product.Favorite_Btn_Added"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

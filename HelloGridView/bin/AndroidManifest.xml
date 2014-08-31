@@ -33,6 +33,11 @@
             android:label="@string/app_name"
             android:theme="@style/HomeNoActionBar" >
         </activity>
+        <activity
+            android:name="com.liwuso.app.ui.TaoBao"
+            android:label="@string/app_name"
+            android:theme="@style/HomeNoActionBar" >
+        </activity>
     </application>
 
 </manifest>

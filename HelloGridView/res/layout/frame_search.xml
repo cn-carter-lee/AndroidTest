@@ -35,9 +35,10 @@
         android:id="@+id/search_category_bar"
         android:layout_width="fill_parent"
         android:layout_height="40dip"
-        android:background="@color/white"
+        android:background="@drawable/send_nav_border"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingBottom="0.5dp" >
     </LinearLayout>
 
     <com.liwuso.app.widget.PullToRefreshGridView

@@ -1,12 +1,12 @@
 package com.liwuso.app.ui;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -178,8 +178,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		this.initMainView();
 		this.initFrameButtons();
 		this.initFrameListView();
+		Utils.writeFavoriteFile("");
 		checkNetwork();
-		Utils.writeFavoriteFile(this);
 	}
 
 	@Override
@@ -1184,7 +1184,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			case 1:
 				strTitle = String.format(getString(R.string.nav_send_age),
 						currentPerson.Name);
-				setSoNavInfo();
+
 				break;
 			case 2:
 				strTitle = getString(R.string.nav_send_aim);
@@ -1194,6 +1194,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				spinnerVisibily = true;
 				break;
 			}
+			setSoNavInfo();
 			break;
 		case 1:
 			strTitle = "";
@@ -1230,7 +1231,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			} else {
 				shouldExit = true;
 				Toast.makeText(this, getString(R.string.alert_exit),
-						Toast.LENGTH_LONG).show();
+						Toast.LENGTH_SHORT).show();
 			}
 			return;
 		}
@@ -1276,7 +1277,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	// Footer
-
 	private void selectFootNavBar(final int itemIndex) {
 		currentSlIndex = itemIndex;
 		for (int i = 0; i < footBtnArray.length; i++) {
@@ -1349,10 +1349,17 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	// Favorite
 	private void loadFavorite() {
-		if (lvFavoriteProductData.isEmpty())
-			loadLvData(1, 0, lvFavoriteProductHandler,
-					UIHelper.LISTVIEW_ACTION_INIT,
-					UIHelper.LISTVIEW_DATATYPE_FAVORITE);
+		if (Utils.getFavoriteCount() == 0) {
+			slArray[2].currentVisibleScreen = 0;
+			slArray[2].setToScreen(0);
+		} else {
+			slArray[2].currentVisibleScreen = 1;
+			slArray[2].setToScreen(1);
+			if (lvFavoriteProductData.isEmpty())
+				loadLvData(1, 0, lvFavoriteProductHandler,
+						UIHelper.LISTVIEW_ACTION_INIT,
+						UIHelper.LISTVIEW_DATATYPE_FAVORITE);
+		}
 	}
 
 	// More
@@ -1450,6 +1457,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			final WaitDialog waitDialog = new WaitDialog();
 			waitDialog.show(getSupportFragmentManager(), "");
 			Handler sleepHandler = new Handler();
+
 			sleepHandler.postDelayed(new Runnable() {
 				public void run() {
 					waitDialog.dismiss();
@@ -1462,6 +1470,38 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 							UIHelper.LISTVIEW_DATATYPE_PRODUCT);
 				}
 			}, 3000);
+		}
+	}
+
+	public void addFavoriteProduct(View view) {
+		if (view.getTag() instanceof Product) {
+			Product product = (Product) view.getTag();
+			Utils.addFavorite(product.getId());
+			View v = (View) view.getParent();
+			v.findViewById(R.id.btn_no_favorite).setVisibility(View.GONE);
+			v.findViewById(R.id.btn_favorite).setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void deleteFavoriteProduct(View view) {
+		if (view.getTag() instanceof Product) {
+			Product product = (Product) view.getTag();
+			Utils.deleteFavorite(product.getId());
+			View v = (View) view.getParent();
+			v.findViewById(R.id.btn_no_favorite).setVisibility(View.VISIBLE);
+			v.findViewById(R.id.btn_favorite).setVisibility(View.GONE);
+		}
+	}
+
+	public void clickProductDetails(View view) {
+		if (view.getTag() instanceof Product) {
+			Product product = (Product) view.getTag();
+			try {
+				Utils.PRODUCT_URL = URLDecoder.decode(product.Url, "UTF-8");
+				Intent intent = new Intent(this, TaoBao.class);
+				startActivity(intent);
+			} catch (Exception e) {
+			}
 		}
 	}
 }

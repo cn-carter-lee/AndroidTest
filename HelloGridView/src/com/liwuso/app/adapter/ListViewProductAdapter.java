@@ -31,7 +31,9 @@ public class ListViewProductAdapter extends BaseAdapter {
 	static class CustomListItemView {
 		public TextView name;
 		public TextView price;
-		public TextView favorite;
+		public Button favorite;
+		public Button no_favorite;
+		public Button details;
 		public ImageView image;
 	}
 
@@ -56,31 +58,37 @@ public class ListViewProductAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		CustomListItemView listItemView = null;
-
-		String[] favoriteArray = Utils.getFavoriteArray();
-
-		convertView = listContainer.inflate(R.layout.search_item, null);
+		convertView = listContainer.inflate(R.layout.product_item, null);
 		listItemView = new CustomListItemView();
 		listItemView.name = (TextView) convertView.findViewById(R.id.name);
 		listItemView.price = (TextView) convertView.findViewById(R.id.price);
-		listItemView.favorite = (TextView) convertView
-				.findViewById(R.id.favorite_text);
+		listItemView.favorite = (Button) convertView
+				.findViewById(R.id.btn_favorite);
+		listItemView.no_favorite = (Button) convertView
+				.findViewById(R.id.btn_no_favorite);
+		listItemView.details = (Button) convertView
+				.findViewById(R.id.btn_details);
 		listItemView.image = (ImageView) convertView.findViewById(R.id.image);
 
 		convertView.setTag(listItemView);
 
 		Product product = listItems.get(position);
-		if (Arrays.asList(favoriteArray).contains(
-				String.valueOf(product.getId()))) {
-			listItemView.favorite.setText("已收藏");
-			listItemView.favorite.setEnabled(false);
+		if (Utils.getFavoriteList().contains(String.valueOf(product.getId()))) {
+			listItemView.favorite.setVisibility(View.VISIBLE);
+			listItemView.no_favorite.setVisibility(View.GONE);
 		} else {
-			listItemView.favorite.setText("1002已收藏");
-			listItemView.favorite.setEnabled(true);		
+			listItemView.favorite.setVisibility(View.GONE);
+			listItemView.no_favorite.setVisibility(View.VISIBLE);
 		}
+		listItemView.favorite.setTag(product);
+		listItemView.no_favorite.setText(product.Liked + "已收藏");
+		listItemView.no_favorite.setTag(product);
+		listItemView.details.setTag(product);
 		listItemView.name.setText(product.Name);
+		listItemView.name.setTag(product);
 		listItemView.price.setText(product.Price);
 		imageLoader.DisplayImage(product.ImageUrl, listItemView.image);
+		listItemView.image.setTag(product);
 		return convertView;
 	}
 

@@ -22,5 +22,6 @@
     <color name="nav_bg">#ff8432</color>
     <color name="container">#f3f3f3</color>
     <color name="listitem_black">#ff000000</color>
+    <color name="border_line">#DBDBDB</color>
 
 </resources>

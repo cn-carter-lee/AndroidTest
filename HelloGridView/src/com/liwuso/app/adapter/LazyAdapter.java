@@ -42,9 +42,9 @@ public class LazyAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View vi = convertView;
 		if (convertView == null)
-			vi = inflater.inflate(R.layout.search_item, null);
+			vi = inflater.inflate(R.layout.product_item, null);
 
-		TextView text = (TextView) vi.findViewById(R.id.favorite_text);
+		TextView text = (TextView) vi.findViewById(R.id.btn_favorite);
 		ImageView image = (ImageView) vi.findViewById(R.id.image);
 		text.setText(position+"111“— ’≤ÿ"  );
 		imageLoader.DisplayImage(data[position], image);

@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -87,25 +90,59 @@ public class Utils {
 		return Content;
 	}
 
+	// Product
+
+	public static String PRODUCT_URL = "";
+
 	// Favorite
 
-	public static void addFavorite(int id) {
+	public static String FAVORITE_FILENAME = "liwuso_data";
 
+	public static void addFavorite(int id) {
+		List<String> list = getFavoriteList();
+		list.add(String.valueOf(id));
+		saveFavorite(list);		
+	}
+
+	public static void deleteFavorite(int id) {
+		List<String> list = getFavoriteList();
+		list.remove(String.valueOf(id));
+		saveFavorite(list);
+	}
+
+	public static void saveFavorite(List<String> list) {
+		String fileContent = "";
+		for (String id : list) {
+			if (fileContent == "")
+				fileContent += String.valueOf(id);
+			else
+				fileContent += ("," + String.valueOf(id));
+		}
+		writeFavoriteFile(fileContent);
 	}
 
 	public static String[] getFavoriteArray() {
-		String[] product_id_array = readFavoriteFile().split(",");
-		return product_id_array;
+		return readFavoriteFile().split(",");
+
 	}
 
-	public static void writeFavoriteFile(Context context) {
-		String filename = "liwuso_data";
-		String string = "887,718,109,571";
+	public static List<String> getFavoriteList() {
+		String content = readFavoriteFile();
+		String[] arr;
+		if (content == "")
+			arr = new String[0];
+		else
+			arr = content.split(",");
+		List<String> list = new ArrayList<String>(Arrays.asList(arr));
+		return list;
+	}
+
+	public static void writeFavoriteFile(String content) {
 		FileOutputStream outputStream;
 		try {
-			outputStream = context.openFileOutput(filename,
+			outputStream = context.openFileOutput(FAVORITE_FILENAME,
 					Context.MODE_PRIVATE);
-			outputStream.write(string.getBytes());
+			outputStream.write(content.getBytes());
 			outputStream.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -114,16 +151,21 @@ public class Utils {
 
 	public static String readFavoriteFile() {
 		String result = "";
-		String filename = "liwuso_data";
 		try {
-			FileInputStream fin = context.openFileInput(filename);
-			int c;
+			String[] fileList = context.fileList();
+			if (Arrays.asList(fileList).contains(FAVORITE_FILENAME)) {
+				FileInputStream fin = context.openFileInput(FAVORITE_FILENAME);
+				int c;
+				while ((c = fin.read()) != -1) {
+					result = result + Character.toString((char) c);
+				}
 
-			while ((c = fin.read()) != -1) {
-				result = result + Character.toString((char) c);
+			} else {
+				result = "";
+				context.openFileOutput(FAVORITE_FILENAME, Context.MODE_PRIVATE)
+						.write(result.getBytes());
 			}
-			// Toast.makeText(getBaseContext(), "file read:" + temp,
-			// Toast.LENGTH_SHORT).show();
+
 		} catch (Exception e) {
 
 		}
@@ -133,10 +175,11 @@ public class Utils {
 	public static int getFavoriteCount() {
 		int result = 0;
 		try {
-			result = getFavoriteArray().length;
+			result = getFavoriteList().size();
 		} catch (Exception e) {
 
 		}
 		return result;
 	}
+
 }
