@@ -37,7 +37,7 @@ import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.AppManager;
 import com.liwuso.app.R;
-import com.liwuso.app.adapter.ImageAdapter;
+import com.liwuso.app.adapter.GridViewSearchAdapter;
 import com.liwuso.app.adapter.ListViewAgeAdapter;
 import com.liwuso.app.adapter.ListViewFavoriteAdapter;
 import com.liwuso.app.adapter.ListViewFemaleAdapter;
@@ -68,7 +68,6 @@ import com.pys.liwuso.bean.Aim;
 public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	private boolean shouldExit = false;
-	private Context context = null;
 	private Person currentPerson = null;
 	private Age currentAge = null;
 	private Aim currentAim = null;
@@ -178,12 +177,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private Button btnMoreAdviceQuersion;
 
 	private WebView webView;
-
 	private AppContext appContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		this.context = this;
 		Utils.context = this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
@@ -872,7 +869,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			} else {
 				lvPersonData.addAll(list.getMixedPersonList());
 			}
-
 			break;
 		}
 	}
@@ -1199,6 +1195,53 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		}
 	}
 
+	public void clickPersonBtn(View view) {
+		if (view.getTag() instanceof Person) {
+			Person person = (Person) view.getTag();
+			currentPerson = person;
+			loadLvData(currentPerson.Sex, 0, lvAgeHandler,
+					UIHelper.LISTVIEW_ACTION_INIT,
+					UIHelper.LISTVIEW_DATATYPE_AGE);
+			slArray[currentSlIndex].currentVisibleScreen++;
+			slArray[currentSlIndex]
+					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+			setTopState();
+		} else if (view.getTag() instanceof Age) {
+			currentAge = (Age) view.getTag();
+			loadLvData(1, 0, lvPurposeHandler, UIHelper.LISTVIEW_ACTION_INIT,
+					UIHelper.LISTVIEW_DATATYPE_PURPOSE);
+			slArray[currentSlIndex].currentVisibleScreen++;
+			slArray[currentSlIndex]
+					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+			setTopState();
+		} else if (view.getTag() instanceof Aim) {
+			currentAim = (Aim) view.getTag();
+			final WaitDialog waitDialog = new WaitDialog();
+			waitDialog.show(getSupportFragmentManager(), "");
+			Handler sleepHandler = new Handler();
+
+			sleepHandler.postDelayed(new Runnable() {
+				public void run() {
+					waitDialog.dismiss();
+					slArray[currentSlIndex].currentVisibleScreen++;
+					slArray[currentSlIndex]
+							.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+					setTopState();
+					loadLvData(1, 0, lvProductHandler,
+							UIHelper.LISTVIEW_ACTION_INIT,
+							UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+				}
+			}, 3000);
+		}
+	}
+
+	public void clickProductDetails(View view) {
+		if (view.getTag() instanceof Product) {
+			Product product = (Product) view.getTag();
+			loadTaobao(product.Url);
+		}
+	}
+
 	// So navigation bar
 	private void setSoNavInfo() {
 		if (currentPerson != null) {
@@ -1332,77 +1375,18 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			btnTopNavPre.setVisibility(View.GONE);
 	}
 
-	// Footer
-	private void selectScrollLayout(final int itemIndex) {
-		if (itemIndex == 4)
-			preTaobaolIndex = currentSlIndex;
-		currentSlIndex = itemIndex;
-		for (int i = 0; i < slArray.length; i++) {
-			// footer bars
-			if (i < footBtnArray.length)
-				footBtnArray[i].setEnabled(i != currentSlIndex);
-			// scroll layout
-			if (i == itemIndex)
-				slArray[i].setVisibility(View.VISIBLE);
-			else
-				slArray[i].setVisibility(View.GONE);
-		}
-		switch (itemIndex) {
-		case 0:
-			break;
-		case 1:
-			break;
-		case 2:
-			loadFavorite();
-			break;
-		case 3:
-			break;
-		case 4:
-			loadTaobao();
-			break;
-		}
-
-		// Set nav pre button
-		if (slArray[currentSlIndex].currentVisibleScreen > 0
-				|| currentSlIndex == 4)
-			btnTopNavPre.setVisibility(View.VISIBLE);
-		else
-			btnTopNavPre.setVisibility(View.GONE);
-
-		setTopState();
-	}
-
-	private View.OnClickListener selectFootBar(final int itemIndex) {
-		return new View.OnClickListener() {
-			public void onClick(View v) {
-				selectScrollLayout(itemIndex);
-			}
-		};
-	}
-
-	// Search
 	// Search
 	private void loadSearchProduct() {
-		gvSearchProduct.setAdapter(new ImageAdapter(this, this));
-		gvSearchProduct.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
-
-			}
-		});
+		gvSearchProduct.setAdapter(new GridViewSearchAdapter(this, this));
 	}
 
 	private View.OnClickListener frameSearchBtnClick() {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-				try {
-					String url = String.format(
-							"http://s8.m.taobao.com/munion/search.htm?q=%s",
-							txtSearch.getText());
-					Utils.PRODUCT_URL = URLDecoder.decode(url, "UTF-8");
-					selectScrollLayout(4);
-				} catch (Exception e) {
-				}
+				String url = String.format(
+						"http://s8.m.taobao.com/munion/search.htm?q=%s",
+						txtSearch.getText());
+				loadTaobao(url);
 			}
 		};
 	}
@@ -1421,16 +1405,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	public void clickSearchItem(View view) {
-		try {
-			Utils.PRODUCT_URL = URLDecoder
-					.decode("http://s.m.taobao.com/h5?q=%E9%85%8D%E4%BB%B6&topSearch=1&from=1&abtest=7&sst=1&sid=10c7a04c13fff8f8a942032ff1b1453b&v=0",
-							"UTF-8");
-
-			selectScrollLayout(4);
-
-		} catch (Exception e) {
-		}
-
+		this.loadTaobao("http://s.m.taobao.com/h5?q=%E9%85%8D%E4%BB%B6&topSearch=1&from=1&abtest=7&sst=1&sid=10c7a04c13fff8f8a942032ff1b1453b&v=0");
 	}
 
 	// Favorite
@@ -1473,6 +1448,26 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		adb.show();
 	}
 
+	public void addFavoriteProduct(View view) {
+		if (view.getTag() instanceof Product) {
+			Product product = (Product) view.getTag();
+			Utils.addFavorite(product.getId());
+			View v = (View) view.getParent();
+			v.findViewById(R.id.btn_no_favorite).setVisibility(View.GONE);
+			v.findViewById(R.id.btn_favorite).setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void deleteFavoriteProduct(View view) {
+		if (view.getTag() instanceof Product) {
+			Product product = (Product) view.getTag();
+			Utils.deleteFavorite(product.getId());
+			View v = (View) view.getParent();
+			v.findViewById(R.id.btn_no_favorite).setVisibility(View.VISIBLE);
+			v.findViewById(R.id.btn_favorite).setVisibility(View.GONE);
+		}
+	}
+
 	// More
 	private View.OnClickListener frameMoreBtnClick(final int item_index) {
 		return new View.OnClickListener() {
@@ -1510,11 +1505,63 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	// Taobao
-	private void loadTaobao() {
-		webView.loadUrl(Utils.PRODUCT_URL);
+	private void loadTaobao(String url) {
+		try {
+			url = URLDecoder.decode(url, "UTF-8");
+		} catch (Exception e) {
+		}
+
+		webView.loadUrl(url);
+		selectScrollLayout(4);
+	}
+	
+	// Footer
+	private void selectScrollLayout(final int itemIndex) {
+		if (itemIndex == 4)
+			preTaobaolIndex = currentSlIndex;
+		currentSlIndex = itemIndex;
+		for (int i = 0; i < slArray.length; i++) {
+			// footer bars
+			if (i < footBtnArray.length)
+				footBtnArray[i].setEnabled(i != currentSlIndex);
+			// scroll layout
+			if (i == itemIndex)
+				slArray[i].setVisibility(View.VISIBLE);
+			else
+				slArray[i].setVisibility(View.GONE);
+		}
+		switch (itemIndex) {
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+			loadFavorite();
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		}
+
+		// Set nav pre button
+		if (slArray[currentSlIndex].currentVisibleScreen > 0
+				|| currentSlIndex == 4)
+			btnTopNavPre.setVisibility(View.VISIBLE);
+		else
+			btnTopNavPre.setVisibility(View.GONE);
+		setTopState();
 	}
 
-	// Exit application
+	private View.OnClickListener selectFootBar(final int itemIndex) {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				selectScrollLayout(itemIndex);
+			}
+		};
+	}
+	
+	// Application
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			backUpplerLevel();
@@ -1547,79 +1594,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
 		// TODO Auto-generated method stub
-	}
-
-	public void clickPersonBtn(View view) {
-		if (view.getTag() instanceof Person) {
-			Person person = (Person) view.getTag();
-			currentPerson = person;
-			loadLvData(currentPerson.Sex, 0, lvAgeHandler,
-					UIHelper.LISTVIEW_ACTION_INIT,
-					UIHelper.LISTVIEW_DATATYPE_AGE);
-			slArray[currentSlIndex].currentVisibleScreen++;
-			slArray[currentSlIndex]
-					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-			setTopState();
-		} else if (view.getTag() instanceof Age) {
-			currentAge = (Age) view.getTag();
-			loadLvData(1, 0, lvPurposeHandler, UIHelper.LISTVIEW_ACTION_INIT,
-					UIHelper.LISTVIEW_DATATYPE_PURPOSE);
-			slArray[currentSlIndex].currentVisibleScreen++;
-			slArray[currentSlIndex]
-					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-			setTopState();
-		} else if (view.getTag() instanceof Aim) {
-			currentAim = (Aim) view.getTag();
-			final WaitDialog waitDialog = new WaitDialog();
-			waitDialog.show(getSupportFragmentManager(), "");
-			Handler sleepHandler = new Handler();
-
-			sleepHandler.postDelayed(new Runnable() {
-				public void run() {
-					waitDialog.dismiss();
-					slArray[currentSlIndex].currentVisibleScreen++;
-					slArray[currentSlIndex]
-							.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
-					setTopState();
-					loadLvData(1, 0, lvProductHandler,
-							UIHelper.LISTVIEW_ACTION_INIT,
-							UIHelper.LISTVIEW_DATATYPE_PRODUCT);
-				}
-			}, 3000);
-		}
-	}
-
-	public void addFavoriteProduct(View view) {
-		if (view.getTag() instanceof Product) {
-			Product product = (Product) view.getTag();
-			Utils.addFavorite(product.getId());
-			View v = (View) view.getParent();
-			v.findViewById(R.id.btn_no_favorite).setVisibility(View.GONE);
-			v.findViewById(R.id.btn_favorite).setVisibility(View.VISIBLE);
-		}
-	}
-
-	public void deleteFavoriteProduct(View view) {
-		if (view.getTag() instanceof Product) {
-			Product product = (Product) view.getTag();
-			Utils.deleteFavorite(product.getId());
-			View v = (View) view.getParent();
-			v.findViewById(R.id.btn_no_favorite).setVisibility(View.VISIBLE);
-			v.findViewById(R.id.btn_favorite).setVisibility(View.GONE);
-		}
-	}
-
-	public void clickProductDetails(View view) {
-		if (view.getTag() instanceof Product) {
-			Product product = (Product) view.getTag();
-			try {
-				Utils.PRODUCT_URL = URLDecoder.decode(product.Url, "UTF-8");
-
-				selectScrollLayout(4);
-
-			} catch (Exception e) {
-			}
-		}
 	}
 
 }

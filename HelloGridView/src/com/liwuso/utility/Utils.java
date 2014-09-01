@@ -89,13 +89,8 @@ public class Utils {
 		}
 		return Content;
 	}
-
-	// Product
-
-	public static String PRODUCT_URL = "";
-
+	
 	// Favorite
-
 	public static String FAVORITE_FILENAME = "liwuso_data";
 
 	public static void addFavorite(int id) {

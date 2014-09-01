@@ -13,13 +13,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ImageAdapter extends BaseAdapter {
+public class GridViewSearchAdapter extends BaseAdapter {
 	private Context mContext;
 	private Activity activity;
 	private static LayoutInflater inflater = null;
 	public ImageLoader imageLoader;
 
-	public ImageAdapter(Activity a, Context c) {
+	public GridViewSearchAdapter(Activity a, Context c) {
 		activity = a;
 		mContext = c;
 		inflater = (LayoutInflater) activity
