@@ -271,10 +271,11 @@ public class AppContext extends Application {
 
 	public List<SearchCatalog> getSearchCatalog() {
 		List<SearchCatalog> listSearchCatalog = new ArrayList<SearchCatalog>();
-		listSearchCatalog.add(new SearchCatalog(1, ""));
-		listSearchCatalog.add(new SearchCatalog(1, ""));
-		listSearchCatalog.add(new SearchCatalog(1, ""));
-		listSearchCatalog.add(new SearchCatalog(1, ""));
+		listSearchCatalog.add(new SearchCatalog(-1, "全部"));
+		listSearchCatalog.add(new SearchCatalog(1, "创意"));
+		listSearchCatalog.add(new SearchCatalog(1, "经典"));
+		listSearchCatalog.add(new SearchCatalog(1, "实用"));
+		listSearchCatalog.add(new SearchCatalog(1, "健康"));
 
 		return listSearchCatalog;
 	}

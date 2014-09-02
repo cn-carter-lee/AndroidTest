@@ -61,6 +61,7 @@ import com.pys.liwuso.bean.PersonList;
 import com.pys.liwuso.bean.Product;
 import com.pys.liwuso.bean.ProductList;
 import com.pys.liwuso.bean.Aim;
+import com.pys.liwuso.bean.SearchCatalog;
 import com.pys.liwuso.bean.SearchItem;
 import com.pys.liwuso.bean.SearchItemList;
 
@@ -159,7 +160,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private Button[] footBtnArray = new Button[4];
 
 	private LinearLayout searchCategoryBar;
-	private Button[] searchTabButtons;
+	private List<Button> searchTabButtons;
 
 	private int[] moreBtnResourceArray = { R.id.btn_more_about,
 			R.id.btn_more_question, R.id.btn_more_agreement,
@@ -259,19 +260,29 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		btnSearch.setOnClickListener(frameSearchBtnClick());
 		txtSearch = (EditText) findViewById(R.id.editSearchText);
 		searchCategoryBar = (LinearLayout) findViewById(R.id.search_category_bar);
-		String[] strTabArray = { "全部", "创意", "经典", "实用", "健康" };
-		searchTabButtons = new Button[strTabArray.length];
 
-		for (int i = 0; i < strTabArray.length; i++) {
-			Button tempButton = (Button) getLayoutInflater().inflate(
-					R.anim.search_tab_button, searchCategoryBar, false);
-			tempButton.setText(strTabArray[i]);
+		try {
+			List<SearchCatalog> listSearchCatalog = appContext
+					.getSearchCatalog();
+			searchTabButtons = new ArrayList<Button>();
 
-			tempButton.setOnClickListener(frameSearchTabBtnClick(i));
+			for (SearchCatalog catalog : listSearchCatalog) {
 
-			searchTabButtons[i] = tempButton;
+				Button tempButton = (Button) getLayoutInflater().inflate(
+						R.anim.search_tab_button, searchCategoryBar, false);
+				tempButton.setText(catalog.Name);
+				tempButton.setTag(catalog);
 
-			searchCategoryBar.addView(tempButton);
+				tempButton.setOnClickListener(frameSearchTabBtnClick());
+				searchTabButtons.add(tempButton);
+				// searchTabButtons[i] = tempButton;
+
+				searchCategoryBar.addView(tempButton);
+
+			}
+
+		} catch (Exception e) {
+
 		}
 		if (searchCategoryBar.getChildCount() > 0)
 			searchCategoryBar.getChildAt(0).setEnabled(false);
@@ -1524,9 +1535,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		// this.loadSearchProduct();
 	}
 
-	private void loadSearch() {
+	private void loadSearch(SearchCatalog catalog) {
 		if (gvSearchData.isEmpty()) {
-			loadLvData(0, 0, gvSearchHandler, UIHelper.LISTVIEW_ACTION_INIT,
+			loadLvData(catalog == null ? 0 : catalog.getId(), 0,
+					gvSearchHandler, UIHelper.LISTVIEW_ACTION_INIT,
 					UIHelper.GRIDVIEW_DATATYPE_SEARCH);
 		}
 	}
@@ -1542,15 +1554,14 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		};
 	}
 
-	private View.OnClickListener frameSearchTabBtnClick(final int itemIndex) {
+	private View.OnClickListener frameSearchTabBtnClick() {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-				for (int i = 0; i < searchTabButtons.length; i++) {
-					searchTabButtons[i].setEnabled(i != itemIndex);
+				for (Button btn : searchTabButtons) {
+					btn.setEnabled(btn != v);
 				}
-
-				// Load data
-				loadSearch();
+				SearchCatalog catalog = (SearchCatalog) v.getTag();
+				loadSearch(catalog);
 			}
 		};
 	}
@@ -1687,7 +1698,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		case 0:
 			break;
 		case 1:
-			loadSearch();
+			loadSearch(null);
 			break;
 		case 2:
 			loadFavorite();
