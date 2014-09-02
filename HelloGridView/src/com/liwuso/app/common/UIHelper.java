@@ -26,12 +26,13 @@ public class UIHelper {
 
 	public final static int LISTVIEW_DATATYPE_FEMALE = 0x01;
 	public final static int LISTVIEW_DATATYPE_MALE = 0x02;
-	public final static int LISTVIEW_DATATYPE_AGE = 0x03;
-	public final static int LISTVIEW_DATATYPE_PURPOSE = 0x04;
-	public final static int LISTVIEW_DATATYPE_PRODUCT = 0x05;
-	public final static int LISTVIEW_DATATYPE_FAVORITE = 0X06;
-	public final static int LISTVIEW_DATATYPE_PERSON = 0x07;
-	
+	public final static int LISTVIEW_DATATYPE_PERSON = 0x03;
+	public final static int LISTVIEW_DATATYPE_AGE = 0x04;
+	public final static int LISTVIEW_DATATYPE_PURPOSE = 0x05;
+	public final static int LISTVIEW_DATATYPE_PRODUCT = 0x06;
+	public final static int LISTVIEW_DATATYPE_FAVORITE = 0X07;
+	public final static int GRIDVIEW_DATATYPE_SEARCH = 0x08;
+
 	/** ±Ì«ÈÕº∆¨∆•≈‰ */
 	private static Pattern facePattern = Pattern
 			.compile("\\[{1}([0-9]\\d*)\\]{1}");
@@ -94,25 +95,25 @@ public class UIHelper {
 		builder.show();
 	}
 
-	
 	// Exit dialog
-	public static void Exit(final Context cont)
-	{
+	public static void Exit(final Context cont) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(cont);
 		builder.setIcon(android.R.drawable.ic_dialog_info);
 		builder.setTitle(R.string.app_menu_surelogout);
-		builder.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-				// Exit
-				AppManager.getAppManager().AppExit(cont);
-			}
-		});
-		builder.setNegativeButton(R.string.cancle, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
+		builder.setPositiveButton(R.string.sure,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						// Exit
+						AppManager.getAppManager().AppExit(cont);
+					}
+				});
+		builder.setNegativeButton(R.string.cancle,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
 		builder.show();
 	}
 }

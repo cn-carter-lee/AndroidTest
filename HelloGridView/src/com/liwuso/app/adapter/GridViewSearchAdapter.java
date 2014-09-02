@@ -1,7 +1,12 @@
 package com.liwuso.app.adapter;
 
+import java.util.List;
+
 import com.liwuso.app.R;
+import com.liwuso.app.adapter.ListViewProductAdapter.CustomListItemView;
 import com.liwuso.utility.ImageLoader;
+import com.pys.liwuso.bean.Product;
+import com.pys.liwuso.bean.SearchItem;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,26 +14,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GridViewSearchAdapter extends BaseAdapter {
-	private Context mContext;
-	private Activity activity;
-	private static LayoutInflater inflater = null;
+	private Context context;
+	private LayoutInflater listContainer;;
+	private List<SearchItem> listItems;
 	public ImageLoader imageLoader;
 
-	public GridViewSearchAdapter(Activity a, Context c) {
-		activity = a;
-		mContext = c;
-		inflater = (LayoutInflater) activity
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		imageLoader = new ImageLoader(activity.getApplicationContext());
+	public GridViewSearchAdapter(Context context, List<SearchItem> data) {
+		this.context = context;
+		this.listContainer = LayoutInflater.from(context);
+		this.listItems = data;
+		this.imageLoader = new ImageLoader(context);
+	}
+
+	static class CustomListItemView {
+		public TextView name;
+		public ImageView image;
 	}
 
 	public int getCount() {
-		return mThumbIds.length;
+		return listItems.size();
 	}
 
 	public Object getItem(int position) {
@@ -41,24 +51,23 @@ public class GridViewSearchAdapter extends BaseAdapter {
 
 	// create a new ImageView for each item reference by the Adapter
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View vi = convertView;
-		if (convertView == null)
-			vi = inflater.inflate(R.layout.search_product_item, null);
-		ImageView imageView = (ImageView) vi.findViewById(R.id.image);
-		imageView.setImageResource(mThumbIds[position]);
-		return vi;
+		CustomListItemView listItemView = new CustomListItemView();		
+		convertView = listContainer.inflate(R.layout.search_product_item, null);
+		listItemView.name = (TextView) convertView.findViewById(R.id.name);
+		listItemView.image = (ImageView) convertView.findViewById(R.id.image);
 
+		SearchItem searchItem = listItems.get(position);
+
+		listItemView.name.setText(searchItem.Name);
+		listItemView.name.setTag(searchItem);
+		imageLoader.DisplayImage(searchItem.ImageUrl, listItemView.image);
+		listItemView.image.setTag(searchItem);
+		
+		return convertView;
 	}
 
-	// reference to our images
-	private Integer[] mThumbIds = { R.drawable.sample_0, R.drawable.sample_0,
-			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
-			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
-			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
-			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
-			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
-			R.drawable.sample_0, R.drawable.sample_0, R.drawable.sample_0,
-			R.drawable.sample_0
-
-	};
+	@Override
+	public boolean isEnabled(int position) {
+		return false;
+	}
 }

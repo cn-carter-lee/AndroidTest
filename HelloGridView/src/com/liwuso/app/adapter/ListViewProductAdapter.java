@@ -1,10 +1,6 @@
 package com.liwuso.app.adapter;
 
-import java.util.Arrays;
 import java.util.List;
-
-import org.w3c.dom.Text;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +13,6 @@ import android.widget.TextView;
 import com.liwuso.app.R;
 import com.liwuso.utility.ImageLoader;
 import com.liwuso.utility.Utils;
-import com.pys.liwuso.bean.Person;
 import com.pys.liwuso.bean.Product;
 
 public class ListViewProductAdapter extends BaseAdapter {

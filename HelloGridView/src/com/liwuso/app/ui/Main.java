@@ -6,9 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,7 +28,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 import com.liwuso.app.AppContext;
@@ -64,6 +61,8 @@ import com.pys.liwuso.bean.PersonList;
 import com.pys.liwuso.bean.Product;
 import com.pys.liwuso.bean.ProductList;
 import com.pys.liwuso.bean.Aim;
+import com.pys.liwuso.bean.SearchItem;
+import com.pys.liwuso.bean.SearchItemList;
 
 public class Main extends BaseActivity implements OnItemSelectedListener {
 
@@ -114,6 +113,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private Handler lvAgeHandler;
 	private Handler lvPurposeHandler;
 	private Handler lvProductHandler;
+	private Handler gvSearchHandler;
 	private Handler lvFavoriteProductHandler;
 
 	private ListViewPersonAdapter lvPersonAdapter;
@@ -122,6 +122,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private ListViewAgeAdapter lvAgeAdapter;
 	private ListViewAimAdapter lvPurposeAdapter;
 	private ListViewProductAdapter lvProductAdapter;
+	private GridViewSearchAdapter gvSearchAdapter;
 	private ListViewFavoriteAdapter lvFavoriteAdapter;
 
 	private List<MixedPerson> lvPersonData = new ArrayList<MixedPerson>();
@@ -130,6 +131,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private List<Age> lvAgeData = new ArrayList<Age>();
 	private List<Aim> lvPurposeData = new ArrayList<Aim>();
 	private List<Product> lvProductData = new ArrayList<Product>();
+	private List<SearchItem> gvSearchData = new ArrayList<SearchItem>();
 	private List<Product> lvFavoriteProductData = new ArrayList<Product>();
 
 	private int lvPersonSumData;
@@ -138,6 +140,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private int lvAgeSumData;
 	private int lvPurposeSumData;
 	private int lvProductSumData;
+	private int gvSearchSumData;
 	private int lvFavoriteProductSumData;
 
 	private TextView lvFemale_foot_more;
@@ -171,7 +174,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	// Search
 	private Button btnSearch;
 	private EditText txtSearch;
-	private PullToRefreshGridView gvSearchProduct;
+	private PullToRefreshGridView gvSearch;
 
 	private Button btnMoreAdviceSubmit;
 	private Button btnMoreAdviceQuersion;
@@ -273,8 +276,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		if (searchCategoryBar.getChildCount() > 0)
 			searchCategoryBar.getChildAt(0).setEnabled(false);
 
-		gvSearchProduct = (PullToRefreshGridView) findViewById(R.id.frame_search_gridview_product);
-		this.loadSearchProduct();
 		// Favorite
 
 		// More
@@ -344,6 +345,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		this.initAgeListView();
 		this.initPurposeView();
 		this.initProductListView();
+		this.initSearchGridView();
 		this.initFavoriteListView();
 		this.initFrameListViewData();
 	}
@@ -643,28 +645,33 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	private void initFrameListViewData() {
-		lvPersonHandler = this.getLvHandler(lvPerson, lvPersonAdapter,
+		lvPersonHandler = this.getHandler(lvPerson, lvPersonAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
 
-		lvFemaleHandler = this.getLvHandler(lvFemale, lvFemaleAdapter,
+		lvFemaleHandler = this.getHandler(lvFemale, lvFemaleAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
 
-		lvMaleHandler = this.getLvHandler(lvMale, lvMaleAdapter,
+		lvMaleHandler = this.getHandler(lvMale, lvMaleAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
 
-		lvAgeHandler = this.getLvHandler(lvAge, lvAgeAdapter,
+		lvAgeHandler = this.getHandler(lvAge, lvAgeAdapter, lvFemale_foot_more,
+				lvFemale_foot_progress, AppContext.PAGE_SIZE);
+		lvPurposeHandler = this.getHandler(lvPurpose, lvPurposeAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
-		lvPurposeHandler = this.getLvHandler(lvPurpose, lvPurposeAdapter,
+
+		lvProductHandler = this.getHandler(lvProduct, lvProductAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
-		lvProductHandler = this.getLvHandler(lvProduct, lvProductAdapter,
+
+		gvSearchHandler = this.getGvHandler(gvSearch, gvSearchAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
-		lvFavoriteProductHandler = this.getLvHandler(lvFavorite,
+
+		lvFavoriteProductHandler = this.getHandler(lvFavorite,
 				lvFavoriteAdapter, lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
 
@@ -680,7 +687,50 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		}
 	}
 
-	private Handler getLvHandler(final PullToRefreshListView lv,
+	private Handler getHandler(final PullToRefreshListView lv,
+			final BaseAdapter adapter, final TextView more,
+			final ProgressBar progress, final int pageSize) {
+		return new Handler() {
+			public void handleMessage(Message msg) {
+				if (msg.what >= 0) {
+					Notice notice = handleLvData(msg.what, msg.obj, msg.arg2,
+							msg.arg1);
+					if (msg.what < pageSize) {
+						lv.setTag(UIHelper.LISTVIEW_DATA_FULL);
+						adapter.notifyDataSetChanged();
+						// more.setText(R.string.load_full);
+					} else if (msg.what == pageSize) {
+						lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
+						adapter.notifyDataSetChanged();
+						// more.setText(R.string.load_more);
+					}
+
+				} else if (msg.what == -1) {
+					// exeption
+					lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
+					// Should be add message here
+					// more.setText(R.string.load_error);
+					((AppException) msg.obj).makeToast(Main.this);
+				}
+				if (adapter.getCount() == 0) {
+					lv.setTag(UIHelper.LISTVIEW_DATA_EMPTY);
+					// more.setText(R.string.load_empty);
+				}
+				// progress.setVisibility(ProgressBar.GONE);
+				// mHeadProgress.setVisibility(ProgressBar.GONE);
+				if (msg.arg1 == UIHelper.LISTVIEW_ACTION_REFRESH) {
+					lv.onRefreshComplete(getString(R.string.pull_to_refresh_update)
+							+ new Date().toLocaleString());
+					lv.setSelection(0);
+				} else if (msg.arg1 == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG) {
+					lv.onRefreshComplete();
+					lv.setSelection(0);
+				}
+			}
+		};
+	}
+
+	private Handler getGvHandler(final PullToRefreshGridView lv,
 			final BaseAdapter adapter, final TextView more,
 			final ProgressBar progress, final int pageSize) {
 		return new Handler() {
@@ -770,6 +820,13 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						msg.what = productlist.getProductCount();
 						msg.obj = productlist;
 						break;
+					case UIHelper.GRIDVIEW_DATATYPE_SEARCH:
+						SearchItemList searchItemList = appContext
+								.getSearchItemList(0, 0, isRefresh);
+						gvSearch.totalCount = searchItemList.totalCount;
+						msg.what = searchItemList.getProductCount();
+						msg.obj = searchItemList;
+						break;
 					case UIHelper.LISTVIEW_DATATYPE_FAVORITE:
 						ProductList favoriteproductlist = appContext
 								.getFavoriteList(Utils.readFavoriteFile(),
@@ -812,6 +869,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			break;
 		case UIHelper.LISTVIEW_DATATYPE_PRODUCT:
 			handleLvDataProduct(what, obj, objtype, actiontype);
+			break;
+		case UIHelper.GRIDVIEW_DATATYPE_SEARCH:
+			handleGvData(what, obj, objtype, actiontype);
 			break;
 		case UIHelper.LISTVIEW_DATATYPE_FAVORITE:
 			handleLvDataFavorite(what, obj, objtype, actiontype);
@@ -1142,6 +1202,59 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		}
 	}
 
+	private void handleGvData(int what, Object obj, int objtype, int actiontype) {
+		switch (actiontype) {
+		case UIHelper.LISTVIEW_ACTION_INIT:
+		case UIHelper.LISTVIEW_ACTION_REFRESH:
+		case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:
+			int newdata = 0;
+			SearchItemList searchitemlist = (SearchItemList) obj;
+			gvSearchSumData = what;
+			if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
+				if (gvSearchData.size() > 0) {
+					for (SearchItem searchitem1 : searchitemlist
+							.getSearchItemList()) {
+						boolean b = false;
+						for (SearchItem searchitem2 : gvSearchData) {
+							if (searchitem1.getId() == searchitem2.getId()) {
+								b = true;
+								break;
+							}
+						}
+						if (!b)
+							newdata++;
+					}
+				} else {
+					newdata = what;
+				}
+			}
+			gvSearchData.clear();
+			gvSearchData.addAll(searchitemlist.getSearchItemList());
+			break;
+		case UIHelper.LISTVIEW_ACTION_SCROLL:
+			SearchItemList list = (SearchItemList) obj;
+			gvSearchSumData += what;
+			if (gvSearchData.size() > 0) {
+
+				// for (Product purpose1 : list.getProductList()) {
+				// boolean b = false;
+				// for (Product purpose2 : lvFavoriteProductData) {
+				// if (purpose1.getId() == purpose2.getId()) {
+				// b = true;
+				// break;
+				// }
+				// }
+				// if (!b)
+				// lvFavoriteProductData.add(purpose1);
+				// }
+			} else {
+				// lvFavoriteProductData.addAll(list.getProductList());
+			}
+
+			break;
+		}
+	}
+
 	private void handleLvDataFavorite(int what, Object obj, int objtype,
 			int actiontype) {
 		switch (actiontype) {
@@ -1376,8 +1489,46 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	// Search
-	private void loadSearchProduct() {
-		gvSearchProduct.setAdapter(new GridViewSearchAdapter(this, this));
+	private void initSearchGridView() {
+		gvSearchAdapter = new GridViewSearchAdapter(this, gvSearchData);
+		gvSearch = (PullToRefreshGridView) findViewById(R.id.frame_search_gridview_product);
+		gvSearch.setAdapter(gvSearchAdapter);
+
+		gvSearch.setOnScrollListener(new AbsListView.OnScrollListener() {
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				gvSearch.onScrollStateChanged(view, scrollState);
+				if (gvSearchData.isEmpty())
+					return;
+
+				int pageIndex = 1;
+				loadLvData(0, pageIndex, gvSearchHandler,
+						UIHelper.LISTVIEW_ACTION_SCROLL,
+						UIHelper.GRIDVIEW_DATATYPE_SEARCH);
+			}
+
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				gvSearch.onScroll(view, firstVisibleItem, visibleItemCount,
+						totalItemCount);
+			}
+		});
+
+		gvSearch.setOnRefreshListener(new PullToRefreshGridView.OnRefreshListener() {
+			public void onRefresh() {
+				loadLvData(0, 0, gvSearchHandler,
+						UIHelper.LISTVIEW_ACTION_REFRESH,
+						UIHelper.GRIDVIEW_DATATYPE_SEARCH);
+			}
+		});
+
+		// this.loadSearchProduct();
+	}
+
+	private void loadSearch() {
+		if (gvSearchData.isEmpty()) {
+			loadLvData(0, 0, gvSearchHandler, UIHelper.LISTVIEW_ACTION_INIT,
+					UIHelper.GRIDVIEW_DATATYPE_SEARCH);
+		}
 	}
 
 	private View.OnClickListener frameSearchBtnClick() {
@@ -1399,13 +1550,16 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				}
 
 				// Load data
-				loadSearchProduct();
+				loadSearch();
 			}
 		};
 	}
 
 	public void clickSearchItem(View view) {
-		this.loadTaobao("http://s.m.taobao.com/h5?q=%E9%85%8D%E4%BB%B6&topSearch=1&from=1&abtest=7&sst=1&sid=10c7a04c13fff8f8a942032ff1b1453b&v=0");
+		if (view.getTag() instanceof SearchItem) {
+			SearchItem searchitem = (SearchItem) view.getTag();
+			loadTaobao(searchitem.Url);
+		}
 	}
 
 	// Favorite
@@ -1508,13 +1662,12 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void loadTaobao(String url) {
 		try {
 			url = URLDecoder.decode(url, "UTF-8");
+			webView.loadUrl(url);
+			selectScrollLayout(4);
 		} catch (Exception e) {
 		}
-
-		webView.loadUrl(url);
-		selectScrollLayout(4);
 	}
-	
+
 	// Footer
 	private void selectScrollLayout(final int itemIndex) {
 		if (itemIndex == 4)
@@ -1534,6 +1687,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		case 0:
 			break;
 		case 1:
+			loadSearch();
 			break;
 		case 2:
 			loadFavorite();
@@ -1560,7 +1714,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			}
 		};
 	}
-	
+
 	// Application
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {

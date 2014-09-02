@@ -8,6 +8,8 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.liwuso.net.ApiClient;
 import com.pys.liwuso.bean.Age;
@@ -21,6 +23,9 @@ import com.pys.liwuso.bean.Product;
 import com.pys.liwuso.bean.ProductList;
 import com.pys.liwuso.bean.Aim;
 import com.pys.liwuso.bean.AimList;
+import com.pys.liwuso.bean.SearchCatalog;
+import com.pys.liwuso.bean.SearchItem;
+import com.pys.liwuso.bean.SearchItemList;
 
 import android.app.Application;
 import android.content.Context;
@@ -262,6 +267,45 @@ public class AppContext extends Application {
 		}
 
 		return productList;
+	}
+
+	public List<SearchCatalog> getSearchCatalog() {
+		List<SearchCatalog> listSearchCatalog = new ArrayList<SearchCatalog>();
+		listSearchCatalog.add(new SearchCatalog(1, ""));
+		listSearchCatalog.add(new SearchCatalog(1, ""));
+		listSearchCatalog.add(new SearchCatalog(1, ""));
+		listSearchCatalog.add(new SearchCatalog(1, ""));
+
+		return listSearchCatalog;
+	}
+
+	public SearchItemList getSearchItemList(int catalogId, int pageIndex,
+			boolean isRefresh) throws AppException {
+		SearchItemList searchItemList = new SearchItemList();
+		String key = "search_list_" + catalogId + "_" + pageIndex + "_"
+				+ PAGE_SIZE;
+
+		for (int i = 0; i < 20; i++) {
+			SearchItem item = new SearchItem();
+			item.ImageUrl = "http://www.liwuso.com/Uploads/cpc/894b.jpg";
+			item.Name = "3DÀËÂþË®¾§";
+			item.Url = "http://redirect.simba.taobao.com/rd?&f=http%3A%2F%2Fai.taobao.com%2Fauction%2Fedetail.htm%3Fe%3DGtKCQq6%252FBMLebLdhAWchHB1%252BqwFLTnE8TCbL1Om%252BR1KLltG5xFicObalFqTViQTOxN35oEuRTJdyHrcqZgjbAe%252FrEZy%252FN1Z0cymvewz5SETed6w8MirRX%252BIZWR1bMnHu%26ptype%3D100011%26rType%3D1%26from%3Dgoldenlink%26eid%3D&k=5ccfdb950740ca16&p=mm_31516171_5574276_21616173&pvid=1409641450_2199802r2_475131414&posid=&b=display_1_625_0_0_0&w=unionapijs&c=un";
+			searchItemList.Add(item);
+		}
+
+		// try {
+		// searchItemList = ApiClient.getSearchItemList(catalogId, pageIndex);
+		// if (searchItemList != null) {
+		// searchItemList.setCacheKey(key);
+		// saveObject(searchItemList, key);
+		// }
+		// } catch (AppException e) {
+		// searchItemList = (SearchItemList) readObject(key);
+		// if (searchItemList == null)
+		// throw e;
+		// }
+
+		return searchItemList;
 	}
 
 	public ProductList getFavoriteList(String productIds, int pageIndex,

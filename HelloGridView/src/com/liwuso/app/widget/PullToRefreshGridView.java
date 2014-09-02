@@ -22,6 +22,9 @@ import android.widget.AbsListView.OnScrollListener;
 
 public class PullToRefreshGridView extends GridView implements OnScrollListener {
 
+	
+	public int totalCount;
+	
 	private final static String TAG = "PullToRefreshListView";
 
 	// 下拉刷新标志
