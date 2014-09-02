@@ -13,13 +13,13 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.http.HttpClientConnection;
 
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.pys.liwuso.bean.AgeList;
 import com.pys.liwuso.bean.AimList;
 import com.pys.liwuso.bean.ProductList;
+import com.pys.liwuso.bean.SearchItemList;
 import com.pys.liwuso.bean.URLs;
 
 public class ApiClient {
@@ -75,6 +75,20 @@ public class ApiClient {
 
 		try {
 			return ProductList.parse(http_get(appContext, newUrl));
+		} catch (Exception e) {
+			if (e instanceof AppException)
+				throw (AppException) e;
+			throw AppException.network(e);
+		}
+	}
+
+	public static SearchItemList getSearchItemList(int catalogId, int pageIndex)
+			throws AppException {
+
+		String newUrl = URLs.BASE_API_URL + catalogId + '-' + pageIndex;
+
+		try {
+			return SearchItemList.parse(http_get(null, newUrl));
 		} catch (Exception e) {
 			if (e instanceof AppException)
 				throw (AppException) e;
