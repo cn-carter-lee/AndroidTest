@@ -1,6 +1,6 @@
 package com.pys.liwuso.bean;
 
-public class SearchCatalog extends Entity {
+public class Catalog extends Entity {
 
 	public final static String NODE_START = "item";
 	public final static String NODE_ID = "id";
@@ -8,9 +8,8 @@ public class SearchCatalog extends Entity {
 
 	public String Name;
 
-	public SearchCatalog(int id, String name) {
-		this.id = id;
-		this.Name = name;
+	public Catalog() {
+
 	}
 
 }

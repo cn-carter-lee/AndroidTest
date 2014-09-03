@@ -55,14 +55,11 @@ public class GridViewSearchAdapter extends BaseAdapter {
 		convertView = listContainer.inflate(R.layout.search_product_item, null);
 		listItemView.name = (TextView) convertView.findViewById(R.id.name);
 		listItemView.image = (ImageView) convertView.findViewById(R.id.image);
-
 		SearchItem searchItem = listItems.get(position);
-
 		listItemView.name.setText(searchItem.Name);
 		listItemView.name.setTag(searchItem);
 		imageLoader.DisplayImage(searchItem.ImageUrl, listItemView.image);
-		listItemView.image.setTag(searchItem);
-		
+		listItemView.image.setTag(searchItem);		
 		return convertView;
 	}
 

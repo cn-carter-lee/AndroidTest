@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
@@ -14,11 +15,15 @@ import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 
+import android.os.AsyncTask;
+
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.pys.liwuso.bean.AgeList;
 import com.pys.liwuso.bean.AimList;
+import com.pys.liwuso.bean.CatalogList;
 import com.pys.liwuso.bean.ProductList;
+import com.pys.liwuso.bean.Catalog;
 import com.pys.liwuso.bean.SearchItemList;
 import com.pys.liwuso.bean.URLs;
 
@@ -82,10 +87,22 @@ public class ApiClient {
 		}
 	}
 
+	public static CatalogList getCatalog(AppContext appContext)
+			throws AppException {
+		String newUrl = URLs.BASE_API_URL + "search";
+		try {
+			return CatalogList.parse(http_get(appContext, newUrl));
+		} catch (Exception e) {
+			if (e instanceof AppException)
+				throw (AppException) e;
+			throw AppException.network(e);
+		}
+	}
+
 	public static SearchItemList getSearchItemList(int catalogId, int pageIndex)
 			throws AppException {
 
-		String newUrl = URLs.BASE_API_URL + catalogId + '-' + pageIndex;
+		String newUrl = URLs.BASE_API_URL + "search-list";
 
 		try {
 			return SearchItemList.parse(http_get(null, newUrl));
@@ -220,5 +237,4 @@ public class ApiClient {
 		httpClient.getParams().setContentCharset(UTF_8);
 		return httpClient;
 	}
-
 }

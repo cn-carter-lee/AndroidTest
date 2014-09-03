@@ -7,6 +7,7 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -53,6 +54,7 @@ import com.liwuso.utility.Utils;
 import com.pys.liwuso.bean.Age;
 import com.pys.liwuso.bean.AgeList;
 import com.pys.liwuso.bean.AimList;
+import com.pys.liwuso.bean.CatalogList;
 import com.pys.liwuso.bean.MixedPerson;
 import com.pys.liwuso.bean.MixedPersonList;
 import com.pys.liwuso.bean.Notice;
@@ -61,7 +63,7 @@ import com.pys.liwuso.bean.PersonList;
 import com.pys.liwuso.bean.Product;
 import com.pys.liwuso.bean.ProductList;
 import com.pys.liwuso.bean.Aim;
-import com.pys.liwuso.bean.SearchCatalog;
+import com.pys.liwuso.bean.Catalog;
 import com.pys.liwuso.bean.SearchItem;
 import com.pys.liwuso.bean.SearchItemList;
 
@@ -176,6 +178,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private Button btnSearch;
 	private EditText txtSearch;
 	private PullToRefreshGridView gvSearch;
+	private int curentSearchCatalog = 0;
 
 	private Button btnMoreAdviceSubmit;
 	private Button btnMoreAdviceQuersion;
@@ -260,32 +263,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		btnSearch.setOnClickListener(frameSearchBtnClick());
 		txtSearch = (EditText) findViewById(R.id.editSearchText);
 		searchCategoryBar = (LinearLayout) findViewById(R.id.search_category_bar);
-
-		try {
-			List<SearchCatalog> listSearchCatalog = appContext
-					.getSearchCatalog();
-			searchTabButtons = new ArrayList<Button>();
-
-			for (SearchCatalog catalog : listSearchCatalog) {
-
-				Button tempButton = (Button) getLayoutInflater().inflate(
-						R.anim.search_tab_button, searchCategoryBar, false);
-				tempButton.setText(catalog.Name);
-				tempButton.setTag(catalog);
-
-				tempButton.setOnClickListener(frameSearchTabBtnClick());
-				searchTabButtons.add(tempButton);
-				// searchTabButtons[i] = tempButton;
-
-				searchCategoryBar.addView(tempButton);
-
-			}
-
-		} catch (Exception e) {
-
-		}
-		if (searchCategoryBar.getChildCount() > 0)
-			searchCategoryBar.getChildAt(0).setEnabled(false);
+		this.initSearchTabbar();
 
 		// Favorite
 
@@ -302,29 +280,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		btnMoreAdviceQuersion.setOnClickListener(frameMoreBtnClick(1));
 
 		// Taobao
-		webView = (WebView) findViewById(R.id.webview);
-		webView.setWebViewClient(new WebViewClient() {
-			// Load opened URL in the application instead of standard browser
-			// application
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				return true;
-			}
-		});
-
-		webView.setWebChromeClient(new WebChromeClient() {
-			// Set progress bar during loading
-			public void onProgressChanged(WebView view, int progress) {
-				// BrowserActivity.this.setProgress(progress * 100);
-			}
-		});
-
-		// Enable some feature like Javascript and pinch zoom
-		WebSettings websettings = webView.getSettings();
-		websettings.setJavaScriptEnabled(true); // Warning! You can have XSS
-												// vulnerabilities!
-		websettings.setBuiltInZoomControls(true);
-
+		this.initTaobaoView();
 	}
 
 	private View.OnClickListener framePersonBtnClick(final Button btn,
@@ -1500,6 +1456,11 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	// Search
+	private void initSearchTabbar() {
+		LoadCatalogTask task = new LoadCatalogTask();
+		task.execute();
+	}
+
 	private void initSearchGridView() {
 		gvSearchAdapter = new GridViewSearchAdapter(this, gvSearchData);
 		gvSearch = (PullToRefreshGridView) findViewById(R.id.frame_search_gridview_product);
@@ -1531,16 +1492,13 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						UIHelper.GRIDVIEW_DATATYPE_SEARCH);
 			}
 		});
-
-		// this.loadSearchProduct();
 	}
 
-	private void loadSearch(SearchCatalog catalog) {
-		if (gvSearchData.isEmpty()) {
-			loadLvData(catalog == null ? 0 : catalog.getId(), 0,
-					gvSearchHandler, UIHelper.LISTVIEW_ACTION_INIT,
-					UIHelper.GRIDVIEW_DATATYPE_SEARCH);
-		}
+	private void loadSearch(Catalog catalog) {
+		int catalogId = catalog == null ? 0 : catalog.getId();
+		loadLvData(catalogId, 0, gvSearchHandler,
+				UIHelper.LISTVIEW_ACTION_INIT,
+				UIHelper.GRIDVIEW_DATATYPE_SEARCH);
 	}
 
 	private View.OnClickListener frameSearchBtnClick() {
@@ -1560,7 +1518,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				for (Button btn : searchTabButtons) {
 					btn.setEnabled(btn != v);
 				}
-				SearchCatalog catalog = (SearchCatalog) v.getTag();
+				Catalog catalog = (Catalog) v.getTag();
 				loadSearch(catalog);
 			}
 		};
@@ -1570,6 +1528,39 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		if (view.getTag() instanceof SearchItem) {
 			SearchItem searchitem = (SearchItem) view.getTag();
 			loadTaobao(searchitem.Url);
+		}
+	}
+
+	private class LoadCatalogTask extends AsyncTask<String, Void, String> {
+		@Override
+		protected String doInBackground(String... urls) {
+			try {
+				CatalogList cataloglist = appContext.getSearchCatalog();
+
+				searchTabButtons = new ArrayList<Button>();
+				for (Catalog catalog : cataloglist.getCatalogList()) {
+					Button tempButton = (Button) getLayoutInflater().inflate(
+							R.anim.search_tab_button, searchCategoryBar, false);
+					tempButton.setText(catalog.Name);
+					tempButton.setTag(catalog);
+
+					tempButton.setOnClickListener(frameSearchTabBtnClick());
+					searchTabButtons.add(tempButton);
+					searchCategoryBar.addView(tempButton);
+				}
+
+			} catch (Exception e) {
+
+			}
+			if (searchCategoryBar.getChildCount() > 0)
+				searchCategoryBar.getChildAt(0).setEnabled(false);
+			return null;
+
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+
 		}
 	}
 
@@ -1669,7 +1660,32 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		};
 	}
 
-	// Taobao
+	// TaoBao
+	private void initTaobaoView() {
+		webView = (WebView) findViewById(R.id.webview);
+		webView.setWebViewClient(new WebViewClient() {
+			// Load opened URL in the application instead of standard browser
+			// application
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				view.loadUrl(url);
+				return true;
+			}
+		});
+
+		webView.setWebChromeClient(new WebChromeClient() {
+			// Set progress bar during loading
+			public void onProgressChanged(WebView view, int progress) {
+				// BrowserActivity.this.setProgress(progress * 100);
+			}
+		});
+
+		// Enable some feature like Javascript and pinch zoom
+		WebSettings websettings = webView.getSettings();
+		websettings.setJavaScriptEnabled(true); // Warning! You can have XSS
+												// vulnerabilities!
+		websettings.setBuiltInZoomControls(true);
+	}
+
 	private void loadTaobao(String url) {
 		try {
 			url = URLDecoder.decode(url, "UTF-8");
