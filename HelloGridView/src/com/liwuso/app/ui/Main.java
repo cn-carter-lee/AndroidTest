@@ -93,6 +93,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private int preTaobaolIndex = 0;
 
 	private View lvProduct_footer;
+	private View gvSearch_foorter;
 	private View lvFavorite_footer;
 
 	private ProgressBar lvProduct_foot_progress;
@@ -740,7 +741,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		};
 	}
 
-	private void loadLvData(final int sexId, final int pageIndex,
+	private void loadLvData(final int catalogid, final int pageIndex,
 			final Handler handler, final int action, final int dataType) {
 		// mHeadProgress.setVisibility(ProgressBar.VISIBLE);
 		new Thread() {
@@ -760,19 +761,19 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_FEMALE:
 					case UIHelper.LISTVIEW_DATATYPE_MALE:
-						PersonList personlist = appContext.getPersonList(sexId,
-								isRefresh);
+						PersonList personlist = appContext.getPersonList(
+								catalogid, isRefresh);
 						msg.what = personlist.getPageSize();
 						msg.obj = personlist;
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_AGE:
-						AgeList agelist = appContext.getAgeList(sexId,
+						AgeList agelist = appContext.getAgeList(catalogid,
 								currentPerson.getId(), pageIndex, isRefresh);
 						msg.what = agelist.getPageSize();
 						msg.obj = agelist;
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_PURPOSE:
-						AimList purposelist = appContext.getAimList(sexId,
+						AimList purposelist = appContext.getAimList(catalogid,
 								currentPerson.getId(), currentAge.getId(),
 								isRefresh);
 						msg.what = purposelist.getPageSize();
@@ -780,7 +781,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_PRODUCT:
 						ProductList productlist = appContext.getProductList(
-								sexId, currentPerson.getId(),
+								catalogid, currentPerson.getId(),
 								currentAge.getId(), currentAim.getId(),
 								pageIndex, isRefresh);
 						lvProduct.totalCount = productlist.totalCount;
@@ -789,7 +790,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						break;
 					case UIHelper.GRIDVIEW_DATATYPE_SEARCH:
 						SearchItemList searchItemList = appContext
-								.getSearchItemList(0, 0, isRefresh);
+								.getSearchItemList(catalogid, 0, isRefresh);
 						gvSearch.totalCount = searchItemList.totalCount;
 						msg.what = searchItemList.getProductCount();
 						msg.obj = searchItemList;
@@ -1464,6 +1465,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initSearchGridView() {
 		gvSearchAdapter = new GridViewSearchAdapter(this, gvSearchData);
 		gvSearch = (PullToRefreshGridView) findViewById(R.id.frame_search_gridview_product);
+		//gvSearch_foorter = getLayoutInflater().inflate(R.layout.listview_footer, null);
+		// gvSearch.addView(gvSearch_foorter);
 		gvSearch.setAdapter(gvSearchAdapter);
 
 		gvSearch.setOnScrollListener(new AbsListView.OnScrollListener() {

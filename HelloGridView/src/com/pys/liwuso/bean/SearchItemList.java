@@ -73,9 +73,8 @@ public class SearchItemList extends Entity {
 						} else if (tag.equalsIgnoreCase(Product.NODE_URL)) {
 							searchItem.Url = xmlParser.nextText();
 						} else if (tag.equalsIgnoreCase(Product.NODE_IMG)) {
-							searchItem.ImageUrl = URLs.PRODUCT_IMG_URL_PREFIX
-									+ xmlParser.nextText();
-						}
+							searchItem.ImageUrl = xmlParser.nextText();
+						} 
 					}
 
 					break;

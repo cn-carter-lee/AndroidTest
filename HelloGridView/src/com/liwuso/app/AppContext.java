@@ -306,7 +306,6 @@ public class AppContext extends Application {
 			if (searchItemList == null)
 				throw e;
 		}
-
 		return searchItemList;
 	}
 

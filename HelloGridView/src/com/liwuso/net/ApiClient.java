@@ -102,7 +102,8 @@ public class ApiClient {
 	public static SearchItemList getSearchItemList(int catalogId, int pageIndex)
 			throws AppException {
 
-		String newUrl = URLs.BASE_API_URL + "search-list";
+		String newUrl = URLs.BASE_API_URL + "search-list-" + catalogId + "?p"
+				+ pageIndex;
 
 		try {
 			return SearchItemList.parse(http_get(null, newUrl));
