@@ -157,6 +157,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private Button framebtn_Female;
 	private Button framebtn_Male;
 
+	private String[] productSortFields = { "mark", "price", "like" };
+	private int currentProductSortIndex = 0;
+
 	private int[] fbResourceArray = { R.id.bottom_btn_so,
 			R.id.bottom_btn_search, R.id.bottom_btn_favorite,
 			R.id.bottom_btn_more };
@@ -783,6 +786,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						ProductList productlist = appContext.getProductList(
 								catalogid, currentPerson.getId(),
 								currentAge.getId(), currentAim.getId(),
+								productSortFields[currentProductSortIndex],
 								pageIndex, isRefresh);
 						lvProduct.totalCount = productlist.totalCount;
 						msg.what = productlist.getProductCount();
@@ -1465,7 +1469,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initSearchGridView() {
 		gvSearchAdapter = new GridViewSearchAdapter(this, gvSearchData);
 		gvSearch = (PullToRefreshGridView) findViewById(R.id.frame_search_gridview_product);
-		//gvSearch_foorter = getLayoutInflater().inflate(R.layout.listview_footer, null);
+		// gvSearch_foorter =
+		// getLayoutInflater().inflate(R.layout.listview_footer, null);
 		// gvSearch.addView(gvSearch_foorter);
 		gvSearch.setAdapter(gvSearchAdapter);
 
@@ -1767,12 +1772,18 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		SortItem sortItem = (SortItem) parent.getItemAtPosition(pos);
 		switch (sortItem.getTypeId()) {
 		case 0:
+			currentProductSortIndex = 0;
 			break;
 		case 1:
+			currentProductSortIndex = 1;
 			break;
 		case 2:
+			currentProductSortIndex = 2;
 			break;
+
 		}
+		loadLvData(1, 0, lvProductHandler, UIHelper.LISTVIEW_ACTION_INIT,
+				UIHelper.LISTVIEW_DATATYPE_PRODUCT);
 	}
 
 	@Override

@@ -1243,7 +1243,7 @@ containing a value of this type.
         public static final int listMode=0x7f050001;
         public static final int listViewProduct=0x7f050049;
         public static final int list_item=0x7f050029;
-        public static final int listview_foot_progress=0x7f05006a;
+        public static final int listview_foot_progress=0x7f05006b;
         public static final int main_header_bar=0x7f050076;
         public static final int main_linearlayout_footer=0x7f050071;
         public static final int main_scrolllayout_favorite=0x7f05006e;
@@ -1298,7 +1298,7 @@ containing a value of this type.
         public static final int txt_so_purpose_personname=0x7f050046;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;
-        public static final int webview=0x7f05006b;
+        public static final int webview=0x7f05006a;
         public static final int withText=0x7f05000c;
     }
     public static final class integer {

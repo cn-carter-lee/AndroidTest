@@ -73,10 +73,10 @@ public class ApiClient {
 
 	public static ProductList getProductList(AppContext appContext,
 			final int sexId, final int personId, final int ageId, int aimId,
-			int pageIndex) throws AppException {
+			String sortfield, int pageIndex) throws AppException {
 
 		String newUrl = URLs.BASE_API_URL + sexId + '-' + personId + '-'
-				+ ageId + '-' + aimId + "?p=" + pageIndex;
+				+ ageId + '-' + aimId + "?p=" + pageIndex + "&o=" + sortfield;
 
 		try {
 			return ProductList.parse(http_get(appContext, newUrl));
@@ -102,7 +102,7 @@ public class ApiClient {
 	public static SearchItemList getSearchItemList(int catalogId, int pageIndex)
 			throws AppException {
 
-		String newUrl = URLs.BASE_API_URL + "search-list-" + catalogId + "?p"
+		String newUrl = URLs.BASE_API_URL + "search-list-" + catalogId + "?p="
 				+ pageIndex;
 
 		try {

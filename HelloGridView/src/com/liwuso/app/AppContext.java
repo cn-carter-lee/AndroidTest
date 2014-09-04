@@ -247,13 +247,14 @@ public class AppContext extends Application {
 	}
 
 	public ProductList getProductList(int sexId, int personId, int ageId,
-			int aimId, int pageIndex, boolean isRefresh) throws AppException {
+			int aimId, String sortfield, int pageIndex, boolean isRefresh)
+			throws AppException {
 		ProductList productList = new ProductList();
 		String key = "product_list_" + sexId + "_" + personId + "_" + ageId
 				+ "_" + aimId + "_" + "_" + pageIndex + "_" + PAGE_SIZE;
 		try {
 			productList = ApiClient.getProductList(this, sexId, personId,
-					ageId, aimId, pageIndex);
+					ageId, aimId, sortfield, pageIndex);
 			if (productList != null) {
 				// Notice notice = list.getNotice();
 				// list.setNotice(null);
