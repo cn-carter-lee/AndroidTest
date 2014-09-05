@@ -19,7 +19,6 @@ public class SearchItemList extends Entity {
 	private int SearchItemCount;
 
 	public int catalog;
-	// 该分类总数量
 	public int totalCount;
 
 	private List<SearchItem> searchItemList = new ArrayList<SearchItem>();
@@ -51,10 +50,8 @@ public class SearchItemList extends Entity {
 
 		XmlPullParser xmlParser = Xml.newPullParser();
 		try {
-			xmlParser.setInput(inputStream, UTF8);
-			// 获得解析到的事件类别，这里有开始文档，结束文档，开始标签，结束标签，文本等等事件。
-			int evtType = xmlParser.getEventType();
-			// 一直循环，直到文档结束
+			xmlParser.setInput(inputStream, UTF8);		
+			int evtType = xmlParser.getEventType();		
 			while (evtType != XmlPullParser.END_DOCUMENT) {
 				String tag = xmlParser.getName();
 				switch (evtType) {
@@ -76,17 +73,14 @@ public class SearchItemList extends Entity {
 							searchItem.ImageUrl = xmlParser.nextText();
 						} 
 					}
-
 					break;
 				case XmlPullParser.END_TAG:
-					// 如果遇到标签结束，则把对象添加进集合中
 					if (tag.equalsIgnoreCase("item") && searchItem != null) {
 						searchItemList.Add(searchItem);
 						searchItem = null;
 					}
 					break;
 				}
-				// 如果xml没有结束，则导航到下一个节点
 				int a = xmlParser.next();
 				evtType = a;
 			}
@@ -96,7 +90,6 @@ public class SearchItemList extends Entity {
 		} finally {
 			inputStream.close();
 		}
-
 		return searchItemList;
 	}
 }

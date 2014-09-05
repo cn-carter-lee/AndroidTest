@@ -680,12 +680,12 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					// exeption
 					lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
 					// Should be add message here
-					// more.setText(R.string.load_error);
+					more.setText(R.string.load_error);
 					((AppException) msg.obj).makeToast(Main.this);
 				}
 				if (adapter.getCount() == 0) {
 					lv.setTag(UIHelper.LISTVIEW_DATA_EMPTY);
-					// more.setText(R.string.load_empty);
+					more.setText(R.string.load_empty);
 				}
 				// progress.setVisibility(ProgressBar.GONE);
 				// mHeadProgress.setVisibility(ProgressBar.GONE);
@@ -1041,14 +1041,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			break;
 		case UIHelper.LISTVIEW_ACTION_SCROLL:
 			ProductList list = (ProductList) obj;
-			// ///////////////////////////////////////////////////////////////////////////////////
-			// ///////////////////////////////////////////////////////////////////////////////////
-			// ///////////////////////////////////////////////////////////////////////////////////
-			// ///////////////////////////////////////////////////////////////////////////////////
-			// ///////////////////////////////////////////////////////////////////////////////////
-			// ///////////////////////////////////////////////////////////////////////////////////
-			// ///////////////////////////////////////////////////////////////////////////////////
-			// ///////////////////////////////////////////////////////////////////////////////////
 			lvProductSumData += what;
 			if (lvProductData.size() > 0) {
 				for (Product product1 : list.getProductList()) {
@@ -1066,6 +1058,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				lvProductData.addAll(list.getProductList());
 			}
 
+			lvProductSumData = lvProductData.size();
 			break;
 		}
 	}
@@ -1169,7 +1162,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			} else {
 				lvPurposeData.addAll(list.getPurposeList());
 			}
-
 			break;
 		}
 	}
