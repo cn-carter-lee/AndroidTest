@@ -10,7 +10,6 @@ import android.view.animation.Animation.AnimationListener;
 
 import com.liwuso.app.ui.Main;
 
-
 public class AppStart extends Activity {
 
 	@Override
