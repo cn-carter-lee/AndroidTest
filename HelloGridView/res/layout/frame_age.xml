@@ -6,9 +6,7 @@
 
     <LinearLayout
         style="@style/so_current_navbar"
-       
-        android:orientation="horizontal"
- >
+        android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/current_nav"

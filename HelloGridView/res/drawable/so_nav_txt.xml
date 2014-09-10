@@ -2,17 +2,17 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:drawable="@drawable/bg_select_r_b"
+        android:drawable="@drawable/bg_select_r_b_s"
         android:tileMode="disabled"/>
     <item>
         <shape
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:shape="rectangle" >
-            <solid android:color="#00000000" />
+            <solid android:color="@color/transparent" />
 
             <stroke
                 android:width="2dip"
-                android:color="#ff8432" />
+                android:color="@color/nav_txt" />
         </shape>
     </item>
 

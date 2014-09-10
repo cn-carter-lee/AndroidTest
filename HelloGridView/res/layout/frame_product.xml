@@ -28,6 +28,6 @@
 
     <com.liwuso.app.widget.PullToRefreshListView
         android:id="@+id/frame_listview_product"
-        style="@style/widget_listview" />
+        style="@style/widget_product_listview" />
 
 </LinearLayout>

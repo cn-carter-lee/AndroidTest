@@ -25,6 +25,11 @@
             android:id="@+id/name"
             style="@style/product_name" />
 
+        <Button
+            android:id="@+id/btn_order"
+            style="@style/product_order"
+            android:text="@string/product_order" />
+
         <TextView
             android:id="@+id/price"
             style="@style/product_price" />

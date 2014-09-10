@@ -23,5 +23,6 @@
     <color name="container">#f3f3f3</color>
     <color name="listitem_black">#ff000000</color>
     <color name="border_line">#DBDBDB</color>
+    <color name="nav_txt">#ff8432</color>
 
 </resources>

@@ -296,14 +296,14 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				framebtn_Male.setEnabled(framebtn_Male != btn);
 				if (btn == framebtn_All) {
 
-					personScrollLayout.scrollToScreen(0);
+					personScrollLayout.snapToScreen(0);
 
 				} else if (btn == framebtn_Female) {
 
-					personScrollLayout.scrollToScreen(1);
+					personScrollLayout.snapToScreen(1);
 				} else if (btn == framebtn_Male) {
 
-					personScrollLayout.scrollToScreen(2);
+					personScrollLayout.snapToScreen(2);
 				}
 			}
 		};
@@ -430,7 +430,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				currentAge = lvAgeData.get(position - 1);
 				slArray[currentSlIndex].currentVisibleScreen++;
 				slArray[currentSlIndex]
-						.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+						.snapToScreen(slArray[currentSlIndex].currentVisibleScreen);
 				setSoNavInfo();
 				loadLvData(1, 0, lvPurposeHandler,
 						UIHelper.LISTVIEW_ACTION_INIT,
@@ -1281,7 +1281,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					UIHelper.LISTVIEW_DATATYPE_AGE);
 			slArray[currentSlIndex].currentVisibleScreen++;
 			slArray[currentSlIndex]
-					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+					.snapToScreen(slArray[currentSlIndex].currentVisibleScreen);
 			setTopState();
 		} else if (view.getTag() instanceof Age) {
 			currentAge = (Age) view.getTag();
@@ -1289,7 +1289,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					UIHelper.LISTVIEW_DATATYPE_PURPOSE);
 			slArray[currentSlIndex].currentVisibleScreen++;
 			slArray[currentSlIndex]
-					.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+					.snapToScreen(slArray[currentSlIndex].currentVisibleScreen);
 			setTopState();
 		} else if (view.getTag() instanceof Aim) {
 			currentAim = (Aim) view.getTag();
@@ -1302,7 +1302,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					waitDialog.dismiss();
 					slArray[currentSlIndex].currentVisibleScreen++;
 					slArray[currentSlIndex]
-							.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+							.snapToScreen(slArray[currentSlIndex].currentVisibleScreen);
 					setTopState();
 					loadLvData(1, 0, lvProductHandler,
 							UIHelper.LISTVIEW_ACTION_INIT,
@@ -1433,7 +1433,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			break;
 		}
 		slArray[currentSlIndex]
-				.scrollToScreen(slArray[currentSlIndex].currentVisibleScreen);
+				.snapToScreen(slArray[currentSlIndex].currentVisibleScreen);
 		selectScrollLayout(currentSlIndex);
 	}
 
@@ -1632,10 +1632,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					TextView myTextView = (TextView) findViewById(R.id.txtMoreInfo);
 					myTextView.setText(Html.fromHtml(getResources()
 							.getStringArray(R.array.more_info)[item_index]));
-					slArray[currentSlIndex].scrollToScreen(1);
+					slArray[currentSlIndex].snapToScreen(1);
 				} else if (item_index == 4) {
 					// Advice
-					slArray[3].scrollToScreen(2);
+					slArray[3].snapToScreen(2);
 				} else if (item_index == 5) {
 					// Check version
 					CustomDialog m = new CustomDialog(

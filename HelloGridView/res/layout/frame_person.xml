@@ -52,6 +52,8 @@
                 android:id="@+id/frame_listview_person"
                 style="@style/widget_listview"
                 android:background="@color/transparent"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false"
                 android:listSelector="@android:color/transparent" />
         </LinearLayout>
 

@@ -34,14 +34,14 @@
     <style name="so_current_navbar_item" parent="android:Widget">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/bg_txt_nav</item>
+        <item name="android:background">@drawable/so_nav_txt</item>
         <item name="android:textSize">15sp</item>
         <item name="android:layout_marginRight">10sp</item>
         <item name="android:paddingTop">2sp</item>
         <item name="android:paddingBottom">2sp</item>
         <item name="android:paddingLeft">10sp</item>
         <item name="android:paddingRight">10sp</item>
-        <item name="android:textColor">#ff8432</item>
+        <item name="android:textColor">@color/nav_txt</item>
     </style>
 
     <style name="MyDialog" parent="@android:style/Theme.Dialog">
@@ -84,7 +84,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:padding">0dip</item>
-        <item name="android:layout_margin">0dip</item>
     </style>
 
     <style name="frame_button_seperator">
@@ -104,9 +103,19 @@
         <item name="android:scrollingCache">false</item>
     </style>
 
+    <style name="widget_product_listview">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:dividerHeight">10dip</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:divider">@color/container</item>
+        <item name="android:scrollingCache">false</item>
+    </style>
+
     <style name="search_widget_listview">
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">fill_parent</item>        
+        <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:dividerHeight">0dip</item>
         <item name="android:fadingEdge">none</item>
@@ -130,7 +139,7 @@
     <style name="product_root">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@drawable/product_item_border</item>
     </style>
 
     <style name="product_image">
@@ -151,10 +160,23 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="product_order">
+        <item name="android:textColor">@color/product_name</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">25dip</item>
+        <item name="android:background">@drawable/bg_btn_product_order</item>
+        <item name="android:paddingBottom">2dip</item>
+        <item name="android:paddingLeft">10dip</item>
+        <item name="android:paddingRight">10dip</item>
+        <item name="android:paddingTop">2dip</item>
+        <item name="android:layout_below">@+id/name</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <style name="product_price">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_below">@+id/name</item>
+        <item name="android:layout_below">@+id/btn_order</item>
         <item name="android:textColor">@color/orange</item>
         <item name="android:textSize">15sp</item>
     </style>
@@ -186,7 +208,7 @@
 
     <style name="product_details">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">25dip</item>
+        <item name="android:layout_height">30dip</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_marginBottom">10dip</item>

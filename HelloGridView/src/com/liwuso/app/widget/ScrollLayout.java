@@ -23,7 +23,7 @@ public class ScrollLayout extends ViewGroup {
 	private float mLastMotionX;
 	private float mLastMotionY;
 	private OnViewChangeListener mOnViewChangeListener;
-	
+
 	public int currentVisibleScreen = 0;
 	/**
 	 * 设置是否可左右滑动
@@ -120,7 +120,7 @@ public class ScrollLayout extends ViewGroup {
 			if (mOnViewChangeListener != null) {
 				mOnViewChangeListener.OnViewChange(mCurScreen);
 			}
-			
+
 			this.currentVisibleScreen = whichScreen;
 		}
 	}
