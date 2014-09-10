@@ -43,7 +43,6 @@
         android:background="@color/transparent" >
 
         <LinearLayout
-            style="@style/Gift.ParentLayoutPadding"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/transparent"
@@ -58,7 +57,6 @@
 
         <LinearLayout
             android:id="@+id/frame_layout_female"
-            style="@style/Gift.ParentLayoutPadding"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
@@ -73,7 +71,6 @@
 
         <LinearLayout
             android:id="@+id/frame_layout_male"
-            style="@style/Gift.ParentLayoutPadding"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:descendantFocusability="blocksDescendants"

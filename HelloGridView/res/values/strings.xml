@@ -39,7 +39,7 @@
     <string name="person1">女性</string>
     <string name="person2">男性</string>
     <string name="image_content"></string>
-    <string name="so_current_tip">您已经选择：   </string>
+    <string name="so_current_tip">已选择：   </string>
     <string name="blank"></string>
     <string name="search_txt">请输入关键字搜索礼物</string>
 

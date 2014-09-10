@@ -32,11 +32,11 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 
 	private LayoutInflater inflater;
 
-	private LinearLayout headView;
-	private TextView tipsTextview;
-	private TextView lastUpdatedTextView;
-	private ImageView arrowImageView;
-	private ProgressBar progressBar;
+	// private LinearLayout headView;
+	// private TextView tipsTextview;
+	// private TextView lastUpdatedTextView;
+	// private ImageView arrowImageView;
+	// private ProgressBar progressBar;
 	// 用来设置箭头图标动画效果
 	private RotateAnimation animation;
 	private RotateAnimation reverseAnimation;
@@ -88,33 +88,8 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 		reverseAnimation.setFillAfter(true);
 
 		inflater = LayoutInflater.from(context);
-		headView = (LinearLayout) inflater.inflate(
-				R.layout.pull_to_refresh_head, null);
-
-		arrowImageView = (ImageView) headView
-				.findViewById(R.id.head_arrowImageView);
-		arrowImageView.setMinimumWidth(50);
-		arrowImageView.setMinimumHeight(50);
-		progressBar = (ProgressBar) headView
-				.findViewById(R.id.head_progressBar);
-		tipsTextview = (TextView) headView.findViewById(R.id.head_tipsTextView);
-		lastUpdatedTextView = (TextView) headView
-				.findViewById(R.id.head_lastUpdatedTextView);
-
-		headContentOriginalTopPadding = headView.getPaddingTop();
-
-		measureView(headView);
-		headContentHeight = headView.getMeasuredHeight();
-		headContentWidth = headView.getMeasuredWidth();
-
-		headView.setPadding(headView.getPaddingLeft(), -1 * headContentHeight,
-				headView.getPaddingRight(), headView.getPaddingBottom());
-		headView.invalidate();
-
-		// System.out.println("初始高度："+headContentHeight);
-		// System.out.println("初始TopPad："+headContentOriginalTopPadding);
-
-		addHeaderView(headView);
+		//headView = (LinearLayout) inflater.inflate(R.layout.pull_to_refresh_head, null);
+	
 		setOnScrollListener(this);
 	}
 
@@ -218,20 +193,14 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 				// 更新headView的size
 				if (state == PULL_To_REFRESH) {
 					int topPadding = (int) ((-1 * headContentHeight + (tempY - startY)));
-					headView.setPadding(headView.getPaddingLeft(), topPadding,
-							headView.getPaddingRight(),
-							headView.getPaddingBottom());
-					headView.invalidate();
+
 					// System.out.println("当前-下拉刷新PULL_To_REFRESH-TopPad："+topPadding);
 				}
 
 				// 更新headView的paddingTop
 				if (state == RELEASE_To_REFRESH) {
 					int topPadding = (int) ((tempY - startY - headContentHeight));
-					headView.setPadding(headView.getPaddingLeft(), topPadding,
-							headView.getPaddingRight(),
-							headView.getPaddingBottom());
-					headView.invalidate();
+	
 					// System.out.println("当前-释放刷新RELEASE_To_REFRESH-TopPad："+topPadding);
 				}
 			}
@@ -242,71 +211,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 
 	// 当状态改变时候，调用该方法，以更新界面
 	private void changeHeaderViewByState() {
-		switch (state) {
-		case RELEASE_To_REFRESH:
-
-			arrowImageView.setVisibility(View.VISIBLE);
-			progressBar.setVisibility(View.GONE);
-			tipsTextview.setVisibility(View.VISIBLE);
-			lastUpdatedTextView.setVisibility(View.VISIBLE);
-
-			arrowImageView.clearAnimation();
-			arrowImageView.startAnimation(animation);
-
-			tipsTextview.setText(R.string.pull_to_refresh_release_label);
-
-			// Log.v(TAG, "当前状态，松开刷新");
-			break;
-		case PULL_To_REFRESH:
-
-			progressBar.setVisibility(View.GONE);
-			tipsTextview.setVisibility(View.VISIBLE);
-			lastUpdatedTextView.setVisibility(View.VISIBLE);
-			arrowImageView.clearAnimation();
-			arrowImageView.setVisibility(View.VISIBLE);
-			if (isBack) {
-				isBack = false;
-				arrowImageView.clearAnimation();
-				arrowImageView.startAnimation(reverseAnimation);
-			}
-			tipsTextview.setText(R.string.pull_to_refresh_pull_label);
-
-			// Log.v(TAG, "当前状态，下拉刷新");
-			break;
-
-		case REFRESHING:
-			// System.out.println("刷新REFRESHING-TopPad："+headContentOriginalTopPadding);
-			headView.setPadding(headView.getPaddingLeft(),
-					headContentOriginalTopPadding, headView.getPaddingRight(),
-					headView.getPaddingBottom());
-			headView.invalidate();
-
-			progressBar.setVisibility(View.VISIBLE);
-			arrowImageView.clearAnimation();
-			arrowImageView.setVisibility(View.GONE);
-			tipsTextview.setText(R.string.pull_to_refresh_refreshing_label);
-			lastUpdatedTextView.setVisibility(View.GONE);
-
-			// Log.v(TAG, "当前状态,正在刷新...");
-			break;
-		case DONE:
-			// System.out.println("完成DONE-TopPad："+(-1 * headContentHeight));
-			headView.setPadding(headView.getPaddingLeft(), -1
-					* headContentHeight, headView.getPaddingRight(),
-					headView.getPaddingBottom());
-			headView.invalidate();
-
-			progressBar.setVisibility(View.GONE);
-			arrowImageView.clearAnimation();
-			// 此处更换图标
-			arrowImageView.setImageResource(R.drawable.ic_pulltorefresh_arrow);
-
-			tipsTextview.setText(R.string.pull_to_refresh_pull_label);
-			lastUpdatedTextView.setVisibility(View.VISIBLE);
-
-			// Log.v(TAG, "当前状态，done");
-			break;
-		}
+	
 	}
 
 	// 点击刷新
@@ -325,8 +230,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 		public void onRefresh();
 	}
 
-	public void onRefreshComplete(String update) {
-		lastUpdatedTextView.setText(update);
+	public void onRefreshComplete(String update) {		
 		onRefreshComplete();
 	}
 

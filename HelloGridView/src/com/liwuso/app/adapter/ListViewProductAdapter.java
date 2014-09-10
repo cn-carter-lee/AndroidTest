@@ -81,7 +81,7 @@ public class ListViewProductAdapter extends BaseAdapter {
 		listItemView.details.setTag(product);
 		listItemView.name.setText(product.Name);
 		listItemView.name.setTag(product);
-		listItemView.price.setText(product.Price);
+		listItemView.price.setText("гд"+product.Price);
 		imageLoader.DisplayImage(product.ImageUrl, listItemView.image);
 		listItemView.image.setTag(product);
 		return convertView;

@@ -18,7 +18,7 @@ public class AppStart extends Activity {
 		final View view = View.inflate(this, R.layout.start, null);
 		setContentView(view);
 
-		AlphaAnimation aa = new AlphaAnimation(0.3f, 1.0f);
+		AlphaAnimation aa = new AlphaAnimation(1.0f, 1.0f);
 		aa.setDuration(100);
 		view.startAnimation(aa);
 		aa.setAnimationListener(new AnimationListener() {
