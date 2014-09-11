@@ -74,6 +74,8 @@ public class ProductList extends Entity {
 									xmlParser.nextText(), 0);
 						} else if (tag.equalsIgnoreCase(Product.NODE_NAME)) {
 							product.Name = xmlParser.nextText();
+						} else if (tag.equalsIgnoreCase(Product.NODE_TAGS)) {
+							product.Tags = xmlParser.nextText();
 						} else if (tag.equalsIgnoreCase(Product.NODE_PRICE)) {
 							product.Price = xmlParser.nextText();
 						} else if (tag.equalsIgnoreCase(Product.NODE_URL)) {

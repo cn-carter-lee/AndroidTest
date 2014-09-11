@@ -24,5 +24,6 @@
     <color name="listitem_black">#ff000000</color>
     <color name="border_line">#DBDBDB</color>
     <color name="nav_txt">#ff8432</color>
+    <color name="tag">#999999</color>
 
 </resources>

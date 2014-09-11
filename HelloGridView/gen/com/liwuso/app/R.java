@@ -829,7 +829,7 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f060002;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f07001a;
+        public static final int abc_search_url_text_holo=0x7f07001b;
         public static final int abc_search_url_text_normal=0x7f070000;
         public static final int abc_search_url_text_pressed=0x7f070002;
         public static final int abc_search_url_text_selected=0x7f070001;
@@ -837,7 +837,7 @@ containing a value of this type.
         public static final int blue=0x7f07000a;
         public static final int border_line=0x7f070018;
         public static final int container=0x7f070016;
-        public static final int favorite_txt_selector_color=0x7f07001b;
+        public static final int favorite_txt_selector_color=0x7f07001c;
         public static final int gold=0x7f070007;
         public static final int gray=0x7f070005;
         public static final int grayslate=0x7f070011;
@@ -854,6 +854,7 @@ containing a value of this type.
         public static final int product_name=0x7f07000e;
         public static final int purple=0x7f07000b;
         public static final int red=0x7f070006;
+        public static final int tag=0x7f07001a;
         public static final int transparent=0x7f070014;
         public static final int white=0x7f070003;
         public static final int yellow=0x7f070008;
@@ -1180,14 +1181,14 @@ containing a value of this type.
         public static final int bottom_btn_more=0x7f050075;
         public static final int bottom_btn_search=0x7f050073;
         public static final int bottom_btn_so=0x7f050072;
-        public static final int btnAge=0x7f05008a;
-        public static final int btnPerson=0x7f05008b;
-        public static final int btnPerson1=0x7f05008c;
-        public static final int btnPerson2=0x7f05008d;
-        public static final int btnPurpose=0x7f05008e;
+        public static final int btnAge=0x7f050089;
+        public static final int btnPerson=0x7f05008a;
+        public static final int btnPerson1=0x7f05008b;
+        public static final int btnPerson2=0x7f05008c;
+        public static final int btnPurpose=0x7f05008d;
         public static final int btnSearch=0x7f050067;
         public static final int btnTopNavPre=0x7f050077;
-        public static final int btn_details=0x7f05007f;
+        public static final int btn_details=0x7f05007e;
         public static final int btn_favorite=0x7f050041;
         public static final int btn_favorite_details=0x7f050042;
         public static final int btn_more_about=0x7f05004c;
@@ -1198,9 +1199,8 @@ containing a value of this type.
         public static final int btn_more_check_vertion=0x7f050051;
         public static final int btn_more_contact=0x7f050050;
         public static final int btn_more_question=0x7f05004d;
-        public static final int btn_no_favorite=0x7f05007e;
-        public static final int btn_order=0x7f05007c;
-        public static final int btn_search_tab=0x7f05008f;
+        public static final int btn_no_favorite=0x7f05007d;
+        public static final int btn_search_tab=0x7f05008e;
         public static final int checkbox=0x7f05002d;
         public static final int collapseActionView=0x7f05000d;
         public static final int current_nav=0x7f050043;
@@ -1213,7 +1213,7 @@ containing a value of this type.
         public static final int editAdvice=0x7f050052;
         public static final int editEmail=0x7f050053;
         public static final int editSearchText=0x7f050066;
-        public static final int editText1=0x7f050088;
+        public static final int editText1=0x7f050087;
         public static final int edit_query=0x7f050030;
         public static final int end=0x7f050013;
         public static final int expand_activities_button=0x7f050026;
@@ -1233,18 +1233,18 @@ containing a value of this type.
         public static final int frame_listview_product=0x7f050065;
         public static final int frame_listview_purpose=0x7f050048;
         public static final int frame_search_gridview_product=0x7f050069;
-        public static final int grvProducts=0x7f050085;
-        public static final int head_arrowImageView=0x7f050081;
-        public static final int head_contentLayout=0x7f050080;
-        public static final int head_lastUpdatedTextView=0x7f050084;
-        public static final int head_progressBar=0x7f050082;
-        public static final int head_tipsTextView=0x7f050083;
+        public static final int grvProducts=0x7f050084;
+        public static final int head_arrowImageView=0x7f050080;
+        public static final int head_contentLayout=0x7f05007f;
+        public static final int head_lastUpdatedTextView=0x7f050083;
+        public static final int head_progressBar=0x7f050081;
+        public static final int head_tipsTextView=0x7f050082;
         public static final int home=0x7f050014;
         public static final int homeAsUp=0x7f050005;
         public static final int icon=0x7f05002a;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
-        public static final int item_name=0x7f050089;
+        public static final int item_name=0x7f050088;
         public static final int linearLayout1=0x7f050054;
         public static final int listMode=0x7f050001;
         public static final int listViewProduct=0x7f050049;
@@ -1265,7 +1265,7 @@ containing a value of this type.
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
         public static final int notfound_progressBar=0x7f05004b;
-        public static final int price=0x7f05007d;
+        public static final int price=0x7f05007c;
         public static final int product_image=0x7f05003e;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
@@ -1289,8 +1289,8 @@ containing a value of this type.
         public static final int split_action_bar=0x7f05001e;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int tabsLayout=0x7f050086;
-        public static final int tabsText=0x7f050087;
+        public static final int tabsLayout=0x7f050085;
+        public static final int tabsText=0x7f050086;
         public static final int textAreaScroller=0x7f050057;
         public static final int textView1=0x7f05007a;
         public static final int title=0x7f05002b;

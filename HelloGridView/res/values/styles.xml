@@ -161,7 +161,7 @@
     </style>
 
     <style name="product_order">
-        <item name="android:textColor">@color/product_name</item>
+        <item name="android:textColor">@color/tag</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">25dip</item>
         <item name="android:background">@drawable/bg_btn_product_order</item>
@@ -169,14 +169,13 @@
         <item name="android:paddingLeft">10dip</item>
         <item name="android:paddingRight">10dip</item>
         <item name="android:paddingTop">2dip</item>
-        <item name="android:layout_below">@+id/name</item>
         <item name="android:textSize">15sp</item>
     </style>
 
     <style name="product_price">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_below">@+id/btn_order</item>
+        <item name="android:layout_below">@+id/name</item>
         <item name="android:textColor">@color/orange</item>
         <item name="android:textSize">15sp</item>
     </style>
