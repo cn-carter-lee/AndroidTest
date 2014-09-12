@@ -3,6 +3,7 @@ package com.liwuso.net;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,13 +20,13 @@ import android.os.AsyncTask;
 
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
-import com.pys.liwuso.bean.AgeList;
-import com.pys.liwuso.bean.AimList;
-import com.pys.liwuso.bean.CatalogList;
-import com.pys.liwuso.bean.ProductList;
-import com.pys.liwuso.bean.Catalog;
-import com.pys.liwuso.bean.SearchItemList;
-import com.pys.liwuso.bean.URLs;
+import com.liwuso.bean.AgeList;
+import com.liwuso.bean.AimList;
+import com.liwuso.bean.Catalog;
+import com.liwuso.bean.CatalogList;
+import com.liwuso.bean.ProductList;
+import com.liwuso.bean.SearchItemList;
+import com.liwuso.bean.URLs;
 
 public class ApiClient {
 
@@ -92,6 +93,21 @@ public class ApiClient {
 		String newUrl = URLs.BASE_API_URL + "search";
 		try {
 			return CatalogList.parse(http_get(appContext, newUrl));
+		} catch (Exception e) {
+			if (e instanceof AppException)
+				throw (AppException) e;
+			throw AppException.network(e);
+		}
+	}
+
+	public static void addAdvice(AppContext appContext, String email,
+			String content) throws AppException {
+
+		String newUrl = URLs.BASE_API_URL + "advice?email="
+				+ URLEncoder.encode(email) + "&content="
+				+ URLEncoder.encode(content);
+		try {
+			http_get(appContext, newUrl);
 		} catch (Exception e) {
 			if (e instanceof AppException)
 				throw (AppException) e;

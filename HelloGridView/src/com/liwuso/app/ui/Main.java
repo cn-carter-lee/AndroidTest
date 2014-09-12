@@ -50,22 +50,22 @@ import com.liwuso.app.common.UIHelper;
 import com.liwuso.app.widget.PullToRefreshGridView;
 import com.liwuso.app.widget.PullToRefreshListView;
 import com.liwuso.app.widget.ScrollLayout;
+import com.liwuso.bean.Age;
+import com.liwuso.bean.AgeList;
+import com.liwuso.bean.Aim;
+import com.liwuso.bean.AimList;
+import com.liwuso.bean.Catalog;
+import com.liwuso.bean.CatalogList;
+import com.liwuso.bean.MixedPerson;
+import com.liwuso.bean.MixedPersonList;
+import com.liwuso.bean.Notice;
+import com.liwuso.bean.Person;
+import com.liwuso.bean.PersonList;
+import com.liwuso.bean.Product;
+import com.liwuso.bean.ProductList;
+import com.liwuso.bean.SearchItem;
+import com.liwuso.bean.SearchItemList;
 import com.liwuso.utility.Utils;
-import com.pys.liwuso.bean.Age;
-import com.pys.liwuso.bean.AgeList;
-import com.pys.liwuso.bean.AimList;
-import com.pys.liwuso.bean.CatalogList;
-import com.pys.liwuso.bean.MixedPerson;
-import com.pys.liwuso.bean.MixedPersonList;
-import com.pys.liwuso.bean.Notice;
-import com.pys.liwuso.bean.Person;
-import com.pys.liwuso.bean.PersonList;
-import com.pys.liwuso.bean.Product;
-import com.pys.liwuso.bean.ProductList;
-import com.pys.liwuso.bean.Aim;
-import com.pys.liwuso.bean.Catalog;
-import com.pys.liwuso.bean.SearchItem;
-import com.pys.liwuso.bean.SearchItemList;
 
 public class Main extends BaseActivity implements OnItemSelectedListener {
 
@@ -685,7 +685,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				}
 				if (adapter.getCount() == 0) {
 					lv.setTag(UIHelper.LISTVIEW_DATA_EMPTY);
-					more.setText(R.string.load_empty);
+					// more.setText(R.string.load_empty);
 				}
 				// progress.setVisibility(ProgressBar.GONE);
 				// mHeadProgress.setVisibility(ProgressBar.GONE);
@@ -1653,6 +1653,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private View.OnClickListener frameMoreAdviceBtnClick() {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
+				EditText email = (EditText) findViewById(R.id.editEmail);
+				EditText content = (EditText) findViewById(R.id.editAdvice);
+				appContext.addAdvice(email.getText().toString(), content
+						.getText().toString());
 				CustomDialog m = new CustomDialog(
 						(getString(R.string.dialog_submit)));
 				m.show(getSupportFragmentManager(), "");

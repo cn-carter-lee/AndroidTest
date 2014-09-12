@@ -160,7 +160,7 @@
         <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="product_order">
+    <style name="product_tag">
         <item name="android:textColor">@color/tag</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">25dip</item>
@@ -175,7 +175,7 @@
     <style name="product_price">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_below">@+id/name</item>
+        <item name="android:layout_below">@+id/tags</item>
         <item name="android:textColor">@color/orange</item>
         <item name="android:textSize">15sp</item>
     </style>

@@ -8,26 +8,17 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
+import com.liwuso.bean.AgeList;
+import com.liwuso.bean.AimList;
+import com.liwuso.bean.CatalogList;
+import com.liwuso.bean.MixedPerson;
+import com.liwuso.bean.MixedPersonList;
+import com.liwuso.bean.Person;
+import com.liwuso.bean.PersonList;
+import com.liwuso.bean.ProductList;
+import com.liwuso.bean.SearchItemList;
 import com.liwuso.net.ApiClient;
-import com.pys.liwuso.bean.Age;
-import com.pys.liwuso.bean.AgeList;
-import com.pys.liwuso.bean.CatalogList;
-import com.pys.liwuso.bean.MixedPerson;
-import com.pys.liwuso.bean.MixedPersonList;
-import com.pys.liwuso.bean.Notice;
-import com.pys.liwuso.bean.Person;
-import com.pys.liwuso.bean.PersonList;
-import com.pys.liwuso.bean.Product;
-import com.pys.liwuso.bean.ProductList;
-import com.pys.liwuso.bean.Aim;
-import com.pys.liwuso.bean.AimList;
-import com.pys.liwuso.bean.Catalog;
-import com.pys.liwuso.bean.SearchItem;
-import com.pys.liwuso.bean.SearchItemList;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -289,6 +280,14 @@ public class AppContext extends Application {
 		}
 
 		return cataloglist;
+	}
+
+	public void addAdvice(String email, String content) {
+		try {
+			ApiClient.addAdvice(this, email, content);
+		} catch (AppException e) {
+			
+		}
 	}
 
 	public SearchItemList getSearchItemList(int catalogId, int pageIndex,

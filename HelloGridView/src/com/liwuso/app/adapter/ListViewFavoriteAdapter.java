@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liwuso.app.R;
+import com.liwuso.bean.Product;
 import com.liwuso.utility.ImageLoader;
-import com.pys.liwuso.bean.Product;
 
 public class ListViewFavoriteAdapter extends BaseAdapter {
 

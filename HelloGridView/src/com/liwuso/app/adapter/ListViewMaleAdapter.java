@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.liwuso.app.R;
-import com.pys.liwuso.bean.Person;
+import com.liwuso.bean.Person;
 
 public class ListViewMaleAdapter extends BaseAdapter {
 

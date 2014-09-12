@@ -25,6 +25,12 @@
             android:id="@+id/name"
             style="@style/product_name" />
 
+        <com.liwuso.app.widget.WordWrapView
+            android:id="@+id/tags"
+            style="@style/widget_listview"
+            android:layout_below="@+id/name" >
+        </com.liwuso.app.widget.WordWrapView>
+
         <TextView
             android:id="@+id/price"
             style="@style/product_price" />

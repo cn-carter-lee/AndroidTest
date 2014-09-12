@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.liwuso.app.R;
-import com.pys.liwuso.bean.Age;
+import com.liwuso.bean.Age;
 
 public class ListViewAgeAdapter extends BaseAdapter {
 

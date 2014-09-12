@@ -8,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+
 import com.liwuso.app.R;
-import com.pys.liwuso.bean.MixedPerson;
+import com.liwuso.bean.MixedPerson;
 
 public class ListViewPersonAdapter extends BaseAdapter {
 

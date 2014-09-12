@@ -30,8 +30,7 @@
     <string name="gift_actionbar_more">更多</string>
     <string name="age_actionbar_title">请选择女朋友的年龄</string>
     <string name="purpose_actionbar_title">请选择送礼目的</string>
-    <string name="product_actionbar_title">礼物推荐</string>
-    <string name="product_order">个性定制</string>
+    <string name="product_actionbar_title">礼物推荐</string>    
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="btn_product_detail">礼物详情</string>

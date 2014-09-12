@@ -1,10 +1,8 @@
 package com.liwuso.app.widget;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 
 public class WordWrapView extends ViewGroup {
@@ -41,14 +39,16 @@ public class WordWrapView extends ViewGroup {
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		int childCount = getChildCount();
 		int autualWidth = r - l;
-		int x = SIDE_MARGIN;// 横坐标开始
+		// int x = SIDE_MARGIN;// 横坐标开始
+		int x = 0;// 横坐标开始
 		int y = 0;// 纵坐标开始
 		int rows = 1;
 		for (int i = 0; i < childCount; i++) {
 			View view = getChildAt(i);
-			view.setBackgroundColor(Color.GREEN);
+			// view.setBackgroundColor(Color.GREEN);
 			int width = view.getMeasuredWidth();
 			int height = view.getMeasuredHeight();
+
 			x += width + TEXT_MARGIN;
 			if (x > autualWidth) {
 				x = width + SIDE_MARGIN;

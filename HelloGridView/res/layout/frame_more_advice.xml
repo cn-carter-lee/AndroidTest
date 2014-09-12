@@ -44,7 +44,6 @@
             android:layout_height="fill_parent"
             android:layout_weight="0.4"
             android:background="#f86047"
-            android:onClick="sendAdvice"
             android:text="提交"
             android:textColor="#FFFFFF" />
 

@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.liwuso.app.R;
-import com.pys.liwuso.bean.Aim;
+import com.liwuso.bean.Aim;
 
 public class ListViewAimAdapter extends BaseAdapter {
 

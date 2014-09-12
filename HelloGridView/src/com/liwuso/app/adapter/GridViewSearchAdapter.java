@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.liwuso.app.R;
 import com.liwuso.app.adapter.ListViewProductAdapter.CustomListItemView;
+import com.liwuso.bean.Product;
+import com.liwuso.bean.SearchItem;
 import com.liwuso.utility.ImageLoader;
-import com.pys.liwuso.bean.Product;
-import com.pys.liwuso.bean.SearchItem;
 
 import android.app.Activity;
 import android.content.Context;
