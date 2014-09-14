@@ -1,7 +1,6 @@
 package com.liwuso.app.common;
 
 import java.util.regex.Pattern;
-
 import com.liwuso.app.AppManager;
 import com.liwuso.app.R;
 import com.liwuso.app.ui.Main;
@@ -11,6 +10,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 public class UIHelper {
@@ -115,5 +117,5 @@ public class UIHelper {
 					}
 				});
 		builder.show();
-	}
+	}	
 }

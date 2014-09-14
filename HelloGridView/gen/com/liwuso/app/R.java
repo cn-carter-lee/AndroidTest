@@ -1372,7 +1372,7 @@ containing a value of this type.
         public static final int frame_person=0x7f030021;
         public static final int frame_product=0x7f030022;
         public static final int frame_search=0x7f030023;
-        public static final int frame_taobao=0x7f030024;
+        public static final int frame_webview=0x7f030024;
         public static final int listview_footer=0x7f030025;
         public static final int main=0x7f030026;
         public static final int main_footer=0x7f030027;
@@ -1466,6 +1466,10 @@ containing a value of this type.
         public static final int load_full=0x7f0a0017;
         public static final int load_ing=0x7f0a0021;
         public static final int load_more=0x7f0a0015;
+        public static final int more_advice_content=0x7f0a004d;
+        public static final int more_advice_email=0x7f0a004e;
+        public static final int more_advice_question=0x7f0a0050;
+        public static final int more_advice_submit=0x7f0a004f;
         public static final int nav_favorite=0x7f0a002f;
         public static final int nav_more=0x7f0a0033;
         public static final int nav_send_age=0x7f0a002c;

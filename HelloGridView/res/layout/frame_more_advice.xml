@@ -1,66 +1,71 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/root_layout_style"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="fill_parent" >
 
-    <EditText
-        android:id="@+id/editAdvice"
+    <RelativeLayout
+        style="@style/root_layout_style"
         android:layout_width="fill_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/more_edit_background"
-        android:gravity="top"
-        android:hint="请输入意见建议内容"
-        android:inputType="textMultiLine"
-        android:padding="5dp"
-        android:scrollbars="vertical"
-        android:textSize="12sp" >
-    </EditText>
+        android:layout_height="wrap_content" >
 
-    <EditText
-        android:id="@+id/editEmail"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_below="@+id/editAdvice"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/more_edit_background"
-        android:hint="请输入您常用的电子邮箱"
-        android:padding="5dp"
-        android:scrollbars="vertical"
-        android:textSize="12sp" >
-    </EditText>
-
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editEmail"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/btn_more_advice_submit"
+        <EditText
+            android:id="@+id/editAdvice"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.4"
-            android:background="#f86047"
-            android:text="提交"
-            android:textColor="#FFFFFF" />
+            android:layout_height="150dp"
+            android:background="@drawable/more_edit_background"
+            android:gravity="top"
+            android:hint="@string/more_advice_content"
+            android:inputType="textMultiLine"
+            android:padding="5dp"
+            android:scrollbars="vertical"
+            android:textSize="12sp" >
+        </EditText>
 
-        <View
-            android:layout_width="10dp"
-            android:layout_height="40dp" >
-        </View>
-
-        <Button
-            android:id="@+id/btn_more_advice_quersion"
+        <EditText
+            android:id="@+id/editEmail"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.4"
-            android:background="#34abcd"
-            android:onClick="navigateFragment"
-            android:text="常见问题"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
+            android:layout_height="40dp"
+            android:layout_below="@+id/editAdvice"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/more_edit_background"
+            android:hint="@string/more_advice_content"
+            android:padding="5dp"
+            android:scrollbars="vertical"
+            android:textSize="12sp" >
+        </EditText>
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editEmail"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_more_advice_submit"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.4"
+                android:background="#f86047"
+                android:text="@string/more_advice_submit"
+                android:textColor="#FFFFFF" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="40dp" >
+            </View>
+
+            <Button
+                android:id="@+id/btn_more_advice_quersion"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.4"
+                android:background="#34abcd"
+                android:onClick="navigateFragment"
+                android:text="@string/more_advice_question"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

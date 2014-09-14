@@ -55,7 +55,7 @@
         style="@style/main_srcoll_layout"
         android:visibility="gone" >
 
-        <include layout="@layout/frame_taobao" />
+        <include layout="@layout/frame_webview" />
     </com.liwuso.app.widget.ScrollLayout>
 
     <include layout="@layout/main_footer" />

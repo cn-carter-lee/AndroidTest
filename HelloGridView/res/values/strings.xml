@@ -13,7 +13,7 @@
     <string name="nav_send_aim">请选择送礼目的</string>
     <string name="nav_send_product">礼物推荐</string>
     <string name="nav_favorite">我的收藏(%d)</string>
-     <string name="favorite_added">已收藏</string>
+    <string name="favorite_added">已收藏</string>
     <string name="favorite_not_found">矮油，您还没有收藏任何礼物~</string>
     <string name="favorite_find_new">去发现礼物</string>
     <string name="nav_more">更多</string>
@@ -30,7 +30,7 @@
     <string name="gift_actionbar_more">更多</string>
     <string name="age_actionbar_title">请选择女朋友的年龄</string>
     <string name="purpose_actionbar_title">请选择送礼目的</string>
-    <string name="product_actionbar_title">礼物推荐</string>    
+    <string name="product_actionbar_title">礼物推荐</string>
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="btn_product_detail">礼物详情</string>
@@ -42,6 +42,10 @@
     <string name="so_current_tip">已选择：   </string>
     <string name="blank"></string>
     <string name="search_txt">请输入关键字搜索礼物</string>
+    <string name="more_advice_content">请输入意见建议内容</string>
+    <string name="more_advice_email">请输入您常用的电子邮箱</string>
+    <string name="more_advice_submit">提交</string>
+    <string name="more_advice_question">常见问题</string>
 
     <string-array name="more_info">
         <item><![CDATA[<div style="font-weight:bold;line-height:2;"><p>礼物搜（www.liwuso.com）是一款快速找到礼物的导购应用，用户只需要选择送礼的对象、年龄和目的，简单3步就能找到满意的礼物。无论是生日、结婚、节日、商务还是纪念送礼，礼物搜都会是您最棒的私人送礼顾问。</p><p>我们寻求将互联网技术与专家送礼经验加以整合，帮助消费者从繁重的甄选礼物的过程中解脱出来。用户只需要选择“送给谁”、“ta的年龄”、“送礼目的”，我们的送礼专家经验系统就能为您推荐高匹配度的产品，让你轻轻松松网购礼物，并在此过程中享受温馨愉悦的体验。</p></p>「应用优点」<br />1、快捷找到满意的礼物<br />2、重要节日推送消息提醒<br />3、收藏喜欢的商品</p><br />「大事件」<br />2014年8月  礼物搜安卓应用v1.0上线<br />2014年5月  礼物搜手机触屏版获得uc.cn认可，被收录入uc网址导航<br />2014年4月  礼物搜手机触屏版（m.liwuso.com）正式上线<br />2014年1月  礼物搜（www.liwuso.com）独立域名品牌运营<br />2013年6月  礼物搜可可礼物网版（http://www.cocodiy.com/liwusou）正式上线运营</div>]]></item>

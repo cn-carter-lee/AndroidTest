@@ -187,6 +187,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private Button btnMoreAdviceSubmit;
 	private Button btnMoreAdviceQuersion;
 
+	//
+	private LinearLayout footer;
+	//
 	private WebView webView;
 	private AppContext appContext;
 
@@ -231,11 +234,13 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			slArray[i] = scrollLayout;
 		}
 		// Footer
+		footer = (LinearLayout) findViewById(R.id.main_linearlayout_footer);
 		for (int i = 0; i < footBtnArray.length; i++) {
 			Button footBtn = (Button) findViewById(fbResourceArray[i]);
 			footBtn.setOnClickListener(selectFootBar(i));
 			footBtnArray[i] = footBtn;
 		}
+
 	}
 
 	private void initFrameButtons() {
@@ -1682,12 +1687,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				// BrowserActivity.this.setProgress(progress * 100);
 			}
 		});
-
-		// Enable some feature like Javascript and pinch zoom
-		WebSettings websettings = webView.getSettings();
-		websettings.setJavaScriptEnabled(true); // Warning! You can have XSS
-												// vulnerabilities!
-		websettings.setBuiltInZoomControls(true);
+		WebSettings webSettings = webView.getSettings();
+		webSettings.setJavaScriptEnabled(true);
+		webSettings.setBuiltInZoomControls(true);
+		webSettings.setAppCacheEnabled(true);
 	}
 
 	private void loadTaobao(String url) {
@@ -1701,8 +1704,11 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	// Footer
 	private void selectScrollLayout(final int itemIndex) {
-		if (itemIndex == 4)
+		if (itemIndex == 4) {
 			preTaobaolIndex = currentSlIndex;
+			footer.setVisibility(View.GONE);
+		} else
+			footer.setVisibility(View.VISIBLE);
 		currentSlIndex = itemIndex;
 		for (int i = 0; i < slArray.length; i++) {
 			// footer bars
