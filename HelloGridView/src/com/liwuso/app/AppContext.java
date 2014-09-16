@@ -286,7 +286,7 @@ public class AppContext extends Application {
 		try {
 			ApiClient.addAdvice(this, email, content);
 		} catch (AppException e) {
-			
+
 		}
 	}
 
@@ -305,7 +305,7 @@ public class AppContext extends Application {
 			searchItemList = (SearchItemList) readObject(key);
 			if (searchItemList == null)
 				throw e;
-		}
+		}		
 		return searchItemList;
 	}
 

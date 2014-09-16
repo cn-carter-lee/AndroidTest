@@ -79,7 +79,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private TextView txtSoPurposeAgeName;
 	private TextView txtSoProductPersonName;
 	private TextView txtSoProductAgeName;
-	private TextView txtSoProductPurposeName;
+	private TextView txtSoProductAimName;
 
 	private RelativeLayout mainHeaderBar;
 	private int[] slResourceArray = { R.id.main_scrolllayout_so,
@@ -107,7 +107,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private PullToRefreshListView lvFemale;
 	private PullToRefreshListView lvMale;
 	private PullToRefreshListView lvAge;
-	private PullToRefreshListView lvPurpose;
+	private PullToRefreshListView lvAim;
 	private PullToRefreshListView lvProduct;
 	private PullToRefreshListView lvFavorite;
 
@@ -124,7 +124,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private ListViewFemaleAdapter lvFemaleAdapter;
 	private ListViewMaleAdapter lvMaleAdapter;
 	private ListViewAgeAdapter lvAgeAdapter;
-	private ListViewAimAdapter lvPurposeAdapter;
+	private ListViewAimAdapter lvAimAdapter;
 	private ListViewProductAdapter lvProductAdapter;
 	private GridViewSearchAdapter gvSearchAdapter;
 	private ListViewFavoriteAdapter lvFavoriteAdapter;
@@ -133,7 +133,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private List<Person> lvFemaleData = new ArrayList<Person>();
 	private List<Person> lvMaleData = new ArrayList<Person>();
 	private List<Age> lvAgeData = new ArrayList<Age>();
-	private List<Aim> lvPurposeData = new ArrayList<Aim>();
+	private List<Aim> lvAimData = new ArrayList<Aim>();
 	private List<Product> lvProductData = new ArrayList<Product>();
 	private List<SearchItem> gvSearchData = new ArrayList<SearchItem>();
 	private List<Product> lvFavoriteProductData = new ArrayList<Product>();
@@ -142,10 +142,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private int lvFemaleSumData;
 	private int lvMaleSumData;
 	private int lvAgeSumData;
-	private int lvPurposeSumData;
+	private int lvAimSumData;
 	private int lvProductSumData;
 	private int gvSearchSumData;
-	private int lvFavoriteProductSumData;
+	private int lvFavoriteSumData;
 
 	private TextView lvFemale_foot_more;
 
@@ -265,7 +265,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		txtSoPurposeAgeName = (TextView) findViewById(R.id.txt_so_purpose_agename);
 		txtSoProductPersonName = (TextView) findViewById(R.id.txt_so_product_personname);
 		txtSoProductAgeName = (TextView) findViewById(R.id.txt_so_product_agename);
-		txtSoProductPurposeName = (TextView) findViewById(R.id.txt_so_product_purposename);
+		txtSoProductAimName = (TextView) findViewById(R.id.txt_so_product_purposename);
 
 		// Search
 		btnSearch = (Button) findViewById(R.id.btnSearch);
@@ -300,14 +300,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				framebtn_Female.setEnabled(framebtn_Female != btn);
 				framebtn_Male.setEnabled(framebtn_Male != btn);
 				if (btn == framebtn_All) {
-
 					personScrollLayout.snapToScreen(0);
-
 				} else if (btn == framebtn_Female) {
-
 					personScrollLayout.snapToScreen(1);
 				} else if (btn == framebtn_Male) {
-
 					personScrollLayout.snapToScreen(2);
 				}
 			}
@@ -319,7 +315,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		this.initFemaleListView();
 		this.initMaleListView();
 		this.initAgeListView();
-		this.initPurposeView();
+		this.initAimView();
 		this.initProductListView();
 		this.initSearchGridView();
 		this.initFavoriteListView();
@@ -471,15 +467,15 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		});
 	}
 
-	private void initPurposeView() {
-		lvPurposeAdapter = new ListViewAimAdapter(this, lvPurposeData);
-		lvPurpose = (PullToRefreshListView) findViewById(R.id.frame_listview_purpose);
-		lvPurpose.setAdapter(lvPurposeAdapter);
-		lvPurpose.setOnScrollListener(new AbsListView.OnScrollListener() {
+	private void initAimView() {
+		lvAimAdapter = new ListViewAimAdapter(this, lvAimData);
+		lvAim = (PullToRefreshListView) findViewById(R.id.frame_listview_purpose);
+		lvAim.setAdapter(lvAimAdapter);
+		lvAim.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				lvPurpose.onScrollStateChanged(view, scrollState);
+				lvAim.onScrollStateChanged(view, scrollState);
 				// 数据为空--不用继续下面代码�?
-				if (lvPurposeData.isEmpty())
+				if (lvAimData.isEmpty())
 					return;
 				// 判断是否滚动到底�?
 				int pageIndex = 1;
@@ -490,18 +486,17 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				lvPurpose.onScroll(view, firstVisibleItem, visibleItemCount,
+				lvAim.onScroll(view, firstVisibleItem, visibleItemCount,
 						totalItemCount);
 			}
 		});
-		lvPurpose
-				.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-					public void onRefresh() {
-						loadLvData(1, 0, lvPurposeHandler,
-								UIHelper.LISTVIEW_ACTION_REFRESH,
-								UIHelper.LISTVIEW_DATATYPE_PURPOSE);
-					}
-				});
+		lvAim.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+			public void onRefresh() {
+				loadLvData(1, 0, lvPurposeHandler,
+						UIHelper.LISTVIEW_ACTION_REFRESH,
+						UIHelper.LISTVIEW_DATATYPE_PURPOSE);
+			}
+		});
 	}
 
 	private void initProductListView() {
@@ -635,7 +630,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 		lvAgeHandler = this.getHandler(lvAge, lvAgeAdapter, lvFemale_foot_more,
 				lvFemale_foot_progress, AppContext.PAGE_SIZE);
-		lvPurposeHandler = this.getHandler(lvPurpose, lvPurposeAdapter,
+		lvPurposeHandler = this.getHandler(lvAim, lvAimAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
 
@@ -1128,12 +1123,12 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:
 			int newdata = 0;// 新加载数�?只有刷新动作才会使用�?
 			AimList purposelist = (AimList) obj;
-			lvPurposeSumData = what;
+			lvAimSumData = what;
 			if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
-				if (lvPurposeData.size() > 0) {
+				if (lvAimData.size() > 0) {
 					for (Aim purpose1 : purposelist.getPurposeList()) {
 						boolean b = false;
-						for (Aim purpose2 : lvPurposeData) {
+						for (Aim purpose2 : lvAimData) {
 							if (purpose1.getId() == purpose2.getId()) {
 								b = true;
 								break;
@@ -1146,26 +1141,26 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					newdata = what;
 				}
 			}
-			lvPurposeData.clear();
-			lvPurposeData.addAll(purposelist.getPurposeList());
+			lvAimData.clear();
+			lvAimData.addAll(purposelist.getPurposeList());
 
 		case UIHelper.LISTVIEW_ACTION_SCROLL:
 			AimList list = (AimList) obj;
-			lvPurposeSumData += what;
-			if (lvPurposeData.size() > 0) {
+			lvAimSumData += what;
+			if (lvAimData.size() > 0) {
 				for (Aim purpose1 : list.getPurposeList()) {
 					boolean b = false;
-					for (Aim purpose2 : lvPurposeData) {
+					for (Aim purpose2 : lvAimData) {
 						if (purpose1.getId() == purpose2.getId()) {
 							b = true;
 							break;
 						}
 					}
 					if (!b)
-						lvPurposeData.add(purpose1);
+						lvAimData.add(purpose1);
 				}
 			} else {
-				lvPurposeData.addAll(list.getPurposeList());
+				lvAimData.addAll(list.getPurposeList());
 			}
 			break;
 		}
@@ -1232,7 +1227,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:
 			int newdata = 0;// 新加载数�?只有刷新动作才会使用�?
 			ProductList productlist = (ProductList) obj;
-			lvFavoriteProductSumData = what;
+			lvFavoriteSumData = what;
 			if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
 				if (lvFavoriteProductData.size() > 0) {
 					for (Product product1 : productlist.getProductList()) {
@@ -1255,7 +1250,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			break;
 		case UIHelper.LISTVIEW_ACTION_SCROLL:
 			ProductList list = (ProductList) obj;
-			lvFavoriteProductSumData += what;
+			lvFavoriteSumData += what;
 			if (lvProductData.size() > 0) {
 
 				// for (Product purpose1 : list.getProductList()) {
@@ -1281,6 +1276,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		if (view.getTag() instanceof Person) {
 			Person person = (Person) view.getTag();
 			currentPerson = person;
+			lvAgeData.clear();
+			lvAgeAdapter.notifyDataSetChanged();
+
 			loadLvData(currentPerson.Sex, 0, lvAgeHandler,
 					UIHelper.LISTVIEW_ACTION_INIT,
 					UIHelper.LISTVIEW_DATATYPE_AGE);
@@ -1290,6 +1288,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			setTopState();
 		} else if (view.getTag() instanceof Age) {
 			currentAge = (Age) view.getTag();
+			lvAimData.clear();
+			lvAimAdapter.notifyDataSetChanged();
 			loadLvData(1, 0, lvPurposeHandler, UIHelper.LISTVIEW_ACTION_INIT,
 					UIHelper.LISTVIEW_DATATYPE_PURPOSE);
 			slArray[currentSlIndex].currentVisibleScreen++;
@@ -1298,10 +1298,11 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			setTopState();
 		} else if (view.getTag() instanceof Aim) {
 			currentAim = (Aim) view.getTag();
+			lvProductData.clear();
+			lvProductAdapter.notifyDataSetChanged();
 			final WaitDialog waitDialog = new WaitDialog();
 			waitDialog.show(getSupportFragmentManager(), "");
 			Handler sleepHandler = new Handler();
-
 			sleepHandler.postDelayed(new Runnable() {
 				public void run() {
 					waitDialog.dismiss();
@@ -1336,7 +1337,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			txtSoProductAgeName.setText(currentAge.Name);
 		}
 		if (currentAim != null) {
-			txtSoProductPurposeName.setText(currentAim.Name);
+			txtSoProductAimName.setText(currentAim.Name);
 		}
 	}
 
@@ -1464,11 +1465,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	private void initSearchGridView() {
-		gvSearchAdapter = new GridViewSearchAdapter(this, gvSearchData);
+
 		gvSearch = (PullToRefreshGridView) findViewById(R.id.frame_search_gridview_product);
-		// gvSearch_foorter =
-		// getLayoutInflater().inflate(R.layout.listview_footer, null);
-		// gvSearch.addView(gvSearch_foorter);
+
+		gvSearchAdapter = new GridViewSearchAdapter(this, gvSearchData);
 		gvSearch.setAdapter(gvSearchAdapter);
 
 		gvSearch.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -1501,6 +1501,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	private void loadSearch(Catalog catalog) {
 		int catalogId = catalog == null ? 0 : catalog.getId();
+		gvSearchData.clear();
+		gvSearchAdapter.notifyDataSetChanged();
 		loadLvData(catalogId, 0, gvSearchHandler,
 				UIHelper.LISTVIEW_ACTION_INIT,
 				UIHelper.GRIDVIEW_DATATYPE_SEARCH);

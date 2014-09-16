@@ -10,9 +10,12 @@ import com.liwuso.utility.ImageLoader;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -24,6 +27,7 @@ public class GridViewSearchAdapter extends BaseAdapter {
 	private LayoutInflater listContainer;;
 	private List<SearchItem> listItems;
 	public ImageLoader imageLoader;
+	private OnClickListener ml;
 
 	public GridViewSearchAdapter(Context context, List<SearchItem> data) {
 		this.context = context;
@@ -51,16 +55,19 @@ public class GridViewSearchAdapter extends BaseAdapter {
 
 	// create a new ImageView for each item reference by the Adapter
 	public View getView(int position, View convertView, ViewGroup parent) {
-		CustomListItemView listItemView = new CustomListItemView();		
+		SearchItem searchItem = listItems.get(position);
+
+		CustomListItemView listItemView = new CustomListItemView();
 		convertView = listContainer.inflate(R.layout.search_product_item, null);
 		listItemView.name = (TextView) convertView.findViewById(R.id.name);
 		listItemView.image = (ImageView) convertView.findViewById(R.id.image);
-		SearchItem searchItem = listItems.get(position);
-		listItemView.name.setText(searchItem.Name);
+
+		listItemView.name.setText(searchItem.Name );
 		listItemView.name.setTag(searchItem);
 		imageLoader.DisplayImage(searchItem.ImageUrl, listItemView.image);
-		listItemView.image.setTag(searchItem);		
+		listItemView.image.setTag(searchItem);
 		return convertView;
+
 	}
 
 	@Override
