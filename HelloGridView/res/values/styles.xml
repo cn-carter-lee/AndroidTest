@@ -113,6 +113,15 @@
         <item name="android:scrollingCache">false</item>
     </style>
 
+    <style name="widget_search_listview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>        
+        <item name="android:dividerHeight">0dip</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:divider">@color/container</item>
+        <item name="android:scrollingCache">false</item>
+    </style>
+
     <style name="search_widget_listview">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>

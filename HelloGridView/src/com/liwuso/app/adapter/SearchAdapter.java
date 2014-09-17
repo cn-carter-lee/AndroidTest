@@ -6,6 +6,8 @@ import com.liwuso.app.R;
 import com.liwuso.app.adapter.ListViewProductAdapter.CustomListItemView;
 import com.liwuso.bean.Product;
 import com.liwuso.bean.SearchItem;
+import com.liwuso.bean.SearchItemListWapper;
+import com.liwuso.bean.SearchItemWapper;
 import com.liwuso.utility.ImageLoader;
 
 import android.app.Activity;
@@ -20,20 +22,21 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class GridViewSearchAdapter extends BaseAdapter {
+public class SearchAdapter extends BaseAdapter {
 	private Context context;
 	private LayoutInflater listContainer;;
-	private List<SearchItem> listItems;
+	private List<SearchItemWapper> listItemWappers;
 	public ImageLoader imageLoader;
 	private OnClickListener ml;
 
-	public GridViewSearchAdapter(Context context, List<SearchItem> data) {
+	public SearchAdapter(Context context, List<SearchItemWapper> data) {
 		this.context = context;
 		this.listContainer = LayoutInflater.from(context);
-		this.listItems = data;
+		this.listItemWappers = data;
 		this.imageLoader = new ImageLoader(context);
 	}
 
@@ -43,7 +46,7 @@ public class GridViewSearchAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
-		return listItems.size();
+		return listItemWappers.size();
 	}
 
 	public Object getItem(int position) {
@@ -56,8 +59,11 @@ public class GridViewSearchAdapter extends BaseAdapter {
 
 	// create a new ImageView for each item reference by the Adapter
 	public View getView(int position, View convertView, ViewGroup parent) {
-		SearchItem searchItem = listItems.get(position);
-		
+		SearchItemWapper searchItem = listItemWappers.get(position);
+		LinearLayout row = (LinearLayout) listContainer.inflate(
+				R.layout.search_product_row, null);
+
+		for (int i = 0; i < 3; i++) {
 			CustomListItemView listItemView = new CustomListItemView();
 			convertView = listContainer.inflate(R.layout.search_product_item,
 					null);
@@ -65,12 +71,13 @@ public class GridViewSearchAdapter extends BaseAdapter {
 			listItemView.image = (ImageView) convertView
 					.findViewById(R.id.image);
 
-			listItemView.name.setText(searchItem.Name);
+			listItemView.name.setText(searchItem.Items[i].Name);
 			listItemView.name.setTag(searchItem);
-			imageLoader.DisplayImage(searchItem.ImageUrl, listItemView.image);
+			imageLoader.DisplayImage(searchItem.Items[i].ImageUrl, listItemView.image);
 			listItemView.image.setTag(searchItem);
-			return convertView;
-	
+			row.addView(convertView);
+		}
+		return row;
 	}
 
 	@Override

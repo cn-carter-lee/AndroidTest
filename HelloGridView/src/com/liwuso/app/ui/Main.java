@@ -36,7 +36,7 @@ import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.AppManager;
 import com.liwuso.app.R;
-import com.liwuso.app.adapter.GridViewSearchAdapter;
+import com.liwuso.app.adapter.SearchAdapter;
 import com.liwuso.app.adapter.ListViewAgeAdapter;
 import com.liwuso.app.adapter.ListViewFavoriteAdapter;
 import com.liwuso.app.adapter.ListViewFemaleAdapter;
@@ -66,6 +66,8 @@ import com.liwuso.bean.Product;
 import com.liwuso.bean.ProductList;
 import com.liwuso.bean.SearchItem;
 import com.liwuso.bean.SearchItemList;
+import com.liwuso.bean.SearchItemListWapper;
+import com.liwuso.bean.SearchItemWapper;
 import com.liwuso.utility.Utils;
 
 public class Main extends BaseActivity implements OnItemSelectedListener {
@@ -118,7 +120,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private Handler lvAgeHandler;
 	private Handler lvPurposeHandler;
 	private Handler lvProductHandler;
-	private Handler gvSearchHandler;
+	private Handler lvSearchHandler;
 	private Handler lvFavoriteProductHandler;
 
 	private ListViewPersonAdapter lvPersonAdapter;
@@ -127,7 +129,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private ListViewAgeAdapter lvAgeAdapter;
 	private ListViewAimAdapter lvAimAdapter;
 	private ListViewProductAdapter lvProductAdapter;
-	private GridViewSearchAdapter gvSearchAdapter;
+	private SearchAdapter searchAdapter;
 	private ListViewFavoriteAdapter lvFavoriteAdapter;
 
 	private List<MixedPerson> lvPersonData = new ArrayList<MixedPerson>();
@@ -136,7 +138,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private List<Age> lvAgeData = new ArrayList<Age>();
 	private List<Aim> lvAimData = new ArrayList<Aim>();
 	private List<Product> lvProductData = new ArrayList<Product>();
-	private List<SearchItem> gvSearchData = new ArrayList<SearchItem>();
+	private List<SearchItemWapper> lvSearchData = new ArrayList<SearchItemWapper>();
 	private List<Product> lvFavoriteProductData = new ArrayList<Product>();
 
 	private int lvPersonSumData;
@@ -182,8 +184,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	// Search
 	private Button btnSearch;
 	private EditText txtSearch;
-	private PullToRefreshGridView gvSearch;
-	private int curentSearchCatalog = 0;
+	private PullToRefreshListView lvSearch;
 
 	private Button btnMoreAdviceSubmit;
 	private Button btnMoreAdviceQuersion;
@@ -318,7 +319,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		this.initAgeListView();
 		this.initAimView();
 		this.initProductListView();
-		this.initSearchGridView();
+		this.initSearchListView();
 		this.initFavoriteListView();
 		this.initFrameListViewData();
 	}
@@ -639,7 +640,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
 
-		gvSearchHandler = this.getGvHandler(gvSearch, gvSearchAdapter,
+		lvSearchHandler = this.getHandler(lvSearch, searchAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
 
@@ -793,10 +794,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						msg.what = productlist.getProductCount();
 						msg.obj = productlist;
 						break;
-					case UIHelper.GRIDVIEW_DATATYPE_SEARCH:
+					case UIHelper.LISTVIEW_DATATYPE_SEARCH:
 						SearchItemList searchItemList = appContext
 								.getSearchItemList(catalogid, 0, isRefresh);
-						gvSearch.totalCount = searchItemList.totalCount;
+						lvSearch.totalCount = searchItemList.totalCount;
 						msg.what = searchItemList.getProductCount();
 						msg.obj = searchItemList;
 						break;
@@ -843,8 +844,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		case UIHelper.LISTVIEW_DATATYPE_PRODUCT:
 			handleLvDataProduct(what, obj, objtype, actiontype);
 			break;
-		case UIHelper.GRIDVIEW_DATATYPE_SEARCH:
-			handleGvData(what, obj, objtype, actiontype);
+		case UIHelper.LISTVIEW_DATATYPE_SEARCH:
+			handleLvSearchData(what, obj, objtype, actiontype);
 			break;
 		case UIHelper.LISTVIEW_DATATYPE_FAVORITE:
 			handleLvDataFavorite(what, obj, objtype, actiontype);
@@ -1167,7 +1168,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		}
 	}
 
-	private void handleGvData(int what, Object obj, int objtype, int actiontype) {
+	private void handleLvSearchData(int what, Object obj, int objtype,
+			int actiontype) {
 		switch (actiontype) {
 		case UIHelper.LISTVIEW_ACTION_INIT:
 		case UIHelper.LISTVIEW_ACTION_REFRESH:
@@ -1176,11 +1178,11 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			SearchItemList searchitemlist = (SearchItemList) obj;
 			gvSearchSumData = what;
 			if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
-				if (gvSearchData.size() > 0) {
+				if (lvSearchData.size() > 0) {
 					for (SearchItem searchitem1 : searchitemlist
 							.getSearchItemList()) {
 						boolean b = false;
-						for (SearchItem searchitem2 : gvSearchData) {
+						for (SearchItemWapper searchitem2 : lvSearchData) {
 							if (searchitem1.getId() == searchitem2.getId()) {
 								b = true;
 								break;
@@ -1193,13 +1195,13 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					newdata = what;
 				}
 			}
-			gvSearchData.clear();
-			gvSearchData.addAll(searchitemlist.getSearchItemList());
+			lvSearchData.clear();
+			lvSearchData.addAll(searchitemlist.getSearchItemList());
 			break;
 		case UIHelper.LISTVIEW_ACTION_SCROLL:
 			SearchItemList list = (SearchItemList) obj;
 			gvSearchSumData += what;
-			if (gvSearchData.size() > 0) {
+			if (lvSearchData.size() > 0) {
 
 				// for (Product purpose1 : list.getProductList()) {
 				// boolean b = false;
@@ -1465,45 +1467,47 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		task.execute();
 	}
 
-	private void initSearchGridView() {
-		gvSearch = (PullToRefreshGridView) findViewById(R.id.frame_search_gridview_product);
-		gvSearchAdapter = new GridViewSearchAdapter(this, gvSearchData);
-		gvSearch.setAdapter(gvSearchAdapter);
-		gvSearch.setOnScrollListener(new AbsListView.OnScrollListener() {
+	private void initSearchListView() {
+		lvSearch = (PullToRefreshListView) findViewById(R.id.frame_search_listview_product);
+		searchAdapter = new SearchAdapter(this, lvSearchData);
+		lvSearch.setAdapter(searchAdapter);
+
+		lvSearch.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				gvSearch.onScrollStateChanged(view, scrollState);
-				if (gvSearchData.isEmpty())
+				lvSearch.onScrollStateChanged(view, scrollState);
+				if (lvSearchData.isEmpty())
 					return;
 
 				int pageIndex = 1;
-				loadLvData(0, pageIndex, gvSearchHandler,
+				loadLvData(0, pageIndex, lvSearchHandler,
 						UIHelper.LISTVIEW_ACTION_SCROLL,
-						UIHelper.GRIDVIEW_DATATYPE_SEARCH);
+						UIHelper.LISTVIEW_DATATYPE_SEARCH);
 			}
 
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				gvSearch.onScroll(view, firstVisibleItem, visibleItemCount,
+				lvSearch.onScroll(view, firstVisibleItem, visibleItemCount,
 						totalItemCount);
 			}
 		});
 
-		gvSearch.setOnRefreshListener(new PullToRefreshGridView.OnRefreshListener() {
+		lvSearch.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 			public void onRefresh() {
-				loadLvData(0, 0, gvSearchHandler,
+				loadLvData(0, 0, lvSearchHandler,
 						UIHelper.LISTVIEW_ACTION_REFRESH,
-						UIHelper.GRIDVIEW_DATATYPE_SEARCH);
+						UIHelper.LISTVIEW_DATATYPE_SEARCH);
 			}
 		});
+
 	}
 
 	private void loadSearch(Catalog catalog) {
 		int catalogId = catalog == null ? 0 : catalog.getId();
-		gvSearchData.clear();
-		gvSearchAdapter.notifyDataSetChanged();
-		loadLvData(catalogId, 0, gvSearchHandler,
+		lvSearchData.clear();
+		searchAdapter.notifyDataSetChanged();
+		loadLvData(catalogId, 0, lvSearchHandler,
 				UIHelper.LISTVIEW_ACTION_INIT,
-				UIHelper.GRIDVIEW_DATATYPE_SEARCH);
+				UIHelper.LISTVIEW_DATATYPE_SEARCH);
 	}
 
 	private View.OnClickListener frameSearchBtnClick() {

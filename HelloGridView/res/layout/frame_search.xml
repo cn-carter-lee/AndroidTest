@@ -41,16 +41,8 @@
         android:paddingBottom="0.5dp" >
     </LinearLayout>
 
-    <com.liwuso.app.widget.PullToRefreshGridView
-        android:id="@+id/frame_search_gridview_product"
-        style="@style/search_widget_listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:horizontalSpacing="1dp"
-        android:numColumns="3"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="1dp" />
-
+    <com.liwuso.app.widget.PullToRefreshListView
+        android:id="@+id/frame_search_listview_product"
+        style="@style/widget_search_listview" />
 
 </LinearLayout>
