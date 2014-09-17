@@ -50,8 +50,8 @@ public class SearchItemList extends Entity {
 
 		XmlPullParser xmlParser = Xml.newPullParser();
 		try {
-			xmlParser.setInput(inputStream, UTF8);		
-			int evtType = xmlParser.getEventType();		
+			xmlParser.setInput(inputStream, UTF8);
+			int evtType = xmlParser.getEventType();
 			while (evtType != XmlPullParser.END_DOCUMENT) {
 				String tag = xmlParser.getName();
 				switch (evtType) {
@@ -71,7 +71,7 @@ public class SearchItemList extends Entity {
 							searchItem.Url = xmlParser.nextText();
 						} else if (tag.equalsIgnoreCase(Product.NODE_IMG)) {
 							searchItem.ImageUrl = xmlParser.nextText();
-						} 
+						}
 					}
 					break;
 				case XmlPullParser.END_TAG:
@@ -90,6 +90,7 @@ public class SearchItemList extends Entity {
 		} finally {
 			inputStream.close();
 		}
+
 		return searchItemList;
 	}
 }

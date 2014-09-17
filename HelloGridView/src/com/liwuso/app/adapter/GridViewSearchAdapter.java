@@ -20,6 +20,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class GridViewSearchAdapter extends BaseAdapter {
@@ -56,18 +57,20 @@ public class GridViewSearchAdapter extends BaseAdapter {
 	// create a new ImageView for each item reference by the Adapter
 	public View getView(int position, View convertView, ViewGroup parent) {
 		SearchItem searchItem = listItems.get(position);
+		
+			CustomListItemView listItemView = new CustomListItemView();
+			convertView = listContainer.inflate(R.layout.search_product_item,
+					null);
+			listItemView.name = (TextView) convertView.findViewById(R.id.name);
+			listItemView.image = (ImageView) convertView
+					.findViewById(R.id.image);
 
-		CustomListItemView listItemView = new CustomListItemView();
-		convertView = listContainer.inflate(R.layout.search_product_item, null);
-		listItemView.name = (TextView) convertView.findViewById(R.id.name);
-		listItemView.image = (ImageView) convertView.findViewById(R.id.image);
-
-		listItemView.name.setText(searchItem.Name );
-		listItemView.name.setTag(searchItem);
-		imageLoader.DisplayImage(searchItem.ImageUrl, listItemView.image);
-		listItemView.image.setTag(searchItem);
-		return convertView;
-
+			listItemView.name.setText(searchItem.Name);
+			listItemView.name.setTag(searchItem);
+			imageLoader.DisplayImage(searchItem.ImageUrl, listItemView.image);
+			listItemView.image.setTag(searchItem);
+			return convertView;
+	
 	}
 
 	@Override

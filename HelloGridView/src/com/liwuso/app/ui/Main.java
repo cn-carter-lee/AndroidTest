@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.ViewPager.LayoutParams;
 import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
@@ -1465,12 +1466,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	private void initSearchGridView() {
-
 		gvSearch = (PullToRefreshGridView) findViewById(R.id.frame_search_gridview_product);
-
 		gvSearchAdapter = new GridViewSearchAdapter(this, gvSearchData);
 		gvSearch.setAdapter(gvSearchAdapter);
-
 		gvSearch.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				gvSearch.onScrollStateChanged(view, scrollState);

@@ -17,8 +17,10 @@ import com.liwuso.bean.MixedPersonList;
 import com.liwuso.bean.Person;
 import com.liwuso.bean.PersonList;
 import com.liwuso.bean.ProductList;
+import com.liwuso.bean.SearchItem;
 import com.liwuso.bean.SearchItemList;
 import com.liwuso.net.ApiClient;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -305,7 +307,7 @@ public class AppContext extends Application {
 			searchItemList = (SearchItemList) readObject(key);
 			if (searchItemList == null)
 				throw e;
-		}		
+		}
 		return searchItemList;
 	}
 
