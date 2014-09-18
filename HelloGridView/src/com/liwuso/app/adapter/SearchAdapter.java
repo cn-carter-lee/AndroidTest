@@ -33,6 +33,9 @@ public class SearchAdapter extends BaseAdapter {
 	public ImageLoader imageLoader;
 	private OnClickListener ml;
 
+	private int[] name_resource_ids = { R.id.name0, R.id.name1, R.id.name2 };
+	private int[] image_resource_ids = { R.id.image0, R.id.image1, R.id.image2 };
+
 	public SearchAdapter(Context context, List<SearchItemWapper> data) {
 		this.context = context;
 		this.listContainer = LayoutInflater.from(context);
@@ -41,8 +44,8 @@ public class SearchAdapter extends BaseAdapter {
 	}
 
 	static class CustomListItemView {
-		public TextView name;
-		public ImageView image;
+		public TextView[] names = new TextView[3];
+		public ImageView[] images = new ImageView[3];
 	}
 
 	public int getCount() {
@@ -59,25 +62,26 @@ public class SearchAdapter extends BaseAdapter {
 
 	// create a new ImageView for each item reference by the Adapter
 	public View getView(int position, View convertView, ViewGroup parent) {
-		SearchItemWapper searchItem = listItemWappers.get(position);
-		LinearLayout row = (LinearLayout) listContainer.inflate(
+		SearchItemWapper searchItemWapper = listItemWappers.get(position);
+		convertView = (LinearLayout) listContainer.inflate(
 				R.layout.search_product_row, null);
-
+		CustomListItemView listItemView = new CustomListItemView();
 		for (int i = 0; i < 3; i++) {
-			CustomListItemView listItemView = new CustomListItemView();
-			convertView = listContainer.inflate(R.layout.search_product_item,
-					null);
-			listItemView.name = (TextView) convertView.findViewById(R.id.name);
-			listItemView.image = (ImageView) convertView
-					.findViewById(R.id.image);
+			SearchItem searchItem = searchItemWapper.Items[i];
+			if (searchItem != null) {
+				listItemView.names[i] = (TextView) convertView
+						.findViewById(name_resource_ids[i]);
+				listItemView.images[i] = (ImageView) convertView
+						.findViewById(image_resource_ids[i]);
 
-			listItemView.name.setText(searchItem.Items[i].Name);
-			listItemView.name.setTag(searchItem);
-			imageLoader.DisplayImage(searchItem.Items[i].ImageUrl, listItemView.image);
-			listItemView.image.setTag(searchItem);
-			row.addView(convertView);
+				listItemView.names[i].setText(searchItem.Name);
+				listItemView.images[i].setTag(searchItem);
+				imageLoader.DisplayImage(searchItem.ImageUrl,
+						listItemView.images[i]);
+				listItemView.images[i].setTag(searchItem);
+			}
 		}
-		return row;
+		return convertView;
 	}
 
 	@Override

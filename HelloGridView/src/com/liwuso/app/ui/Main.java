@@ -96,10 +96,11 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private int preTaobaolIndex = 0;
 
 	private View lvProduct_footer;
-	private View gvSearch_foorter;
+	private View lvSearch_footer;
 	private View lvFavorite_footer;
 
 	private ProgressBar lvProduct_foot_progress;
+	private ProgressBar lvSearch_foot_progress;
 	private ProgressBar lvFavorite_foot_progress;
 
 	// private ProgressBar mHeadProgress;
@@ -147,7 +148,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private int lvAgeSumData;
 	private int lvAimSumData;
 	private int lvProductSumData;
-	private int gvSearchSumData;
+	private int lvSearchSumData;
 	private int lvFavoriteSumData;
 
 	private TextView lvFemale_foot_more;
@@ -188,6 +189,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	private Button btnMoreAdviceSubmit;
 	private Button btnMoreAdviceQuersion;
+	private int currentSearchCatalogId = 0;
 
 	//
 	private LinearLayout footer;
@@ -703,49 +705,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		};
 	}
 
-	private Handler getGvHandler(final PullToRefreshGridView lv,
-			final BaseAdapter adapter, final TextView more,
-			final ProgressBar progress, final int pageSize) {
-		return new Handler() {
-			public void handleMessage(Message msg) {
-				if (msg.what >= 0) {
-					Notice notice = handleLvData(msg.what, msg.obj, msg.arg2,
-							msg.arg1);
-					if (msg.what < pageSize) {
-						lv.setTag(UIHelper.LISTVIEW_DATA_FULL);
-						adapter.notifyDataSetChanged();
-						// more.setText(R.string.load_full);
-					} else if (msg.what == pageSize) {
-						lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
-						adapter.notifyDataSetChanged();
-						// more.setText(R.string.load_more);
-					}
-
-				} else if (msg.what == -1) {
-					// exeption
-					lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
-					// Should be add message here
-					// more.setText(R.string.load_error);
-					((AppException) msg.obj).makeToast(Main.this);
-				}
-				if (adapter.getCount() == 0) {
-					lv.setTag(UIHelper.LISTVIEW_DATA_EMPTY);
-					// more.setText(R.string.load_empty);
-				}
-				// progress.setVisibility(ProgressBar.GONE);
-				// mHeadProgress.setVisibility(ProgressBar.GONE);
-				if (msg.arg1 == UIHelper.LISTVIEW_ACTION_REFRESH) {
-					lv.onRefreshComplete(getString(R.string.pull_to_refresh_update)
-							+ new Date().toLocaleString());
-					lv.setSelection(0);
-				} else if (msg.arg1 == UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG) {
-					lv.onRefreshComplete();
-					lv.setSelection(0);
-				}
-			}
-		};
-	}
-
 	private void loadLvData(final int catalogid, final int pageIndex,
 			final Handler handler, final int action, final int dataType) {
 		// mHeadProgress.setVisibility(ProgressBar.VISIBLE);
@@ -795,11 +754,12 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						msg.obj = productlist;
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_SEARCH:
-						SearchItemList searchItemList = appContext
-								.getSearchItemList(catalogid, 0, isRefresh);
-						lvSearch.totalCount = searchItemList.totalCount;
-						msg.what = searchItemList.getProductCount();
-						msg.obj = searchItemList;
+						SearchItemListWapper searchItemListWapper = appContext
+								.getSearchItemList(catalogid, pageIndex,
+										isRefresh);
+						lvSearch.totalCount = searchItemListWapper.totalCount;
+						msg.what = searchItemListWapper.searchItemCount;
+						msg.obj = searchItemListWapper;
 						break;
 					case UIHelper.LISTVIEW_DATATYPE_FAVORITE:
 						ProductList favoriteproductlist = appContext
@@ -808,7 +768,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						msg.what = Utils.getFavoriteCount();
 						msg.obj = favoriteproductlist;
 						break;
-
 					}
 				} catch (AppException e) {
 					e.printStackTrace();
@@ -1175,11 +1134,11 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		case UIHelper.LISTVIEW_ACTION_REFRESH:
 		case UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG:
 			int newdata = 0;
-			SearchItemList searchitemlist = (SearchItemList) obj;
-			gvSearchSumData = what;
+			SearchItemListWapper searchitemlist = (SearchItemListWapper) obj;
+			lvSearchSumData = searchitemlist.searchItemCount;
 			if (actiontype == UIHelper.LISTVIEW_ACTION_REFRESH) {
 				if (lvSearchData.size() > 0) {
-					for (SearchItem searchitem1 : searchitemlist
+					for (SearchItemWapper searchitem1 : searchitemlist
 							.getSearchItemList()) {
 						boolean b = false;
 						for (SearchItemWapper searchitem2 : lvSearchData) {
@@ -1199,25 +1158,27 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			lvSearchData.addAll(searchitemlist.getSearchItemList());
 			break;
 		case UIHelper.LISTVIEW_ACTION_SCROLL:
-			SearchItemList list = (SearchItemList) obj;
-			gvSearchSumData += what;
+			SearchItemListWapper list = (SearchItemListWapper) obj;
+			// lvSearchSumData += list.searchItemCount;
 			if (lvSearchData.size() > 0) {
 
-				// for (Product purpose1 : list.getProductList()) {
-				// boolean b = false;
-				// for (Product purpose2 : lvFavoriteProductData) {
-				// if (purpose1.getId() == purpose2.getId()) {
-				// b = true;
-				// break;
-				// }
-				// }
-				// if (!b)
-				// lvFavoriteProductData.add(purpose1);
-				// }
+				for (SearchItemWapper searchItemWapper1 : list
+						.getSearchItemList()) {
+					boolean b = false;
+					for (SearchItemWapper searchItemWapper2 : lvSearchData) {
+						if (searchItemWapper1.getId() == searchItemWapper2
+								.getId()) {
+							b = true;
+							break;
+						}
+					}
+					if (!b)
+						lvSearchData.add(searchItemWapper1);
+				}
 			} else {
-				// lvFavoriteProductData.addAll(list.getProductList());
+				lvSearchData.addAll(list.getSearchItemList());
 			}
-
+			lvSearchSumData = lvSearchData.size() * 3;
 			break;
 		}
 	}
@@ -1470,6 +1431,11 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initSearchListView() {
 		lvSearch = (PullToRefreshListView) findViewById(R.id.frame_search_listview_product);
 		searchAdapter = new SearchAdapter(this, lvSearchData);
+		lvSearch_footer = getLayoutInflater().inflate(R.layout.listview_footer,
+				null);
+		lvSearch_foot_progress = (ProgressBar) lvSearch_footer
+				.findViewById(R.id.listview_foot_progress);
+		lvSearch.addFooterView(lvSearch_footer);
 		lvSearch.setAdapter(searchAdapter);
 
 		lvSearch.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -1477,11 +1443,31 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				lvSearch.onScrollStateChanged(view, scrollState);
 				if (lvSearchData.isEmpty())
 					return;
+				boolean scrollEnd = false;
+				try {
+					if (view.getPositionForView(lvSearch_footer) == view
+							.getLastVisiblePosition()) {
+						scrollEnd = true;
+					}
+				} catch (Exception e) {
+					scrollEnd = false;
+				}
 
-				int pageIndex = 1;
-				loadLvData(0, pageIndex, lvSearchHandler,
-						UIHelper.LISTVIEW_ACTION_SCROLL,
-						UIHelper.LISTVIEW_DATATYPE_SEARCH);
+				if (scrollEnd) {
+					if (lvSearchSumData != lvSearch.totalCount
+							&& lvSearchSumData < lvSearch.totalCount) {
+						lvSearch.setTag(UIHelper.LISTVIEW_DATA_LOADING);
+						lvSearch_foot_progress.setVisibility(View.VISIBLE);
+						// 当前pageIndex, pagesize is 15 here.
+						int pageIndex = lvSearchSumData / 15 + 1;
+						loadLvData(currentSearchCatalogId, pageIndex,
+								lvSearchHandler,
+								UIHelper.LISTVIEW_ACTION_SCROLL,
+								UIHelper.LISTVIEW_DATATYPE_SEARCH);
+					} else
+						lvSearch_foot_progress.setVisibility(View.GONE);
+				}
+
 			}
 
 			public void onScroll(AbsListView view, int firstVisibleItem,
@@ -1493,7 +1479,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 		lvSearch.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 			public void onRefresh() {
-				loadLvData(0, 0, lvSearchHandler,
+				loadLvData(currentSearchCatalogId, 0, lvSearchHandler,
 						UIHelper.LISTVIEW_ACTION_REFRESH,
 						UIHelper.LISTVIEW_DATATYPE_SEARCH);
 			}
@@ -1502,10 +1488,11 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	private void loadSearch(Catalog catalog) {
-		int catalogId = catalog == null ? 0 : catalog.getId();
+		currentSearchCatalogId = catalog == null ? 0 : catalog.getId();
 		lvSearchData.clear();
+		lvSearchSumData = 0;
 		searchAdapter.notifyDataSetChanged();
-		loadLvData(catalogId, 0, lvSearchHandler,
+		loadLvData(currentSearchCatalogId, 0, lvSearchHandler,
 				UIHelper.LISTVIEW_ACTION_INIT,
 				UIHelper.LISTVIEW_DATATYPE_SEARCH);
 	}

@@ -2,8 +2,79 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#cccccc"
-    android:baselineAligned="true"
+    android:baselineAligned="false"
     android:orientation="horizontal" >
+
+    <LinearLayout style="@style/search_widget_listview_row_item" >
+
+        <ImageView
+            android:id="@+id/image0"
+            android:layout_width="100dip"
+            android:layout_height="100dip"
+            android:layout_gravity="center"
+            android:contentDescription="@string/blank"
+            android:onClick="clickSearchItem"
+            android:src="@drawable/product_blank" />
+
+        <TextView
+            android:id="@+id/name0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dip"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:onClick="clickSearchItem"
+            android:textColor="#333333"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/search_widget_listview_row_item"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp" >
+
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="100dip"
+            android:layout_height="100dip"
+            android:layout_gravity="center"
+            android:contentDescription="@string/blank"
+            android:onClick="clickSearchItem"
+            android:src="@drawable/product_blank" />
+
+        <TextView
+            android:id="@+id/name1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dip"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:onClick="clickSearchItem"
+            android:textColor="#333333"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/search_widget_listview_row_item" >
+
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="100dip"
+            android:layout_height="100dip"
+            android:layout_gravity="center"
+            android:contentDescription="@string/blank"
+            android:onClick="clickSearchItem"
+            android:src="@drawable/product_blank" />
+
+        <TextView
+            android:id="@+id/name2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dip"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:onClick="clickSearchItem"
+            android:textColor="#333333"
+            android:textSize="15sp" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,9 +1,8 @@
 package com.liwuso.bean;
 
-
 public abstract class Entity extends Base {
 
-	protected int id;
+	public int id;
 
 	public int getId() {
 		return id;

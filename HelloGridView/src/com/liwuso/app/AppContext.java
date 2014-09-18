@@ -19,6 +19,8 @@ import com.liwuso.bean.PersonList;
 import com.liwuso.bean.ProductList;
 import com.liwuso.bean.SearchItem;
 import com.liwuso.bean.SearchItemList;
+import com.liwuso.bean.SearchItemListWapper;
+import com.liwuso.bean.SearchItemWapper;
 import com.liwuso.net.ApiClient;
 
 import android.app.Application;
@@ -30,6 +32,8 @@ import android.net.NetworkInfo;
 
 public class AppContext extends Application {
 	public static final int PAGE_SIZE = 20;
+
+	public static final int SEARCH_PAGE_SIZE = 15;
 
 	public PackageInfo getPackageInfo() {
 		PackageInfo info = null;
@@ -292,11 +296,12 @@ public class AppContext extends Application {
 		}
 	}
 
-	public SearchItemList getSearchItemList(int catalogId, int pageIndex,
+	public SearchItemListWapper getSearchItemList(int catalogId, int pageIndex,
 			boolean isRefresh) throws AppException {
+		SearchItemListWapper searchItemListWapper = new SearchItemListWapper();
 		SearchItemList searchItemList = new SearchItemList();
 		String key = "search_list_" + catalogId + "_" + pageIndex + "_"
-				+ PAGE_SIZE;
+				+ SEARCH_PAGE_SIZE;
 		try {
 			searchItemList = ApiClient.getSearchItemList(catalogId, pageIndex);
 			if (searchItemList != null) {
@@ -308,7 +313,27 @@ public class AppContext extends Application {
 			if (searchItemList == null)
 				throw e;
 		}
-		return searchItemList;
+		searchItemListWapper.totalCount = searchItemList.totalCount;
+		searchItemListWapper.searchItemCount = searchItemList.getProductCount();
+		if (searchItemList.totalCount % 3 > 0) {
+			for (int i = 0; i < (3 - (searchItemList.totalCount % 3)); i++) {
+				searchItemList.Add(null);
+			}
+		}
+		int rowCount = searchItemList.getSearchItemList().size() / 3;
+
+		for (int j = 0; j < rowCount; j++) {
+			SearchItemWapper searchItemWapper = new SearchItemWapper();
+			searchItemWapper.id = searchItemList.getSearchItemList().get(j * 3)
+					.getId();
+			for (int i = 0; i < 3; i++) {
+				searchItemWapper.Items[i] = searchItemList.getSearchItemList()
+						.get(j * 3 + i);
+			}
+			searchItemListWapper.Add(searchItemWapper);
+		}
+
+		return searchItemListWapper;
 	}
 
 	public ProductList getFavoriteList(String productIds, int pageIndex,
