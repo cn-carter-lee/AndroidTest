@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.ViewPager.LayoutParams;
 import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
@@ -48,7 +47,6 @@ import com.liwuso.app.common.SortAdapter;
 import com.liwuso.app.common.SortItem;
 import com.liwuso.app.common.StringUtils;
 import com.liwuso.app.common.UIHelper;
-import com.liwuso.app.widget.PullToRefreshGridView;
 import com.liwuso.app.widget.PullToRefreshListView;
 import com.liwuso.app.widget.ScrollLayout;
 import com.liwuso.bean.Age;
@@ -65,7 +63,6 @@ import com.liwuso.bean.PersonList;
 import com.liwuso.bean.Product;
 import com.liwuso.bean.ProductList;
 import com.liwuso.bean.SearchItem;
-import com.liwuso.bean.SearchItemList;
 import com.liwuso.bean.SearchItemListWapper;
 import com.liwuso.bean.SearchItemWapper;
 import com.liwuso.utility.Utils;
@@ -78,8 +75,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private Aim currentAim = null;
 
 	private TextView txtSoAgePersonName;
-	private TextView txtSoPurposePersoname;
-	private TextView txtSoPurposeAgeName;
+	private TextView txtSoAimPersoname;
+	private TextView txtSoAimAgeName;
 	private TextView txtSoProductPersonName;
 	private TextView txtSoProductAgeName;
 	private TextView txtSoProductAimName;
@@ -153,6 +150,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	private TextView lvFemale_foot_more;
 
+	LinearLayout frame_product_header;
+
 	// So person
 	LinearLayout frame_layout_female;
 	LinearLayout frame_layout_male;
@@ -181,14 +180,13 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	// Top nav bar
 	private Button btnTopNavPre;
 	private Spinner spinner;
+	private Button btnMoreAdviceSubmit;
 
 	// Search
 	private Button btnSearch;
 	private EditText txtSearch;
 	private PullToRefreshListView lvSearch;
 
-	private Button btnMoreAdviceSubmit;
-	private Button btnMoreAdviceQuersion;
 	private int currentSearchCatalogId = 0;
 
 	//
@@ -265,11 +263,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		framebtn_Male.setOnClickListener(framePersonBtnClick(framebtn_Male, 2));
 
 		txtSoAgePersonName = (TextView) findViewById(R.id.txt_so_age_personname);
-		txtSoPurposePersoname = (TextView) findViewById(R.id.txt_so_purpose_personname);
-		txtSoPurposeAgeName = (TextView) findViewById(R.id.txt_so_purpose_agename);
-		txtSoProductPersonName = (TextView) findViewById(R.id.txt_so_product_personname);
-		txtSoProductAgeName = (TextView) findViewById(R.id.txt_so_product_agename);
-		txtSoProductAimName = (TextView) findViewById(R.id.txt_so_product_purposename);
+		txtSoAimPersoname = (TextView) findViewById(R.id.txt_so_purpose_personname);
+		txtSoAimAgeName = (TextView) findViewById(R.id.txt_so_purpose_agename);
 
 		// Search
 		btnSearch = (Button) findViewById(R.id.btnSearch);
@@ -289,8 +284,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 		btnMoreAdviceSubmit = (Button) findViewById(R.id.btn_more_advice_submit);
 		btnMoreAdviceSubmit.setOnClickListener(frameMoreAdviceBtnClick());
-		btnMoreAdviceQuersion = (Button) findViewById(R.id.btn_more_advice_quersion);
-		btnMoreAdviceQuersion.setOnClickListener(frameMoreBtnClick(1));
 
 		// Taobao
 		this.initTaobaoView();
@@ -329,6 +322,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initPersonListView() {
 		lvPersonAdapter = new ListViewPersonAdapter(this, lvPersonData);
 		lvPerson = (PullToRefreshListView) findViewById(R.id.frame_listview_person);
+
+		AddHeaderToListView(lvPerson);
 		lvPerson.setAdapter(lvPersonAdapter);
 		lvPerson.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -361,6 +356,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initFemaleListView() {
 		lvFemaleAdapter = new ListViewFemaleAdapter(this, lvFemaleData);
 		lvFemale = (PullToRefreshListView) findViewById(R.id.frame_listview_person_female);
+		AddHeaderToListView(lvFemale);
 		lvFemale.setAdapter(lvFemaleAdapter);
 		lvFemale.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -395,6 +391,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initMaleListView() {
 		lvMaleAdapter = new ListViewMaleAdapter(this, lvMaleData);
 		lvMale = (PullToRefreshListView) findViewById(R.id.frame_listview_person_male);
+		AddHeaderToListView(lvMale);
 		lvMale.setAdapter(lvMaleAdapter);
 		lvMale.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -427,6 +424,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initAgeListView() {
 		lvAgeAdapter = new ListViewAgeAdapter(this, lvAgeData);
 		lvAge = (PullToRefreshListView) findViewById(R.id.frame_listview_age);
+		AddHeaderToListView(lvAge);
 		lvAge.setAdapter(lvAgeAdapter);
 
 		lvAge.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -474,6 +472,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initAimView() {
 		lvAimAdapter = new ListViewAimAdapter(this, lvAimData);
 		lvAim = (PullToRefreshListView) findViewById(R.id.frame_listview_purpose);
+		AddHeaderToListView(lvAim);
 		lvAim.setAdapter(lvAimAdapter);
 		lvAim.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -506,6 +505,17 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initProductListView() {
 		lvProductAdapter = new ListViewProductAdapter(this, lvProductData);
 		lvProduct = (PullToRefreshListView) findViewById(R.id.frame_listview_product);
+		LinearLayout frame_product_header = (LinearLayout) getLayoutInflater()
+				.inflate(R.layout.frame_product_header, null);
+
+		txtSoProductPersonName = (TextView) frame_product_header
+				.findViewById(R.id.txt_so_product_personname);
+		txtSoProductAgeName = (TextView) frame_product_header
+				.findViewById(R.id.txt_so_product_agename);
+		txtSoProductAimName = (TextView) frame_product_header
+				.findViewById(R.id.txt_so_product_purposename);
+
+		lvProduct.addHeaderView(frame_product_header);
 		lvProduct_footer = getLayoutInflater().inflate(
 				R.layout.listview_footer, null);
 		lvProduct_foot_progress = (ProgressBar) lvProduct_footer
@@ -684,7 +694,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					// exeption
 					lv.setTag(UIHelper.LISTVIEW_DATA_MORE);
 					// Should be add message here
-					more.setText(R.string.load_error);
+					// more.setText(R.string.load_error);
 					((AppException) msg.obj).makeToast(Main.this);
 				}
 				if (adapter.getCount() == 0) {
@@ -1292,12 +1302,12 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	// So navigation bar
 	private void setSoNavInfo() {
 		if (currentPerson != null) {
-			txtSoAgePersonName.setText(currentPerson.Name);
-			txtSoPurposePersoname.setText(currentPerson.Name);
-			txtSoProductPersonName.setText(currentPerson.Name);
+			txtSoAgePersonName.setText(currentPerson.AliasName);
+			txtSoAimPersoname.setText(currentPerson.AliasName);
+			txtSoProductPersonName.setText(currentPerson.AliasName);
 		}
 		if (currentAge != null) {
-			txtSoPurposeAgeName.setText(currentAge.Name);
+			txtSoAimAgeName.setText(currentAge.Name);
 			txtSoProductAgeName.setText(currentAge.Name);
 		}
 		if (currentAim != null) {
@@ -1315,6 +1325,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	private void setTopState() {
 		boolean spinnerVisibily = false;
+		boolean adviceSubmitVisibily = false;
 		String strTitle = "";
 		switch (currentSlIndex) {
 		case 0:
@@ -1324,8 +1335,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				break;
 			case 1:
 				strTitle = String.format(getString(R.string.nav_send_age),
-						currentPerson.Name);
-
+						currentPerson.AliasName);
 				break;
 			case 2:
 				strTitle = getString(R.string.nav_send_aim);
@@ -1352,6 +1362,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			default:
 				strTitle = getResources().getStringArray(
 						R.array.more_info_title)[slArray[currentSlIndex].currentVisibleScreen - 1];
+				if (slArray[currentSlIndex].currentVisibleScreen == 5)
+					adviceSubmitVisibily = true;
 				break;
 			}
 			break;
@@ -1369,6 +1381,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
 		titleView.setText(strTitle);
 		spinner.setVisibility(spinnerVisibily ? View.VISIBLE : View.GONE);
+		btnMoreAdviceSubmit.setVisibility(adviceSubmitVisibily ? View.VISIBLE
+				: View.GONE);
 	}
 
 	private void backUpplerLevel() {
@@ -1431,7 +1445,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initSearchListView() {
 		lvSearch = (PullToRefreshListView) findViewById(R.id.frame_search_listview_product);
 		searchAdapter = new SearchAdapter(this, lvSearchData);
-		lvSearch_footer = getLayoutInflater().inflate(R.layout.listview_footer,
+		lvSearch_footer = getLayoutInflater().inflate(R.layout.listview__search_footer,
 				null);
 		lvSearch_foot_progress = (ProgressBar) lvSearch_footer
 				.findViewById(R.id.listview_foot_progress);
@@ -1649,13 +1663,32 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private View.OnClickListener frameMoreAdviceBtnClick() {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-				EditText email = (EditText) findViewById(R.id.editEmail);
-				EditText content = (EditText) findViewById(R.id.editAdvice);
-				appContext.addAdvice(email.getText().toString(), content
-						.getText().toString());
-				CustomDialog m = new CustomDialog(
+
+				String email = ((EditText) findViewById(R.id.editEmail))
+						.getText().toString().trim();
+				String content = ((EditText) findViewById(R.id.editAdvice))
+						.getText().toString().trim();
+				if (content.length() < 1) {
+					showAlertDialog(getString(R.string.dialog_content));
+					return;
+				}
+				if (email.length() < 1) {
+					showAlertDialog(getString(R.string.dialog_email));
+					return;
+				}
+
+				appContext.addAdvice(email, content);
+				final CustomDialog m = new CustomDialog(
 						(getString(R.string.dialog_submit)));
 				m.show(getSupportFragmentManager(), "");
+				Handler sleepHandler = new Handler();
+				sleepHandler.postDelayed(new Runnable() {
+					public void run() {
+						m.dismiss();
+						((EditText) findViewById(R.id.editEmail)).setText("");
+						((EditText) findViewById(R.id.editAdvice)).setText("");
+					}
+				}, 3000);
 			}
 		};
 	}
@@ -1782,6 +1815,17 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
 		// TODO Auto-generated method stub
+	}
+
+	private void AddHeaderToListView(PullToRefreshListView listview) {
+		LinearLayout listview_header = (LinearLayout) getLayoutInflater()
+				.inflate(R.layout.listview_header, null);
+		listview.addHeaderView(listview_header);
+	}
+
+	private void showAlertDialog(String text) {
+		CustomDialog m = new CustomDialog((text));
+		m.show(getSupportFragmentManager(), "");
 	}
 
 }

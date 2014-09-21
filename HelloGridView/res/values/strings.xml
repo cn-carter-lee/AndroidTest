@@ -22,7 +22,7 @@
     <string name="action_gift_favorite">收藏</string>
     <string name="action_gift_more">更多</string>
     <string name="pull_to_refresh_pull_label">下拉可以刷新</string>
-    <string name="title_activity_more">MoreActivity</string>
+    
     <string name="hello_blank_fragment"></string>
     <string name="gift_all">全部</string>
     <string name="gift_male">男性</string>

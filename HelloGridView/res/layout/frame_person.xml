@@ -46,7 +46,9 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/transparent"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin" >
 
             <com.liwuso.app.widget.PullToRefreshListView
                 android:id="@+id/frame_listview_person"
@@ -62,7 +64,9 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin" >
 
             <com.liwuso.app.widget.PullToRefreshListView
                 android:id="@+id/frame_listview_person_female"
@@ -76,7 +80,9 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:descendantFocusability="blocksDescendants"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin" >
 
             <com.liwuso.app.widget.PullToRefreshListView
                 android:id="@+id/frame_listview_person_male"

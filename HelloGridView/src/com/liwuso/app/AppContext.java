@@ -132,14 +132,14 @@ public class AppContext extends Application {
 		list.Add(new Person(36, "弟弟", sex));
 		list.Add(new Person(26, "男长辈", sex));
 		list.Add(new Person(31, "男老师", sex));
-		list.Add(new Person(27, "孩子", sex));
+		list.Add(new Person(27, "孩子", "小男孩", sex));
 		list.Add(new Person(30, "儿子", sex));
 		list.Add(new Person(29, "男同事", sex));
 		list.Add(new Person(24, "男领导", sex));
-		list.Add(new Person(28, "老人", sex));
+		list.Add(new Person(28, "老人", "男性老人", sex));
 		list.Add(new Person(32, "男客户", sex));
-		list.Add(new Person(33, "外国人", sex));
-		list.Add(new Person(34, "其他人", sex));
+		list.Add(new Person(33, "外国人", "男老外", sex));
+		list.Add(new Person(34, "其他人", "其他男性", sex));
 		return list;
 	}
 
@@ -156,14 +156,14 @@ public class AppContext extends Application {
 		list.Add(new Person(35, "妹妹", sex));
 		list.Add(new Person(8, "女长辈", sex));
 		list.Add(new Person(11, "女老师", sex));
-		list.Add(new Person(0, "孩子", sex));
+		list.Add(new Person(9, "孩子", "小女孩", sex));
 		list.Add(new Person(10, "女儿", sex));
 		list.Add(new Person(13, "女同事", sex));
 		list.Add(new Person(12, "女领导", sex));
-		list.Add(new Person(14, "老人", sex));
+		list.Add(new Person(14, "老人", "女性老人", sex));
 		list.Add(new Person(15, "女客户", sex));
-		list.Add(new Person(16, "外国人", sex));
-		list.Add(new Person(17, "其他人", sex));
+		list.Add(new Person(16, "外国人", "女老外", sex));
+		list.Add(new Person(17, "其他人", "其他女性", sex));
 		return list;
 	}
 
