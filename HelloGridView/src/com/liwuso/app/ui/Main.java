@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -192,7 +193,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	//
 	private LinearLayout footer;
 	//
-	private WebView webView;
+	private ScrollView taoBaoScrollView;
+	private WebView taoBaoWebView;
 	private AppContext appContext;
 
 	@Override
@@ -1445,8 +1447,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initSearchListView() {
 		lvSearch = (PullToRefreshListView) findViewById(R.id.frame_search_listview_product);
 		searchAdapter = new SearchAdapter(this, lvSearchData);
-		lvSearch_footer = getLayoutInflater().inflate(R.layout.listview__search_footer,
-				null);
+		lvSearch_footer = getLayoutInflater().inflate(
+				R.layout.listview__search_footer, null);
 		lvSearch_foot_progress = (ProgressBar) lvSearch_footer
 				.findViewById(R.id.listview_foot_progress);
 		lvSearch.addFooterView(lvSearch_footer);
@@ -1695,8 +1697,13 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	// TaoBao
 	private void initTaobaoView() {
-		webView = (WebView) findViewById(R.id.webview);
-		webView.setWebViewClient(new WebViewClient() {
+		taoBaoScrollView = (ScrollView) findViewById(R.id.taobao_scrollview);
+		// Enable Scrolling by removing the OnTouchListner
+		taoBaoScrollView.setOnTouchListener(null);
+
+		taoBaoWebView = (WebView) findViewById(R.id.taobao_webview);
+		taoBaoWebView.setVerticalScrollBarEnabled(true);
+		taoBaoWebView.setWebViewClient(new WebViewClient() {
 			// Load opened URL in the application instead of standard browser
 			// application
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -1705,13 +1712,14 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			}
 		});
 
-		webView.setWebChromeClient(new WebChromeClient() {
+		taoBaoWebView.setWebChromeClient(new WebChromeClient() {
 			// Set progress bar during loading
 			public void onProgressChanged(WebView view, int progress) {
 				// BrowserActivity.this.setProgress(progress * 100);
 			}
 		});
-		WebSettings webSettings = webView.getSettings();
+
+		WebSettings webSettings = taoBaoWebView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		webSettings.setBuiltInZoomControls(true);
 		webSettings.setAppCacheEnabled(true);
@@ -1720,7 +1728,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void loadTaobao(String url) {
 		try {
 			url = URLDecoder.decode(url, "UTF-8");
-			webView.loadUrl(url);
+			taoBaoWebView.loadUrl(url);
 			selectScrollLayout(4);
 		} catch (Exception e) {
 		}
