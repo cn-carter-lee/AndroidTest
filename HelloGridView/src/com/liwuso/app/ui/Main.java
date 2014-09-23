@@ -6,7 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -1691,6 +1696,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 						((EditText) findViewById(R.id.editAdvice)).setText("");
 					}
 				}, 3000);
+
 			}
 		};
 	}
@@ -1700,9 +1706,18 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		taoBaoScrollView = (ScrollView) findViewById(R.id.taobao_scrollview);
 		// Enable Scrolling by removing the OnTouchListner
 		taoBaoScrollView.setOnTouchListener(null);
+		
 
 		taoBaoWebView = (WebView) findViewById(R.id.taobao_webview);
 		taoBaoWebView.setVerticalScrollBarEnabled(true);
+
+		taoBaoWebView.setInitialScale(1);
+		taoBaoWebView.getSettings().setJavaScriptEnabled(true);
+		taoBaoWebView.getSettings().setLoadWithOverviewMode(true);
+		taoBaoWebView.getSettings().setUseWideViewPort(true);
+		taoBaoWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+		taoBaoWebView.setScrollbarFadingEnabled(false);
+
 		taoBaoWebView.setWebViewClient(new WebViewClient() {
 			// Load opened URL in the application instead of standard browser
 			// application
@@ -1719,10 +1734,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			}
 		});
 
-		WebSettings webSettings = taoBaoWebView.getSettings();
-		webSettings.setJavaScriptEnabled(true);
-		webSettings.setBuiltInZoomControls(true);
-		webSettings.setAppCacheEnabled(true);
+		// WebSettings webSettings = taoBaoWebView.getSettings();
+		// webSettings.setJavaScriptEnabled(true);
+		// webSettings.setBuiltInZoomControls(true);
+		// webSettings.setAppCacheEnabled(true);
 	}
 
 	private void loadTaobao(String url) {

@@ -55,7 +55,7 @@ public class ListViewMaleAdapter extends BaseAdapter {
 		convertView.setTag(listItemView);
 
 		Person person = listItems.get(position);
-		listItemView.text.setText(person.Name);
+		listItemView.text.setText(person.AliasName);
 		listItemView.text.setTag(person);
 		return convertView;
 	}

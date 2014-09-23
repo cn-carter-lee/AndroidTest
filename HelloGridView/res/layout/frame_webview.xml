@@ -6,9 +6,8 @@
 
     <WebView
         android:id="@+id/taobao_webview"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:isScrollContainer="true" />
+        android:background="@color/white" />
 
 </ScrollView>

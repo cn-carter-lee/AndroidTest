@@ -60,9 +60,9 @@ public class ListViewPersonAdapter extends BaseAdapter {
 		convertView.setTag(listItemView);
 
 		MixedPerson mixedPerson = listItems.get(position);
-		listItemView.button1.setText(mixedPerson.female.Name);
+		listItemView.button1.setText(mixedPerson.female.AliasName);
 		listItemView.button1.setTag(mixedPerson.female);
-		listItemView.button2.setText(mixedPerson.male.Name);
+		listItemView.button2.setText(mixedPerson.male.AliasName);
 		listItemView.button2.setTag(mixedPerson.male);
 		return convertView;
 	}
