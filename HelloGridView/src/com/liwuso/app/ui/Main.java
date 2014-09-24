@@ -18,7 +18,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -157,6 +159,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private TextView lvFemale_foot_more;
 
 	LinearLayout frame_product_header;
+	LinearLayout frame_favorite_header;
 
 	// So person
 	LinearLayout frame_layout_female;
@@ -591,6 +594,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		lvFavoriteAdapter = new ListViewFavoriteAdapter(this,
 				lvFavoriteProductData);
 		lvFavorite = (PullToRefreshListView) findViewById(R.id.frame_listview_favorite_product);
+		frame_favorite_header = (LinearLayout) getLayoutInflater().inflate(
+				R.layout.favorite_product_header, null);
+		lvFavorite.addHeaderView(frame_favorite_header);
 		lvFavorite_footer = getLayoutInflater().inflate(
 				R.layout.listview_footer, null);
 		lvFavorite_foot_progress = (ProgressBar) lvFavorite_footer
@@ -1705,8 +1711,17 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private void initTaobaoView() {
 		taoBaoScrollView = (ScrollView) findViewById(R.id.taobao_scrollview);
 		// Enable Scrolling by removing the OnTouchListner
+		// taoBaoScrollView.setOnTouchListener(null);
+
+		taoBaoScrollView.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return true;
+			}
+		});
+
+		// Enable Scrolling by removing the OnTouchListner
 		taoBaoScrollView.setOnTouchListener(null);
-		
 
 		taoBaoWebView = (WebView) findViewById(R.id.taobao_webview);
 		taoBaoWebView.setVerticalScrollBarEnabled(true);

@@ -18,6 +18,6 @@
 
     <com.liwuso.app.widget.PullToRefreshListView
         android:id="@+id/frame_listview_favorite_product"
-        style="@style/widget_listview" />
+        style="@style/favorite_listview" />
 
 </LinearLayout>

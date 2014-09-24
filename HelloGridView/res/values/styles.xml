@@ -103,7 +103,7 @@
         <item name="android:scrollingCache">false</item>
     </style>
 
-    <style name="widget_product_listview">
+    <style name="product_listview_base">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_weight">1</item>
@@ -113,6 +113,10 @@
         <item name="android:scrollingCache">false</item>
     </style>
 
+    <style name="favorite_listview" parent="product_listview_base"></style>
+
+    <style name="widget_product_listview" parent="product_listview_base"></style>
+
     <style name="widget_search_listview">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -121,6 +125,7 @@
         <item name="android:background">#e4e4e4</item>
         <item name="android:scrollingCache">false</item>
     </style>
+
     <style name="search_widget_listview_row_item">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -165,7 +170,7 @@
 
     <style name="product_image">
         <item name="android:layout_width">150dip</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">150dip</item>
         <item name="android:contentDescription">@string/blank</item>
         <item name="android:onClick">clickProductDetails</item>
         <item name="android:scaleType">centerCrop</item>
