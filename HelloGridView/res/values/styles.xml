@@ -163,17 +163,17 @@
     </style>
 
     <style name="product_root">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:background">@drawable/product_item_border</item>
     </style>
 
     <style name="product_image">
-        <item name="android:layout_width">150dip</item>
-        <item name="android:layout_height">150dip</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:contentDescription">@string/blank</item>
         <item name="android:onClick">clickProductDetails</item>
-        <item name="android:scaleType">centerCrop</item>
+        <item name="android:scaleType">fitCenter</item>
         <item name="android:src">@drawable/product_blank</item>
     </style>
 
@@ -184,7 +184,7 @@
         <item name="android:onClick">clickProductDetails</item>
         <item name="android:textColor">@color/product_name</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:layout_marginTop">8sp</item>
+        <item name="android:paddingTop">8dip</item>
     </style>
 
     <style name="product_tag">
