@@ -2,6 +2,8 @@ package com.liwuso.app.adapter;
 
 import java.util.List;
 
+import android.app.ActionBar.LayoutParams;
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.liwuso.app.R;
 import com.liwuso.app.widget.WordWrapView;
 import com.liwuso.bean.Product;
 import com.liwuso.utility.ImageLoader;
+import com.liwuso.utility.ScreenUtils;
 import com.liwuso.utility.Utils;
 
 public class ListViewProductAdapter extends BaseAdapter {
@@ -36,6 +40,7 @@ public class ListViewProductAdapter extends BaseAdapter {
 	}
 
 	public ListViewProductAdapter(Context context, List<Product> data) {
+
 		this.context = context;
 		this.listContainer = LayoutInflater.from(context);
 		this.listItems = data;
@@ -56,7 +61,8 @@ public class ListViewProductAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		CustomListItemView listItemView = null;
-		convertView = listContainer.inflate(R.layout.product_item, null);
+		convertView = listContainer.inflate(R.layout.product_item, parent,
+				false);
 		listItemView = new CustomListItemView();
 		listItemView.name = (TextView) convertView.findViewById(R.id.name);
 		listItemView.tags = (WordWrapView) convertView.findViewById(R.id.tags);
@@ -100,6 +106,21 @@ public class ListViewProductAdapter extends BaseAdapter {
 		listItemView.price.setText("гд" + product.Price);
 		imageLoader.DisplayImage(product.ImageUrl, listItemView.image);
 		listItemView.image.setTag(product);
+
+		Activity a = (Activity) context;
+		int w = (int) ScreenUtils.getWidth(a);
+
+		android.widget.AbsListView.LayoutParams layoutParams = new android.widget.AbsListView.LayoutParams(
+				w, 200);
+		// LinearLayout.LayoutParams layoutParams = new
+		// LinearLayout.LayoutParams(100, 100);
+		// convertView.setLayoutParams(layoutParams);
+		ViewGroup.LayoutParams params = convertView.getLayoutParams();
+		if (params != null)
+			params.height = 200;
+		// final LayoutParams params = convertView.getLayoutParams();
+		// convertView.getLayoutParams().height = 200;
+
 		return convertView;
 	}
 
