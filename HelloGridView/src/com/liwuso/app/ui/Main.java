@@ -514,8 +514,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	private void initProductListView() {
 		lvProductAdapter = new ListViewProductAdapter(this, lvProductData);
-				
-		
+
 		lvProduct = (PullToRefreshListView) findViewById(R.id.frame_listview_product);
 		LinearLayout frame_product_header = (LinearLayout) getLayoutInflater()
 				.inflate(R.layout.frame_product_header, null);
