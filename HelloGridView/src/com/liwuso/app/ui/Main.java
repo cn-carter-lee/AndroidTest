@@ -56,6 +56,7 @@ import com.liwuso.app.common.SortItem;
 import com.liwuso.app.common.StringUtils;
 import com.liwuso.app.common.UIHelper;
 import com.liwuso.app.widget.PullToRefreshListView;
+import com.liwuso.app.widget.PysScrollView;
 import com.liwuso.app.widget.ScrollLayout;
 import com.liwuso.bean.Age;
 import com.liwuso.bean.AgeList;
@@ -201,7 +202,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	//
 	private LinearLayout footer;
 	//
-	private ScrollView taoBaoScrollView;
+	private PysScrollView taoBaoScrollView;
 	private WebView taoBaoWebView;
 	private AppContext appContext;
 
@@ -1710,7 +1711,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	// TaoBao
 	private void initTaobaoView() {
-		taoBaoScrollView = (ScrollView) findViewById(R.id.taobao_scrollview);
+		taoBaoScrollView = (PysScrollView) findViewById(R.id.taobao_scrollview);
 		// Enable Scrolling by removing the OnTouchListner
 		// taoBaoScrollView.setOnTouchListener(null);
 
