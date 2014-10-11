@@ -93,11 +93,11 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private RelativeLayout mainHeaderBar;
 	private int[] slResourceArray = { R.id.main_scrolllayout_so,
 			R.id.main_scrolllayout_search, R.id.main_scrolllayout_favorite,
-			R.id.main_scrolllayout_more, R.id.main_scrolllayout_taobao };
+			R.id.main_scrolllayout_more };
 
 	private ScrollLayout personScrollLayout;
 
-	private ScrollLayout[] slArray = new ScrollLayout[5];
+	private ScrollLayout[] slArray = new ScrollLayout[4];
 	private int currentSlIndex = 0;
 	private int preTaobaolIndex = 0;
 
@@ -202,7 +202,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	//
 	private LinearLayout footer;
 	//
-	private PysScrollView taoBaoScrollView;
+	private ScrollView taoBaoScrollView;
 	private WebView taoBaoWebView;
 	private AppContext appContext;
 
@@ -823,7 +823,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			handleLvDataAge(what, obj, objtype, actiontype);
 			break;
 		case UIHelper.LISTVIEW_DATATYPE_PURPOSE:
-			handleLvDataPurpose(what, obj, objtype, actiontype);
+			handleLvDataAim(what, obj, objtype, actiontype);
 			break;
 		case UIHelper.LISTVIEW_DATATYPE_PRODUCT:
 			handleLvDataProduct(what, obj, objtype, actiontype);
@@ -1101,7 +1101,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		}
 	}
 
-	private void handleLvDataPurpose(int what, Object obj, int objtype,
+	private void handleLvDataAim(int what, Object obj, int objtype,
 			int actiontype) {
 		switch (actiontype) {
 		case UIHelper.LISTVIEW_ACTION_INIT:
@@ -1303,7 +1303,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 							UIHelper.LISTVIEW_ACTION_INIT,
 							UIHelper.LISTVIEW_DATATYPE_PRODUCT);
 				}
-			}, 3000);
+			}, 10 /* 3000 */);
 		}
 	}
 
@@ -1387,7 +1387,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			break;
 		}
 		setTopNavBarVisibility(currentSlIndex != 1);
-		if (slArray[currentSlIndex].currentVisibleScreen > 0)
+		if (currentSlIndex != 4
+				&& slArray[currentSlIndex].currentVisibleScreen > 0)
 			setTopBtnPreVisible(true);
 		if (currentSlIndex == 2)
 			setTopBtnPreVisible(false);
@@ -1711,19 +1712,19 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	// TaoBao
 	private void initTaobaoView() {
-		taoBaoScrollView = (PysScrollView) findViewById(R.id.taobao_scrollview);
+		// taoBaoScrollView = (ScrollView) findViewById(R.id.taobao_scrollview);
 		// Enable Scrolling by removing the OnTouchListner
 		// taoBaoScrollView.setOnTouchListener(null);
 
-		taoBaoScrollView.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				return true;
-			}
-		});
+		// taoBaoScrollView.setOnTouchListener(new OnTouchListener() {
+		// @Override
+		// public boolean onTouch(View v, MotionEvent event) {
+		// return true;
+		// }
+		// });
 
 		// Enable Scrolling by removing the OnTouchListner
-		taoBaoScrollView.setOnTouchListener(null);
+		// taoBaoScrollView.setOnTouchListener(null);
 
 		taoBaoWebView = (WebView) findViewById(R.id.taobao_webview);
 		taoBaoWebView.setVerticalScrollBarEnabled(true);
@@ -1750,11 +1751,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 				// BrowserActivity.this.setProgress(progress * 100);
 			}
 		});
-
-		// WebSettings webSettings = taoBaoWebView.getSettings();
-		// webSettings.setJavaScriptEnabled(true);
-		// webSettings.setBuiltInZoomControls(true);
-		// webSettings.setAppCacheEnabled(true);
 	}
 
 	private void loadTaobao(String url) {
@@ -1768,22 +1764,21 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	// Footer
 	private void selectScrollLayout(final int itemIndex) {
-		if (itemIndex == 4) {
-			preTaobaolIndex = currentSlIndex;
-			footer.setVisibility(View.GONE);
-		} else
-			footer.setVisibility(View.VISIBLE);
+		// To show taobao view
+		taoBaoWebView.setVisibility(itemIndex == 4 ? View.VISIBLE : View.GONE);
+		footer.setVisibility(itemIndex == 4 ? View.GONE : View.VISIBLE);
+		preTaobaolIndex = currentSlIndex;
 		currentSlIndex = itemIndex;
 		for (int i = 0; i < slArray.length; i++) {
 			// footer bars
 			if (i < footBtnArray.length)
 				footBtnArray[i].setEnabled(i != currentSlIndex);
 			// scroll layout
-			if (i == itemIndex)
-				slArray[i].setVisibility(View.VISIBLE);
-			else
-				slArray[i].setVisibility(View.GONE);
+			slArray[i].setVisibility(i == itemIndex ? View.VISIBLE : View.GONE);
 		}
+
+		setTopState();
+
 		switch (itemIndex) {
 		case 0:
 			break;
@@ -1793,19 +1788,18 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		case 2:
 			loadFavorite();
 			break;
-		case 3:
-			break;
-		case 4:
+		default:
 			break;
 		}
 
 		// Set nav pre button
-		if (slArray[currentSlIndex].currentVisibleScreen > 0
-				|| currentSlIndex == 4)
+		if (currentSlIndex == 4)
+			btnTopNavPre.setVisibility(View.VISIBLE);
+		else if (slArray[currentSlIndex].currentVisibleScreen > 0)
 			btnTopNavPre.setVisibility(View.VISIBLE);
 		else
 			btnTopNavPre.setVisibility(View.GONE);
-		setTopState();
+
 	}
 
 	private View.OnClickListener selectFootBar(final int itemIndex) {

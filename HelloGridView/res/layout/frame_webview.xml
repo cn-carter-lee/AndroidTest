@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.liwuso.app.widget.PysScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/taobao_scrollview"
+<WebView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/taobao_webview"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent" >
-
-    <com.liwuso.app.widget.TouchyWebView
-        android:id="@+id/taobao_webview"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white" />
-
-</com.liwuso.app.widget.PysScrollView>
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:visibility="gone" />
