@@ -107,19 +107,7 @@ public class ListViewProductAdapter extends BaseAdapter {
 		imageLoader.DisplayImage(product.ImageUrl, listItemView.image);
 		listItemView.image.setTag(product);
 
-		Activity a = (Activity) context;
-		int w = (int) ScreenUtils.getWidth(a);
 
-		android.widget.AbsListView.LayoutParams layoutParams = new android.widget.AbsListView.LayoutParams(
-				w, 200);
-		// LinearLayout.LayoutParams layoutParams = new
-		// LinearLayout.LayoutParams(100, 100);
-		// convertView.setLayoutParams(layoutParams);
-		ViewGroup.LayoutParams params = convertView.getLayoutParams();
-		if (params != null)
-			params.height = 200;
-		// final LayoutParams params = convertView.getLayoutParams();
-		// convertView.getLayoutParams().height = 200;
 
 		return convertView;
 	}

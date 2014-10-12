@@ -163,19 +163,27 @@
     </style>
 
     <style name="product_root">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">1px</item>
-        <item name="android:paddingBottom">1px</item>
         <item name="android:background">@drawable/product_item_border</item>
     </style>
 
     <style name="product_image">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:contentDescription">@string/blank</item>
+        <item name="android:layout_marginBottom">1px</item>
+        <item name="android:layout_marginTop">1px</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:adjustViewBounds">true</item>
         <item name="android:onClick">clickProductDetails</item>
         <item name="android:scaleType">fitStart</item>
+    </style>
+
+    <style name="product_info">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:paddingLeft">7px</item>
     </style>
 
     <style name="product_name">
@@ -202,8 +210,7 @@
 
     <style name="product_price">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_below">@+id/tags</item>
+        <item name="android:layout_height">20dip</item>
         <item name="android:textColor">@color/orange</item>
         <item name="android:textSize">15sp</item>
     </style>
@@ -211,24 +218,26 @@
     <style name="product_add_favorite" parent="android:Widget">
         <item name="android:textColor">@color/product_name</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">30dip</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:background">@drawable/bg_btn_favorite_add</item>
         <item name="android:onClick">addFavoriteProduct</item>
         <item name="android:paddingLeft">25dip</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginBottom">15px</item>
     </style>
 
     <style name="product_added_favorite">
         <item name="android:background">@drawable/bg_btn_favorite_added</item>
         <item name="android:textColor">@color/orange</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">30dip</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:paddingLeft">25dip</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginBottom">15px</item>
     </style>
 
     <style name="product_details">
@@ -238,11 +247,12 @@
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:background">@drawable/so_btn_details_bg </item>
         <item name="android:onClick">clickProductDetails</item>
-        <item name="android:paddingLeft">10dip</item>
+        <item name="android:paddingLeft">20dip</item>
         <item name="android:paddingRight">10dip</item>
         <item name="android:text">@string/btn_product_detail</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginBottom">15px</item>
     </style>
 
 </resources>

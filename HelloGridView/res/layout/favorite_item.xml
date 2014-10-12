@@ -4,31 +4,27 @@
     android:baselineAligned="false"
     android:orientation="horizontal" >
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="8" >
+    <ImageView
+        android:id="@+id/image"
+        style="@style/product_image"
+        android:contentDescription="@string/blank" />
 
-        <ImageView
-            android:id="@+id/product_image"
-            style="@style/product_image"
-            android:contentDescription="@string/blank" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="10"
-        android:paddingLeft="10dip" >
+    <RelativeLayout style="@style/product_info" >
 
         <TextView
             android:id="@+id/favorite_product_name"
             style="@style/product_name" />
 
+        <com.liwuso.app.widget.WordWrapView
+            android:id="@+id/tags"
+            style="@style/widget_listview"
+            android:layout_below="@+id/favorite_product_name" >
+        </com.liwuso.app.widget.WordWrapView>
+
         <TextView
             android:id="@+id/favorite_product_price"
             style="@style/product_price"
-            android:layout_below="@+id/favorite_product_name" />
+            android:layout_below="@+id/tags" />
 
         <Button
             android:id="@+id/btn_favorite"

@@ -29,7 +29,7 @@ public class AppStart extends Activity {
 		setContentView(view);
 
 		AlphaAnimation aa = new AlphaAnimation(1.0f, 1.0f);
-		aa.setDuration(10);
+		aa.setDuration(3000);
 		view.startAnimation(aa);
 		aa.setAnimationListener(new AnimationListener() {
 			@Override

@@ -1303,7 +1303,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 							UIHelper.LISTVIEW_ACTION_INIT,
 							UIHelper.LISTVIEW_DATATYPE_PRODUCT);
 				}
-			}, 10 /* 3000 */);
+			}, 3000);
 		}
 	}
 
