@@ -45,6 +45,7 @@ public final class R {
         public static final int search_tab_button=0x7f040021;
         public static final int search_tab_button_seperator=0x7f040022;
         public static final int waiting=0x7f040023;
+        public static final int waiting_black=0x7f040024;
     }
     public static final class array {
         public static final int more_info=0x7f0c0000;
@@ -1154,13 +1155,21 @@ containing a value of this type.
         public static final int top_nav_btn_pre_pressed=0x7f0200c5;
         public static final int top_nav_btn_pre_selector=0x7f0200c6;
         public static final int waiting_0=0x7f0200c7;
-        public static final int waiting_1=0x7f0200c8;
-        public static final int waiting_2=0x7f0200c9;
-        public static final int waiting_3=0x7f0200ca;
-        public static final int waiting_4=0x7f0200cb;
-        public static final int waiting_5=0x7f0200cc;
-        public static final int welcome_1=0x7f0200cd;
-        public static final int welcome_2=0x7f0200ce;
+        public static final int waiting_0b=0x7f0200c8;
+        public static final int waiting_1=0x7f0200c9;
+        public static final int waiting_1b=0x7f0200ca;
+        public static final int waiting_2=0x7f0200cb;
+        public static final int waiting_2b=0x7f0200cc;
+        public static final int waiting_3=0x7f0200cd;
+        public static final int waiting_3b=0x7f0200ce;
+        public static final int waiting_4=0x7f0200cf;
+        public static final int waiting_4b=0x7f0200d0;
+        public static final int waiting_5=0x7f0200d1;
+        public static final int waiting_5b=0x7f0200d2;
+        public static final int waiting_6b=0x7f0200d3;
+        public static final int waiting_7b=0x7f0200d4;
+        public static final int welcome_1=0x7f0200d5;
+        public static final int welcome_2=0x7f0200d6;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1513,29 +1522,29 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0b0084;
-        public static final int Gift_ParentLayoutPadding=0x7f0b00a5;
-        public static final int Gift_ParentLeftRightPadding=0x7f0b00a6;
-        public static final int Gift_Product_Favorite=0x7f0b00b4;
-        public static final int GiftActionBarStyle=0x7f0b00a3;
-        public static final int GiftActionBarTabText=0x7f0b00a7;
-        public static final int GiftMoreButton=0x7f0b00a8;
-        public static final int GiftTheme=0x7f0b00a2;
-        public static final int HomeNoActionBar=0x7f0b00a1;
-        public static final int MyActionBarTabText=0x7f0b00a4;
+        public static final int Gift_ParentLayoutPadding=0x7f0b00a6;
+        public static final int Gift_ParentLeftRightPadding=0x7f0b00a7;
+        public static final int Gift_Product_Favorite=0x7f0b00b5;
+        public static final int GiftActionBarStyle=0x7f0b00a4;
+        public static final int GiftActionBarTabText=0x7f0b00a8;
+        public static final int GiftMoreButton=0x7f0b00a9;
+        public static final int GiftTheme=0x7f0b00a3;
+        public static final int HomeNoActionBar=0x7f0b00a2;
+        public static final int MyActionBarTabText=0x7f0b00a5;
         public static final int MyDialog=0x7f0b0089;
-        public static final int Search_Btn=0x7f0b00b6;
-        public static final int Search_Txt=0x7f0b00b5;
-        public static final int SearchButtonBlue=0x7f0b00ab;
-        public static final int SearchButtonMale1=0x7f0b00af;
-        public static final int SearchButtonMale2=0x7f0b00b0;
-        public static final int SearchButtonMale3=0x7f0b00b1;
-        public static final int SearchButtonMale4=0x7f0b00b2;
-        public static final int SearchButtonMale5=0x7f0b00b3;
-        public static final int SearchButtonPink=0x7f0b00ac;
-        public static final int SearchButtonPurple=0x7f0b00ad;
-        public static final int SearchButtonRed=0x7f0b00aa;
-        public static final int SearchButtonYellow=0x7f0b00ae;
-        public static final int SoButton=0x7f0b00a9;
+        public static final int Search_Btn=0x7f0b00b7;
+        public static final int Search_Txt=0x7f0b00b6;
+        public static final int SearchButtonBlue=0x7f0b00ac;
+        public static final int SearchButtonMale1=0x7f0b00b0;
+        public static final int SearchButtonMale2=0x7f0b00b1;
+        public static final int SearchButtonMale3=0x7f0b00b2;
+        public static final int SearchButtonMale4=0x7f0b00b3;
+        public static final int SearchButtonMale5=0x7f0b00b4;
+        public static final int SearchButtonPink=0x7f0b00ad;
+        public static final int SearchButtonPurple=0x7f0b00ae;
+        public static final int SearchButtonRed=0x7f0b00ab;
+        public static final int SearchButtonYellow=0x7f0b00af;
+        public static final int SoButton=0x7f0b00aa;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0b0063;
@@ -1723,35 +1732,36 @@ containing a value of this type.
         public static final int Widget_AppCompat_ProgressBar=0x7f0b000a;
         public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0b0009;
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0b0022;
-        public static final int favorite_listview=0x7f0b0091;
-        public static final int footbar=0x7f0b00b7;
-        public static final int footer_btn=0x7f0b0097;
-        public static final int frame_button=0x7f0b008c;
-        public static final int frame_button_seperator=0x7f0b008e;
+        public static final int favorite_listview=0x7f0b0092;
+        public static final int footbar=0x7f0b00b8;
+        public static final int footer_btn=0x7f0b0098;
+        public static final int frame_button=0x7f0b008d;
+        public static final int frame_button_seperator=0x7f0b008f;
         public static final int loading_small=0x7f0b008a;
-        public static final int main_footbar_radio=0x7f0b00b8;
-        public static final int main_srcoll_layout=0x7f0b0096;
-        public static final int mixed_person_wrapper=0x7f0b008d;
-        public static final int product_add_favorite=0x7f0b009e;
-        public static final int product_added_favorite=0x7f0b009f;
-        public static final int product_details=0x7f0b00a0;
-        public static final int product_image=0x7f0b0099;
-        public static final int product_info=0x7f0b009a;
-        public static final int product_listview_base=0x7f0b0090;
-        public static final int product_name=0x7f0b009b;
-        public static final int product_price=0x7f0b009d;
-        public static final int product_root=0x7f0b0098;
-        public static final int product_tag=0x7f0b009c;
+        public static final int main_footbar_radio=0x7f0b00b9;
+        public static final int main_srcoll_layout=0x7f0b0097;
+        public static final int mixed_person_wrapper=0x7f0b008e;
+        public static final int product_add_favorite=0x7f0b009f;
+        public static final int product_added_favorite=0x7f0b00a0;
+        public static final int product_details=0x7f0b00a1;
+        public static final int product_image=0x7f0b009a;
+        public static final int product_info=0x7f0b009b;
+        public static final int product_listview_base=0x7f0b0091;
+        public static final int product_name=0x7f0b009c;
+        public static final int product_price=0x7f0b009e;
+        public static final int product_root=0x7f0b0099;
+        public static final int product_tag=0x7f0b009d;
         public static final int root_layout_style=0x7f0b0085;
-        public static final int search_widget_listview_row_item=0x7f0b0094;
-        public static final int search_widget_listview_row_text=0x7f0b0095;
+        public static final int search_widget_listview_row_item=0x7f0b0095;
+        public static final int search_widget_listview_row_text=0x7f0b0096;
         public static final int so_current_navbar=0x7f0b0086;
         public static final int so_current_navbar_item=0x7f0b0088;
         public static final int so_current_navbar_tip=0x7f0b0087;
+        public static final int waitinging_black=0x7f0b008c;
         public static final int waitinging_small=0x7f0b008b;
-        public static final int widget_listview=0x7f0b008f;
-        public static final int widget_product_listview=0x7f0b0092;
-        public static final int widget_search_listview=0x7f0b0093;
+        public static final int widget_listview=0x7f0b0090;
+        public static final int widget_product_listview=0x7f0b0093;
+        public static final int widget_search_listview=0x7f0b0094;
     }
     public static final class styleable {
         /**  ============================================ 

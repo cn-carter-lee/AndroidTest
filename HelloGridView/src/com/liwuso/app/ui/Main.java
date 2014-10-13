@@ -1302,6 +1302,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					loadLvData(1, 0, lvProductHandler,
 							UIHelper.LISTVIEW_ACTION_INIT,
 							UIHelper.LISTVIEW_DATATYPE_PRODUCT);
+
 				}
 			}, 3000);
 		}

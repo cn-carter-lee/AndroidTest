@@ -69,6 +69,13 @@
         <item name="android:layout_height">21dip</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
+    
+    <style name="waitinging_black">
+        <item name="android:indeterminateDrawable">@anim/waiting_black</item>
+        <item name="android:layout_width">21dip</item>
+        <item name="android:layout_height">21dip</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>    
 
     <style name="frame_button">
         <item name="android:layout_width">fill_parent</item>
