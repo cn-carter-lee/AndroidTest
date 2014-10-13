@@ -10,6 +10,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.RelativeLayout;
+import cn.jpush.android.api.JPushInterface;
 
 import com.liwuso.app.ui.Main;
 
@@ -18,6 +19,11 @@ public class AppStart extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// Initialize JPush
+		JPushInterface.setDebugMode(true);
+		JPushInterface.init(this);
+
 		View view = View.inflate(this, R.layout.start, null);
 		RelativeLayout relativeLayout = (RelativeLayout) view
 				.findViewById(R.id.starter_layout);
@@ -46,6 +52,18 @@ public class AppStart extends Activity {
 			}
 
 		});
+	}
+
+	@Override
+	protected void onResume() {
+		JPushInterface.onResume(this);
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		JPushInterface.onPause(this);
+		super.onPause();
 	}
 
 	private void redirectTo() {
