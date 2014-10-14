@@ -3,40 +3,21 @@
     package="com.liwuso.app"
     android:versionCode="1"
     android:versionName="1.0" >
-    
-    <!-- Required -->
-    
-    <permission
-        android:name="com.liwuso.app.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="com.liwuso.app.permission.JPUSH_MESSAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />   
-    <uses-permission android:name="android.permission.INTERNET" />    
-    <uses-permission android:name="android.permission.WAKE_LOCK" />    
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />    
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />    
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />    
-    <uses-permission android:name="android.permission.VIBRATE" />    
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />    
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />    
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />      
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />    
-    
+
     <!-- since 1.6.0 -->
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="20" />
 
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -63,61 +44,21 @@
             android:theme="@style/HomeNoActionBar"
             android:windowSoftInputMode="adjustPan" >
         </activity>
-        
-        <!-- Required -->        
-        <service
-            android:name="cn.jpush.android.service.PushService"
-            android:enabled="true"
-            android:exported="false" >            
-            <intent-filter>                
-                <action android:name="cn.jpush.android.intent.REGISTER" />                
-                <action android:name="cn.jpush.android.intent.REPORT" />                
-                <action android:name="cn.jpush.android.intent.PushService" />                
-                <action android:name="cn.jpush.android.intent.PUSH_TIME" />            
-            </intent-filter>        
-        </service>                
-        <!-- Required -->        
-        <receiver
-            android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true" >         
-            <intent-filter android:priority="1000" >                 
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />                
-                <category android:name="com.liwuso.app" />            
-            </intent-filter>            
-            <intent-filter>                
-                <action android:name="android.intent.action.USER_PRESENT" />                
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />            
-            </intent-filter>            
-            <intent-filter>                
-                <action android:name="android.intent.action.PACKAGE_ADDED" />                
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />                
-                <data android:scheme="package" />            
-            </intent-filter>        
-        </receiver>
-        <activity
-            android:name="cn.jpush.android.ui.PushActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >            
-            <intent-filter>                
-                <action android:name="cn.jpush.android.ui.PushActivity" />                
-                <category android:name="android.intent.category.DEFAULT" />                
-                <category android:name="com.liwuso.app" />            
-            </intent-filter>        
-        </activity>        
-        <service
-            android:name="cn.jpush.android.service.DownloadService"
-            android:enabled="true"
-            android:exported="false" >        
-        </service>
-        
-        <!-- Required SDK核心功能 -->        
-        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />        
+  
+
+
         <meta-data
-            android:name="JPUSH_CHANNEL"
-            android:value="google-play" />               
+            android:name="UMENG_APPKEY"
+            android:value="541178edfd98c557b90007b6" >
+        </meta-data>
         <meta-data
-            android:name="JPUSH_APPKEY"
-            android:value="88940fcecdc1c9119cf0919b" />
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="540b903ce3e3b05697d7b224551c5652" >
+        </meta-data>
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.liwuso.app;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,20 +11,41 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.RelativeLayout;
-import cn.jpush.android.api.JPushInterface;
 
 import com.liwuso.app.ui.Main;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 
 public class AppStart extends Activity {
+
+	private Context mContext;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mContext = this;
+		// Analytics service
+		MobclickAgent.setDebugMode(true);
+		MobclickAgent.updateOnlineConfig(this);
+	    // Push service		
+		PushAgent mPushAgent = PushAgent.getInstance(this);
+		mPushAgent.enable();
+		this.initView();
+	}
 
-		// Initialize JPush
-		JPushInterface.setDebugMode(true);
-		JPushInterface.init(this);
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+
+	private void initView() {
 		View view = View.inflate(this, R.layout.start, null);
 		RelativeLayout relativeLayout = (RelativeLayout) view
 				.findViewById(R.id.starter_layout);
@@ -52,18 +74,6 @@ public class AppStart extends Activity {
 			}
 
 		});
-	}
-
-	@Override
-	protected void onResume() {
-		JPushInterface.onResume(this);
-		super.onResume();
-	}
-
-	@Override
-	protected void onPause() {
-		JPushInterface.onPause(this);
-		super.onPause();
 	}
 
 	private void redirectTo() {

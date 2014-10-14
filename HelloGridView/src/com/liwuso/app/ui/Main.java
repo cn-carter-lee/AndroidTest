@@ -75,6 +75,8 @@ import com.liwuso.bean.SearchItem;
 import com.liwuso.bean.SearchItemListWapper;
 import com.liwuso.bean.SearchItemWapper;
 import com.liwuso.utility.Utils;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 
 public class Main extends BaseActivity implements OnItemSelectedListener {
 
@@ -216,13 +218,21 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		this.initFrameButtons();
 		this.initFrameListView();
 		checkNetwork();
+		PushAgent.getInstance(this).onAppStart();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+	
 	private void initMainView() {
 		// Top
 		mainHeaderBar = (RelativeLayout) findViewById(R.id.main_header_bar);
@@ -1862,5 +1872,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		CustomDialog m = new CustomDialog((text));
 		m.show(getSupportFragmentManager(), "");
 	}
+
 
 }
