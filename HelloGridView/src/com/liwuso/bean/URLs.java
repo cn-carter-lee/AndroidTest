@@ -1,10 +1,5 @@
 package com.liwuso.bean;
 
-import java.io.Serializable;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-
 public class URLs {
 	public final static String HOST = "www.liwuso.com";
 

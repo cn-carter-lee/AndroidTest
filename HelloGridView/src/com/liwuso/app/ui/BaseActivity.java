@@ -1,8 +1,6 @@
 package com.liwuso.app.ui;
 
 import com.liwuso.app.AppManager;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 

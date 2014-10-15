@@ -4,25 +4,16 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AbsListView;
@@ -56,7 +47,6 @@ import com.liwuso.app.common.SortItem;
 import com.liwuso.app.common.StringUtils;
 import com.liwuso.app.common.UIHelper;
 import com.liwuso.app.widget.PullToRefreshListView;
-import com.liwuso.app.widget.PysScrollView;
 import com.liwuso.app.widget.ScrollLayout;
 import com.liwuso.bean.Age;
 import com.liwuso.bean.AgeList;
@@ -204,7 +194,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	//
 	private LinearLayout footer;
 	//
-	private ScrollView taoBaoScrollView;
+	private WaitDialog webviewDialog;
+	private LinearLayout taoBaoContainer;
+
 	private WebView taoBaoWebView;
 	private AppContext appContext;
 
@@ -232,7 +224,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
-	
+
 	private void initMainView() {
 		// Top
 		mainHeaderBar = (RelativeLayout) findViewById(R.id.main_header_bar);
@@ -1299,7 +1291,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			currentAim = (Aim) view.getTag();
 			lvProductData.clear();
 			lvProductAdapter.notifyDataSetChanged();
-			final WaitDialog waitDialog = new WaitDialog();
+			final WaitDialog waitDialog = new WaitDialog(R.layout.dialog_loading);
 			waitDialog.show(getSupportFragmentManager(), "");
 			Handler sleepHandler = new Handler();
 			sleepHandler.postDelayed(new Runnable() {
@@ -1646,7 +1638,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			Product product = (Product) view.getTag();
 			Utils.addFavorite(product.getId());
 			View v = (View) view.getParent();
-			v.findViewById(R.id.btn_no_favorite).setVisibility(View.GONE);
 			v.findViewById(R.id.btn_favorite).setVisibility(View.VISIBLE);
 		}
 	}
@@ -1656,7 +1647,6 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			Product product = (Product) view.getTag();
 			Utils.deleteFavorite(product.getId());
 			View v = (View) view.getParent();
-			v.findViewById(R.id.btn_no_favorite).setVisibility(View.VISIBLE);
 			v.findViewById(R.id.btn_favorite).setVisibility(View.GONE);
 		}
 	}
@@ -1723,30 +1713,16 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	// TaoBao
 	private void initTaobaoView() {
-		// taoBaoScrollView = (ScrollView) findViewById(R.id.taobao_scrollview);
-		// Enable Scrolling by removing the OnTouchListner
-		// taoBaoScrollView.setOnTouchListener(null);
-
-		// taoBaoScrollView.setOnTouchListener(new OnTouchListener() {
-		// @Override
-		// public boolean onTouch(View v, MotionEvent event) {
-		// return true;
-		// }
-		// });
-
-		// Enable Scrolling by removing the OnTouchListner
-		// taoBaoScrollView.setOnTouchListener(null);
-
+		webviewDialog = new WaitDialog(R.layout.dialog_webview_loading);
+		taoBaoContainer = (LinearLayout) findViewById(R.id.taoBaoContainer);
 		taoBaoWebView = (WebView) findViewById(R.id.taobao_webview);
 		taoBaoWebView.setVerticalScrollBarEnabled(true);
-
 		taoBaoWebView.setInitialScale(1);
 		taoBaoWebView.getSettings().setJavaScriptEnabled(true);
 		taoBaoWebView.getSettings().setLoadWithOverviewMode(true);
 		taoBaoWebView.getSettings().setUseWideViewPort(true);
 		taoBaoWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		taoBaoWebView.setScrollbarFadingEnabled(false);
-
 		taoBaoWebView.setWebViewClient(new WebViewClient() {
 			// Load opened URL in the application instead of standard browser
 			// application
@@ -1759,7 +1735,11 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		taoBaoWebView.setWebChromeClient(new WebChromeClient() {
 			// Set progress bar during loading
 			public void onProgressChanged(WebView view, int progress) {
-				// BrowserActivity.this.setProgress(progress * 100);
+				if (progress < 100 && !webviewDialog.isVisible())
+					webviewDialog.show(getSupportFragmentManager(), "");
+				if (progress == 100) {
+					webviewDialog.dismiss();
+				}
 			}
 		});
 	}
@@ -1776,7 +1756,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	// Footer
 	private void selectScrollLayout(final int itemIndex) {
 		// To show taobao view
-		taoBaoWebView.setVisibility(itemIndex == 4 ? View.VISIBLE : View.GONE);
+		taoBaoContainer
+				.setVisibility(itemIndex == 4 ? View.VISIBLE : View.GONE);
 		footer.setVisibility(itemIndex == 4 ? View.GONE : View.VISIBLE);
 		preTaobaolIndex = currentSlIndex;
 		currentSlIndex = itemIndex;
@@ -1872,6 +1853,5 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		CustomDialog m = new CustomDialog((text));
 		m.show(getSupportFragmentManager(), "");
 	}
-
 
 }

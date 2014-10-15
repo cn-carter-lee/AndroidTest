@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/footer_border"
-    android:gravity="center_vertical"    
+    android:gravity="center_vertical"
     android:orientation="horizontal" >
 
     <Button
@@ -20,7 +20,9 @@
 
     <Button
         android:id="@+id/bottom_btn_favorite"
-        style="@style/footer_btn"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:background="@drawable/footer_ic_favorite_bg" />
 
     <Button

@@ -4,10 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -15,14 +12,10 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
-
-import android.os.AsyncTask;
-
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.bean.AgeList;
 import com.liwuso.bean.AimList;
-import com.liwuso.bean.Catalog;
 import com.liwuso.bean.CatalogList;
 import com.liwuso.bean.ProductList;
 import com.liwuso.bean.SearchItemList;

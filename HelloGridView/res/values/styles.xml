@@ -69,13 +69,13 @@
         <item name="android:layout_height">21dip</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
-    
+
     <style name="waitinging_black">
         <item name="android:indeterminateDrawable">@anim/waiting_black</item>
         <item name="android:layout_width">21dip</item>
         <item name="android:layout_height">21dip</item>
         <item name="android:layout_gravity">center_vertical</item>
-    </style>    
+    </style>
 
     <style name="frame_button">
         <item name="android:layout_width">fill_parent</item>
@@ -104,7 +104,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:dividerHeight">15dip</item>
+        <item name="android:dividerHeight">17dip</item>
         <item name="android:fadingEdge">none</item>
         <item name="android:divider">@color/container</item>
         <item name="android:scrollingCache">false</item>
@@ -199,8 +199,8 @@
         <item name="android:clickable">true</item>
         <item name="android:onClick">clickProductDetails</item>
         <item name="android:textColor">@color/product_name</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:paddingTop">8dip</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:paddingTop">6dip</item>
     </style>
 
     <style name="product_tag">
@@ -219,7 +219,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">20dip</item>
         <item name="android:textColor">@color/orange</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
     <style name="product_add_favorite" parent="android:Widget">

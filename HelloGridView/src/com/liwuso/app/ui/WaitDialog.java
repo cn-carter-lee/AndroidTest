@@ -5,14 +5,14 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.liwuso.app.R;
 
 public class WaitDialog extends DialogFragment {
 
-	public WaitDialog() {
+	private int layoutResource;
 
+	public WaitDialog(int layoutResource) {
+		this.layoutResource = layoutResource;
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class WaitDialog extends DialogFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.dialog_wait, container, false);
+		View v = inflater.inflate(layoutResource, container, false);
 		return v;
 
 	}

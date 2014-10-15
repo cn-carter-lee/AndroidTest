@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.TextView;
-
 import com.liwuso.app.R;
 import com.liwuso.bean.Person;
 

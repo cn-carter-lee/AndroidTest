@@ -1,29 +1,18 @@
 package com.liwuso.app.adapter;
 
 import java.util.List;
-
 import com.liwuso.app.R;
-import com.liwuso.app.adapter.ListViewProductAdapter.CustomListItemView;
-import com.liwuso.bean.Product;
 import com.liwuso.bean.SearchItem;
-import com.liwuso.bean.SearchItemListWapper;
 import com.liwuso.bean.SearchItemWapper;
 import com.liwuso.utility.ImageLoader;
-
-import android.app.Activity;
 import android.content.Context;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class SearchAdapter extends BaseAdapter {

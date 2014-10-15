@@ -1,9 +1,6 @@
 package com.liwuso.app.adapter;
 
 import java.util.List;
-
-import android.app.ActionBar.LayoutParams;
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.liwuso.app.R;
 import com.liwuso.app.widget.WordWrapView;
 import com.liwuso.bean.Product;
 import com.liwuso.utility.ImageLoader;
-import com.liwuso.utility.ScreenUtils;
 import com.liwuso.utility.Utils;
 
 public class ListViewProductAdapter extends BaseAdapter {
@@ -33,8 +27,6 @@ public class ListViewProductAdapter extends BaseAdapter {
 		public TextView name;
 		public WordWrapView tags;
 		public TextView price;
-		public Button favorite;
-		public Button no_favorite;
 		public Button details;
 		public ImageView image;
 	}
@@ -67,10 +59,6 @@ public class ListViewProductAdapter extends BaseAdapter {
 		listItemView.name = (TextView) convertView.findViewById(R.id.name);
 		listItemView.tags = (WordWrapView) convertView.findViewById(R.id.tags);
 		listItemView.price = (TextView) convertView.findViewById(R.id.price);
-		listItemView.favorite = (Button) convertView
-				.findViewById(R.id.btn_favorite);
-		listItemView.no_favorite = (Button) convertView
-				.findViewById(R.id.btn_no_favorite);
 		listItemView.details = (Button) convertView
 				.findViewById(R.id.btn_details);
 		listItemView.image = (ImageView) convertView.findViewById(R.id.image);
@@ -78,16 +66,6 @@ public class ListViewProductAdapter extends BaseAdapter {
 		convertView.setTag(listItemView);
 
 		Product product = listItems.get(position);
-		if (Utils.getFavoriteList().contains(String.valueOf(product.getId()))) {
-			listItemView.favorite.setVisibility(View.VISIBLE);
-			listItemView.no_favorite.setVisibility(View.GONE);
-		} else {
-			listItemView.favorite.setVisibility(View.GONE);
-			listItemView.no_favorite.setVisibility(View.VISIBLE);
-		}
-		listItemView.favorite.setTag(product);
-		listItemView.no_favorite.setText(product.Liked + "“— ’≤ÿ");
-		listItemView.no_favorite.setTag(product);
 		listItemView.details.setTag(product);
 		listItemView.name.setText(product.Name);
 		listItemView.name.setTag(product);
