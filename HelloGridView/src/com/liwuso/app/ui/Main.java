@@ -194,10 +194,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	//
 	private LinearLayout footer;
 	//
-	private WaitDialog webviewDialog;
 	private LinearLayout taoBaoContainer;
 
 	private WebView taoBaoWebView;
+	private ProgressBar taoBaoProgress;
 	private AppContext appContext;
 
 	@Override
@@ -1291,7 +1291,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 			currentAim = (Aim) view.getTag();
 			lvProductData.clear();
 			lvProductAdapter.notifyDataSetChanged();
-			final WaitDialog waitDialog = new WaitDialog(R.layout.dialog_loading);
+			final WaitDialog waitDialog = new WaitDialog(
+					R.layout.dialog_loading);
 			waitDialog.show(getSupportFragmentManager(), "");
 			Handler sleepHandler = new Handler();
 			sleepHandler.postDelayed(new Runnable() {
@@ -1713,8 +1714,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 
 	// TaoBao
 	private void initTaobaoView() {
-		webviewDialog = new WaitDialog(R.layout.dialog_webview_loading);
+		taoBaoProgress = (ProgressBar) findViewById(R.id.taobao_progress);
 		taoBaoContainer = (LinearLayout) findViewById(R.id.taoBaoContainer);
+
 		taoBaoWebView = (WebView) findViewById(R.id.taobao_webview);
 		taoBaoWebView.setVerticalScrollBarEnabled(true);
 		taoBaoWebView.setInitialScale(1);
@@ -1735,10 +1737,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		taoBaoWebView.setWebChromeClient(new WebChromeClient() {
 			// Set progress bar during loading
 			public void onProgressChanged(WebView view, int progress) {
-				if (progress < 100 && !webviewDialog.isVisible())
-					webviewDialog.show(getSupportFragmentManager(), "");
-				if (progress == 100) {
-					webviewDialog.dismiss();
+				if (progress < 100 && !taoBaoProgress.isShown()) {
+					taoBaoProgress.setVisibility(View.VISIBLE);
+				} else if (progress == 100) {
+					taoBaoProgress.setVisibility(View.GONE);
 				}
 			}
 		});
@@ -1758,6 +1760,8 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		// To show taobao view
 		taoBaoContainer
 				.setVisibility(itemIndex == 4 ? View.VISIBLE : View.GONE);
+		taoBaoProgress.setVisibility(View.GONE);
+
 		footer.setVisibility(itemIndex == 4 ? View.GONE : View.VISIBLE);
 		preTaobaolIndex = currentSlIndex;
 		currentSlIndex = itemIndex;

@@ -23,7 +23,6 @@
     <application
         android:name=".AppContext"
         android:allowBackup="true"
-        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -44,7 +43,7 @@
             android:theme="@style/HomeNoActionBar"
             android:windowSoftInputMode="adjustPan" >
         </activity>
-  
+  
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
             android:exported="false" >
