@@ -1186,9 +1186,9 @@ containing a value of this type.
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
-        public static final int bottom_btn_favorite=0x7f050071;
+        public static final int bottom_btn_favorite=0x7f050073;
         public static final int bottom_btn_more=0x7f050072;
-        public static final int bottom_btn_search=0x7f050070;
+        public static final int bottom_btn_search=0x7f050071;
         public static final int bottom_btn_so=0x7f05006f;
         public static final int btnAge=0x7f05008e;
         public static final int btnPerson=0x7f05008f;
@@ -1196,7 +1196,7 @@ containing a value of this type.
         public static final int btnPerson2=0x7f050091;
         public static final int btnPurpose=0x7f050092;
         public static final int btnSearch=0x7f050064;
-        public static final int btnTopNavPre=0x7f050074;
+        public static final int btnTopNavPre=0x7f050075;
         public static final int btn_details=0x7f05007c;
         public static final int btn_favorite=0x7f050041;
         public static final int btn_favorite_details=0x7f050042;
@@ -1258,7 +1258,7 @@ containing a value of this type.
         public static final int listViewProduct=0x7f050049;
         public static final int list_item=0x7f050029;
         public static final int listview_foot_progress=0x7f050069;
-        public static final int main_header_bar=0x7f050073;
+        public static final int main_header_bar=0x7f050074;
         public static final int main_linearlayout_footer=0x7f05006e;
         public static final int main_scrolllayout_favorite=0x7f05006c;
         public static final int main_scrolllayout_more=0x7f05006d;
@@ -1270,7 +1270,7 @@ containing a value of this type.
         public static final int name0=0x7f050084;
         public static final int name1=0x7f050086;
         public static final int name2=0x7f050088;
-        public static final int navbar_title=0x7f050075;
+        public static final int navbar_title=0x7f050070;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
