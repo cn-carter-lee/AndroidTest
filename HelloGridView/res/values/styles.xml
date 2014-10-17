@@ -162,11 +162,28 @@
         <item name="android:layout_weight">1</item>
     </style>
 
-    <style name="footer_btn">
+    <style name="footer_container">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginBottom">3dip</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="footer_btn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">30dp</item>
         <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="footer_txt">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@drawable/footer_text_color</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="product_root">

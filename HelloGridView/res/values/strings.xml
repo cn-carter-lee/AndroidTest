@@ -4,6 +4,10 @@
     <string name="pull_to_refresh_refreshing_label">加载中...</string>
     <string name="pull_to_refresh_release_label">松开可以刷新</string>
     <string name="app_name">礼物搜</string>
+    <string name="menu_so">礼物搜</string>
+    <string name="menu_search">搜索</string>
+    <string name="menu_favorite">收藏</string>
+    <string name="menu_more">更多</string>
     <string name="title_activity_product">礼物搜索</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
@@ -22,7 +26,6 @@
     <string name="action_gift_favorite">收藏</string>
     <string name="action_gift_more">更多</string>
     <string name="pull_to_refresh_pull_label">下拉可以刷新</string>
-    
     <string name="hello_blank_fragment"></string>
     <string name="gift_all">全部</string>
     <string name="gift_male">男性</string>

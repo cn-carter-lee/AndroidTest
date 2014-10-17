@@ -253,6 +253,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		for (int i = 0; i < footBtnArray.length; i++) {
 			Button footBtn = (Button) findViewById(fbResourceArray[i]);
 			footBtn.setOnClickListener(selectFootBar(i));
+			getFootView(footBtn).setOnClickListener(selectFootBar(i));
 			footBtnArray[i] = footBtn;
 		}
 
@@ -1767,8 +1768,10 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		currentSlIndex = itemIndex;
 		for (int i = 0; i < slArray.length; i++) {
 			// footer bars
-			if (i < footBtnArray.length)
+			if (i < footBtnArray.length) {
 				footBtnArray[i].setEnabled(i != currentSlIndex);
+				getFootView(footBtnArray[i]).setEnabled(i != currentSlIndex);
+			}
 			// scroll layout
 			slArray[i].setVisibility(i == itemIndex ? View.VISIBLE : View.GONE);
 		}
@@ -1858,4 +1861,9 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 		m.show(getSupportFragmentManager(), "");
 	}
 
+	private TextView getFootView(Button btn) {
+		LinearLayout container = (LinearLayout) btn.getParent();
+		TextView view = (TextView) container.getChildAt(1);
+		return view;
+	}
 }

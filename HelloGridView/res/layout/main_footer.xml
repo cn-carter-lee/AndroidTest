@@ -4,90 +4,62 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/footer_border"
+    android:baselineAligned="false"
     android:orientation="horizontal" >
 
     <LinearLayout
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical" >
+        style="@style/footer_container"
+        >
 
         <Button
             android:id="@+id/bottom_btn_so"
             style="@style/footer_btn"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:background="@drawable/footer_ic_so_bg"
             android:enabled="false" />
 
         <TextView
-            android:id="@+id/navbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="礼物搜"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+            style="@style/footer_txt"
+            android:enabled="false"
+            android:text="@string/menu_so" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical" >
+    <LinearLayout style="@style/footer_container" >
 
         <Button
             android:id="@+id/bottom_btn_search"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            style="@style/footer_btn"
             android:background="@drawable/footer_ic_search_bg" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="搜索"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+            style="@style/footer_txt"
+            android:text="@string/menu_search" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical" >
+    <LinearLayout style="@style/footer_container" >
 
         <Button
             android:id="@+id/bottom_btn_more"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            style="@style/footer_btn"
             android:background="@drawable/footer_ic_more_bg" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="更多"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+            style="@style/footer_txt"
+            android:text="@string/menu_more" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/bottom_btn_favorite"
-        android:layout_width="0dip"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:background="@drawable/footer_ic_favorite_bg" />
+        android:visibility="gone" >
+
+        <Button
+            android:id="@+id/bottom_btn_favorite"
+            style="@style/footer_btn"
+            android:background="@drawable/footer_ic_favorite_bg" />
+
+        <TextView
+            style="@style/footer_txt"
+            android:text="@string/menu_favorite" />
+    </LinearLayout>
 
 </LinearLayout>
