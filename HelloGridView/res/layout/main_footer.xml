@@ -7,9 +7,7 @@
     android:baselineAligned="false"
     android:orientation="horizontal" >
 
-    <LinearLayout
-        style="@style/footer_container"
-        >
+    <LinearLayout style="@style/footer_container" >
 
         <Button
             android:id="@+id/bottom_btn_so"
