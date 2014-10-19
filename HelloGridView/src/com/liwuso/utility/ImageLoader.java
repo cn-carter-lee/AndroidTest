@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Random;
 import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,6 +39,15 @@ public class ImageLoader {
 	final int stub_id = R.drawable.product_blank;
 
 	public void DisplayImage(String url, ImageView imageView) {
+		Random r = new Random();
+		if (r.nextBoolean())
+			url = "http://www.huajian-china.com/362.jpg";
+		else
+			url = "http://www.huajian-china.com/362.jpg";
+
+		// url = "http://www.liwuso.com/Uploads/cpc/362b.jpg";
+		// url = "http://www.huajian-china.com/362.jpg";
+		// url = "http://www.huajian-china.com/2.png";
 		imageViews.put(imageView, url);
 		Bitmap bitmap = memoryCache.get(url);
 		if (bitmap != null)

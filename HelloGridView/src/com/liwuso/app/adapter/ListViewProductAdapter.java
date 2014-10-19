@@ -1,15 +1,17 @@
 package com.liwuso.app.adapter;
 
 import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.liwuso.app.R;
+import com.liwuso.app.widget.CustomImageView;
 import com.liwuso.app.widget.WordWrapView;
 import com.liwuso.bean.Product;
 import com.liwuso.utility.ImageLoader;
@@ -28,7 +30,7 @@ public class ListViewProductAdapter extends BaseAdapter {
 		public WordWrapView tags;
 		public TextView price;
 		public Button details;
-		public ImageView image;
+		public CustomImageView image;
 	}
 
 	public ListViewProductAdapter(Context context, List<Product> data) {
@@ -61,7 +63,7 @@ public class ListViewProductAdapter extends BaseAdapter {
 		listItemView.price = (TextView) convertView.findViewById(R.id.price);
 		listItemView.details = (Button) convertView
 				.findViewById(R.id.btn_details);
-		listItemView.image = (ImageView) convertView.findViewById(R.id.image);
+		listItemView.image = (CustomImageView) convertView.findViewById(R.id.image);
 
 		convertView.setTag(listItemView);
 

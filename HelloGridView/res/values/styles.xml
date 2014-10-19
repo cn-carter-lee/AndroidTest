@@ -200,17 +200,30 @@
         <item name="android:layout_weight">1</item>
         <item name="android:adjustViewBounds">true</item>
         <item name="android:onClick">clickProductDetails</item>
-        <item name="android:scaleType">fitStart</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
     <style name="product_info">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_weight">2</item>
-        <item name="android:paddingLeft">10px</item>
     </style>
 
-    <style name="product_name">
+    <style name="product_right_item_base">
+        <item name="android:layout_marginLeft">10px</item>
+    </style>
+
+    <style name="product_tags" parent="product_right_item_base">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:dividerHeight">17dip</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:divider">@color/container</item>
+        <item name="android:scrollingCache">false</item>
+    </style>
+
+    <style name="product_name" parent="product_right_item_base">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:clickable">true</item>
@@ -232,7 +245,7 @@
         <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="product_price">
+    <style name="product_price" parent="product_right_item_base">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">20dip</item>
         <item name="android:textColor">@color/orange</item>

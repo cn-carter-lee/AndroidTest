@@ -3,7 +3,7 @@
     style="@style/product_root"
     android:orientation="horizontal" >
 
-    <ImageView
+    <com.liwuso.app.widget.CustomImageView
         android:id="@+id/image"
         style="@style/product_image"
         android:contentDescription="@string/blank" />
@@ -16,7 +16,7 @@
 
         <com.liwuso.app.widget.WordWrapView
             android:id="@+id/tags"
-            style="@style/widget_listview"
+            style="@style/product_tags"
             android:layout_below="@+id/name" >
         </com.liwuso.app.widget.WordWrapView>
 
