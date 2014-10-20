@@ -100,9 +100,10 @@
             android:name="UMENG_APPKEY"
             android:value="541178edfd98c557b90007b6" >
         </meta-data>
+        <!-- 360mobile,liwuso -->
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="Umeng" >
+            android:value="liwuso" >
         </meta-data>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
