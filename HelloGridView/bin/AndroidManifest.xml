@@ -100,10 +100,10 @@
             android:name="UMENG_APPKEY"
             android:value="541178edfd98c557b90007b6" >
         </meta-data>
-        <!-- 360mobile,liwuso -->
+        <!-- 360mobile,liwuso,baidu,91,android market,wandoujia,tecent,appchina,meizu,xiaomi,huawei,lenovo,sohu,163,mumayi,gfan,eoemarket,nduoa,liqucn -->
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="liwuso" >
+            android:value="liqucn" >
         </meta-data>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
