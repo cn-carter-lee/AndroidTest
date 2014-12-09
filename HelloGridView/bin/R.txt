@@ -150,7 +150,7 @@ int bool abc_config_actionMenuItemAllCaps 0x7f060005
 int bool abc_config_allowActionMenuItemTextWithIcon 0x7f060004
 int bool abc_config_showMenuShortcutsWhenKeyboardPresent 0x7f060003
 int bool abc_split_action_bar_is_narrow 0x7f060002
-int color abc_search_url_text_holo 0x7f07001b
+int color abc_search_url_text_holo 0x7f07001c
 int color abc_search_url_text_normal 0x7f070000
 int color abc_search_url_text_pressed 0x7f070002
 int color abc_search_url_text_selected 0x7f070001
@@ -158,7 +158,7 @@ int color black 0x7f070004
 int color blue 0x7f07000a
 int color border_line 0x7f070018
 int color container 0x7f070016
-int color favorite_txt_selector_color 0x7f07001c
+int color favorite_txt_selector_color 0x7f07001d
 int color gold 0x7f070007
 int color gray 0x7f070005
 int color grayslate 0x7f070011
@@ -168,6 +168,7 @@ int color half_transparent 0x7f070013
 int color lemonyellow 0x7f07000f
 int color lightblue 0x7f070012
 int color listitem_black 0x7f070017
+int color more 0x7f07001b
 int color nav_bg 0x7f070015
 int color nav_txt 0x7f070019
 int color orange 0x7f07000d

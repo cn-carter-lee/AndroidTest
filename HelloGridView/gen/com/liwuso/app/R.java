@@ -830,7 +830,7 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f060002;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f07001b;
+        public static final int abc_search_url_text_holo=0x7f07001c;
         public static final int abc_search_url_text_normal=0x7f070000;
         public static final int abc_search_url_text_pressed=0x7f070002;
         public static final int abc_search_url_text_selected=0x7f070001;
@@ -838,7 +838,7 @@ containing a value of this type.
         public static final int blue=0x7f07000a;
         public static final int border_line=0x7f070018;
         public static final int container=0x7f070016;
-        public static final int favorite_txt_selector_color=0x7f07001c;
+        public static final int favorite_txt_selector_color=0x7f07001d;
         public static final int gold=0x7f070007;
         public static final int gray=0x7f070005;
         public static final int grayslate=0x7f070011;
@@ -848,6 +848,7 @@ containing a value of this type.
         public static final int lemonyellow=0x7f07000f;
         public static final int lightblue=0x7f070012;
         public static final int listitem_black=0x7f070017;
+        public static final int more=0x7f07001b;
         public static final int nav_bg=0x7f070015;
         public static final int nav_txt=0x7f070019;
         public static final int orange=0x7f07000d;

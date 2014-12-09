@@ -5,53 +5,72 @@
     android:background="@color/container"
     android:orientation="vertical" >
 
-    <include layout="@layout/main_header" />
+    <com.liwuso.app.widget.ScrollLayout style="@style/main_srcoll_layout" >
 
-    <com.liwuso.app.widget.ScrollLayout
-        android:id="@+id/main_scrolllayout_so"
-        style="@style/main_srcoll_layout" >
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:background="@color/more"
+            android:orientation="vertical" >
+        </LinearLayout>
 
-        <include layout="@layout/frame_person" />
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:background="@color/container"
+            android:orientation="vertical" >
 
-        <include layout="@layout/frame_age" />
+            <include layout="@layout/main_header" />
 
-        <include layout="@layout/frame_aim" />
+            <com.liwuso.app.widget.ScrollLayout
+                android:id="@+id/main_scrolllayout_so"
+                style="@style/main_srcoll_layout" >
 
-        <include layout="@layout/frame_product" />
+                <include layout="@layout/frame_person" />
+
+                <include layout="@layout/frame_age" />
+
+                <include layout="@layout/frame_aim" />
+
+                <include layout="@layout/frame_product" />
+            </com.liwuso.app.widget.ScrollLayout>
+
+            <com.liwuso.app.widget.ScrollLayout
+                android:id="@+id/main_scrolllayout_search"
+                style="@style/main_srcoll_layout"
+                android:visibility="gone" >
+
+                <include layout="@layout/frame_search" />
+            </com.liwuso.app.widget.ScrollLayout>
+
+            <com.liwuso.app.widget.ScrollLayout
+                android:id="@+id/main_scrolllayout_favorite"
+                style="@style/main_srcoll_layout"
+                android:visibility="gone" >
+
+                <include layout="@layout/frame_favorite_no_product" />
+
+                <include layout="@layout/frame_favorite" />
+            </com.liwuso.app.widget.ScrollLayout>
+
+            <com.liwuso.app.widget.ScrollLayout
+                android:id="@+id/main_scrolllayout_more"
+                style="@style/main_srcoll_layout"
+                android:visibility="gone" >
+
+                <include layout="@layout/frame_more" />
+
+                <include layout="@layout/frame_more_info" />
+
+                <include layout="@layout/frame_more_advice" />
+            </com.liwuso.app.widget.ScrollLayout>
+
+            <include layout="@layout/frame_webview" />
+
+            <include layout="@layout/main_footer" />
+        </LinearLayout>
     </com.liwuso.app.widget.ScrollLayout>
-
-    <com.liwuso.app.widget.ScrollLayout
-        android:id="@+id/main_scrolllayout_search"
-        style="@style/main_srcoll_layout"
-        android:visibility="gone" >
-
-        <include layout="@layout/frame_search" />
-    </com.liwuso.app.widget.ScrollLayout>
-
-    <com.liwuso.app.widget.ScrollLayout
-        android:id="@+id/main_scrolllayout_favorite"
-        style="@style/main_srcoll_layout"
-        android:visibility="gone" >
-
-        <include layout="@layout/frame_favorite_no_product" />
-
-        <include layout="@layout/frame_favorite" />
-    </com.liwuso.app.widget.ScrollLayout>
-
-    <com.liwuso.app.widget.ScrollLayout
-        android:id="@+id/main_scrolllayout_more"
-        style="@style/main_srcoll_layout"
-        android:visibility="gone" >
-
-        <include layout="@layout/frame_more" />
-
-        <include layout="@layout/frame_more_info" />
-
-        <include layout="@layout/frame_more_advice" />
-    </com.liwuso.app.widget.ScrollLayout>
-
-    <include layout="@layout/frame_webview" />
-
-    <include layout="@layout/main_footer" />
 
 </LinearLayout>

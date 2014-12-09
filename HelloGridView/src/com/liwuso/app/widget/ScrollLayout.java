@@ -30,7 +30,7 @@ public class ScrollLayout extends ViewGroup {
 	 * 
 	 * @author liux
 	 */
-	private boolean isScroll = false;
+	private boolean isScroll = true;
 
 	public void setIsScroll(boolean b) {
 		this.isScroll = b;

@@ -25,5 +25,6 @@
     <color name="border_line">#DBDBDB</color>
     <color name="nav_txt">#ff8432</color>
     <color name="tag">#999999</color>
+    <color name="more">#343843</color>
 
 </resources>
