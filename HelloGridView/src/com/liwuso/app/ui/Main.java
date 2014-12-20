@@ -4,6 +4,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -29,7 +30,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.AppManager;
@@ -46,6 +46,7 @@ import com.liwuso.app.common.SortAdapter;
 import com.liwuso.app.common.SortItem;
 import com.liwuso.app.common.StringUtils;
 import com.liwuso.app.common.UIHelper;
+import com.liwuso.app.sliding.SlidingFragmentActivity;
 import com.liwuso.app.widget.PullToRefreshListView;
 import com.liwuso.app.widget.ScrollLayout;
 import com.liwuso.bean.Age;
@@ -67,9 +68,14 @@ import com.liwuso.bean.SearchItemWapper;
 import com.liwuso.utility.Utils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
+import com.liwuso.app.sliding.SlidingMenu;
 
-public class Main extends BaseActivity implements OnItemSelectedListener {
+public class Main extends SlidingFragmentActivity implements OnItemSelectedListener {
 
+	// Left
+	private SlidingMenu mSlidingMenu;
+	private View mLeftView;
+	
 	private boolean shouldExit = false;
 	private Person currentPerson = null;
 	private Age currentAge = null;
@@ -201,7 +207,7 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	private AppContext appContext;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		Utils.context = this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
@@ -226,6 +232,15 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 	}
 
 	private void initMainView() {
+		// Left
+		mSlidingMenu = this.getSlidingMenu();
+		mLeftView = View.inflate(Main.this, R.layout.leftview, null);
+		this.setBehindContentView(mLeftView);
+		mSlidingMenu.setShadowDrawable(R.drawable.drawer_shadow);
+		mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
+		mSlidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		mSlidingMenu.setFadeDegree(0.35f);
+		mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		// Top
 		mainHeaderBar = (RelativeLayout) findViewById(R.id.main_header_bar);
 		btnTopNavPre = (Button) findViewById(R.id.btnTopNavPre);
@@ -1666,11 +1681,14 @@ public class Main extends BaseActivity implements OnItemSelectedListener {
 					// Advice
 					slArray[3].snapToScreen(2);
 				} else if (item_index == 5) {
-					// Check version
-					CustomDialog m = new CustomDialog(
-							(getString(R.string.dialog_version)));
-					m.show(getSupportFragmentManager(), "");
+					
+					Main.this.toggle();
 					return;
+					// Check version
+					//CustomDialog m = new CustomDialog(
+							//(getString(R.string.dialog_version)));
+					//m.show(getSupportFragmentManager(), "");
+					//return;
 				}
 
 				slArray[currentSlIndex].currentVisibleScreen = item_index + 1;
