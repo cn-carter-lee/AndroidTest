@@ -7,6 +7,7 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,13 +27,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
-import com.liwuso.app.AppManager;
 import com.liwuso.app.R;
 import com.liwuso.app.adapter.SearchAdapter;
 import com.liwuso.app.adapter.ListViewAgeAdapter;
@@ -70,12 +70,12 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 import com.liwuso.app.sliding.SlidingMenu;
 
-public class Main extends SlidingFragmentActivity implements OnItemSelectedListener {
-
+public class Main extends SlidingFragmentActivity implements
+		OnItemSelectedListener {
 	// Left
 	private SlidingMenu mSlidingMenu;
 	private View mLeftView;
-	
+
 	private boolean shouldExit = false;
 	private Person currentPerson = null;
 	private Age currentAge = null;
@@ -187,6 +187,8 @@ public class Main extends SlidingFragmentActivity implements OnItemSelectedListe
 
 	// Top nav bar
 	private Button btnTopNavPre;
+	private Button btnTopMore;
+
 	private Spinner spinner;
 	private Button btnMoreAdviceSubmit;
 
@@ -239,13 +241,15 @@ public class Main extends SlidingFragmentActivity implements OnItemSelectedListe
 		mSlidingMenu.setShadowDrawable(R.drawable.drawer_shadow);
 		mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
 		mSlidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		mSlidingMenu.setFadeDegree(0.35f);
+		mSlidingMenu.setFadeDegree(0.95f);
 		mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		// Top
 		mainHeaderBar = (RelativeLayout) findViewById(R.id.main_header_bar);
 		btnTopNavPre = (Button) findViewById(R.id.btnTopNavPre);
-
 		btnTopNavPre.setOnClickListener(frameTopNavPreBtnClick());
+
+		btnTopMore = (Button) findViewById(R.id.btnTopMore);
+		btnTopMore.setOnClickListener(frameTopMoreBtnClick());
 
 		spinner = (Spinner) findViewById(R.id.search_spinner);
 		ArrayList<SortItem> items = new ArrayList<SortItem>();
@@ -1422,10 +1426,11 @@ public class Main extends SlidingFragmentActivity implements OnItemSelectedListe
 	}
 
 	private void backUpplerLevel() {
+
 		if (currentSlIndex == 0
 				&& slArray[currentSlIndex].currentVisibleScreen == 0) {
 			if (shouldExit) {
-				AppManager.getAppManager().AppExit(this);
+				super.onBackPressed();
 			} else {
 				shouldExit = true;
 				Toast.makeText(this, getString(R.string.alert_exit),
@@ -1470,6 +1475,14 @@ public class Main extends SlidingFragmentActivity implements OnItemSelectedListe
 			btnTopNavPre.setVisibility(View.VISIBLE);
 		else
 			btnTopNavPre.setVisibility(View.GONE);
+	}
+
+	private View.OnClickListener frameTopMoreBtnClick() {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				Main.this.toggle();
+			}
+		};
 	}
 
 	// Search
@@ -1672,27 +1685,18 @@ public class Main extends SlidingFragmentActivity implements OnItemSelectedListe
 	private View.OnClickListener frameMoreBtnClick(final int item_index) {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-				if (item_index < 4) {
-					TextView myTextView = (TextView) findViewById(R.id.txtMoreInfo);
-					myTextView.setText(Html.fromHtml(getResources()
-							.getStringArray(R.array.more_info)[item_index]));
-					slArray[currentSlIndex].snapToScreen(1);
-				} else if (item_index == 4) {
-					// Advice
-					slArray[3].snapToScreen(2);
-				} else if (item_index == 5) {
-					
-					Main.this.toggle();
-					return;
+
+				if (item_index == 5) {
 					// Check version
-					//CustomDialog m = new CustomDialog(
-							//(getString(R.string.dialog_version)));
-					//m.show(getSupportFragmentManager(), "");
-					//return;
+					CustomDialog m = new CustomDialog(
+							(getString(R.string.dialog_version)));
+					m.show(getSupportFragmentManager(), "");
+					return;
 				}
 
-				slArray[currentSlIndex].currentVisibleScreen = item_index + 1;
-				setTopState();
+				Intent intent = new Intent(Utils.context, More.class);
+				intent.putExtra("itemIndex", item_index);
+				startActivity(intent);
 			}
 		};
 	}

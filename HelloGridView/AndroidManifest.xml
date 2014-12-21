@@ -43,7 +43,15 @@
             android:theme="@style/HomeNoActionBar"
             android:windowSoftInputMode="adjustPan" >
         </activity>
-  
+          
+        <activity
+            android:name="com.liwuso.app.ui.More"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/HomeNoActionBar"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
             android:exported="false" >
