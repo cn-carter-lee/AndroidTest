@@ -5,13 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <com.liwuso.app.widget.ScrollLayout
-        android:id="@+id/main_scrolllayout_more"
-        style="@style/main_srcoll_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+    <include layout="@layout/frame_more_info" />
 
-        <include layout="@layout/frame_more_info" />
-    </com.liwuso.app.widget.ScrollLayout>
+    <include layout="@layout/frame_more_advice" />
 
 </RelativeLayout>

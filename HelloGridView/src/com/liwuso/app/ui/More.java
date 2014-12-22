@@ -26,7 +26,7 @@ public class More extends Activity {
 			TextView myTextView = (TextView) findViewById(R.id.txtMoreInfo);
 			myTextView.setText(Html.fromHtml(getResources().getStringArray(
 					R.array.more_info)[item_index]));
-			scrollLayout.scrollToScreen(1);
+			scrollLayout.scrollToScreen(0);
 		} else if (item_index == 4) {
 			scrollLayout.scrollToScreen(1);
 		}
