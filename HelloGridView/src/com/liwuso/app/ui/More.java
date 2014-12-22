@@ -3,33 +3,95 @@ package com.liwuso.app.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.text.Html;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.liwuso.app.AppContext;
 import com.liwuso.app.R;
-import com.liwuso.app.widget.ScrollLayout;
 
-public class More extends Activity {
-	private ScrollLayout scrollLayout;
+public class More extends FragmentActivity {
+	
+	private AppContext appContext;
+	
+	private LinearLayout infoLayout;
+	private RelativeLayout adviceLayout;
+	private Button btnMoreAdviceSubmit;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.more);
-
-		scrollLayout = (ScrollLayout) findViewById(R.id.main_scrolllayout_more);
-
+		appContext = (AppContext) getApplication();
+		initView();
+		
 		Intent intent = getIntent();
-
 		int item_index = intent.getIntExtra("itemIndex", 0);
 		if (item_index < 4) {
 			TextView myTextView = (TextView) findViewById(R.id.txtMoreInfo);
 			myTextView.setText(Html.fromHtml(getResources().getStringArray(
 					R.array.more_info)[item_index]));
-			scrollLayout.scrollToScreen(0);
+			showInfo(true);
 		} else if (item_index == 4) {
-			scrollLayout.scrollToScreen(1);
+			showInfo(false);
 		}
+	}
+
+	private void initView() {
+		infoLayout = (LinearLayout) findViewById(R.id.more_info);
+		adviceLayout = (RelativeLayout) findViewById(R.id.more_advice);
+		btnMoreAdviceSubmit = (Button) findViewById(R.id.btn_more_advice_submit);
+		btnMoreAdviceSubmit.setOnClickListener(frameMoreAdviceBtnClick());
+	}
+	
+	private View.OnClickListener frameMoreAdviceBtnClick() {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+
+				String email = ((EditText) findViewById(R.id.editEmail))
+						.getText().toString().trim();
+				String content = ((EditText) findViewById(R.id.editAdvice))
+						.getText().toString().trim();
+				if (content.length() < 1) {
+					showAlertDialog(getString(R.string.dialog_content));
+					return;
+				}
+				if (email.length() < 1) {
+					showAlertDialog(getString(R.string.dialog_email));
+					return;
+				}
+
+				appContext.addAdvice(email, content);
+				final CustomDialog m = new CustomDialog(
+						(getString(R.string.dialog_submit)));
+				m.show(getSupportFragmentManager(), "");
+				Handler sleepHandler = new Handler();
+				sleepHandler.postDelayed(new Runnable() {
+					public void run() {
+						m.dismiss();
+						((EditText) findViewById(R.id.editEmail)).setText("");
+						((EditText) findViewById(R.id.editAdvice)).setText("");
+					}
+				}, 3000);
+
+			}
+		};
+	}
+	
+	private void showAlertDialog(String text) {	
+		CustomDialog m = new CustomDialog((text));
+		m.show(getSupportFragmentManager(), "");
+	}
+
+	private void showInfo(Boolean status) {
+		infoLayout.setVisibility(status == true ? View.VISIBLE : View.GONE);
+		adviceLayout.setVisibility(status == true ? View.GONE : View.VISIBLE);
 	}
 
 }

@@ -12,7 +12,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -90,12 +89,11 @@ public class Main extends SlidingFragmentActivity implements
 
 	private RelativeLayout mainHeaderBar;
 	private int[] slResourceArray = { R.id.main_scrolllayout_so,
-			R.id.main_scrolllayout_search, R.id.main_scrolllayout_favorite,
-			R.id.main_scrolllayout_more };
+			R.id.main_scrolllayout_search, R.id.main_scrolllayout_favorite };
 
 	private ScrollLayout personScrollLayout;
 
-	private ScrollLayout[] slArray = new ScrollLayout[4];
+	private ScrollLayout[] slArray = new ScrollLayout[3];
 	private int currentSlIndex = 0;
 	private int preTaobaolIndex = 0;
 
@@ -172,9 +170,8 @@ public class Main extends SlidingFragmentActivity implements
 	private int currentProductSortIndex = 0;
 
 	private int[] fbResourceArray = { R.id.bottom_btn_so,
-			R.id.bottom_btn_search, R.id.bottom_btn_favorite,
-			R.id.bottom_btn_more };
-	private Button[] footBtnArray = new Button[4];
+			R.id.bottom_btn_search, R.id.bottom_btn_favorite };
+	private Button[] footBtnArray = new Button[fbResourceArray.length];
 
 	private LinearLayout searchCategoryBar;
 	private List<Button> searchTabButtons;
@@ -183,14 +180,13 @@ public class Main extends SlidingFragmentActivity implements
 			R.id.btn_more_question, R.id.btn_more_agreement,
 			R.id.btn_more_contact, R.id.btn_more_advice,
 			R.id.btn_more_check_vertion };
-	private Button[] moreBtnArray = new Button[6];
+	private Button[] moreBtnArray = new Button[moreBtnResourceArray.length];
 
 	// Top nav bar
 	private Button btnTopNavPre;
 	private Button btnTopMore;
 
 	private Spinner spinner;
-	private Button btnMoreAdviceSubmit;
 
 	// Search
 	private Button btnSearch;
@@ -314,9 +310,6 @@ public class Main extends SlidingFragmentActivity implements
 			moreBtnArray[i] = moreButton;
 			moreButton.setOnClickListener(frameMoreBtnClick(i));
 		}
-
-		btnMoreAdviceSubmit = (Button) findViewById(R.id.btn_more_advice_submit);
-		btnMoreAdviceSubmit.setOnClickListener(frameMoreAdviceBtnClick());
 
 		// Taobao
 		this.initTaobaoView();
@@ -1364,7 +1357,6 @@ public class Main extends SlidingFragmentActivity implements
 
 	private void setTopState() {
 		boolean spinnerVisibily = false;
-		boolean adviceSubmitVisibily = false;
 		String strTitle = "";
 		switch (currentSlIndex) {
 		case 0:
@@ -1401,8 +1393,6 @@ public class Main extends SlidingFragmentActivity implements
 			default:
 				strTitle = getResources().getStringArray(
 						R.array.more_info_title)[slArray[currentSlIndex].currentVisibleScreen - 1];
-				if (slArray[currentSlIndex].currentVisibleScreen == 5)
-					adviceSubmitVisibily = true;
 				break;
 			}
 			break;
@@ -1421,8 +1411,6 @@ public class Main extends SlidingFragmentActivity implements
 		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
 		titleView.setText(strTitle);
 		spinner.setVisibility(spinnerVisibily ? View.VISIBLE : View.GONE);
-		btnMoreAdviceSubmit.setVisibility(adviceSubmitVisibily ? View.VISIBLE
-				: View.GONE);
 	}
 
 	private void backUpplerLevel() {
@@ -1697,40 +1685,6 @@ public class Main extends SlidingFragmentActivity implements
 				Intent intent = new Intent(Utils.context, More.class);
 				intent.putExtra("itemIndex", item_index);
 				startActivity(intent);
-			}
-		};
-	}
-
-	private View.OnClickListener frameMoreAdviceBtnClick() {
-		return new View.OnClickListener() {
-			public void onClick(View v) {
-
-				String email = ((EditText) findViewById(R.id.editEmail))
-						.getText().toString().trim();
-				String content = ((EditText) findViewById(R.id.editAdvice))
-						.getText().toString().trim();
-				if (content.length() < 1) {
-					showAlertDialog(getString(R.string.dialog_content));
-					return;
-				}
-				if (email.length() < 1) {
-					showAlertDialog(getString(R.string.dialog_email));
-					return;
-				}
-
-				appContext.addAdvice(email, content);
-				final CustomDialog m = new CustomDialog(
-						(getString(R.string.dialog_submit)));
-				m.show(getSupportFragmentManager(), "");
-				Handler sleepHandler = new Handler();
-				sleepHandler.postDelayed(new Runnable() {
-					public void run() {
-						m.dismiss();
-						((EditText) findViewById(R.id.editEmail)).setText("");
-						((EditText) findViewById(R.id.editAdvice)).setText("");
-					}
-				}, 3000);
-
 			}
 		};
 	}

@@ -36,18 +36,6 @@
     <LinearLayout style="@style/footer_container" >
 
         <Button
-            android:id="@+id/bottom_btn_more"
-            style="@style/footer_btn"
-            android:background="@drawable/footer_ic_more_bg" />
-
-        <TextView
-            style="@style/footer_txt"
-            android:text="@string/menu_more" />
-    </LinearLayout>
-
-    <LinearLayout style="@style/footer_container" >
-
-        <Button
             android:id="@+id/bottom_btn_favorite"
             style="@style/footer_btn"
             android:background="@drawable/footer_ic_favorite_bg" />
