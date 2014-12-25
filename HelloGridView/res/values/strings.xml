@@ -8,6 +8,13 @@
     <string name="menu_search">搜索</string>
     <string name="menu_favorite">收藏</string>
     <string name="menu_more">更多</string>
+    <string name="menu_more_order">我的订单</string>
+    <string name="menu_more_about">关于礼物搜</string>
+    <string name="menu_more_question">常见问题</string>
+    <string name="menu_more_agreement">用户协议</string>
+    <string name="menu_more_advice">意见建议</string>
+    <string name="menu_more_contact">联系我们</string>
+    <string name="menu_more_version">检测新版本</string>
     <string name="title_activity_product">礼物搜索</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>

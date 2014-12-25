@@ -191,6 +191,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/product_item_border</item>
     </style>
+    
+    <style name="product_sub_root">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/product_item_border</item>
+    </style>
 
     <style name="product_image">
         <item name="android:layout_width">0dp</item>

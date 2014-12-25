@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/product_sub_root"
+    android:orientation="horizontal" >
+
+    <com.liwuso.app.widget.CustomImageView
+        android:id="@+id/image"
+        style="@style/product_image"
+        android:contentDescription="@string/blank"
+        android:src="@drawable/ic_launcher" />
+
+    <View
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="2" />
+
+    <RelativeLayout style="@style/product_info" >
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/product_name" />
+
+        <com.liwuso.app.widget.WordWrapView
+            android:id="@+id/tags"
+            style="@style/product_tags"
+            android:layout_below="@+id/name" >
+        </com.liwuso.app.widget.WordWrapView>
+
+        <TextView
+            android:id="@+id/price"
+            style="@style/product_price"
+            android:layout_below="@+id/tags" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,6 +1,5 @@
 package com.liwuso.app.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,9 +16,9 @@ import com.liwuso.app.AppContext;
 import com.liwuso.app.R;
 
 public class More extends FragmentActivity {
-	
+
 	private AppContext appContext;
-	
+
 	private LinearLayout infoLayout;
 	private RelativeLayout adviceLayout;
 	private Button btnMoreAdviceSubmit;
@@ -30,7 +29,7 @@ public class More extends FragmentActivity {
 		setContentView(R.layout.more);
 		appContext = (AppContext) getApplication();
 		initView();
-		
+
 		Intent intent = getIntent();
 		int item_index = intent.getIntExtra("itemIndex", 0);
 		if (item_index < 4) {
@@ -49,7 +48,7 @@ public class More extends FragmentActivity {
 		btnMoreAdviceSubmit = (Button) findViewById(R.id.btn_more_advice_submit);
 		btnMoreAdviceSubmit.setOnClickListener(frameMoreAdviceBtnClick());
 	}
-	
+
 	private View.OnClickListener frameMoreAdviceBtnClick() {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
@@ -83,8 +82,8 @@ public class More extends FragmentActivity {
 			}
 		};
 	}
-	
-	private void showAlertDialog(String text) {	
+
+	private void showAlertDialog(String text) {
 		CustomDialog m = new CustomDialog((text));
 		m.show(getSupportFragmentManager(), "");
 	}

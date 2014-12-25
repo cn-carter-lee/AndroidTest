@@ -23,7 +23,9 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -33,6 +35,7 @@ import android.widget.Toast;
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.app.R;
+import com.liwuso.app.adapter.ListViewSubProductAdapter;
 import com.liwuso.app.adapter.SearchAdapter;
 import com.liwuso.app.adapter.ListViewAgeAdapter;
 import com.liwuso.app.adapter.ListViewFavoriteAdapter;
@@ -115,6 +118,7 @@ public class Main extends SlidingFragmentActivity implements
 	private PullToRefreshListView lvAge;
 	private PullToRefreshListView lvAim;
 	private PullToRefreshListView lvProduct;
+	private GridView lvSubProduct;
 	private PullToRefreshListView lvFavorite;
 
 	private Handler lvPersonHandler;
@@ -132,6 +136,8 @@ public class Main extends SlidingFragmentActivity implements
 	private ListViewAgeAdapter lvAgeAdapter;
 	private ListViewAimAdapter lvAimAdapter;
 	private ListViewProductAdapter lvProductAdapter;
+	private ListViewSubProductAdapter lvSubProductAdapter;
+
 	private SearchAdapter searchAdapter;
 	private ListViewFavoriteAdapter lvFavoriteAdapter;
 
@@ -141,6 +147,7 @@ public class Main extends SlidingFragmentActivity implements
 	private List<Age> lvAgeData = new ArrayList<Age>();
 	private List<Aim> lvAimData = new ArrayList<Aim>();
 	private List<Product> lvProductData = new ArrayList<Product>();
+	private List<Product> lvSubProductData = new ArrayList<Product>();
 	private List<SearchItemWapper> lvSearchData = new ArrayList<SearchItemWapper>();
 	private List<Product> lvFavoriteProductData = new ArrayList<Product>();
 
@@ -530,8 +537,11 @@ public class Main extends SlidingFragmentActivity implements
 
 	private void initProductListView() {
 		lvProductAdapter = new ListViewProductAdapter(this, lvProductData);
+		lvSubProductAdapter = new ListViewSubProductAdapter(this,
+				lvSubProductData);
 
 		lvProduct = (PullToRefreshListView) findViewById(R.id.frame_listview_product);
+
 		LinearLayout frame_product_header = (LinearLayout) getLayoutInflater()
 				.inflate(R.layout.frame_product_header, null);
 
@@ -605,6 +615,26 @@ public class Main extends SlidingFragmentActivity implements
 								UIHelper.LISTVIEW_DATATYPE_MALE);
 					}
 				});
+
+		// Added in 2014-12-25
+		lvSubProduct = (GridView) findViewById(R.id.product_sub_listview);
+		lvSubProduct.setAdapter(lvSubProductAdapter);
+		Product p = new Product();
+		p.id = 10000;
+
+		p.Price = "1000";
+		p.ImageUrl = "http://www.liwuso.com/Uploads/cpc_b/895b.jpg";
+		p.Name = "XXXXXXXXX";
+		p.Url = "http://redirect.simba.taobao.com/rd?&f=http%3A%2F%2Fai.taobao.com%2Fauction%2Fedetail.htm%3Fe%3DvOSMyDwk8ZjebLdhAWchHEQDz%252FPZe6gowTF0nIgV33SLltG5xFicObalFqTViQTOxN35oEuRTJdyHrcqZgjbAe%252FrEZy%252FN1Z0cymvewz5SETed6w8MirRX23abJM7sDg2coYjMuDW3CRYPA6TI2QLLg%253D%253D%26ptype%3D100011%26rType%3D1%26from%3Dgoldenlink%26eid%3D&k=5ccfdb950740ca16&p=mm_31516171_5574276_21616173&pvid=1419501618_2086092r2_18611717&posid=&b=display_1_625_0_0_0&w=unionapijs&c=un";
+		p.Tags = "";
+		lvSubProductData.add(p);
+		lvSubProductData.add(p);
+		lvSubProductData.add(p);
+		lvSubProductData.add(p);
+		lvSubProductData.add(p);
+		lvSubProductData.add(p);
+		lvSubProductData.add(p);
+		lvSubProductData.add(p);
 	}
 
 	private void initFavoriteListView() {

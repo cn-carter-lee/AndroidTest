@@ -7,41 +7,67 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dip"
         android:layout_gravity="bottom"
         android:text="@string/menu_more"
-        android:textColor="#666666" />
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/btn_more_order"
         style="@style/GiftMoreButton"
-        android:text="我的订单" />
+        android:layout_marginTop="1dp"
+        android:text="@string/menu_more_order" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#000000" />
 
     <Button
         android:id="@+id/btn_more_about"
         style="@style/GiftMoreButton"
         android:onClick="clickMore"
-        android:text="关于礼物搜" />
+        android:text="@string/menu_more_about" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#000000" />
 
     <Button
         android:id="@+id/btn_more_question"
         style="@style/GiftMoreButton"
         android:layout_marginTop="1dp"
         android:onClick="clickMore"
-        android:text="常见问题" />
+        android:text="@string/menu_more_question" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#000000" />
 
     <Button
         android:id="@+id/btn_more_agreement"
         style="@style/GiftMoreButton"
         android:layout_marginTop="1dp"
         android:onClick="clickMore"
-        android:text="用户协议" />
+        android:text="@string/menu_more_agreement" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#000000" />
 
     <Button
         android:id="@+id/btn_more_advice"
         style="@style/GiftMoreButton"
         android:onClick="clickMore"
-        android:text="意见建议" />
+        android:text="@string/menu_more_advice" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#000000" />
 
     <Button
         android:id="@+id/btn_more_contact"
@@ -49,12 +75,18 @@
         android:layout_marginTop="1dp"
         android:background="@drawable/more_btn_background"
         android:onClick="clickMore"
-        android:text="联系我们" />
+        android:text="@string/menu_more_contact" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#000000" />
 
     <Button
         android:id="@+id/btn_more_check_vertion"
         style="@style/GiftMoreButton"
+        android:layout_marginTop="1dp"
         android:onClick="checkVersion"
-        android:text="检测新版本" />
+        android:text="@string/menu_more_version" />
 
 </LinearLayout>
