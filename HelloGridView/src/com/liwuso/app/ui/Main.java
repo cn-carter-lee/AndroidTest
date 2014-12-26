@@ -49,6 +49,7 @@ import com.liwuso.app.common.SortItem;
 import com.liwuso.app.common.StringUtils;
 import com.liwuso.app.common.UIHelper;
 import com.liwuso.app.sliding.SlidingFragmentActivity;
+import com.liwuso.app.widget.ExpandableHeightGridView;
 import com.liwuso.app.widget.PullToRefreshListView;
 import com.liwuso.app.widget.ScrollLayout;
 import com.liwuso.bean.Age;
@@ -118,7 +119,7 @@ public class Main extends SlidingFragmentActivity implements
 	private PullToRefreshListView lvAge;
 	private PullToRefreshListView lvAim;
 	private PullToRefreshListView lvProduct;
-	private GridView lvSubProduct;
+	private ExpandableHeightGridView lvSubProduct;
 	private PullToRefreshListView lvFavorite;
 
 	private Handler lvPersonHandler;
@@ -617,14 +618,15 @@ public class Main extends SlidingFragmentActivity implements
 				});
 
 		// Added in 2014-12-25
-		lvSubProduct = (GridView) findViewById(R.id.product_sub_listview);
+		lvSubProduct = (ExpandableHeightGridView) findViewById(R.id.product_sub_listview);
+		lvSubProduct.setExpanded(true);
 		lvSubProduct.setAdapter(lvSubProductAdapter);
 		Product p = new Product();
 		p.id = 10000;
 
 		p.Price = "1000";
 		p.ImageUrl = "http://www.liwuso.com/Uploads/cpc_b/895b.jpg";
-		p.Name = "XXXXXXXXX";
+		p.Name = "浪漫水晶定制 DIY内雕照片";
 		p.Url = "http://redirect.simba.taobao.com/rd?&f=http%3A%2F%2Fai.taobao.com%2Fauction%2Fedetail.htm%3Fe%3DvOSMyDwk8ZjebLdhAWchHEQDz%252FPZe6gowTF0nIgV33SLltG5xFicObalFqTViQTOxN35oEuRTJdyHrcqZgjbAe%252FrEZy%252FN1Z0cymvewz5SETed6w8MirRX23abJM7sDg2coYjMuDW3CRYPA6TI2QLLg%253D%253D%26ptype%3D100011%26rType%3D1%26from%3Dgoldenlink%26eid%3D&k=5ccfdb950740ca16&p=mm_31516171_5574276_21616173&pvid=1419501618_2086092r2_18611717&posid=&b=display_1_625_0_0_0&w=unionapijs&c=un";
 		p.Tags = "";
 		lvSubProductData.add(p);

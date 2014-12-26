@@ -27,7 +27,6 @@ public class ListViewSubProductAdapter extends BaseAdapter {
 
 	static class CustomListItemView {
 		public TextView name;
-		public WordWrapView tags;
 		public TextView price;
 		public CustomImageView image;
 	}
@@ -58,7 +57,6 @@ public class ListViewSubProductAdapter extends BaseAdapter {
 				false);
 		listItemView = new CustomListItemView();
 		listItemView.name = (TextView) convertView.findViewById(R.id.name);
-		listItemView.tags = (WordWrapView) convertView.findViewById(R.id.tags);
 		listItemView.price = (TextView) convertView.findViewById(R.id.price);
 		listItemView.image = (CustomImageView) convertView
 				.findViewById(R.id.image);
@@ -69,17 +67,6 @@ public class ListViewSubProductAdapter extends BaseAdapter {
 		listItemView.name.setText(product.Name);
 		listItemView.name.setTag(product);
 
-		if (product.Tags.length() > 0) {
-			String[] tagArray = product.Tags.split(",");
-			for (int i = 0; i < tagArray.length; i++) {
-				View product_item_tagview = listContainer.inflate(
-						R.layout.product_item_tag, null);
-				TextView txtTagView = (TextView) product_item_tagview
-						.findViewById(R.id.product_tag);
-				txtTagView.setText(tagArray[i]);
-				listItemView.tags.addView(product_item_tagview);
-			}
-		}
 		listItemView.price.setText("гд" + product.Price);
 		imageLoader.DisplayImage(product.ImageUrl, listItemView.image);
 		listItemView.image.setTag(product);
