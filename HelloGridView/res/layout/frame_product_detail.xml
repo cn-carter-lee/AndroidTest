@@ -7,10 +7,11 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="#ffffff"
         android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/image"
+        <com.liwuso.app.widget.CustomImageView
+            android:id="@+id/p_sub_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -18,20 +19,19 @@
             android:src="@drawable/pp886b" />
 
         <LinearLayout
+            style="@style/p_sub_margin_r_l"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
             android:orientation="horizontal" >
 
             <LinearLayout
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="6"
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/fp_name"
+                    android:id="@+id/p_sub_name"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="创意照片水晶定制个性礼物"
@@ -41,74 +41,104 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
                     android:orientation="horizontal" >
 
                     <TextView
-                        android:id="@+id/fp_price"
+                        android:id="@+id/p_sub_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="58.00"
                         android:textColor="@color/orange"
                         android:textSize="20sp" />
 
+                    <View
+                        android:layout_width="20dip"
+                        android:layout_height="wrap_content" />
+
                     <TextView
+                        android:id="@+id/p_sub_sale"
                         android:layout_width="wrap_content"
                         android:layout_height="30dip"
                         android:layout_toRightOf="@+id/fp_price"
                         android:text="月销5763件"
-                        android:textColor="@color/gray" />
+                        android:textColor="@color/gray"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <Button
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/footer_ic_favorite_bg"
+                    android:enabled="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dip"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dip"
+                    android:text="已收藏"
+                    android:textColor="@color/orange" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical" >
 
                 <Button
                     android:layout_width="30dip"
                     android:layout_height="30dip"
-                    android:layout_gravity="center"
-                    android:background="@drawable/footer_ic_favorite_bg"
-                    android:text="cccc" />
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/img_ic_favorite"
+                    android:enabled="false" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="30dip"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dip"
                     android:text="收藏"
                     android:textColor="@color/gray" />
             </LinearLayout>
         </LinearLayout>
 
         <TextView
+            style="@style/p_sub_margin_r_l"
             android:layout_width="fill_parent"
             android:layout_height="30dip"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
             android:text="礼物点评："
             android:textColor="@color/gray" />
 
         <TextView
+            style="@style/p_sub_margin_r_l"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
             android:text="超萌超可爱的喵星人公仔，多种颜色可选，送给猫奴的她。"
-            android:textColor="@color/gray" />
+            android:textColor="#6c6c6c" />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="10dip"
             android:layout_marginBottom="10dip"
             android:layout_marginTop="10dip"
-            android:background="#f3f3f3" />
+            android:background="@drawable/p_sub_sep_bg" />
 
         <Button
+            style="@style/p_sub_margin_r_l"
             android:layout_width="fill_parent"
             android:layout_height="45dip"
             android:layout_marginBottom="10dip"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
             android:layout_marginTop="10dip"
             android:background="@drawable/p_sub_buy1_btn_bg"
             android:text="去淘宝购买"
@@ -119,32 +149,39 @@
             android:layout_height="10dip"
             android:layout_marginBottom="10dip"
             android:layout_marginTop="10dip"
-            android:background="#f3f3f3" />
+            android:background="@drawable/p_sub_sep_bg" />
 
         <TextView
+            style="@style/p_sub_margin_r_l"
             android:layout_width="fill_parent"
             android:layout_height="30dip"
             android:text="相关礼物"
-            android:textColor="@color/gray" />
+            android:textColor="#333333" />
 
         <com.liwuso.app.widget.ExpandableHeightGridView
             android:id="@+id/product_sub_listview"
+            style="@style/p_sub_margin_r_l"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:horizontalSpacing="2dp"
+            android:horizontalSpacing="10dp"
             android:isScrollContainer="false"
-            android:numColumns="2" />
+            android:numColumns="2"
+            android:verticalSpacing="10dp" />
 
         <LinearLayout
+            style="@style/p_sub_margin_r_l"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="10dip"
             android:orientation="horizontal" >
 
             <Button
                 android:layout_width="0dip"
-                android:layout_height="wrap_content"
+                android:layout_height="40dip"
                 android:layout_weight="15"
-                android:background="@drawable/p_sub_favorite_btn_bg"
+                android:background="@drawable/p_sub_favorite_sum"
+                android:paddingLeft="30dip"
                 android:text="76"
                 android:textColor="@color/white" />
 
@@ -155,9 +192,9 @@
 
             <Button
                 android:layout_width="0dip"
-                android:layout_height="wrap_content"
+                android:layout_height="40dip"
                 android:layout_weight="40"
-                android:background="@drawable/p_sub_buy2_btn_bg"
+                android:background="@drawable/p_sub_favorite_buy2"
                 android:text="去淘宝购买"
                 android:textColor="@color/white" />
         </LinearLayout>

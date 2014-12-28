@@ -21,6 +21,7 @@ public class More extends FragmentActivity {
 
 	private LinearLayout infoLayout;
 	private RelativeLayout adviceLayout;
+	private Button btnTopNavPre;
 	private Button btnMoreAdviceSubmit;
 
 	@Override
@@ -45,6 +46,8 @@ public class More extends FragmentActivity {
 	private void initView() {
 		infoLayout = (LinearLayout) findViewById(R.id.more_info);
 		adviceLayout = (RelativeLayout) findViewById(R.id.more_advice);
+		btnTopNavPre = (Button) findViewById(R.id.btnTopNavPre);
+		btnTopNavPre.setOnClickListener(btnPreClick());
 		btnMoreAdviceSubmit = (Button) findViewById(R.id.btn_more_advice_submit);
 		btnMoreAdviceSubmit.setOnClickListener(frameMoreAdviceBtnClick());
 	}
@@ -79,6 +82,14 @@ public class More extends FragmentActivity {
 					}
 				}, 3000);
 
+			}
+		};
+	}
+
+	private View.OnClickListener btnPreClick() {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				finish();
 			}
 		};
 	}

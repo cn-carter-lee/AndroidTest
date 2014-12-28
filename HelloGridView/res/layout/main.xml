@@ -11,8 +11,6 @@
         android:id="@+id/main_scrolllayout_so"
         style="@style/main_srcoll_layout" >
 
-        <include layout="@layout/frame_product_detail" />
-
         <include layout="@layout/frame_person" />
 
         <include layout="@layout/frame_age" />
@@ -20,6 +18,8 @@
         <include layout="@layout/frame_aim" />
 
         <include layout="@layout/frame_product" />
+
+        <include layout="@layout/frame_product_detail" />
     </com.liwuso.app.widget.ScrollLayout>
 
     <com.liwuso.app.widget.ScrollLayout

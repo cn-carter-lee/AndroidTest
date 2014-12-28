@@ -195,7 +195,7 @@
     <style name="product_sub_root">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/product_item_border</item>
+        <item name="android:background">@drawable/p_sub_border_bg</item>
     </style>
 
     <style name="product_image">
@@ -314,15 +314,20 @@
     <style name="product_sub_price" parent="product_right_item_base">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">20dip</item>
-        <item name="android:textColor">#999999</item>
+        <item name="android:textColor">@color/orange</item>
         <item name="android:textSize">12sp</item>
     </style>
 
     <style name="product_sub_sale" parent="product_right_item_base">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">20dip</item>
-        <item name="android:textColor">@color/orange</item>
+        <item name="android:textColor">#999999</item>
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="p_sub_margin_r_l">
+        <item name="android:layout_marginLeft">10dip</item>
+        <item name="android:layout_marginRight">10dip</item>
     </style>
 
 </resources>

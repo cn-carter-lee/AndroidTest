@@ -8,6 +8,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,9 +24,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -49,6 +49,7 @@ import com.liwuso.app.common.SortItem;
 import com.liwuso.app.common.StringUtils;
 import com.liwuso.app.common.UIHelper;
 import com.liwuso.app.sliding.SlidingFragmentActivity;
+import com.liwuso.app.widget.CustomImageView;
 import com.liwuso.app.widget.ExpandableHeightGridView;
 import com.liwuso.app.widget.PullToRefreshListView;
 import com.liwuso.app.widget.ScrollLayout;
@@ -68,6 +69,7 @@ import com.liwuso.bean.ProductList;
 import com.liwuso.bean.SearchItem;
 import com.liwuso.bean.SearchItemListWapper;
 import com.liwuso.bean.SearchItemWapper;
+import com.liwuso.utility.ImageLoader;
 import com.liwuso.utility.Utils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
@@ -190,6 +192,13 @@ public class Main extends SlidingFragmentActivity implements
 			R.id.btn_more_check_vertion };
 	private Button[] moreBtnArray = new Button[moreBtnResourceArray.length];
 
+	// Sub Product
+	private ImageLoader imageLoader;
+	private CustomImageView subImage;
+	private TextView subName;
+	private TextView subPrice;
+	private TextView subSale;
+
 	// Top nav bar
 	private Button btnTopNavPre;
 	private Button btnTopMore;
@@ -215,6 +224,7 @@ public class Main extends SlidingFragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Utils.context = this;
+		this.imageLoader = new ImageLoader(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		appContext = (AppContext) getApplication();
@@ -302,6 +312,11 @@ public class Main extends SlidingFragmentActivity implements
 		txtSoAgePersonName = (TextView) findViewById(R.id.txt_so_age_personname);
 		txtSoAimPersoname = (TextView) findViewById(R.id.txt_so_purpose_personname);
 		txtSoAimAgeName = (TextView) findViewById(R.id.txt_so_purpose_agename);
+
+		subImage = (CustomImageView) findViewById(R.id.p_sub_image);
+		subName = (TextView) findViewById(R.id.p_sub_name);
+		subPrice = (TextView) findViewById(R.id.p_sub_price);
+		subSale = (TextView) findViewById(R.id.p_sub_sale);
 
 		// Search
 		btnSearch = (Button) findViewById(R.id.btnSearch);
@@ -1359,7 +1374,16 @@ public class Main extends SlidingFragmentActivity implements
 	public void clickProductDetails(View view) {
 		if (view.getTag() instanceof Product) {
 			Product product = (Product) view.getTag();
-			loadTaobao(product.Url);
+			imageLoader.DisplayImage(product.ImageUrl, subImage);
+			subName.setText(product.Name);
+			subPrice.setText(product.Price);
+			subSale.setText(product.Price);
+
+			slArray[currentSlIndex].currentVisibleScreen++;
+			slArray[currentSlIndex]
+					.snapToScreen(slArray[currentSlIndex].currentVisibleScreen);
+
+			// loadTaobao(product.Url);
 		}
 	}
 
