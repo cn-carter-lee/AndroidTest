@@ -78,11 +78,19 @@ public class ProductList extends Entity {
 							product.Tags = xmlParser.nextText();
 						} else if (tag.equalsIgnoreCase(Product.NODE_PRICE)) {
 							product.Price = xmlParser.nextText();
+						} else if (tag.equalsIgnoreCase(Product.NODE_SELLED)) {
+							product.Selled = xmlParser.nextText();
+						} else if (tag.equalsIgnoreCase(Product.NODE_COMMENT)) {
+							product.Comment = xmlParser.nextText();
 						} else if (tag.equalsIgnoreCase(Product.NODE_URL)) {
 							product.Url = xmlParser.nextText();
 						} else if (tag.equalsIgnoreCase(Product.NODE_IMG)) {
+							String imageFile = xmlParser.nextText();
 							product.ImageUrl = URLs.PRODUCT_IMG_URL_PREFIX
-									+ xmlParser.nextText();
+									+ imageFile;
+							product.BigImageUrl = URLs.PRODUCT_IMG_URL_PREFIX
+									+ imageFile.replace("cpc", "cpc_b")
+											.replace(".", "b.");
 						} else if (tag.equalsIgnoreCase(Product.NODE_LIKED)) {
 							product.Liked = xmlParser.nextText();
 						}

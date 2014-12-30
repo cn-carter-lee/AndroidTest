@@ -28,8 +28,9 @@ public class UIHelper {
 	public final static int LISTVIEW_DATATYPE_AGE = 0x04;
 	public final static int LISTVIEW_DATATYPE_PURPOSE = 0x05;
 	public final static int LISTVIEW_DATATYPE_PRODUCT = 0x06;
-	public final static int LISTVIEW_DATATYPE_FAVORITE = 0X07;
-	public final static int LISTVIEW_DATATYPE_SEARCH = 0x08;
+	public final static int LISTVIEW_DATATYPE_SUBPRODUCT = 0X07;
+	public final static int LISTVIEW_DATATYPE_FAVORITE = 0x08;
+	public final static int LISTVIEW_DATATYPE_SEARCH = 0x09;
 
 	/** ±Ì«ÈÕº∆¨∆•≈‰ */
 	private static Pattern facePattern = Pattern

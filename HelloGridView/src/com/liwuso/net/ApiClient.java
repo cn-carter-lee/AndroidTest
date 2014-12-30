@@ -81,6 +81,22 @@ public class ApiClient {
 		}
 	}
 
+	public static ProductList getRelativeProductList(AppContext appContext,
+			final int sexId, final int personId, final int ageId, int aimId,
+			int productid) throws AppException {
+
+		String newUrl = URLs.BASE_API_URL + "relative-" + sexId + '-'
+				+ personId + '-' + ageId + '-' + aimId + "?id=" + productid;
+
+		try {
+			return ProductList.parse(http_get(appContext, newUrl));
+		} catch (Exception e) {
+			if (e instanceof AppException)
+				throw (AppException) e;
+			throw AppException.network(e);
+		}
+	}
+
 	public static CatalogList getCatalog(AppContext appContext)
 			throws AppException {
 		String newUrl = URLs.BASE_API_URL + "search";

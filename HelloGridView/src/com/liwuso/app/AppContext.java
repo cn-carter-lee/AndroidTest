@@ -265,6 +265,31 @@ public class AppContext extends Application {
 
 		return productList;
 	}
+	
+	public ProductList getRelativeProductList(int sexId, int personId, int ageId,
+			int aimId, int productid)
+			throws AppException {
+		ProductList productList = new ProductList();
+		String key = "relative_product_list_" + sexId + "_" + personId + "_" + ageId
+				+ "_" + aimId + "_" + "productid_" + productid;
+		try {
+			productList = ApiClient.getRelativeProductList(this, sexId, personId,
+					ageId, aimId, productid);
+			if (productList != null) {
+				// Notice notice = list.getNotice();
+				// list.setNotice(null);
+				productList.setCacheKey(key);
+				saveObject(productList, key);
+				// list.setNotice(notice);
+			}
+		} catch (AppException e) {
+			productList = (ProductList) readObject(key);
+			if (productList == null)
+				throw e;
+		}
+
+		return productList;
+	}
 
 	public CatalogList getSearchCatalog() {
 		CatalogList cataloglist = new CatalogList();

@@ -7,6 +7,7 @@
         android:id="@+id/image"
         style="@style/product_image"
         android:contentDescription="@string/blank"
+        android:onClick="clickProductDetails1"
         android:src="@drawable/ic_launcher" />
 
     <View
@@ -33,7 +34,8 @@
 
         <Button
             android:id="@+id/btn_details"
-            style="@style/product_details" />
+            style="@style/product_details"
+            android:onClick="clickProductDetails1" />
     </RelativeLayout>
 
 </LinearLayout>

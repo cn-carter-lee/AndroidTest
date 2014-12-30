@@ -9,6 +9,7 @@
         style="@style/product_sub_image"
         android:adjustViewBounds="true"
         android:contentDescription="@string/blank"
+        android:onClick="clickProductDetails2"
         android:src="@drawable/ic_launcher" />
 
     <TextView

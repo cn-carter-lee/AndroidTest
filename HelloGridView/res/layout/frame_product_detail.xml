@@ -1,5 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/p_sub_scroll_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:scrollbars="vertical" >
@@ -12,11 +13,10 @@
 
         <com.liwuso.app.widget.CustomImageView
             android:id="@+id/p_sub_image"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
             android:contentDescription="@string/blank"
-            android:src="@drawable/pp886b" />
+            android:src="@drawable/ic_launcher" />
 
         <LinearLayout
             style="@style/p_sub_margin_r_l"
@@ -61,7 +61,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dip"
                         android:layout_toRightOf="@+id/fp_price"
-                        android:text="月销5763件"
                         android:textColor="@color/gray"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -121,10 +120,11 @@
             android:textColor="@color/gray" />
 
         <TextView
+            android:id="@+id/p_sub_comment"
             style="@style/p_sub_margin_r_l"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="超萌超可爱的喵星人公仔，多种颜色可选，送给猫奴的她。"
+            android:text="@string/blank"
             android:textColor="#6c6c6c" />
 
         <View
@@ -135,12 +135,14 @@
             android:background="@drawable/p_sub_sep_bg" />
 
         <Button
+            android:id="@+id/p_sub_buy1"
             style="@style/p_sub_margin_r_l"
             android:layout_width="fill_parent"
             android:layout_height="45dip"
             android:layout_marginBottom="10dip"
             android:layout_marginTop="10dip"
             android:background="@drawable/p_sub_buy1_btn_bg"
+            android:onClick="clickSubProductDetails"
             android:text="去淘宝购买"
             android:textColor="@color/white" />
 
@@ -191,10 +193,12 @@
                 android:layout_weight="3" />
 
             <Button
+                android:id="@+id/p_sub_buy2"
                 android:layout_width="0dip"
                 android:layout_height="40dip"
                 android:layout_weight="40"
                 android:background="@drawable/p_sub_favorite_buy2"
+                android:onClick="clickSubProductDetails"
                 android:text="去淘宝购买"
                 android:textColor="@color/white" />
         </LinearLayout>

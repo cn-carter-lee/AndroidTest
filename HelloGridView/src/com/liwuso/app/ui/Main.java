@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,6 +83,8 @@ public class Main extends SlidingFragmentActivity implements
 	private View mLeftView;
 
 	private boolean shouldExit = false;
+	private int currentSex = 0;
+	private Product currentProduct;
 	private Person currentPerson = null;
 	private Age currentAge = null;
 	private Aim currentAim = null;
@@ -193,11 +196,15 @@ public class Main extends SlidingFragmentActivity implements
 	private Button[] moreBtnArray = new Button[moreBtnResourceArray.length];
 
 	// Sub Product
+	private ScrollView pSubScrollView;
 	private ImageLoader imageLoader;
 	private CustomImageView subImage;
 	private TextView subName;
 	private TextView subPrice;
 	private TextView subSale;
+	private TextView subComment;
+	private Button subBuy1;
+	private Button subBuy2;
 
 	// Top nav bar
 	private Button btnTopNavPre;
@@ -313,10 +320,14 @@ public class Main extends SlidingFragmentActivity implements
 		txtSoAimPersoname = (TextView) findViewById(R.id.txt_so_purpose_personname);
 		txtSoAimAgeName = (TextView) findViewById(R.id.txt_so_purpose_agename);
 
+		pSubScrollView = (ScrollView) findViewById(R.id.p_sub_scroll_view);
 		subImage = (CustomImageView) findViewById(R.id.p_sub_image);
 		subName = (TextView) findViewById(R.id.p_sub_name);
 		subPrice = (TextView) findViewById(R.id.p_sub_price);
+		subComment = (TextView) findViewById(R.id.p_sub_comment);
 		subSale = (TextView) findViewById(R.id.p_sub_sale);
+		subBuy1 = (Button) findViewById(R.id.p_sub_buy1);
+		subBuy2 = (Button) findViewById(R.id.p_sub_buy2);
 
 		// Search
 		btnSearch = (Button) findViewById(R.id.btnSearch);
@@ -553,8 +564,6 @@ public class Main extends SlidingFragmentActivity implements
 
 	private void initProductListView() {
 		lvProductAdapter = new ListViewProductAdapter(this, lvProductData);
-		lvSubProductAdapter = new ListViewSubProductAdapter(this,
-				lvSubProductData);
 
 		lvProduct = (PullToRefreshListView) findViewById(R.id.frame_listview_product);
 
@@ -635,23 +644,7 @@ public class Main extends SlidingFragmentActivity implements
 		// Added in 2014-12-25
 		lvSubProduct = (ExpandableHeightGridView) findViewById(R.id.product_sub_listview);
 		lvSubProduct.setExpanded(true);
-		lvSubProduct.setAdapter(lvSubProductAdapter);
-		Product p = new Product();
-		p.id = 10000;
 
-		p.Price = "1000";
-		p.ImageUrl = "http://www.liwuso.com/Uploads/cpc_b/895b.jpg";
-		p.Name = "浪漫水晶定制 DIY内雕照片";
-		p.Url = "http://redirect.simba.taobao.com/rd?&f=http%3A%2F%2Fai.taobao.com%2Fauction%2Fedetail.htm%3Fe%3DvOSMyDwk8ZjebLdhAWchHEQDz%252FPZe6gowTF0nIgV33SLltG5xFicObalFqTViQTOxN35oEuRTJdyHrcqZgjbAe%252FrEZy%252FN1Z0cymvewz5SETed6w8MirRX23abJM7sDg2coYjMuDW3CRYPA6TI2QLLg%253D%253D%26ptype%3D100011%26rType%3D1%26from%3Dgoldenlink%26eid%3D&k=5ccfdb950740ca16&p=mm_31516171_5574276_21616173&pvid=1419501618_2086092r2_18611717&posid=&b=display_1_625_0_0_0&w=unionapijs&c=un";
-		p.Tags = "";
-		lvSubProductData.add(p);
-		lvSubProductData.add(p);
-		lvSubProductData.add(p);
-		lvSubProductData.add(p);
-		lvSubProductData.add(p);
-		lvSubProductData.add(p);
-		lvSubProductData.add(p);
-		lvSubProductData.add(p);
 	}
 
 	private void initFavoriteListView() {
@@ -728,7 +721,6 @@ public class Main extends SlidingFragmentActivity implements
 		lvProductHandler = this.getHandler(lvProduct, lvProductAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
-
 		lvSearchHandler = this.getHandler(lvSearch, searchAdapter,
 				lvFemale_foot_more, lvFemale_foot_progress,
 				AppContext.PAGE_SIZE);
@@ -876,9 +868,11 @@ public class Main extends SlidingFragmentActivity implements
 			handleLvDataPerson(what, obj, objtype, actiontype);
 			break;
 		case UIHelper.LISTVIEW_DATATYPE_FEMALE:
+			currentSex = 0;
 			handleLvDataFemale(what, obj, objtype, actiontype);
 			break;
 		case UIHelper.LISTVIEW_DATATYPE_MALE:
+			currentSex = 1;
 			handleLvDataMale(what, obj, objtype, actiontype);
 			break;
 		case UIHelper.LISTVIEW_DATATYPE_AGE:
@@ -1372,18 +1366,37 @@ public class Main extends SlidingFragmentActivity implements
 	}
 
 	public void clickProductDetails(View view) {
+		pSubScrollView.fullScroll(View.FOCUS_UP);
 		if (view.getTag() instanceof Product) {
-			Product product = (Product) view.getTag();
-			imageLoader.DisplayImage(product.ImageUrl, subImage);
+			final Product product = (Product) view.getTag();
+			currentProduct = product;
+			imageLoader.DisplayImage(product.BigImageUrl, subImage);
 			subName.setText(product.Name);
 			subPrice.setText(product.Price);
-			subSale.setText(product.Price);
+			subSale.setText(String.format("月销%s件", product.Selled));
+			subComment.setText(product.Comment);
+			subBuy1.setTag(product);
+			subBuy2.setTag(product);
+			new RemoteDataTask().execute();
+		}
+	}
 
-			slArray[currentSlIndex].currentVisibleScreen++;
-			slArray[currentSlIndex]
-					.snapToScreen(slArray[currentSlIndex].currentVisibleScreen);
+	public void clickProductDetails1(View view) {
+		clickProductDetails(view);
+		slArray[currentSlIndex].currentVisibleScreen++;
+		slArray[currentSlIndex]
+				.snapToScreen(slArray[currentSlIndex].currentVisibleScreen);
 
-			// loadTaobao(product.Url);
+	}
+
+	public void clickProductDetails2(View view) {
+		clickProductDetails(view);
+	}
+
+	public void clickSubProductDetails(View view) {
+		if (view.getTag() instanceof Product) {
+			Product product = (Product) view.getTag();
+			loadTaobao(product.Url);
 		}
 	}
 
@@ -1898,4 +1911,39 @@ public class Main extends SlidingFragmentActivity implements
 		TextView view = (TextView) container.getChildAt(1);
 		return view;
 	}
+
+	private class RemoteDataTask extends AsyncTask<Void, Void, Void> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			// Create a progressdialog
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			// Create the array
+			try {
+				lvSubProductData = appContext.getRelativeProductList(
+						currentSex, currentPerson.getId(), currentAge.getId(),
+						currentAim.getId(), currentProduct.id).getProductList();
+
+			} catch (AppException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			// Locate the gridview in gridview_main.xml
+			lvSubProduct = (ExpandableHeightGridView) findViewById(R.id.product_sub_listview);
+			lvSubProductAdapter = new ListViewSubProductAdapter(Utils.context,
+					lvSubProductData);
+			lvSubProduct.setAdapter(lvSubProductAdapter);
+
+			lvSubProductAdapter.notifyDataSetChanged();
+		}
+	}
+
 }
