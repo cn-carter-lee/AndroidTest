@@ -83,8 +83,9 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 		reverseAnimation.setFillAfter(true);
 
 		inflater = LayoutInflater.from(context);
-		//headView = (LinearLayout) inflater.inflate(R.layout.pull_to_refresh_head, null);
-	
+		// headView = (LinearLayout)
+		// inflater.inflate(R.layout.pull_to_refresh_head, null);
+
 		setOnScrollListener(this);
 	}
 
@@ -195,7 +196,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 				// 更新headView的paddingTop
 				if (state == RELEASE_To_REFRESH) {
 					int topPadding = (int) ((tempY - startY - headContentHeight));
-	
+
 					// System.out.println("当前-释放刷新RELEASE_To_REFRESH-TopPad："+topPadding);
 				}
 			}
@@ -206,7 +207,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 
 	// 当状态改变时候，调用该方法，以更新界面
 	private void changeHeaderViewByState() {
-	
+
 	}
 
 	// 点击刷新
@@ -225,7 +226,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 		public void onRefresh();
 	}
 
-	public void onRefreshComplete(String update) {		
+	public void onRefreshComplete(String update) {
 		onRefreshComplete();
 	}
 
@@ -244,7 +245,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 	private void measureView(View child) {
 		ViewGroup.LayoutParams p = child.getLayoutParams();
 		if (p == null) {
-			p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+			p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.WRAP_CONTENT);
 		}
 		int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0 + 0, p.width);

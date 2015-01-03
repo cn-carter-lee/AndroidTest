@@ -26,6 +26,8 @@
     <color name="nav_txt">#ff8432</color>
     <color name="tag">#999999</color>
     <color name="more_btn">#343843</color>
-    <color name="more_btn_pressed">#cccccc</color>
+    <color name="more_btn_pressed">#464953</color>
+    <color name="verson_btn">#ebebeb</color>
+    <color name="verson_btn_pressed">#49aae5</color>
 
 </resources>

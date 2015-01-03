@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/product_root"
-    android:baselineAligned="false"
     android:orientation="horizontal" >
 
-    <ImageView
+    <com.liwuso.app.widget.CustomImageView
         android:id="@+id/image"
         style="@style/product_image"
-        android:contentDescription="@string/blank" />
+        android:contentDescription="@string/blank"
+        android:onClick="clickProductDetails1"
+        android:src="@drawable/ic_launcher" />
+
+    <View
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="2" />
 
     <RelativeLayout style="@style/product_info" >
 
@@ -17,7 +23,7 @@
 
         <com.liwuso.app.widget.WordWrapView
             android:id="@+id/tags"
-            style="@style/widget_listview"
+            style="@style/product_tags"
             android:layout_below="@+id/favorite_product_name" >
         </com.liwuso.app.widget.WordWrapView>
 
@@ -27,14 +33,9 @@
             android:layout_below="@+id/tags" />
 
         <Button
-            android:id="@+id/btn_favorite"
-            style="@style/product_added_favorite"
-            android:onClick="deleteProductFromFavorite"
-            android:text="@string/favorite_added" />
-
-        <Button
             android:id="@+id/btn_favorite_details"
-            style="@style/product_details" />
+            style="@style/product_details"
+            android:onClick="clickProductDetails1" />
     </RelativeLayout>
 
 </LinearLayout>

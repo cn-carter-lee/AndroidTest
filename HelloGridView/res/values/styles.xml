@@ -55,6 +55,18 @@
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:gravity">center</item>
     </style>
+    
+        <style name="VersionDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:gravity">center</item>
+    </style>
 
     <style name="loading_small" parent="@android:style/Widget.ProgressBar.Small">
         <item name="android:indeterminateDrawable">@anim/loading</item>
@@ -256,6 +268,34 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="sub_product_tags" parent="product_right_item_base">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:dividerHeight">17dip</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:divider">@color/container</item>
+        <item name="android:scrollingCache">false</item>
+    </style>
+
+    <style name="product_tag1">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">30dip</item>
+        <item name="android:background">@drawable/p_sub_tag1</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="product_tag2">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">30dip</item>
+        <item name="android:background">@drawable/p_sub_tag2</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <style name="product_price" parent="product_right_item_base">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">20dip</item>
@@ -326,6 +366,24 @@
     <style name="p_sub_margin_r_l">
         <item name="android:layout_marginLeft">10dip</item>
         <item name="android:layout_marginRight">10dip</item>
+    </style>
+
+    <style name="lv_seperator">
+        <item name="android:background">#2d313a</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1dip</item>
+    </style>
+
+    <style name="lv_menu_item">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:background">@drawable/more_btn_background</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:drawablePadding">20dp</item>
     </style>
 
 </resources>

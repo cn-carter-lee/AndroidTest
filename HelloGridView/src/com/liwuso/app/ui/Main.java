@@ -8,11 +8,11 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -24,7 +24,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -202,7 +201,13 @@ public class Main extends SlidingFragmentActivity implements
 	private TextView subName;
 	private TextView subPrice;
 	private TextView subSale;
+	private Button subProductTag1;
+	private Button subProductTag2;
+	private LinearLayout subAddFavoriteView;
+	private LinearLayout subDeleteFavoriteView;
 	private TextView subComment;
+	private Button subFavoriteSum;
+
 	private Button subBuy1;
 	private Button subBuy2;
 
@@ -239,6 +244,7 @@ public class Main extends SlidingFragmentActivity implements
 		this.initFrameButtons();
 		this.initFrameListView();
 		checkNetwork();
+		checkVersion();
 		PushAgent.getInstance(this).onAppStart();
 	}
 
@@ -326,6 +332,11 @@ public class Main extends SlidingFragmentActivity implements
 		subPrice = (TextView) findViewById(R.id.p_sub_price);
 		subComment = (TextView) findViewById(R.id.p_sub_comment);
 		subSale = (TextView) findViewById(R.id.p_sub_sale);
+		subProductTag1 = (Button) findViewById(R.id.sub_product_tag1);
+		subProductTag2 = (Button) findViewById(R.id.sub_product_tag2);
+		subAddFavoriteView = (LinearLayout) findViewById(R.id.sub_add_favorite_view);
+		subDeleteFavoriteView = (LinearLayout) findViewById(R.id.sub_delete_favorite_view);
+		subFavoriteSum = (Button) findViewById(R.id.p_sub_favorite_sum);
 		subBuy1 = (Button) findViewById(R.id.p_sub_buy1);
 		subBuy2 = (Button) findViewById(R.id.p_sub_buy2);
 
@@ -1374,7 +1385,33 @@ public class Main extends SlidingFragmentActivity implements
 			subName.setText(product.Name);
 			subPrice.setText(product.Price);
 			subSale.setText(String.format("月销%s件", product.Selled));
+
+			if (Utils.exists(product.id)) {
+				subAddFavoriteView.setVisibility(View.GONE);
+				subDeleteFavoriteView.setVisibility(View.VISIBLE);
+			} else {
+				subAddFavoriteView.setVisibility(View.VISIBLE);
+				subDeleteFavoriteView.setVisibility(View.GONE);
+			}
+			subAddFavoriteView.setTag(product);
+			subDeleteFavoriteView.setTag(product);
+
+			subProductTag1.setVisibility(View.GONE);
+			subProductTag2.setVisibility(View.GONE);
+
+			if (product.Tags.length() > 0) {
+
+				String[] tagArray = product.Tags.split(",");
+				subProductTag1.setText(tagArray[0]);
+				subProductTag1.setVisibility(View.VISIBLE);
+				if (tagArray.length == 2) {
+					subProductTag2.setText(tagArray[1]);
+					subProductTag2.setVisibility(View.VISIBLE);
+				}
+			}
+
 			subComment.setText(product.Comment);
+			subFavoriteSum.setText(product.Liked);
 			subBuy1.setTag(product);
 			subBuy2.setTag(product);
 			new RemoteDataTask().execute();
@@ -1382,8 +1419,10 @@ public class Main extends SlidingFragmentActivity implements
 	}
 
 	public void clickProductDetails1(View view) {
+		currentSlIndex = 0;
+		selectScrollLayout(currentSlIndex);
 		clickProductDetails(view);
-		slArray[currentSlIndex].currentVisibleScreen++;
+		slArray[currentSlIndex].currentVisibleScreen = 4;
 		slArray[currentSlIndex]
 				.snapToScreen(slArray[currentSlIndex].currentVisibleScreen);
 
@@ -1444,6 +1483,9 @@ public class Main extends SlidingFragmentActivity implements
 				strTitle = getString(R.string.nav_send_product);
 				spinnerVisibily = true;
 				break;
+			case 4:
+				strTitle = getString(R.string.nav_send_product_detail);
+				break;
 			}
 			setSoNavInfo();
 			break;
@@ -1477,9 +1519,16 @@ public class Main extends SlidingFragmentActivity implements
 			setTopBtnPreVisible(false);
 		if (currentSlIndex == 4)
 			setTopBtnPreVisible(true);
-		TextView titleView = (TextView) this.findViewById(R.id.navbar_title);
+		TextView titleView = (TextView) findViewById(R.id.navbar_title);
 		titleView.setText(strTitle);
 		spinner.setVisibility(spinnerVisibily ? View.VISIBLE : View.GONE);
+		if (currentSlIndex == 0
+				&& slArray[currentSlIndex].currentVisibleScreen == 0)
+
+			btnTopMore.setVisibility(View.VISIBLE);
+		else
+			btnTopMore.setVisibility(View.GONE);
+
 	}
 
 	private void backUpplerLevel() {
@@ -1724,8 +1773,17 @@ public class Main extends SlidingFragmentActivity implements
 		if (view.getTag() instanceof Product) {
 			Product product = (Product) view.getTag();
 			Utils.addFavorite(product.getId());
-			View v = (View) view.getParent();
-			v.findViewById(R.id.btn_favorite).setVisibility(View.VISIBLE);
+			subAddFavoriteView.setVisibility(View.GONE);
+			subDeleteFavoriteView.setVisibility(View.VISIBLE);
+		}
+	}
+
+	public void deleteSubFavoriteProduct(View view) {
+		if (view.getTag() instanceof Product) {
+			Product product = (Product) view.getTag();
+			Utils.deleteFavorite(product.getId());
+			subAddFavoriteView.setVisibility(View.VISIBLE);
+			subDeleteFavoriteView.setVisibility(View.GONE);
 		}
 	}
 
@@ -1733,8 +1791,8 @@ public class Main extends SlidingFragmentActivity implements
 		if (view.getTag() instanceof Product) {
 			Product product = (Product) view.getTag();
 			Utils.deleteFavorite(product.getId());
-			View v = (View) view.getParent();
-			v.findViewById(R.id.btn_favorite).setVisibility(View.GONE);
+			// View v = (View) view.getParent();
+			// v.findViewById(R.id.btn_favorite).setVisibility(View.GONE);
 		}
 	}
 
@@ -1748,6 +1806,7 @@ public class Main extends SlidingFragmentActivity implements
 					CustomDialog m = new CustomDialog(
 							(getString(R.string.dialog_version)));
 					m.show(getSupportFragmentManager(), "");
+
 					return;
 				}
 
@@ -1869,6 +1928,19 @@ public class Main extends SlidingFragmentActivity implements
 		}
 	}
 
+	private void checkVersion() {
+		View verionView = View
+				.inflate(Main.this, R.layout.dialog_version, null);
+		AlertDialog.Builder builder = new AlertDialog.Builder(Utils.context);
+
+		builder.setView(verionView);
+
+		// Create the AlertDialog
+		AlertDialog dialog = builder.create();
+
+		dialog.show();
+	}
+
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
 			long id) {
@@ -1901,11 +1973,6 @@ public class Main extends SlidingFragmentActivity implements
 		listview.addHeaderView(listview_header);
 	}
 
-	private void showAlertDialog(String text) {
-		CustomDialog m = new CustomDialog((text));
-		m.show(getSupportFragmentManager(), "");
-	}
-
 	private TextView getFootView(Button btn) {
 		LinearLayout container = (LinearLayout) btn.getParent();
 		TextView view = (TextView) container.getChildAt(1);
@@ -1923,13 +1990,15 @@ public class Main extends SlidingFragmentActivity implements
 		protected Void doInBackground(Void... params) {
 			// Create the array
 			try {
-				lvSubProductData = appContext.getRelativeProductList(
-						currentSex, currentPerson.getId(), currentAge.getId(),
-						currentAim.getId(), currentProduct.id).getProductList();
+				if (currentPerson != null && currentAge != null
+						&& currentAim != null && currentProduct != null)
+					lvSubProductData = appContext.getRelativeProductList(
+							currentSex, currentPerson.getId(),
+							currentAge.getId(), currentAim.getId(),
+							currentProduct.id).getProductList();
 
 			} catch (AppException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 			return null;
 		}

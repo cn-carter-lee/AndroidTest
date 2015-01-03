@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
+        android:contentDescription="@string/blank"
         android:layerType="software"
         android:src="@drawable/dotted" />
 
@@ -35,8 +36,7 @@
         <TextView
             android:id="@+id/sale"
             style="@style/product_sub_sale"
-            android:layout_alignParentRight="true"
-            android:text="月销982件" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
 </LinearLayout>

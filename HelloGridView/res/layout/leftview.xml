@@ -7,85 +7,79 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="30dip"
+        android:layout_height="50dip"
         android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
         android:text="@string/menu_more"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <View style="@style/lv_seperator" />
 
     <Button
         android:id="@+id/btn_more_order"
-        style="@style/GiftMoreButton"
+        style="@style/lv_menu_item"
         android:layout_marginTop="1dp"
+        android:drawableLeft="@drawable/lv_menu_cart"
         android:text="@string/menu_more_order" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="#000000" />
+    <View style="@style/lv_seperator" />
 
     <Button
         android:id="@+id/btn_more_about"
-        style="@style/GiftMoreButton"
+        style="@style/lv_menu_item"
+        android:drawableLeft="@drawable/lv_menu_favorite"
         android:onClick="clickMore"
         android:text="@string/menu_more_about" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="#000000" />
+    <View style="@style/lv_seperator" />
 
     <Button
         android:id="@+id/btn_more_question"
-        style="@style/GiftMoreButton"
+        style="@style/lv_menu_item"
         android:layout_marginTop="1dp"
+        android:drawableLeft="@drawable/lv_menu_question"
         android:onClick="clickMore"
         android:text="@string/menu_more_question" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="#000000" />
+    <View style="@style/lv_seperator" />
 
     <Button
         android:id="@+id/btn_more_agreement"
-        style="@style/GiftMoreButton"
+        style="@style/lv_menu_item"
         android:layout_marginTop="1dp"
+        android:drawableLeft="@drawable/lv_menu_question"
         android:onClick="clickMore"
         android:text="@string/menu_more_agreement" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="#000000" />
+    <View style="@style/lv_seperator" />
 
     <Button
         android:id="@+id/btn_more_advice"
-        style="@style/GiftMoreButton"
+        style="@style/lv_menu_item"
+        android:drawableLeft="@drawable/lv_menu_advice"
         android:onClick="clickMore"
         android:text="@string/menu_more_advice" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="#000000" />
+    <View style="@style/lv_seperator" />
 
     <Button
         android:id="@+id/btn_more_contact"
-        style="@style/GiftMoreButton"
+        style="@style/lv_menu_item"
         android:layout_marginTop="1dp"
         android:background="@drawable/more_btn_background"
+        android:drawableLeft="@drawable/lv_menu_contact"
         android:onClick="clickMore"
         android:text="@string/menu_more_contact" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="#000000" />
+    <View style="@style/lv_seperator" />
 
     <Button
         android:id="@+id/btn_more_check_vertion"
-        style="@style/GiftMoreButton"
+        style="@style/lv_menu_item"
         android:layout_marginTop="1dp"
+        android:drawableLeft="@drawable/lv_menu_version"
         android:onClick="checkVersion"
         android:text="@string/menu_more_version" />
 

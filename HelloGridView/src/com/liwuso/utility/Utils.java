@@ -80,14 +80,14 @@ public class Utils {
 		}
 		return Content;
 	}
-	
+
 	// Favorite
 	public static String FAVORITE_FILENAME = "liwuso_data";
 
 	public static void addFavorite(int id) {
 		List<String> list = getFavoriteList();
 		list.add(String.valueOf(id));
-		saveFavorite(list);		
+		saveFavorite(list);
 	}
 
 	public static void deleteFavorite(int id) {
@@ -109,6 +109,11 @@ public class Utils {
 
 	public static String[] getFavoriteArray() {
 		return readFavoriteFile().split(",");
+	}
+
+	public static boolean exists(int id) {
+		return getFavoriteList().contains(String.valueOf(id));
+
 	}
 
 	public static List<String> getFavoriteList() {

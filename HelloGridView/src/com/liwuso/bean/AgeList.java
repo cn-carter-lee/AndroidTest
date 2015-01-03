@@ -21,8 +21,7 @@ public class AgeList extends Entity {
 
 	private int catalog;
 	private int pageSize;
-	private int ageCount;
-	private Person person;
+
 	private List<Age> agelist = new ArrayList<Age>();
 
 	public int getCatalog() {
