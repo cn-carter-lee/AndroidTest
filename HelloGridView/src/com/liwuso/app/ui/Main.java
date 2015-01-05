@@ -12,7 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.DialogFragment;
+import android.os.StrictMode;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -69,6 +69,7 @@ import com.liwuso.bean.ProductList;
 import com.liwuso.bean.SearchItem;
 import com.liwuso.bean.SearchItemListWapper;
 import com.liwuso.bean.SearchItemWapper;
+import com.liwuso.bean.VersionInfo;
 import com.liwuso.utility.ImageLoader;
 import com.liwuso.utility.Utils;
 import com.umeng.analytics.MobclickAgent;
@@ -235,6 +236,9 @@ public class Main extends SlidingFragmentActivity implements
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
 		Utils.context = this;
 		this.imageLoader = new ImageLoader(this);
 		super.onCreate(savedInstanceState);
@@ -244,7 +248,7 @@ public class Main extends SlidingFragmentActivity implements
 		this.initFrameButtons();
 		this.initFrameListView();
 		checkNetwork();
-		checkVersion();
+		checkVersion(false);
 		PushAgent.getInstance(this).onAppStart();
 	}
 
@@ -1803,10 +1807,7 @@ public class Main extends SlidingFragmentActivity implements
 
 				if (item_index == 5) {
 					// Check version
-					CustomDialog m = new CustomDialog(
-							(getString(R.string.dialog_version)));
-					m.show(getSupportFragmentManager(), "");
-
+					checkVersion(true);
 					return;
 				}
 
@@ -1928,17 +1929,52 @@ public class Main extends SlidingFragmentActivity implements
 		}
 	}
 
-	private void checkVersion() {
-		View verionView = View
-				.inflate(Main.this, R.layout.dialog_version, null);
-		AlertDialog.Builder builder = new AlertDialog.Builder(Utils.context);
+	private void checkVersion(boolean isClickShow) {
+		try {
+			String versionName = getPackageManager().getPackageInfo(
+					getPackageName(), 0).versionName;
+			VersionInfo versionInfo = appContext.getVersionInfo();
+			if (versionInfo != null)
+				if (versionName != versionInfo.Name) {
+					View verionView = View.inflate(Main.this,
+							R.layout.dialog_version, null);
+					AlertDialog.Builder builder = new AlertDialog.Builder(
+							Utils.context);
 
-		builder.setView(verionView);
+					TextView txtTitle = (TextView) verionView
+							.findViewById(R.id.title);
+					TextView txtContent = (TextView) verionView
+							.findViewById(R.id.content);
+					txtTitle.setText(versionInfo.Name);
+					txtContent.setText(versionInfo.Content);
+					Button btnCancel = (Button) verionView
+							.findViewById(R.id.btnCancel);
+					Button btnUpdate = (Button) verionView
+							.findViewById(R.id.btnCancel);
 
-		// Create the AlertDialog
-		AlertDialog dialog = builder.create();
+					builder.setView(verionView);
+					final AlertDialog dialog = builder.create();
+					dialog.show();
+					btnCancel.setOnClickListener(new View.OnClickListener() {
+						public void onClick(View v) {
+							dialog.dismiss();
+						}
+					});
 
-		dialog.show();
+					btnUpdate.setOnClickListener(new View.OnClickListener() {
+						public void onClick(View v) {
+							dialog.dismiss();
+						}
+					});
+				} else if (isClickShow) {
+					CustomDialog m = new CustomDialog(
+							(getString(R.string.dialog_version)));
+					m.show(getSupportFragmentManager(), "");
+				}
+
+		} catch (Exception e) {
+		}
+
 	}
 
 	@Override

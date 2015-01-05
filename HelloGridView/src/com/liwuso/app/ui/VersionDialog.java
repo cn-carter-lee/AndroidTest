@@ -31,6 +31,5 @@ public class VersionDialog extends DialogFragment {
 		// TextView text = (TextView) v.findViewById(R.id.dialog_text);
 		// text.setText(this.Messsage);
 		return v;
-
 	}
 }

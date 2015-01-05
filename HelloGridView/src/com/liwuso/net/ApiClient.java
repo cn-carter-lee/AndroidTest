@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.Map;
+
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -12,6 +13,7 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+
 import com.liwuso.app.AppContext;
 import com.liwuso.app.AppException;
 import com.liwuso.bean.AgeList;
@@ -20,6 +22,7 @@ import com.liwuso.bean.CatalogList;
 import com.liwuso.bean.ProductList;
 import com.liwuso.bean.SearchItemList;
 import com.liwuso.bean.URLs;
+import com.liwuso.bean.VersionInfo;
 
 public class ApiClient {
 
@@ -147,6 +150,19 @@ public class ApiClient {
 
 		try {
 			return ProductList.parse(http_get(appContext, newUrl));
+		} catch (Exception e) {
+			if (e instanceof AppException)
+				throw (AppException) e;
+			throw AppException.network(e);
+		}
+	}
+
+	public static VersionInfo getVersionInfo(AppContext appContext)
+			throws AppException {
+		String newUrl = URLs.BASE_API_URL + "message";
+
+		try {
+			return VersionInfo.parse(http_get(appContext, newUrl));
 		} catch (Exception e) {
 			if (e instanceof AppException)
 				throw (AppException) e;

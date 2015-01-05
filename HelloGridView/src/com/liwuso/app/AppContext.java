@@ -20,7 +20,9 @@ import com.liwuso.bean.ProductList;
 import com.liwuso.bean.SearchItemList;
 import com.liwuso.bean.SearchItemListWapper;
 import com.liwuso.bean.SearchItemWapper;
+import com.liwuso.bean.VersionInfo;
 import com.liwuso.net.ApiClient;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -265,16 +267,15 @@ public class AppContext extends Application {
 
 		return productList;
 	}
-	
-	public ProductList getRelativeProductList(int sexId, int personId, int ageId,
-			int aimId, int productid)
-			throws AppException {
+
+	public ProductList getRelativeProductList(int sexId, int personId,
+			int ageId, int aimId, int productid) throws AppException {
 		ProductList productList = new ProductList();
-		String key = "relative_product_list_" + sexId + "_" + personId + "_" + ageId
-				+ "_" + aimId + "_" + "productid_" + productid;
+		String key = "relative_product_list_" + sexId + "_" + personId + "_"
+				+ ageId + "_" + aimId + "_" + "productid_" + productid;
 		try {
-			productList = ApiClient.getRelativeProductList(this, sexId, personId,
-					ageId, aimId, productid);
+			productList = ApiClient.getRelativeProductList(this, sexId,
+					personId, ageId, aimId, productid);
 			if (productList != null) {
 				// Notice notice = list.getNotice();
 				// list.setNotice(null);
@@ -376,6 +377,18 @@ public class AppContext extends Application {
 				throw e;
 		}
 		return productList;
+	}
+
+	public VersionInfo getVersionInfo() throws AppException {
+		VersionInfo versionInfo = null;
+		try {
+			versionInfo = ApiClient.getVersionInfo(this);
+
+		} catch (AppException e) {
+
+			throw e;
+		}
+		return versionInfo;
 	}
 
 }
