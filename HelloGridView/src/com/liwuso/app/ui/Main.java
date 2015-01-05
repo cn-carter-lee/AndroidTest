@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -1933,7 +1936,7 @@ public class Main extends SlidingFragmentActivity implements
 		try {
 			String versionName = getPackageManager().getPackageInfo(
 					getPackageName(), 0).versionName;
-			VersionInfo versionInfo = appContext.getVersionInfo();
+			final VersionInfo versionInfo = appContext.getVersionInfo();
 			if (versionInfo != null)
 				if (versionName != versionInfo.Name) {
 					View verionView = View.inflate(Main.this,
@@ -1946,11 +1949,12 @@ public class Main extends SlidingFragmentActivity implements
 					TextView txtContent = (TextView) verionView
 							.findViewById(R.id.content);
 					txtTitle.setText(versionInfo.Name);
+
 					txtContent.setText(versionInfo.Content);
 					Button btnCancel = (Button) verionView
 							.findViewById(R.id.btnCancel);
 					Button btnUpdate = (Button) verionView
-							.findViewById(R.id.btnCancel);
+							.findViewById(R.id.btnUpdate);
 
 					builder.setView(verionView);
 					final AlertDialog dialog = builder.create();
@@ -1964,6 +1968,11 @@ public class Main extends SlidingFragmentActivity implements
 					btnUpdate.setOnClickListener(new View.OnClickListener() {
 						public void onClick(View v) {
 							dialog.dismiss();
+							Intent browserIntent = new Intent(
+									Intent.ACTION_VIEW, Uri
+											.parse(versionInfo.Url));
+							startActivity(browserIntent);
+
 						}
 					});
 				} else if (isClickShow) {
