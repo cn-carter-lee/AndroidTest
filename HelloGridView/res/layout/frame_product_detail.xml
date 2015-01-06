@@ -13,8 +13,9 @@
 
         <com.liwuso.app.widget.CustomImageView
             android:id="@+id/p_sub_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/blank"
             android:src="@drawable/ic_launcher" />
 
@@ -182,8 +183,8 @@
         <com.liwuso.app.widget.ExpandableHeightGridView
             android:id="@+id/product_sub_listview"
             style="@style/p_sub_margin_r_l"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:horizontalSpacing="10dp"
             android:isScrollContainer="false"
             android:numColumns="2"

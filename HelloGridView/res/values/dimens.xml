@@ -4,5 +4,5 @@
     <dimen name="activity_horizontal_margin">10dp</dimen>
     <dimen name="activity_vertical_margin">10dp</dimen>
     <dimen name="shadow_width">3dp</dimen>
-    <dimen name="slidingmenu_offset">50dp</dimen>
-</resources>
+    <dimen name="slidingmenu_offset">110dp</dimen>
+</resources>

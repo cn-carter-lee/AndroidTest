@@ -27,6 +27,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -1554,7 +1555,11 @@ public class Main extends SlidingFragmentActivity implements
 
 		switch (currentSlIndex) {
 		case 0:
-			slArray[currentSlIndex].currentVisibleScreen--;
+			if (slArray[currentSlIndex].currentVisibleScreen == 4
+					&& currentAim == null)
+				slArray[currentSlIndex].currentVisibleScreen = 0;
+			else
+				slArray[currentSlIndex].currentVisibleScreen--;
 			break;
 		case 1:
 		case 2:
@@ -1938,7 +1943,7 @@ public class Main extends SlidingFragmentActivity implements
 					getPackageName(), 0).versionName;
 			final VersionInfo versionInfo = appContext.getVersionInfo();
 			if (versionInfo != null)
-				if (versionName != versionInfo.Name) {
+				if (!versionName.equals(versionInfo.Name)) {
 					View verionView = View.inflate(Main.this,
 							R.layout.dialog_version, null);
 					AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -1948,7 +1953,8 @@ public class Main extends SlidingFragmentActivity implements
 							.findViewById(R.id.title);
 					TextView txtContent = (TextView) verionView
 							.findViewById(R.id.content);
-					txtTitle.setText(versionInfo.Name);
+					txtTitle.setText(String.format("检测到新版本v%s",
+							versionInfo.Name));
 
 					txtContent.setText(versionInfo.Content);
 					Button btnCancel = (Button) verionView
