@@ -1,6 +1,5 @@
 package com.liwuso.app.ui;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +23,8 @@ public class More extends FragmentActivity {
 	private RelativeLayout adviceLayout;
 	private Button btnTopNavPre;
 	private Button btnMoreAdviceSubmit;
+	private TextView txtTitleView;
+	private TextView txtContentView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +35,21 @@ public class More extends FragmentActivity {
 
 		Intent intent = getIntent();
 		int item_index = intent.getIntExtra("itemIndex", 0);
-		if (item_index < 4) {
-			TextView myTextView = (TextView) findViewById(R.id.txtMoreInfo);
-			myTextView.setText(Html.fromHtml(getResources().getStringArray(
-					R.array.more_info)[item_index]));
+		String title = getResources().getStringArray(R.array.more_info_title)[item_index];
+
+		txtTitleView.setText(title);
+		if (item_index < 3) {
+			String content = getResources().getStringArray(R.array.more_info)[item_index];
+			txtContentView.setText(Html.fromHtml(content));
 			showInfo(true);
-		} else if (item_index == 4) {
+		} else if (item_index == 3) {
 			showInfo(false);
 		}
 	}
 
 	private void initView() {
+		txtTitleView = (TextView) findViewById(R.id.txtTitle);
+		txtContentView = (TextView) findViewById(R.id.txtMoreInfo);
 		infoLayout = (LinearLayout) findViewById(R.id.more_info);
 		adviceLayout = (RelativeLayout) findViewById(R.id.more_advice);
 		btnTopNavPre = (Button) findViewById(R.id.btnTopNavPre);

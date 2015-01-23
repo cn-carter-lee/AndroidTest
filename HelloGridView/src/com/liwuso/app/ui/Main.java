@@ -4,9 +4,6 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,7 +24,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -194,9 +190,8 @@ public class Main extends SlidingFragmentActivity implements
 	private List<Button> searchTabButtons;
 
 	private int[] moreBtnResourceArray = { R.id.btn_more_about,
-			R.id.btn_more_question, R.id.btn_more_agreement,
-			R.id.btn_more_contact, R.id.btn_more_advice,
-			R.id.btn_more_check_vertion };
+			R.id.btn_more_question, R.id.btn_more_contact,
+			R.id.btn_more_advice, R.id.btn_more_check_vertion };
 	private Button[] moreBtnArray = new Button[moreBtnResourceArray.length];
 
 	// Sub Product
@@ -211,10 +206,8 @@ public class Main extends SlidingFragmentActivity implements
 	private LinearLayout subAddFavoriteView;
 	private LinearLayout subDeleteFavoriteView;
 	private TextView subComment;
-	private Button subFavoriteSum;
 
 	private Button subBuy1;
-	private Button subBuy2;
 
 	// Top nav bar
 	private Button btnTopNavPre;
@@ -344,9 +337,8 @@ public class Main extends SlidingFragmentActivity implements
 		subProductTag2 = (Button) findViewById(R.id.sub_product_tag2);
 		subAddFavoriteView = (LinearLayout) findViewById(R.id.sub_add_favorite_view);
 		subDeleteFavoriteView = (LinearLayout) findViewById(R.id.sub_delete_favorite_view);
-		subFavoriteSum = (Button) findViewById(R.id.p_sub_favorite_sum);
+
 		subBuy1 = (Button) findViewById(R.id.p_sub_buy1);
-		subBuy2 = (Button) findViewById(R.id.p_sub_buy2);
 
 		// Search
 		btnSearch = (Button) findViewById(R.id.btnSearch);
@@ -1419,9 +1411,9 @@ public class Main extends SlidingFragmentActivity implements
 			}
 
 			subComment.setText(product.Comment);
-			subFavoriteSum.setText(product.Liked);
+
 			subBuy1.setTag(product);
-			subBuy2.setTag(product);
+
 			new RemoteDataTask().execute();
 		}
 	}
@@ -1681,9 +1673,9 @@ public class Main extends SlidingFragmentActivity implements
 	private View.OnClickListener frameSearchBtnClick() {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-				String url = String.format(
-						"http://s8.m.taobao.com/munion/search.htm?q=%s",
-						txtSearch.getText());
+				String url = String
+						.format("http://ai.m.taobao.com/search.html?q=%s&pid=mm_31516171_7880925_26706629",
+								txtSearch.getText());
 				loadTaobao(url);
 			}
 		};
@@ -1782,30 +1774,21 @@ public class Main extends SlidingFragmentActivity implements
 	}
 
 	public void addFavoriteProduct(View view) {
-		if (view.getTag() instanceof Product) {
-			Product product = (Product) view.getTag();
-			Utils.addFavorite(product.getId());
+		//if (view.getTag() instanceof Product) {
+			// Product product = (Product) view.getTag();
+			Utils.addFavorite(currentProduct.getId());
 			subAddFavoriteView.setVisibility(View.GONE);
 			subDeleteFavoriteView.setVisibility(View.VISIBLE);
-		}
+		//}
 	}
 
 	public void deleteSubFavoriteProduct(View view) {
-		if (view.getTag() instanceof Product) {
-			Product product = (Product) view.getTag();
-			Utils.deleteFavorite(product.getId());
+		//if (view.getTag() instanceof Product) {
+			// Product product = (Product) view.getTag();
+			Utils.deleteFavorite(currentProduct.getId());
 			subAddFavoriteView.setVisibility(View.VISIBLE);
 			subDeleteFavoriteView.setVisibility(View.GONE);
-		}
-	}
-
-	public void deleteFavoriteProduct(View view) {
-		if (view.getTag() instanceof Product) {
-			Product product = (Product) view.getTag();
-			Utils.deleteFavorite(product.getId());
-			// View v = (View) view.getParent();
-			// v.findViewById(R.id.btn_favorite).setVisibility(View.GONE);
-		}
+		// }
 	}
 
 	// More
@@ -1813,7 +1796,7 @@ public class Main extends SlidingFragmentActivity implements
 		return new View.OnClickListener() {
 			public void onClick(View v) {
 
-				if (item_index == 5) {
+				if (item_index == 4) {
 					// Check version
 					checkVersion(true);
 					return;
@@ -1824,6 +1807,11 @@ public class Main extends SlidingFragmentActivity implements
 				startActivity(intent);
 			}
 		};
+	}
+
+	public void clickOrder(View view) {
+		Main.this.toggle();
+		loadTaobao("http://h5.m.taobao.com/awp/mtb/mtb.htm?#!/awp/mtb/mtb.htm");
 	}
 
 	// TaoBao

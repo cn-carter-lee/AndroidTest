@@ -29,5 +29,6 @@
     <color name="more_btn_pressed">#464953</color>
     <color name="verson_btn">#ebebeb</color>
     <color name="verson_btn_pressed">#49aae5</color>
+    <color name="line_sep">#e7eae5</color>
 
 </resources>

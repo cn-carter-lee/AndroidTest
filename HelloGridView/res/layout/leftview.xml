@@ -22,6 +22,7 @@
         style="@style/lv_menu_item"
         android:layout_marginTop="1dp"
         android:drawableLeft="@drawable/lv_menu_cart"
+        android:onClick="clickOrder"
         android:text="@string/menu_more_order" />
 
     <View style="@style/lv_seperator" />
@@ -30,7 +31,6 @@
         android:id="@+id/btn_more_about"
         style="@style/lv_menu_item"
         android:drawableLeft="@drawable/lv_menu_favorite"
-        android:onClick="clickMore"
         android:text="@string/menu_more_about" />
 
     <View style="@style/lv_seperator" />
@@ -40,18 +40,7 @@
         style="@style/lv_menu_item"
         android:layout_marginTop="1dp"
         android:drawableLeft="@drawable/lv_menu_question"
-        android:onClick="clickMore"
         android:text="@string/menu_more_question" />
-
-    <View style="@style/lv_seperator" />
-
-    <Button
-        android:id="@+id/btn_more_agreement"
-        style="@style/lv_menu_item"
-        android:layout_marginTop="1dp"
-        android:drawableLeft="@drawable/lv_menu_question"
-        android:onClick="clickMore"
-        android:text="@string/menu_more_agreement" />
 
     <View style="@style/lv_seperator" />
 
@@ -59,7 +48,6 @@
         android:id="@+id/btn_more_advice"
         style="@style/lv_menu_item"
         android:drawableLeft="@drawable/lv_menu_advice"
-        android:onClick="clickMore"
         android:text="@string/menu_more_advice" />
 
     <View style="@style/lv_seperator" />
@@ -70,7 +58,6 @@
         android:layout_marginTop="1dp"
         android:background="@drawable/more_btn_background"
         android:drawableLeft="@drawable/lv_menu_contact"
-        android:onClick="clickMore"
         android:text="@string/menu_more_contact" />
 
     <View style="@style/lv_seperator" />

@@ -8,21 +8,40 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
+        android:background="@color/white"
         android:orientation="vertical" >
 
-        <com.liwuso.app.widget.CustomImageView
-            android:id="@+id/p_sub_image"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/blank"
-            android:src="@drawable/ic_launcher" />
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal" >
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
+
+            <com.liwuso.app.widget.CustomImageView
+                android:id="@+id/p_sub_image"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/blank"
+                android:src="@drawable/ic_launcher" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
+        </LinearLayout>
 
         <LinearLayout
             style="@style/p_sub_margin_r_l"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:baselineAligned="false"
             android:orientation="horizontal" >
 
@@ -84,11 +103,8 @@
 
             <LinearLayout
                 android:id="@+id/sub_delete_favorite_view"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                style="@style/product_sub_favorite_box"
                 android:onClick="deleteSubFavoriteProduct"
-                android:orientation="vertical"
                 android:visibility="gone" >
 
                 <Button
@@ -96,6 +112,7 @@
                     android:layout_height="30dip"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/footer_ic_favorite_bg"
+                    android:clickable="false"
                     android:enabled="false" />
 
                 <TextView
@@ -109,28 +126,36 @@
 
             <LinearLayout
                 android:id="@+id/sub_add_favorite_view"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="addFavoriteProduct"
-                android:orientation="vertical" >
+                style="@style/product_sub_favorite_box"
+                android:onClick="addFavoriteProduct" >
 
                 <Button
                     android:layout_width="30dip"
                     android:layout_height="30dip"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/img_ic_favorite"
-                    android:enabled="false" />
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:onClick="addFavoriteProduct" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="30dip"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dip"
+                    android:onClick="addFavoriteProduct"
                     android:text="@string/p_sub_add"
                     android:textColor="@color/gray" />
             </LinearLayout>
         </LinearLayout>
+
+        <View
+            style="@style/p_sub_margin_r_l"
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_marginBottom="10dip"
+            android:layout_marginTop="10dip"
+            android:background="@color/line_sep" />
 
         <TextView
             style="@style/p_sub_margin_r_l"
@@ -178,7 +203,8 @@
             android:layout_width="fill_parent"
             android:layout_height="30dip"
             android:text="@string/p_sub_relative_gifts"
-            android:textColor="#333333" />
+            android:textColor="#333333"
+            android:textSize="18sp" />
 
         <com.liwuso.app.widget.ExpandableHeightGridView
             android:id="@+id/product_sub_listview"
@@ -190,38 +216,9 @@
             android:numColumns="2"
             android:verticalSpacing="10dp" />
 
-        <LinearLayout
-            style="@style/p_sub_margin_r_l"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dip"
-            android:layout_marginTop="10dip"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/p_sub_favorite_sum"
-                android:layout_width="0dip"
-                android:layout_height="40dip"
-                android:layout_weight="15"
-                android:background="@drawable/p_sub_favorite_sum"
-                android:paddingLeft="30dip"
-                android:textColor="@color/white" />
-
-            <View
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="3" />
-
-            <Button
-                android:id="@+id/p_sub_buy2"
-                android:layout_width="0dip"
-                android:layout_height="40dip"
-                android:layout_weight="40"
-                android:background="@drawable/p_sub_favorite_buy2"
-                android:onClick="clickSubProductDetails"
-                android:text="@string/p_sub_buy"
-                android:textColor="@color/white" />
-        </LinearLayout>
+        <View
+            android:layout_width="10dip"
+            android:layout_height="30dip" />
     </LinearLayout>
 
 </ScrollView>
