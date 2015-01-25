@@ -179,17 +179,37 @@
             android:layout_marginTop="10dip"
             android:background="@drawable/p_sub_sep_bg" />
 
-        <Button
+        <RelativeLayout
             android:id="@+id/p_sub_buy1"
-            style="@style/p_sub_margin_r_l"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="45dip"
-            android:layout_marginBottom="10dip"
-            android:layout_marginTop="10dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="10dp"
             android:background="@drawable/p_sub_buy1_btn_bg"
+            android:baselineAligned="false"
             android:onClick="clickSubProductDetails"
-            android:text="@string/p_sub_buy"
-            android:textColor="@color/white" />
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@+id/p_sub_txt_buy"
+                android:contentDescription="@string/blank"
+                android:src="@drawable/thunder" />
+
+            <TextView
+                android:id="@+id/p_sub_txt_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="5dip"
+                android:onClick="addFavoriteProduct"
+                android:text="@string/p_sub_buy"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </RelativeLayout>
 
         <View
             android:layout_width="fill_parent"

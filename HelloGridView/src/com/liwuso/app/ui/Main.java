@@ -207,7 +207,7 @@ public class Main extends SlidingFragmentActivity implements
 	private LinearLayout subDeleteFavoriteView;
 	private TextView subComment;
 
-	private Button subBuy1;
+	private RelativeLayout subBuy1;
 
 	// Top nav bar
 	private Button btnTopNavPre;
@@ -338,7 +338,7 @@ public class Main extends SlidingFragmentActivity implements
 		subAddFavoriteView = (LinearLayout) findViewById(R.id.sub_add_favorite_view);
 		subDeleteFavoriteView = (LinearLayout) findViewById(R.id.sub_delete_favorite_view);
 
-		subBuy1 = (Button) findViewById(R.id.p_sub_buy1);
+		subBuy1 = (RelativeLayout) findViewById(R.id.p_sub_buy1);
 
 		// Search
 		btnSearch = (Button) findViewById(R.id.btnSearch);
@@ -1425,6 +1425,7 @@ public class Main extends SlidingFragmentActivity implements
 		slArray[currentSlIndex].currentVisibleScreen = 4;
 		slArray[currentSlIndex]
 				.snapToScreen(slArray[currentSlIndex].currentVisibleScreen);
+		setTopState();
 
 	}
 
@@ -1532,7 +1533,6 @@ public class Main extends SlidingFragmentActivity implements
 	}
 
 	private void backUpplerLevel() {
-
 		if (currentSlIndex == 0
 				&& slArray[currentSlIndex].currentVisibleScreen == 0) {
 			if (shouldExit) {
@@ -1774,20 +1774,20 @@ public class Main extends SlidingFragmentActivity implements
 	}
 
 	public void addFavoriteProduct(View view) {
-		//if (view.getTag() instanceof Product) {
-			// Product product = (Product) view.getTag();
-			Utils.addFavorite(currentProduct.getId());
-			subAddFavoriteView.setVisibility(View.GONE);
-			subDeleteFavoriteView.setVisibility(View.VISIBLE);
-		//}
+		// if (view.getTag() instanceof Product) {
+		// Product product = (Product) view.getTag();
+		Utils.addFavorite(currentProduct.getId());
+		subAddFavoriteView.setVisibility(View.GONE);
+		subDeleteFavoriteView.setVisibility(View.VISIBLE);
+		// }
 	}
 
 	public void deleteSubFavoriteProduct(View view) {
-		//if (view.getTag() instanceof Product) {
-			// Product product = (Product) view.getTag();
-			Utils.deleteFavorite(currentProduct.getId());
-			subAddFavoriteView.setVisibility(View.VISIBLE);
-			subDeleteFavoriteView.setVisibility(View.GONE);
+		// if (view.getTag() instanceof Product) {
+		// Product product = (Product) view.getTag();
+		Utils.deleteFavorite(currentProduct.getId());
+		subAddFavoriteView.setVisibility(View.VISIBLE);
+		subDeleteFavoriteView.setVisibility(View.GONE);
 		// }
 	}
 
